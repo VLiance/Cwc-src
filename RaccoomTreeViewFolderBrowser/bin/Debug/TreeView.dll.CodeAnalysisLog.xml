@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="f:\app\vs\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="14.0">
+ <Targets>
+  <Target Name="E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser\bin\Debug\TreeView.dll">
+   <Modules>
+    <Module Name="treeview.dll">
+     <Namespaces>
+      <Namespace Name="Raccoom.Windows.Forms">
+       <Types>
+        <Type Name="NativeMethods" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
+         <Members>
+          <Member Name="#SendMessage(System.IntPtr,System.Int32,System.IntPtr,System.IntPtr)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="PInvokesShouldNotBeSafeCriticalFxCopRule" Category="Microsoft.Security" CheckId="CA5122" Status="Active" Created="2019-02-12 13:41:04Z" FixCategory="NonBreaking">
+             <Issue Certainty="50" Level="Warning">P/Invoke method 'NativeMethods.SendMessage(IntPtr, int, IntPtr, IntPtr)' is marked safe-critical.  Since P/Invokes may only be called by critical code, this declaration should either be marked as security critical, or have its annotation removed entirely to avoid being misleading.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="TreeNodeBase" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#AddDummyNode()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="Raccoom.Windows.Forms.TreeNodePath.#ctor(System.String,System.Boolean)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2019-02-12 13:41:04Z" FixCategory="DependsOnFix">
+             <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser" File="TreeNodeBase.cs" Line="107">Method 'TreeNodeBase.AddDummyNode()' passes a literal string as parameter 'text' of a call to 'TreeNodePath.TreeNodePath(string, bool)'. Retrieve the following string(s) from a resource table instead: "@@Dummy@@".</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="TreeViewFolderBrowser" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#OnBeforeCheck(System.Windows.Forms.TreeViewCancelEventArgs)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-02-12 13:41:04Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowser.cs" Line="482">In externally visible method 'TreeViewFolderBrowser.OnBeforeCheck(TreeViewCancelEventArgs)', validate parameter 'e' before using it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#OnBeforeExpand(System.Windows.Forms.TreeViewCancelEventArgs)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-02-12 13:41:04Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowser.cs" Line="534">In externally visible method 'TreeViewFolderBrowser.OnBeforeExpand(TreeViewCancelEventArgs)', validate parameter 'e' before using it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UIVisualizeErrorMessage(System.String,System.Exception)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="1" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-02-12 13:41:04Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowser.cs" Line="427">In externally visible method 'TreeViewFolderBrowser.UIVisualizeErrorMessage(string, Exception)', validate parameter 'ex' before using it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="TreeViewFolderBrowserDesigner" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#PreFilterProperties(System.Collections.IDictionary)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-02-12 13:41:04Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowser.cs" Line="594">In externally visible method 'TreeViewFolderBrowserDesigner.PreFilterProperties(IDictionary)', validate parameter 'properties' before using it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="TreeViewFolderBrowserNodeFactory" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#CreateTreeNode(System.Windows.Forms.TreeNodeCollection,Raccoom.Windows.Forms.TreeNodePath,System.String,System.String,System.Boolean,System.Boolean,System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="3" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-02-12 13:41:04Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowserNodeFactory.cs" Line="112">In externally visible method 'TreeViewFolderBrowserNodeFactory.CreateTreeNode(TreeNodeCollection, TreeNodePath, string, string, bool, bool, bool)', validate parameter 'path' before using it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExpandNode(System.Windows.Forms.TreeNode)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-02-12 13:41:04Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowserNodeFactory.cs" Line="134">In externally visible method 'TreeViewFolderBrowserNodeFactory.ExpandNode(TreeNode)', validate parameter 'parentNode' before using it.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303">
+   <Name>Do not pass literals as localized parameters</Name>
+   <Description>Literal strings that are embedded in source code are difficult to localize. Avoid passing literal strings as arguments in circumstances where a localized string is generally expected.</Description>
+   <Resolution Name="KnownValue">Method {0} passes a literal string as parameter '{1}' of a call to {2}. Retrieve the following string(s) from a resource table instead: {3}.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182187.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="14.0.0.0" />
+  </Rule>
+  <Rule TypeName="PInvokesShouldNotBeSafeCriticalFxCopRule" Category="Microsoft.Security" CheckId="CA5122">
+   <Name>P/Invoke declarations should not be safe-critical.</Name>
+   <Description>Since P/Invokes may not be called by transparent code, they should not be marked as safe-critical methods.  Doing so can lead to confusion on the part of developers who may believe that their transparent code should be able to call the P/Invoke method since it is marked safe-critical.</Description>
+   <Resolution Name="Default">P/Invoke method {0} is marked safe-critical.  Since P/Invokes may only be called by critical code, this declaration should either be marked as security critical, or have its annotation removed entirely to avoid being misleading.</Resolution>
+   <Owner />
+   <Email>[none]</Email>
+   <MessageLevel Certainty="50">Warning</MessageLevel>
+   <File Name="securitytransparencyrules.dll" Version="4.0.0.0" />
+  </Rule>
+  <Rule TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062">
+   <Name>Validate arguments of public methods</Name>
+   <Description>All reference arguments passed to externally visible methods should be checked against null (Nothing in VB). If appropriate, throw a System.ArgumentNullException when the argument is null.</Description>
+   <Resolution Name="Default">In externally visible method {0}, validate parameter '{1}' before using it.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182182.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="14.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>

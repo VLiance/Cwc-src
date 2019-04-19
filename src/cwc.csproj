@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{82D3DF9E-370C-47C3-B9F6-21756AAF0B0B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>cwc</RootNamespace>
+    <AssemblyName>cwc</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Cwc\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;tDebug</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\Cwc\</OutputPath>
+    <DefineConstants>Styles32</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\cwc.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Compilation\ArgumentManager.cs" />
+    <Compile Include="Compilation\ArgProcess.cs" />
+    <Compile Include="GUI\CollapsibleSplitter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\CwScrollBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\DoubleBufferPannel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Form\GuiConsole.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\GuiConsole.Designer.cs">
+      <DependentUpon>GuiConsole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CwFCTB.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\CwTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Info\Base.cs" />
+    <Compile Include="Output\Debug.cs" />
+    <Compile Include="Compilation\Delocalise.cs" />
+    <Compile Include="Compilation\GuiManager.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="System\SysAPI.cs" />
+    <Compile Include="Compiler\ConfigType.cs" />
+    <Compile Include="Compiler\Node.cs" />
+    <Compile Include="Output\DBGpClient.cs" />
+    <Compile Include="Output\GDB.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generate\ProjectCreator.cs" />
+    <Compile Include="Form\GuiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\GuiForm.Designer.cs">
+      <DependentUpon>GuiForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compilation\Build.cs" />
+    <Compile Include="Info\Data.cs" />
+    <Compile Include="Info\Finder.cs" />
+    <Compile Include="Info\Msg.cs" />
+    <Compile Include="Setting\Setting.cs" />
+    <Compile Include="System\Sys.cs" />
+    <Compile Include="SelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectForm.Designer.cs">
+      <DependentUpon>SelectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setting\SettingsLauch.cs" />
+    <Compile Include="Update\ModuleUpdate.cs" />
+    <Compile Include="Update\UpdateCwc.cs" />
+    <Compile Include="Setting\Config.cs" />
+    <Compile Include="Empty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Empty.Designer.cs">
+      <DependentUpon>Empty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Update\Http.cs" />
+    <Compile Include="Update\UpdateManager.cs" />
+    <Compile Include="Utilities\LauchProject.cs" />
+    <Compile Include="Emscripten.cs" />
+    <Compile Include="CompilerConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompilerConfig.Designer.cs">
+      <DependentUpon>CompilerConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Compiler\CompilerData.cs" />
+    <Compile Include="Compilation\CppSeq.cs" />
+    <Compile Include="Compilation\CppCmd.cs" />
+    <Compile Include="Compiler\CppCompiler.cs" />
+    <Compile Include="Compiler\Depandance.cs" />
+    <Compile Include="System\EnvPath.cs" />
+    <Compile Include="Utilities\FileRead.cs" />
+    <Compile Include="Utilities\FileUtils.cs" />
+    <Compile Include="Update\Install.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Update\Install.Designer.cs">
+      <DependentUpon>Install.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\Lauch.cs" />
+    <Compile Include="Utilities\LauchTool.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\MarkdownSharp.cs" />
+    <Compile Include="ModeIDE.cs" />
+    <Compile Include="System\NativeMethods.cs" />
+    <Compile Include="Output\Output.cs" />
+    <Compile Include="Utilities\PipeInput.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Update\ModuleData.cs" />
+    <Compile Include="Update\ModuleLink.cs" />
+    <Compile Include="Update\UpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\ArgProcessor.cs" />
+    <Compile Include="Utilities\ASSFileUtils.cs" />
+    <Compile Include="Info\PathHelper.cs" />
+    <Compile Include="Utilities\RegisterFile.cs" />
+    <Compile Include="Utilities\TaskbarProgress.cs" />
+    <Compile Include="System\Win32.cs" />
+    <Compile Include="Utilities\XmlManager.cs" />
+    <Compile Include="Utilities\DialogHelper.cs" />
+    <Compile Include="Utilities\ObjectSerializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CompilerConfig.resx">
+      <DependentUpon>CompilerConfig.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Empty.resx">
+      <DependentUpon>Empty.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\CollapsibleSplitter.resx">
+      <DependentUpon>CollapsibleSplitter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\GuiForm.resx">
+      <DependentUpon>GuiForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\GuiConsole.resx">
+      <DependentUpon>GuiConsole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Update\Install.resx">
+      <DependentUpon>Install.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\cwc.ico" />
+    <EmbeddedResource Include="SelectForm.resx">
+      <DependentUpon>SelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Update\UpdateForm.resx">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Error.png" />
+    <EmbeddedResource Include="Resources\Msg.png" />
+    <EmbeddedResource Include="Resources\Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\From.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\BrokenLink.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FastColoredTextBox\FastColoredTextBox.csproj">
+      <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
+      <Name>FastColoredTextBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaccoomTreeViewFolderBrowserDataProviders\Raccoom.TreeViewFolderBrowser.DataProviders.csproj">
+      <Project>{e4eaa4da-8de8-41e3-baff-b516e9789d34}</Project>
+      <Name>Raccoom.TreeViewFolderBrowser.DataProviders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaccoomTreeViewFolderBrowser\Raccoom.TreeViewFolderBrowser.csproj">
+      <Project>{98E88A55-DAAC-4A09-B39A-9C0167976AD5}</Project>
+      <Name>Raccoom.TreeViewFolderBrowser</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Resources\Config.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Config1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Menu0001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Menu0002.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Menu0003.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Menu0004.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Menu0005.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Menu0007.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Menu0008.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FatCow\Link\application_link.ico" />
+    <Content Include="FatCow\Link\book_link.ico" />
+    <None Include="Resources\Menu0006.png" />
+    <EmbeddedResource Include="FatCow\Link\brick_link.ico">
+      <CustomToolNamespace>Icon</CustomToolNamespace>
+    </EmbeddedResource>
+    <Content Include="FatCow\Link\bug_link.ico" />
+    <Content Include="FatCow\Link\building_link.ico" />
+    <Content Include="FatCow\Link\calculator_link.ico" />
+    <Content Include="FatCow\Link\chart_bar_link.ico" />
+    <Content Include="FatCow\Link\chart_pie_link.ico" />
+    <Content Include="FatCow\Link\computer_link.ico" />
+    <Content Include="FatCow\Link\cup_link.ico" />
+    <Content Include="FatCow\Link\database_link.ico" />
+    <Content Include="FatCow\Link\drive_link.ico" />
+    <Content Include="FatCow\Link\email_link.ico" />
+    <Content Include="FatCow\Link\group_link.ico" />
+    <Content Include="FatCow\Link\hourglass_link.ico" />
+    <Content Include="FatCow\Link\layout_link.ico" />
+    <Content Include="FatCow\Link\link_break.ico" />
+    <Content Include="FatCow\Link\link_delete.ico" />
+    <Content Include="FatCow\Link\link_edit.ico" />
+    <Content Include="FatCow\Link\link_go.ico" />
+    <Content Include="FatCow\Link\lorry_link.ico" />
+    <Content Include="FatCow\Link\monitor_link.ico" />
+    <Content Include="FatCow\Link\newspaper_link.ico" />
+    <Content Include="FatCow\Link\package_link.ico" />
+    <Content Include="FatCow\Link\page_link.ico" />
+    <Content Include="FatCow\Link\page_white_link.ico" />
+    <Content Include="FatCow\Link\photo_link.ico" />
+    <Content Include="FatCow\Link\picture_link.ico" />
+    <Content Include="FatCow\Link\plugin_link.ico" />
+    <Content Include="FatCow\Link\script_link.ico" />
+    <Content Include="FatCow\Link\server_link.ico" />
+    <Content Include="FatCow\Link\shape_square_link.ico" />
+    <Content Include="FatCow\Link\table_link.ico" />
+    <Content Include="FatCow\Link\world_link.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

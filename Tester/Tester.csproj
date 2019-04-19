@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EBE443EE-F4C7-49E6-AC22-959CA62FAA05}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tester</RootNamespace>
+    <AssemblyName>LiteWayv</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Cwc\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Cwide.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TabStrip, Version=2.0.2523.29272, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\TabStrip.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomHint.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomHint.Designer.cs">
+      <DependentUpon>CustomHint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PowerfulCSharpEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PowerfulCSharpEditor.Designer.cs">
+      <DependentUpon>PowerfulCSharpEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\Base.cs" />
+    <Compile Include="Shared\GUI\CollapsibleSplitter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Shared\GUI\CwFCTB.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shared\GUI\CwScrollBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Shared\GUI\CwToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Shared\GUI\CwTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Shared\GUI\DoubleBufferPannel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Shared\Message.cs" />
+    <EmbeddedResource Include="CustomHint.resx">
+      <DependentUpon>CustomHint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PowerfulCSharpEditor.resx">
+      <DependentUpon>PowerfulCSharpEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Shared\GUI\CollapsibleSplitter.resx" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\undo_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redo_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\class_libraries.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forward_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\backward0_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\property.png" />
+    <None Include="Resources\lightning.png" />
+    <None Include="Resources\box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\smile_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sad_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FastColoredTextBox\FastColoredTextBox.csproj">
+      <Project>{6DD14A85-CCFC-4774-BD26-0F5772512319}</Project>
+      <Name>FastColoredTextBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaccoomTreeViewFolderBrowserDataProviders\Raccoom.TreeViewFolderBrowser.DataProviders.csproj">
+      <Project>{e4eaa4da-8de8-41e3-baff-b516e9789d34}</Project>
+      <Name>Raccoom.TreeViewFolderBrowser.DataProviders</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaccoomTreeViewFolderBrowser\Raccoom.TreeViewFolderBrowser.csproj">
+      <Project>{98e88a55-daac-4a09-b39a-9c0167976ad5}</Project>
+      <Name>Raccoom.TreeViewFolderBrowser</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit-padding-top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bookmark--plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer--plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer--minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bye.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lol.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rolleyes.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\unsure.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Cwide.ico" />
+    <Content Include="htmlDesc.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TabStrip.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetDir)Tester.exe" "$(SolutionDir)Binary"
+copy "$(TargetDir)*.dll" "$(SolutionDir)Binary"
+copy "$(TargetDir)*.xml" "$(SolutionDir)Binary"
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

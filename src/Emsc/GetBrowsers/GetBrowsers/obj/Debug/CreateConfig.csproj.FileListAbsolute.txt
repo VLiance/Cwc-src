@@ -1,0 +1,7 @@
+E:\_Project\_MyProject\CwcSrc\Emsc\CreateConfig\CreateConfig\obj\Debug\CreateConfig.csprojResolveAssemblyReference.cache
+E:\_Project\_MyProject\CwcSrc\Emsc\CreateConfig\CreateConfig\obj\Debug\CreateConfig.csproj.CoreCompileInputs.cache
+E:\_Project\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wPlatform\CreateConfig.exe.config
+E:\_Project\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wPlatform\CreateConfig.exe
+E:\_Project\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wPlatform\CreateConfig.pdb
+E:\_Project\_MyProject\CwcSrc\Emsc\CreateConfig\CreateConfig\obj\Debug\CreateConfig.exe
+E:\_Project\_MyProject\CwcSrc\Emsc\CreateConfig\CreateConfig\obj\Debug\CreateConfig.pdb
