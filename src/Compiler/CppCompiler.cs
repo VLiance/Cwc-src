@@ -505,6 +505,13 @@ namespace cwc
         public static bool fManageMessages( CppCmd _oCmd, string _sMsg) {
             //CWift messages
     //
+
+            if( _sMsg.IndexOf("Unhandled Exception") >= 0) {
+                Output.TraceError(_sMsg);
+                nError++;
+                 return true;
+            }
+
             if (_sMsg.Length >= 3 && _sMsg[1] == '|' && ( _sMsg[2] != '/'  ||  _sMsg[2] != '\\') ) {
                 string _sMessage = _sMsg.Substring(2).Trim();
                 switch (_sMsg[0]) {
@@ -514,6 +521,7 @@ namespace cwc
 
                     case 'E':
                         Output.TraceError(_sMessage);
+                        nError++;
                       return true;
   
                      case 'A':

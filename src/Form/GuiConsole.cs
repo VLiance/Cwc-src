@@ -296,6 +296,7 @@ namespace cwc {
 
 
        internal void fAddAllUsedDir() {
+            try { 
              this.BeginInvoke((MethodInvoker)delegate {
 
 
@@ -375,6 +376,7 @@ namespace cwc {
 
 
              });
+            }catch(Exception e) { }
         }
 
         private static  TextStyle oStyle ;
@@ -778,11 +780,11 @@ namespace cwc {
        int nInitialPosLeft = 0;
          int nInitialPosTop = 0;
         private void GuiConsole_Load(object sender, EventArgs e) {
-         
+             csPrj.ToggleState();//Clesed by default
      
-            	//			SetWindowPosition(ConfigMng.oConfig.vStartPos.X,ConfigMng.oConfig.vStartPos.Y,ConfigMng.oConfig.vStartSize.Width,ConfigMng.oConfig.vStartSize.Height);
+            	//		SetWindowPosition(ConfigMng.oConfig.vStartPos.X,ConfigMng.oConfig.vStartPos.Y,ConfigMng.oConfig.vStartSize.Width,ConfigMng.oConfig.vStartSize.Height);
 
-            fLoadRecent();
+                fLoadRecent();
             
             
                 Setting.oSettingsLauch.fIni( treeViewPrj);  
@@ -797,10 +799,17 @@ namespace cwc {
 
                 if( ConfigMng.oConfig.bTreePrjOpen){
                 //   csPrj.ToggleState();
-                   csPrj.ToggleState();
+                    if( !csPrj.IsCollapsed) {
+                         csPrj.ToggleState();
+                    }
+                }else {
+                     if( csPrj.IsCollapsed) {
+                         csPrj.ToggleState();
+                    }
                 }
             } else {
                  ConfigMng.oConfig.vStartSize = Size;
+                 ConfigMng.oConfig.vStartPos = Location;
             }
           
 

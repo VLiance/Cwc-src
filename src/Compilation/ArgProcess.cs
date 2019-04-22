@@ -67,9 +67,18 @@ namespace cwc {
 			string _sResult = _sFullArg;
 			int _nIndex = _sResult.IndexOf('@');
 			while(_nIndex != -1 ) {
+                char _cPrecIndex = ' ';
+                if(_nIndex>1) {
+                    _cPrecIndex = _sResult[_nIndex-1];
+                }
 
-				_sResult = fExpand(_sResult, _nIndex );
-				_nIndex = _sResult.IndexOf('@');
+                if(_cPrecIndex == ' ' || _cPrecIndex == '\t' || _cPrecIndex == '\n'  || _cPrecIndex == '\r'  || _cPrecIndex == '-') {
+				    _sResult = fExpand(_sResult, _nIndex );
+				     _nIndex = _sResult.IndexOf('@');
+                }else {
+                     _nIndex = _sResult.IndexOf('@', _nIndex+1);
+                }
+               
 			}	
 
               _sResult = fRemoveComment(_sResult);

@@ -474,7 +474,8 @@ private const int WM_DESTROY = 0x0002  ;
                         break;
                     }
                 }
-                Output.TraceWarning( "Download? (yes / no)");
+              //   Output.TraceWarning( "Download? (yes / no)");
+                Output.TraceWarning( "Starting Download ... (press 'n' to cancel)");
                 foreach(ModuleLink _oLink in _aLink) {
                       _oLink.fDownload();
                       while(_oLink.bDl_InProgress) {Thread.Sleep(1); }

@@ -648,6 +648,10 @@ bExtacted = true;
                    */
 
 			}
+
+            if(oCompiler == null) {
+                return;
+            }
        
             sExecutableName = Path.GetFileNameWithoutExtension(sExecutable);
             sExecutableType = "<" +  oCompiler.oCurrentConfigType.sName + ">";
