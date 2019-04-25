@@ -368,6 +368,7 @@ namespace cwc {
 						case "*":
 						break;
 
+                        case "so":
 						case "dll":
 							bToDynamicLib = true;
 						break;
@@ -889,24 +890,25 @@ bExtacted = true;
 					string _sBackEndCmd = "";
 					string _sEndWith = "";
 
-					if(bLink) {
-						_sTypeArg = " -o ";
+					if(bLink && !bToStaticLib) {
+						_sTypeArg = " -o";
 						_sBackEndCmd = sBackEndCmd;
 					}
 
 					if(bToDynamicLib) {
-						_sTypeArg = " -shared -o "; //-Wl,--out-implib,libexample_dll.a ??
+						//_sTypeArg = " -shared -o "; //-Wl,--out-implib,libexample_dll.a ??
 						_sBackEndCmd = sBackEndCmd;
 						//_sEndWith =  "-Wl,--out-implib," + sFile_wTo + ".a"; //Not necessary
 					}
 
 					if(bToStaticLib) {
-						_sTypeArg = " -r -s ";
-						_sBackEndCmd = "";
+					//	_sTypeArg = " -r -s ";
+						//_sBackEndCmd = "";
+						_sBackEndCmd = sBackEndCmd;
 					}
 
 					//sGenBackEndCmd = _sTypeArg   + sFile_wTo + sToAnyType + " " +  sPrecOutput_wTo + " "  +_sEndWith + sObjectLinkList  ;
-					sGenBackEndCmd = _sTypeArg   + sFile_wTo + sToAnyType + " " +  sObjectLinkList + " " + sBackEndLinker + " " +_sEndWith;
+					sGenBackEndCmd = _sTypeArg + " "  + sFile_wTo + sToAnyType + " " +  sObjectLinkList + " " + sBackEndLinker + " " +_sEndWith;
 					//_sSendCmd  = sGenBackEndCmd + " "+ _sBackEndCmd;
 					
 
@@ -2161,8 +2163,10 @@ bExtacted = true;
 						foreach(string _sCond in _aCond) {if(_sCond != null && _sCond.Length > 1 ) {
 							if(_sCond[0] == '!') { //Exclude folder
 							//		Debug.fTrace("-Test !!! "  + _sFile.Substring(0,_sCond.Length-1 ) );
+							//Output.Trace("-Test !!! "  + _sFile.Substring(0,_sCond.Length-1 ) );
 								if( _sCond.Substring(1) == _sFile.Substring(0,_sCond.Length-1)) {
 								//	Debug.fTrace("-Exclude!!! "  + _sCond.Substring(1) );
+								//    Output.Trace("-Exclude!!! "  + _sCond.Substring(1)  + " : " +_sFile );
 									_bInclude = false;
 								}
 							

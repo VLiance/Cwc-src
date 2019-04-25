@@ -1096,24 +1096,25 @@ namespace cwc
                 }
 
 
-               string _sOptLevel =   Data.fGetGlobalVar("_sOpt").ToUpper();
-                switch(_sOptLevel) {
-                     case "DEBUG":
-                         _sArg += oGblConfigType.fGetNode(new string[]{"Arguments", "Debug"}, oCurrentConfigType.sName)+ " ";
-                        // _sArg += "-g ";
+              if(!_bSLib && !_bDLib) {
+                   string _sOptLevel =   Data.fGetGlobalVar("_sOpt").ToUpper();
+                    switch(_sOptLevel) {
+                         case "DEBUG":
+                             _sArg += oGblConfigType.fGetNode(new string[]{"Arguments", "Debug"}, oCurrentConfigType.sName)+ " ";
+                            // _sArg += "-g ";
 
-                     break;
+                         break;
 
-                     case "OS":
-                     case "O3":
-                     case "O2":
-                       //  _sArg += "-O2 " + oGblConfigType.sName + "| ";
-                         _sArg += oGblConfigType.fGetNode(new string[]{"Arguments", _sOptLevel}, oCurrentConfigType.sName)+ " ";
-                     break;
+                         case "OS":
+                         case "O3":
+                         case "O2":
+                           //  _sArg += "-O2 " + oGblConfigType.sName + "| ";
+                             _sArg += oGblConfigType.fGetNode(new string[]{"Arguments", _sOptLevel}, oCurrentConfigType.sName)+ " ";
+                         break;
             
-                    default:
-                    break;
-
+                        default:
+                        break;
+                  }
               }
                  
 
@@ -1127,25 +1128,27 @@ namespace cwc
 
 
 		//		_sArg += oCurrentConfigType.sCompilerLinker;
-               _sArg += oGblConfigType.fGetNode(new string[]{"Arguments", "CompilerLinker"}, oCurrentConfigType.sName) + " ";
-      
+                 if(!_bSLib && !_bDLib) {
+                    _sArg += oGblConfigType.fGetNode(new string[]{"Arguments", "CompilerLinker"}, oCurrentConfigType.sName) + " ";
+                }
 				if(_bLinkTime){
 
-                    _oCmd.sArgLinkerLib += oGblConfigType.fGetNode(new string[]{"Arguments", "Linker_Lib"}, oCurrentConfigType.sName) + " ";
-
-
+               
 				//	_sArg += oCurrentConfigType.sLinker;
-                   _sArg += oGblConfigType.fGetNode(new string[]{"Arguments", "Linker"}, oCurrentConfigType.sName) + " ";
-
+                
 					if(_bSLib) {
 					//	_sArg += oCurrentConfigType.sLink_Static;
                         _sArg += oGblConfigType.fGetNode(new string[]{"Arguments", "Linker_Static"}, oCurrentConfigType.sName) + " ";
-
 					}
-					if(_bDLib) {
+					else if(_bDLib) {
 					//	_sArg += oCurrentConfigType.sLink_Dynamic;
                       _sArg += oGblConfigType.fGetNode(new string[]{"Arguments", "Linker_Dynamic"}, oCurrentConfigType.sName) + " ";
-					}
+					}else {
+
+                       _oCmd.sArgLinkerLib += oGblConfigType.fGetNode(new string[]{"Arguments", "Linker_Lib"}, oCurrentConfigType.sName) + " ";
+                       _sArg += oGblConfigType.fGetNode(new string[]{"Arguments", "Linker"}, oCurrentConfigType.sName) + " ";
+
+                    }
 					
 				}else{
 
@@ -1249,8 +1252,7 @@ namespace cwc
 
 					}
 				}
-				
-               else if(_bLinkTime) {
+                else if(_bLinkTime) {
 
 				//	_sExe = oCurrentConfigType.sExe_Linker;
 
