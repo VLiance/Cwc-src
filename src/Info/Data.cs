@@ -277,7 +277,7 @@ namespace cwc {
 			Data.fSetGlobalVar("wArch", "x32" );
 			Data.fSetGlobalVar("wArchPC", "x86" );
 	
-			Data.fSetGlobalVar("wDir", PathHelper.ExeWorkDir);
+			Data.fSetGlobalVar("_pProject", PathHelper.ExeWorkDir);
 			Data.fSetGlobalVar("_sOpt", "Debug");
 
 			Data.fSetGlobalVar("wBuildAnd","Run");

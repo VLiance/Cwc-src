@@ -49,7 +49,7 @@ namespace cwc {
 
        public bool bHave_wTo = false;
        public string sFile_wTo = "";
-       public string s_wDir = "";
+       public string s_pProject = "";
        public string sPrecOutput_wTo = "";
 
 
@@ -258,8 +258,9 @@ namespace cwc {
 		public void fExtractLib(){
 
 
-                  oLauchLib_Arg.fSetVar("wPath",  oLib.sCurrFolder);  		
-                  oLauchLib_Arg.fSetVar("wExPath", sLauchLib_wExPath);
+                 // oLauchLib_Arg.fSetVar("wPath",  oLib.sCurrFolder);  		
+                  oLauchLib_Arg.fSetVar("_pModule",  oLib.sCurrFolder);  		
+                  oLauchLib_Arg.fSetVar("_pOutput", sLauchLib__pOutput);
 
       
                   oLauchLib_Arg.aLib = oParent.aLib;
@@ -294,7 +295,7 @@ namespace cwc {
 
 		public ArgumentManager oLauchLib_Arg = null;
 		public string sLauchLib_File = "";
-		public string sLauchLib_wExPath = "";
+		public string sLauchLib__pOutput = "";
         public bool bIsRunLib = false;
 
         private void fPreBuildCmd( string _sArg) {
@@ -325,7 +326,7 @@ namespace cwc {
 
 		public void fPreOutputLib(string _sArg){
 
-			sLauchLib_wExPath =  fGetVar("wDir") + _sArg;
+			sLauchLib__pOutput =  fGetVar("_pProject") + _sArg;
 		//	sLauchLib_File = oLib.sCurrFolder + "wLib.cwc";
          //  if(){
              bIsRunLib = true;
@@ -566,7 +567,7 @@ bExtacted = true;
 */
 			sCompiler = fGetVar("wToolchain");
 			sPlatform = fGetVar("wPlatform_Name");
-			s_wDir = fGetVar("wDir");
+			s_pProject = fGetVar("_pProject");
 
 	
 			oCompiler = Finder.fUseCompiler(sCompiler, sPlatform);
@@ -651,6 +652,10 @@ bExtacted = true;
 			}
 
             if(oCompiler == null) {
+              //  if(bHaveSourceC || bHaveMultipleFileSrc || bHaveKnowSourcesFiles) {
+                if(bCallCompiler) {
+                     Output.TraceError("Compiler not exist: " + sCompiler + " (" + sPlatform + ")");
+                }
                 return;
             }
        
@@ -961,7 +966,7 @@ bExtacted = true;
             }
 
 			if(bCallCompiler ){
-				if(( bHaveMultipleFileSrc || bHaveDirectorySource) && !bHave_wTo){ //if not, bug with: -c (wPath)SubLib_System/Lib_GZ_OpenGL/ -o (wExPath)/ -std=c++11  |
+				if(( bHaveMultipleFileSrc || bHaveDirectorySource) && !bHave_wTo){ //if not, bug with: -c (_pModule)SubLib_System/Lib_GZ_OpenGL/ -o (wExPath)/ -std=c++11  |
 					bCallCompiler = false;
 				}
 			}
@@ -985,7 +990,7 @@ bExtacted = true;
 				    if( !bSkip ) {
                     
 					    if(!(bLink && CppCompiler.nError > 0)) {
-						    if(bLink && oCompiler.sLink_Action_cmd != "") {
+						    if(bLink && oCompiler != null &&  oCompiler.sLink_Action_cmd != "") {
 							    fDoLinkCustomAction();
 						    }
                       
@@ -1317,11 +1322,11 @@ bExtacted = true;
                 case ".exe":
 				case ".*":
                 case "": //Linux?
-					//Console.WriteLine("!!!!!!!!!!!!!!!!-**-*-*!wOutBin" + _sDirectory);
-					oParent.fSetVar("wOutBin", sOutDirectory);
-					//fSetVarCmd("wOutBin", "wOutBin"+_sDirectory);
+					//Console.WriteLine("!!!!!!!!!!!!!!!!-**-*-*!_pOutput_Bin" + _sDirectory);
+					oParent.fSetVar("_pOutput_Bin", sOutDirectory);
+					//fSetVarCmd("_pOutput_Bin", "wOutBin"+_sDirectory);
 					
-				//	Console.WriteLine("!! " + 	Data.fGetGlobalVar("wOutBin"));
+				//	Console.WriteLine("!! " + 	Data.fGetGlobalVar("_pOutput_Bin"));
 
 
 					if(_bwTo){
@@ -1531,7 +1536,7 @@ bExtacted = true;
 
 				 break;
 
-				case "wDir":
+				case "_pProject":
 			        fSetWorkingDir(oParent, _sVarArg);
                  break;
 
@@ -1556,10 +1561,10 @@ bExtacted = true;
 
 
             try  {  Directory.SetCurrentDirectory(_sFullValue.Replace('"', ' ') );  } catch (DirectoryNotFoundException e) { //TODO verifie order execution of SetCurrentDirectory
-				Output.TraceError("wDir not found: " + _sFullValue);
+				Output.TraceError("{_pProject} not found: " + _sFullValue);
 			}
 
-          _oArg.fSetVar("wDir", _sFullValue);
+          _oArg.fSetVar("_pProject", _sFullValue);
                        
 		    // PathHelper.ExeWorkDir =  _sFullValue;
 	       	SysAPI.fSetWorkingDir(_sFullValue);

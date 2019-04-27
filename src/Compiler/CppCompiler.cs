@@ -309,7 +309,7 @@ namespace cwc
                          process.StartInfo.RedirectStandardOutput = true;
                          process.StartInfo.RedirectStandardError = true;
 
-	                    process.StartInfo.WorkingDirectory =_oCmd.s_wDir; 
+	                    process.StartInfo.WorkingDirectory =_oCmd.s_pProject; 
 	
 
                    //     List<string> _aOutput = new List<string>() ;//Temp

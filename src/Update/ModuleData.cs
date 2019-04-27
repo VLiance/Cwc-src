@@ -224,15 +224,40 @@ namespace cwc
 			//Debug.fTrace("fGetCompilerList : " + 	sCurrFolder + "wType/");
 			aCompilerData = new List<CompilerData>();
 			aPlatformData = new Dictionary<string, CompilerData>();
+
+
+            string _sFoundPath = PathHelper.fFindFolder(sCurrFolder, "cwc", 5);
+            if(_sFoundPath == "") { //Default
+                _sFoundPath = sCurrFolder;
+            }
+            String[] _aFiles = Directory.GetFiles(_sFoundPath, "*.cwcfg");
+            if(_aFiles.Length == 0) {
+                Output.TraceError("Cannot find '*.cwcfg' file in " + sCurrFolder );
+                Data.bDontExecute = true;
+				Build.StopBuild();
+                return;
+            }
+            foreach ( string _sCwcfg_File in _aFiles){
+              //     Output.TraceGood("Found " +  _sCwcfg_File);
+                CompilerData _oCompilerData = new CompilerData(this, _sCwcfg_File );
+                if(bIsCompiler){//It's a Compiler
+			        aCompilerData.Add(_oCompilerData);
+				    //Output.TraceGood("Add:  " + _oCompilerData.sSubName);
+				    aPlatformData.Add(_oCompilerData.sSubName,_oCompilerData );
+
+                }else {//It's a lib
+                     oLibData = _oCompilerData;
+                }
+
+
+            }
+
+            /*
 			
 			string _sCompilerPlatform = sCurrFolder+ "wType/";
-    
 			if(!Directory.Exists(_sCompilerPlatform)) {//backward compatibility
                     _sCompilerPlatform = sCurrFolder+ "wPlatform/";
             }
-
-
-
 			if(Directory.Exists(_sCompilerPlatform)) {
 
 				string[] _aFile = Directory.GetFiles( _sCompilerPlatform,"*.xml");
@@ -254,7 +279,7 @@ namespace cwc
 				Data.bDontExecute = true;
 				Build.StopBuild();
 			}
-			
+			*/
 			
 		}
 
@@ -263,15 +288,30 @@ namespace cwc
 
 			aCompilerData = new List<CompilerData>(); //Reset
 			if(sCurrFolder != ""){
+
+                fGetCompilerList();
+                /*
 				if(bIsCompiler){
 					fGetCompilerList();
 				}else{ //Is a lib
-					string _sFile = sCurrFolder + "Lib.xml";
-					if(File.Exists(_sFile)){
-						CompilerData _oCompilerData = new CompilerData(this, _sFile );
+
+                    string _sFoundPath = PathHelper.fFindFolder(sCurrFolder, "cwc");
+                    if(_sFoundPath == "") { //Default
+                        _sFoundPath = sCurrFolder;
+                    }
+                    
+                    String[] _aFiles = Directory.GetFiles(_sFoundPath, "*.cwcfg");
+                    if(_aFiles.Length == 0) {
+                        Output.TraceError("Cannot find '*.cwcfg' file in " + sCurrFolder );
+                        return;
+                    }
+
+                    foreach ( string _sCwcfg_File in _aFiles){
+                        //   Output.TraceGood("Found " +  _sCwcfg_File);
+                        CompilerData _oCompilerData = new CompilerData(this, _sCwcfg_File );
 						oLibData = _oCompilerData;
-					}
-				}
+                    }
+				}*/
 			}
 			
 			/*

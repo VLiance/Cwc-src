@@ -129,6 +129,32 @@ namespace cwc.Utilities
             return _sPath;
         }
 
+
+        public static string fFindFolder( string _sPath, string _sFilter, int _nMaxLevel = 9999,int _nLevel = 0){
+
+                try {
+                    foreach (var f in Directory.GetDirectories(_sPath, _sFilter, SearchOption.TopDirectoryOnly)) {
+                         return f;
+                    }
+
+                    if(_nLevel <= _nMaxLevel) {
+                       foreach (var f in Directory.GetDirectories(_sPath)) {
+                            if ( fFindFolder(f, _sFilter, _nMaxLevel, _nLevel + 1) != ""){
+                            
+                           }
+                        }
+                    }
+
+
+                } catch (UnauthorizedAccessException) {
+                    Console.WriteLine("Path is not accessible: {0}", _sPath);
+                }      
+            return ""; 
+        }
+
+
+
+
     }
 
 }

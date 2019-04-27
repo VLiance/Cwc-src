@@ -40,7 +40,7 @@ namespace cwc {
 					return null;
 				}
 			}
-			Output.TraceError("Compiler not exist: " + _sVar + " (" + _sPlatform + ")");
+			//Output.TraceError("Compiler not exist: " + _sVar + " (" + _sPlatform + ")");
 			return null;
 		}
     }

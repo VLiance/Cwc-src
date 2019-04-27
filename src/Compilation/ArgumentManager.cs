@@ -70,8 +70,12 @@ namespace cwc {
 		}
 
 		internal void fAddLib(ModuleData _oLib){
-			aLib.Add(_oLib);
-			aLibList.Add(_oLib.oLibData);
+            if(_oLib != null) {
+			    aLib.Add(_oLib);
+                if(_oLib.oLibData != null) {
+			      aLibList.Add(_oLib.oLibData);
+                }
+            }
 		}
 
 
@@ -158,7 +162,7 @@ namespace cwc {
 
 			foreach(CompilerData _oLib in  aLibList) { //TODO separate subcompiler and extract after!?
 					//Console.WriteLine("Extract Lib: " + _oLib.sFullName);
-					///Debug.fTrace("Extract Lib: " + _oLib.sFullName);
+			    Debug.fTrace("Extract Lib: " + _oLib.sFullName);
 				_oLib.fExtract();
 			}
 

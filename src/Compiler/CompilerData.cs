@@ -85,7 +85,7 @@ namespace cwc
 				//	sFullName = sFullName.Substring(10); //Remove wToolchain_
 				//	Debug.fTrace("_sFullName " +  sFullName);
 					sSubName = sFullName;
-					int _nIndex = sSubName.IndexOf("_");
+					int _nIndex = sSubName.IndexOf(".");
 					if(_nIndex != -1){
 						sSubName =  sSubName.Substring(_nIndex + 1);//10 = wToolchain_
 					}
@@ -691,7 +691,8 @@ namespace cwc
         }
 
 		private string fSpecialExtartVar(string _sValue){
-			_sValue = _sValue.Replace("{wPath}", oModuleData.sCurrFolder);
+			//_sValue = _sValue.Replace("{wPath}", oModuleData.sCurrFolder);
+			_sValue = _sValue.Replace("{_pModule}", oModuleData.sCurrFolder);
 			/*
 			if(oModuleData.bIsCompiler){
 				_sValue = _sValue.Replace("(wToolchain_Dir)", oModuleData.sCurrFolder);
@@ -1212,9 +1213,10 @@ namespace cwc
 				string _sLibArg = "";
 				foreach(ModuleData _oLib in _oCmd.oParent.aLib){
 					CompilerData _oData = _oLib.oLibData;
-
-					_sLibArg += _oData.fGetArgs(_oCmd, "", _bLinkTime, _bSLib, _bDLib,false ) + " ";//_oCmd.oParentCmd.bHaveSourceC ?
-				}
+                    if(_oData != null) {
+					    _sLibArg += _oData.fGetArgs(_oCmd, "", _bLinkTime, _bSLib, _bDLib,false ) + " ";//_oCmd.oParentCmd.bHaveSourceC ?
+                    }   
+                }
 
 				///////////////
              
