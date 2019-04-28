@@ -265,15 +265,20 @@ namespace cwc {
 
         public static void  fSetDefaultVar(string[] _sArgs) {
             Data.CmdArgs = _sArgs;
+            fSetDefaultVar();
+        }
+
+         public static void  fSetDefaultVar() {
+
 //Console.WriteLine("fSetDefaultVar!!");
 
-		//	fSetGlobalVar("wToolchain", "Honera/LibRT" );
-		//	fSetGlobalVar("wPlatform", "" );
+		//	fSetGlobalVar("_wToolchain", "Honera/LibRT" );
+		//	fSetGlobalVar("_sPlatform", "" );
 
 		//	Data.fAddRequiredModule("Honera/LibRT",true);
 		//	oArg.fAddCompiler( "Honera/LibRT", ""); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
 
-		//	fSetGlobalVar("wToolchain", "_LibRT_clang" );
+		//	fSetGlobalVar("_wToolchain", "_LibRT_clang" );
 			Data.fSetGlobalVar("wArch", "x32" );
 			Data.fSetGlobalVar("wArchPC", "x86" );
 	

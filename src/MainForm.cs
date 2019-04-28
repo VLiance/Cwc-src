@@ -529,8 +529,8 @@ webClient.Proxy=GlobalProxySelection.GetEmptyWebProxy();
         internal void fFinishExtractArg() {this.BeginInvoke((MethodInvoker)delegate  {
 	
 				cbBuildType.Text  =  Data.fGetGlobalVar("wBuildAnd"); 
-				cbCompiler.Text = Data.fGetGlobalVar("wToolchain");
-				cbPlatform.Text = Data.fGetGlobalVar("wPlatform_Name");
+				cbCompiler.Text = Data.fGetGlobalVar("_wToolchain");
+				cbPlatform.Text = Data.fGetGlobalVar("_sConfig_Type");
 				cbArchiteture.Text  = " " + Data.fGetGlobalVar( "wArch");
         });}
 
@@ -974,7 +974,7 @@ public static double nTimeShow = 2;
 			try {	this.BeginInvoke((MethodInvoker)delegate  {	try {
 				cbView.Items.Clear();
 			//	cbView = new ComboBox();
-				switch( Data.fGetGlobalVar("wToolchain") ) {
+				switch( Data.fGetGlobalVar("_wToolchain") ) {
 					case "Honera/WebRT":
 				//		cbView.Items.AddRange(Emscripten.aBrowser.ToArray());
 					break;
@@ -1159,8 +1159,8 @@ protected override void OnPaintBackground(PaintEventArgs e)
                   Build.sBuildAnd = "Run";
             }
         
-      //     cbCompiler.Text = Data.fGetGlobalVar("wToolchain");
-	//	   cbPlatform.Text = Data.fGetGlobalVar("wPlatform");
+      //     cbCompiler.Text = Data.fGetGlobalVar("_wToolchain");
+	//	   cbPlatform.Text = Data.fGetGlobalVar("_sPlatform");
 	
 			fFinishExtractArg();
 			fSetWorkingDir(PathHelper.ExeWorkDir);
@@ -3123,7 +3123,7 @@ else {
 
        private void cbPlatform_SelectedIndexChanged(object sender, EventArgs e) {
 			 if(cbPlatform.Enabled == true) {
-				Data.fSetGlobalVar("wPlatform", cbPlatform.Text);
+				Data.fSetGlobalVar("_sPlatform", cbPlatform.Text);
 			}
 			fSetView();
         }
@@ -3178,7 +3178,7 @@ else {
         private void cbCompiler_SelectedIndexChanged(object sender, EventArgs e) {
 
 			if(cbCompiler.Enabled == true) {
-				Data.fSetGlobalVar("wToolchain", cbCompiler.Text);
+				Data.fSetGlobalVar("_wToolchain", cbCompiler.Text);
 			}
         }
 

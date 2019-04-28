@@ -223,7 +223,7 @@ namespace cwc {
 							case 'o':
 								
 								if(Data.bCheckLibRTRequired){
-									fwToolchain("VLianceTool/LibRT"); //Default compiler
+									f_wToolchain("VLianceTool/LibRT"); //Default compiler
 								}
 								fPreOutputCmd(_sFullRArg,_bCompiling);
 							break;
@@ -565,8 +565,8 @@ Output.TraceError("Already extracted!!!!!!!!!!!!");
 }
 bExtacted = true;
 */
-			sCompiler = fGetVar("wToolchain");
-			sPlatform = fGetVar("wPlatform_Name");
+			sCompiler = fGetVar("_wToolchain");
+			sPlatform = fGetVar("_sConfig_Type");
 			s_pProject = fGetVar("_pProject");
 
 	
@@ -1053,6 +1053,9 @@ bExtacted = true;
              
                 if(sObjListVar != "") {
                     fSetVar(sObjListVar, "[" + sObjList  + "]");
+
+                  //    Output.TraceAction("sObjListVarval + "  + sObjListVar);
+                   //   Output.TraceAction("sObjListVarSert + "  + sObjList);
                   //   Console.WriteLine("fSetVar " + sObjListVar +  " " + sObjList);
                 }
             }
@@ -1351,7 +1354,7 @@ bExtacted = true;
 		public void fGetAppTypeFromPlatform() {
 
 			bToAnyType = true;
-			switch(fGetVar("wPlatform")){
+			switch(fGetVar("_sPlatform")){
 				case "Windows":
 					sToAnyType = ".exe";
 				break;
@@ -1474,8 +1477,16 @@ bExtacted = true;
             string _sVar = _sFullVar.Substring(_nIndexStart+1, _nIndexEnd - _nIndexStart-1).Trim();
             */
 
+            bool _reAddUnderscore = false;
+            if(_sVar[0] == '_') { //Do no remove first undescore
+                _sVar = _sVar.Substring(1);
+                _reAddUnderscore = true;
+            }
             string[]   aVar = _sVar.Split('_');
-
+            if(_reAddUnderscore) {
+                 _sVar = "_" + _sVar;
+                aVar[0] = "_" + aVar[0];
+            }
     
 
             string _sVarArg = fExtractSpaceMultiVals(_sArg);
@@ -1496,9 +1507,9 @@ bExtacted = true;
                     fwCwcUpdated(_sVarArg);
                  break;
 
-                case "wToolchain":
+                case "_wToolchain":
 					//oParent.fSetVar(_sCmd, _sMainValue);
-					fwToolchain( _sVarArg);
+					f_wToolchain( _sVarArg);
                 break;
 
 				case "wLib": //TODO multilib, ","
@@ -1526,12 +1537,12 @@ bExtacted = true;
 				case "wArchPC":
 					oParent.fSetVar(_sCmd, _sMainValue);
 				 break;
-				case "wPlatform":
+				case "_sPlatform":
 
 					oParent.fSetVar(_sCmd, _sMainValue);
-			//		Debug.fTrace("wPlatform : " + _sMainValue);
-			//		Debug.fTrace("wToolchain : " + oParent.fGetVar("wToolchain"));
-					oParent.fAddCompiler(oParent.fGetVar("wToolchain"), _sMainValue); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
+			//		Debug.fTrace("_sPlatform : " + _sMainValue);
+			//		Debug.fTrace("_wToolchain : " + oParent.fGetVar("_wToolchain"));
+					oParent.fAddCompiler(oParent.fGetVar("_wToolchain"), _sMainValue); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
 				//	oParent.aCompilerList.Add(	Data.fGetCompiler, _sMainValue) );
 
 				 break;
@@ -1687,6 +1698,7 @@ bExtacted = true;
                 Output.TraceError("Output object list to var require assing '=>{VarName}' : " + sPreCwcCommand);
             }   
            sObjListVar = fGetStringVar(sCmdArg);
+        //    Output.TraceAction("sObjListVar + "  + sObjListVar);
                
         }
 
@@ -2031,21 +2043,21 @@ bExtacted = true;
 
 	}
 
-	public void fwToolchain( string _sArg) {    
+	public void f_wToolchain( string _sArg) {    
 		Data.bCheckLibRTRequired = false;
 
        string[] _aArg = _sArg.Split(' ', '=', '/', ','); 
 		if(_aArg.Length < 2) {
-			Output.TraceError("{wToolchain} Require argument: \"sAutor/sName/(sPlatform/sSubCompiler)\"" );
+			Output.TraceError("{_wToolchain} Require argument: \"[Server]/Author/Name/[Version]\"" );
 		}else {
 			string _sName  = _aArg[0] + "/" + _aArg[1];
 			string _sPlatform ="";
-			if(_aArg.Length >= 3){
-				_sPlatform = _aArg[2];
-			} 
+			//if(_aArg.Length >= 3){
+		//		_sPlatform = _aArg[2];
+			//} 
 
-			oParent.fSetVar("wToolchain", _sName);
-			oParent.fSetVar("wPlatform", _sPlatform);
+			oParent.fSetVar("_wToolchain", _sName);
+			//oParent.fSetVar("_sPlatform", _sPlatform);
 
 
 			Data.fAddRequiredModule(_sName,true);
@@ -2389,7 +2401,7 @@ bExtacted = true;
 				case "wArch":
 					return "x32";
 				break;
-				case "wPlatform":
+				case "_sPlatform":
 					return oParent.sPlatform;
 				break;
 				case "wArchPC":

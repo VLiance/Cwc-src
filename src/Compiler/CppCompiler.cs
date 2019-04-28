@@ -226,7 +226,7 @@ namespace cwc
         public static void fSend2Compiler(string _sArg, bool _bLinkTime = false, bool _bCompileAndLink = false, CppCmd _oCmd = null) {
            
 			//string _sPlatform = _oCmd.oParent.sPlatform;
-			string _sPlatform = _oCmd.oParent.fGetVar("wPlatform");
+			string _sPlatform = _oCmd.oParent.fGetVar("_sPlatform");
 
 			if(_oCmd.oCompiler == null) {	
 				//Debug.fTrace("Unknow Compiler");
@@ -268,7 +268,6 @@ namespace cwc
             }
             Interlocked.Increment(ref safeInstanceCount);
            // Debug.fTrace("Inc " + safeInstanceCount);
-           
 
             BackgroundWorker worker = new BackgroundWorker();
             ///	m_WorkersWithData.Add(worker);
@@ -289,17 +288,17 @@ namespace cwc
                  using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
                  using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
                  {
-                     using (Process process = new Process())
-                     {
+                     using (Process process = new Process()) {
                       
+                    
 							
 						 process.StartInfo.FileName = _oCmd.sExecutable;
 						
 			
 
-				if(_bLinkTime){
-					//_sFinalArg =_sFinalArg.Replace("-c ", "");//remove -c command -> bug
-				}
+				        if(_bLinkTime){
+					        //_sFinalArg =_sFinalArg.Replace("-c ", "");//remove -c command -> bug
+				        }
 				
                            process.StartInfo.Arguments =_sFinalArg ;
 						
@@ -423,6 +422,7 @@ namespace cwc
                          if(_oCmd != null && !_bLinkTime) { 
                               _oCmd.fAddCommandLineVerificationToDepedancesFile(_oCmd);
                          }
+
 
                          Interlocked.Decrement(ref safeInstanceCount);
                           // Debug.fTrace("Dec " + safeInstanceCount);

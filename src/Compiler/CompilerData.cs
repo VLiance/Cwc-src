@@ -82,12 +82,12 @@ namespace cwc
 				if(_sFilePath != ""){
 					sFilePath =  _sFilePath;
 					sFullName = Path.GetFileName(_sFilePath);
-				//	sFullName = sFullName.Substring(10); //Remove wToolchain_
+				//	sFullName = sFullName.Substring(10); //Remove _wToolchain_
 				//	Debug.fTrace("_sFullName " +  sFullName);
 					sSubName = sFullName;
-					int _nIndex = sSubName.IndexOf(".");
+					int _nIndex = sSubName.IndexOf("."); //.cwfg file name -> LibRT.Default.cwfg = Default
 					if(_nIndex != -1){
-						sSubName =  sSubName.Substring(_nIndex + 1);//10 = wToolchain_
+						sSubName =  sSubName.Substring(_nIndex + 1);//10 = _wToolchain_
 					}
 					 _nIndex = sSubName.LastIndexOf(".");///Remove .xml
 					if(_nIndex != -1){
@@ -425,7 +425,7 @@ namespace cwc
 						if(sNode_Arch == ""){
 							sNode_Arch = _sName;
 						}else{
-							Output.TraceError("wPlatform config error: " + "Can't put arch type inside another arch" + " in " + sFilePath );
+							Output.TraceError("_sPlatform config error: " + "Can't put arch type inside another arch" + " in " + sFilePath );
 						}
 					break;
 				
@@ -481,11 +481,11 @@ namespace cwc
 								case "name":
                                	case "type":
 									string _sType= _oNode.Value;
-									//Debug.fTrace("!!!!!!!!!!!!!!!!!!!!!!!!!FoundType!!!! :  " + Data.fGetGlobalVar("wPlatform") );
+									//Debug.fTrace("!!!!!!!!!!!!!!!!!!!!!!!!!FoundType!!!! :  " + Data.fGetGlobalVar("_sPlatform") );
 									
 									oCurr_If_Platform =	fGetConditionalPlatformCompilo(_sType);
 									/*
-									if(_sType ==  Data.fGetGlobalVar("wPlatform") ){
+									if(_sType ==  Data.fGetGlobalVar("_sPlatform") ){
 										bIf_Platform = true;
 									}*/
 									
@@ -513,12 +513,15 @@ namespace cwc
 
 		internal void fSetVar(CppCmd cppCmd)
 		{
-			cppCmd.oParent.fSetVar("wToolchain", oModuleData.sAutorName);
-			cppCmd.oParent.fSetVar("wToolchain_Dir", oModuleData.sCurrFolder);
-			cppCmd.oParent.fSetVar("wPlatform", sType);
+			cppCmd.oParent.fSetVar("_wToolchain", oModuleData.sAutorName);
+			cppCmd.oParent.fSetVar("_wToolchain_Dir", oModuleData.sCurrFolder);
+			cppCmd.oParent.fSetVar("_sPlatform", sType);
+
+           // Output.TraceAction("_wToolchain " +  oModuleData.sAutorName);
+         //   Output.TraceAction("_sPlatform " + sType);
 
 			//cppCmd.oParent.fSetVar("wPlatform_Type", sType);
-			cppCmd.oParent.fSetVar("wPlatform_Name", sSubName);
+			cppCmd.oParent.fSetVar("_sConfig_Type", sSubName); //.cwfg file name -> LibRT.Default.cwfg = Default
 //Debug.fTrace("SetVar: " + sSubName);
 //Debug.fTrace("SetVar: " + sType);
 		}
@@ -695,7 +698,7 @@ namespace cwc
 			_sValue = _sValue.Replace("{_pModule}", oModuleData.sCurrFolder);
 			/*
 			if(oModuleData.bIsCompiler){
-				_sValue = _sValue.Replace("(wToolchain_Dir)", oModuleData.sCurrFolder);
+				_sValue = _sValue.Replace("(_wToolchain_Dir)", oModuleData.sCurrFolder);
 			}else{//IsLib
 				_sValue = _sValue.Replace("(wLib_Dir)", oModuleData.sCurrFolder);
 			}*/
@@ -1166,7 +1169,7 @@ namespace cwc
 					_sArg += _sAllDefine;
 				}
 
-		    CompilerData _oCond_Plat =	fGetConditionalPlatformCompilo(_oCmd.fGetVar("wPlatform"),true);
+		    CompilerData _oCond_Plat =	fGetConditionalPlatformCompilo(_oCmd.fGetVar("_sPlatform"),true);
 			if(_oCond_Plat != null){
 				_sArg += _oCond_Plat.fGetArgs(_oCmd,_sAllDefine,_bLinkTime,_bSLib,_bDLib,_bHaveSourceC);
 				//Debug.fTrace("--------------------------------------------------P!!!!!!!!!!LAQFORM : " + _oCond_Plat.sConditionalName);

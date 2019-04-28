@@ -87,7 +87,7 @@ namespace cwc {
         public  void ExtractMainArgument(string _sAllArg, bool bPreExtract = false){
 
 			//	sPlatform = Data.sPlatform;
-//				fAddCompiler(fGetVar("wToolchain"),  fGetVar("wPlatform"));
+//				fAddCompiler(fGetVar("_wToolchain"),  fGetVar("_sPlatform"));
 		
 
 			
@@ -418,7 +418,7 @@ namespace cwc {
 
             
 			//special case
-			if(_sCmd == "wPlatform_Name"){
+			if(_sCmd == "_sConfig_Type"){
 				if(_sMainValue == ""){
 					_sMainValue = "Default";	
 				}

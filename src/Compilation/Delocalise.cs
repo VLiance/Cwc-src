@@ -39,9 +39,11 @@ namespace cwc {
    
 	public static void fDelocaliseCmd(){
 
-              
+            //Reset all
+            Data.aVarGlobal.Clear();
+             Data.fSetDefaultVar();
 
-               Output.TraceWarning("Lauch " + sDelocaliseCmd);
+           Output.TraceWarning("Lauch " + sDelocaliseCmd);
             string _sText =  Delocalise.fDelocalise(sDelocaliseCmd);
 			Data.sArgExpand  = ArgProcess.fExpandAll(_sText);
 	       Data.sCmd = "StartBuild";

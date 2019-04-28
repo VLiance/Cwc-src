@@ -92,7 +92,10 @@ namespace cwc {
       }
 
 
+
     public static void KillProcessAndChildren(int pid){
+
+        Interlocked.Exchange(ref CppCompiler.safeInstanceCount,0); //Just to be sure we will not be waiting for a killed instance
 
 		KillProcessAndChildrens( pid);
 	   try {
@@ -100,6 +103,7 @@ namespace cwc {
 				Data.oArg.fCleanAllCorruptObj();
 			}
 		} catch (Exception ex) { }
+        
 	}
 
      private static bool ProcessExists(int id) {
@@ -140,7 +144,13 @@ namespace cwc {
                         } 
                   //  MessageBox.Show(_sFileName);
                         if(!_bSkip){
-                          try{  proc.Kill(); }catch (Exception ex) { }
+                          try{
+                             proc.Kill();
+                              while( !proc.HasExited) {
+                                   Thread.Sleep(1);
+                              }              
+
+                        } catch (Exception ex) { }
                         }}catch (Exception ex) { }
 				}
 //proc.CloseMainWindow();

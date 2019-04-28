@@ -25,7 +25,7 @@ namespace cwc {
 			if(_sPlatform == ""){
 				_sPlatform = "Default";
 			}
-			Data.fSetGlobalVar("wPlatform_Name", _sPlatform  );
+			Data.fSetGlobalVar("_sConfig_Type", _sPlatform  );
 
 			if (Data.aCompilerData.ContainsKey(_sVar)){
 			//	CompilerData _oCompiler =  aCompilerData[_sVar];

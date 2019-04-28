@@ -39,7 +39,7 @@ namespace cwc {
                 string _sArg = "";
 
 
-				if(Data.fGetGlobalVar("wPlatform") == "Web_Emsc") {
+				if(Data.fGetGlobalVar("_sPlatform") == "Web_Emsc") {
 		
 					bWeb = true;
 					bSanitize = false;

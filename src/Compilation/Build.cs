@@ -232,7 +232,8 @@ namespace cwc {
                  Output.Trace("\f4C--Stop Build--");
                  SysAPI.KillProcessAndChildren( Data.MainProcess.Id );
                   //fClearData();
-                // CppCompiler.safeInstanceCount = 0;
+                 
+                 //CppCompiler.safeInstanceCount = 0;
                  
             }
         }

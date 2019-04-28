@@ -256,7 +256,7 @@ namespace cwc
 			
 			string _sCompilerPlatform = sCurrFolder+ "wType/";
 			if(!Directory.Exists(_sCompilerPlatform)) {//backward compatibility
-                    _sCompilerPlatform = sCurrFolder+ "wPlatform/";
+                    _sCompilerPlatform = sCurrFolder+ "_sPlatform/";
             }
 			if(Directory.Exists(_sCompilerPlatform)) {
 
@@ -275,7 +275,7 @@ namespace cwc
 				}
 			//Debug.fTrace("---------------------:  " );
 			}else{
-				Output.TraceError("Compiler " + sAutorName +  " require 'wPlatform' forlder with xml data");
+				Output.TraceError("Compiler " + sAutorName +  " require '_sPlatform' forlder with xml data");
 				Data.bDontExecute = true;
 				Build.StopBuild();
 			}

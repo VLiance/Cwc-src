@@ -40,13 +40,13 @@ namespace cwc {
             //Output.TraceColored(" \f0E-Compiler=<name>\fs  ");
               Output.Trace("");
             Output.Trace("\f08---- Backend C++ Compiler Flag --- \f0D(Host on Github)");
-            Output.Trace(" \f0E-wToolchain \f0B(Autor/Name/(Type)/(Minimal Version))\f08 : (Default:Honera/LibRT)\fs");
+            Output.Trace(" \f0E-_wToolchain \f0B(Autor/Name/(Type)/(Minimal Version))\f08 : (Default:Honera/LibRT)\fs");
        Output.Trace("");
 			 Output.Trace("\f08   ---- Examples ----");
 			 
-            Output.Trace(" \f06  -wToolchain  VLianceTool/LibRT        \f03(Build for Windows with Clang)\fs");
-            Output.Trace(" \f06  -wToolchain  VLianceTool/LibRT/Mingw  \f03(Build for Windows with Mingw)\fs");
-			Output.Trace(" \f06  -wToolchain  VLianceTool/WebRT        \f03(Build for Web with Emsc)\fs");
+            Output.Trace(" \f06  -_wToolchain  VLianceTool/LibRT        \f03(Build for Windows with Clang)\fs");
+            Output.Trace(" \f06  -_wToolchain  VLianceTool/LibRT/Mingw  \f03(Build for Windows with Mingw)\fs");
+			Output.Trace(" \f06  -_wToolchain  VLianceTool/WebRT        \f03(Build for Web with Emsc)\fs");
 
 
             //Output.TraceColored("Designed to be lite & minimal, it doesn't contain every possible libs. If you really want it, it still compatible with all MinGw libs, but you may loose your portability.");

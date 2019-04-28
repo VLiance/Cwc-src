@@ -80,7 +80,7 @@ namespace cwc{
 
         string _sArg = "";
         string _sExePath = _sPath;
-		if(Data.fGetGlobalVar("wPlatform") == "Web_Emsc") {
+		if(Data.fGetGlobalVar("_sPlatform") == "Web_Emsc") {
 		        _bDebug = false; // No GDB
                 oCurLauch.bRedirectOutput = true;
                 oCurLauch.bHidden = true;
@@ -124,8 +124,8 @@ namespace cwc{
         if(_bDebug){
 
             //Better way?
-            string _sCompiler = Data.fGetGlobalVar("wToolchain");
-			string _sPlatform = Data.fGetGlobalVar("wPlatform_Name");
+            string _sCompiler = Data.fGetGlobalVar("_wToolchain");
+			string _sPlatform = Data.fGetGlobalVar("_sConfig_Type");
 		    CompilerData	_oCompiler = Finder.fUseCompiler(_sCompiler, _sPlatform);
 
              GDB _oGdb  =  new GDB(this, oCurLauch, _oCompiler.oModuleData.sCurrFolder + _oCompiler.sExe_Debugger, _sExePath, _oCompiler); //Create debugger proxy
@@ -157,9 +157,13 @@ namespace cwc{
 
 
 public  void 	fExit(LauchTool _oTool){
-            Output.TraceError("Exit: " + _oTool.sExeName);
-	Data.oLauchProject.oCurLauch = null;
-    Build.EndExecution();
+
+    if( Data.oLauchProject.oCurLauch != null) {
+        Output.TraceError("Exit: " + _oTool.sExeName);
+	    Data.oLauchProject.oCurLauch = null;
+        Build.EndExecution();
+    }
+
 }
 public  void 	fAppOut(LauchTool _oTool, string _sOut){
 	Output.Trace("O> " +_sOut);
