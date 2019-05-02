@@ -59,7 +59,7 @@ namespace cwc {
 
 
        public string sCompiler = "";
-       public string sPlatform = "";
+       public string sConfig_Type = "";
 
 
 
@@ -265,7 +265,7 @@ namespace cwc {
       
                   oLauchLib_Arg.aLib = oParent.aLib;
 
-              if(oLib.oLibData.sCmd != "") {
+              if(oLib.oLibData != null && oLib.oLibData.sCmd != "") {
 
                   //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
                	     fNewArgCmdRun( oLib.oLibData.sCmd , false,oLauchLib_Arg,false); //Not run
@@ -566,11 +566,11 @@ Output.TraceError("Already extracted!!!!!!!!!!!!");
 bExtacted = true;
 */
 			sCompiler = fGetVar("_wToolchain");
-			sPlatform = fGetVar("_sConfig_Type");
+			sConfig_Type = fGetVar("_sConfig_Type");
 			s_pProject = fGetVar("_pProject");
 
 	
-			oCompiler = Finder.fUseCompiler(sCompiler, sPlatform);
+			oCompiler = Finder.fUseCompiler(sCompiler, sConfig_Type);
             if (oCompiler != null) { 
 			    oCompiler.fSetVar(this);
        
@@ -641,20 +641,21 @@ bExtacted = true;
                 _sCmd = " " + sResidualArg   + " " + sCmd +  " " +   sArgument  ;
                // _sCmd = " " + sResidualArg   + " " + sCmd  ;
     
-                   sBackEndCmd =  fExtractValidCompilerCommand(_sCmd);
-                /*s
+                sBackEndCmd =  fExtractValidCompilerCommand(_sCmd);
+
+                /*
 				sArgument = oParentCmd.sSubArg ;
 				sResidualArg = oParentCmd.sSubResidualArg;
 				sExecutable = oParentCmd.sSubExe;
                 sBackEndCmd =  fExtractValidCompilerCommand(_sCmd);
-                   */
-
+                 */
 			}
+
 
             if(oCompiler == null) {
               //  if(bHaveSourceC || bHaveMultipleFileSrc || bHaveKnowSourcesFiles) {
                 if(bCallCompiler) {
-                     Output.TraceError("Compiler not exist: " + sCompiler + " (" + sPlatform + ")");
+                     Output.TraceError("Compiler not exist: " + sCompiler + " (" + sConfig_Type + ")");
                 }
                 return;
             }
@@ -760,7 +761,7 @@ bExtacted = true;
 				}
 				
 				if( !File.Exists(sExecutable)){
-					Output.TraceError("No executable " +  sExecutable+ " for: " + sCompiler + " ("  + sPlatform + ") " + "please update the xml: " + oCompiler.sFilePath  + " //Cmd[" + sCmd +"]");
+					Output.TraceError("No executable " +  sExecutable+ " for: " + sCompiler + " ("  + sConfig_Type + ") " + "please update the xml: " + oCompiler.sFilePath  + " //Cmd[" + sCmd +"]");
 					return;
 				}
 
@@ -792,7 +793,7 @@ bExtacted = true;
 					    _sExeType = "Dynamic Linker";
 				    }
 				
-				    Output.TraceError("No '"+ _sExeType + "' executable for: " + sCompiler + " ("  + sPlatform + ") " + "please update the xml: " + oCompiler.sFilePath );
+				    Output.TraceError("No '"+ _sExeType + "' executable for: " + sCompiler + " ("  + sConfig_Type + ") " + "please update the xml: " + oCompiler.sFilePath );
                  }
             }
 
@@ -841,8 +842,8 @@ bExtacted = true;
 			//	sAllDefine += "-DDwPlatform=\"" +  oCompiler.sType + "\" ";;//Type
 				//sAllDefine += "-DDwPlatform_File=\""  +  oCompiler.sSubName + "\" "; //TODO
 
-                sAllDefine += "-DDsPlatform=\"" +  oCompiler.sType + "\" ";;//Type
-				sAllDefine += "-DD_Platform_" +  oCompiler.sType + " ";//Type
+                sAllDefine += "-DDsPlatform=\"" +  oCompiler.sPlatformName + "\" ";;//Type
+				sAllDefine += "-DD_Platform_" +  oCompiler.sPlatformName + " ";//Type
 				sAllDefine += "-DDsPlatform_File=\""  +  oCompiler.sSubName + "\" "; //TODO
 			}
 		}
@@ -2003,7 +2004,7 @@ bExtacted = true;
             if(File.Exists(sPath)) {
                 //ReadDependandece?
 
-                string _sAddToDepandance= "Cwc:" + _oCmd.sCompiler + " " + _oCmd.sPlatform  + " " + _oCmd.sExeCmdUnique + " >> " +  sRecompileOnChangeCmd;
+                string _sAddToDepandance= "Cwc:" + _oCmd.sCompiler + " " + _oCmd.sConfig_Type  + " " + _oCmd.sExeCmdUnique + " >> " +  sRecompileOnChangeCmd;
 
                 fReadDepandances(sPath, _sAddToDepandance);
 
@@ -2051,18 +2052,30 @@ bExtacted = true;
 			Output.TraceError("{_wToolchain} Require argument: \"[Server]/Author/Name/[Version]\"" );
 		}else {
 			string _sName  = _aArg[0] + "/" + _aArg[1];
-			string _sPlatform ="";
+			string _sType ="";
 			//if(_aArg.Length >= 3){
 		//		_sPlatform = _aArg[2];
 			//} 
 
-			oParent.fSetVar("_wToolchain", _sName);
+		//	oParent.fSetVar("_wToolchain", _sName);
 			//oParent.fSetVar("_sPlatform", _sPlatform);
+         //   Output.TraceAction("Set _wToolchain " + _sName );
+
+
+            int _nStart_Index = _sName.IndexOf('[');
+            if(_nStart_Index>0) {
+                int  _nEnd_Index = _sName.IndexOf(']');
+                _sType = _sName.Substring(_nStart_Index+1, _nEnd_Index - (_nStart_Index)-1 );
+                _sName = _sName.Substring(0, _nStart_Index);
+            }
+
 
 
 			Data.fAddRequiredModule(_sName,true);
-			oParent.fAddCompiler(_sName, _sPlatform); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
-		}
+		    CompilerData _oCompiler = 	oParent.fAddCompiler(_sName, _sType); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
+            _oCompiler.fSetVar(this);
+
+        }
 	}
 
    ModuleData oLib = null;

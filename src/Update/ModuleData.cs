@@ -230,6 +230,7 @@ namespace cwc
             if(_sFoundPath == "") { //Default
                 _sFoundPath = sCurrFolder;
             }
+           // Output.TraceAction("FOund?: " + _sFoundPath);
             String[] _aFiles = Directory.GetFiles(_sFoundPath, "*.cwcfg");
             if(_aFiles.Length == 0) {
                 Output.TraceError("Cannot find '*.cwcfg' file in " + sCurrFolder );

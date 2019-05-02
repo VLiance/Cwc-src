@@ -215,7 +215,8 @@ namespace cwc {
             Data.bNowBuilding = false;
          CppCompiler.nTotalTicket = 0;
         CppCompiler.nCurrentTicket = 0;
-        CppCompiler.nErrorTicket = 0;
+        CppCompiler.nErrorTicket = -1;
+            
             
        //   Debug.fTrace("fDisableBuild");
             if(Data.oGuiConsole != null) {

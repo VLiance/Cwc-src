@@ -35,6 +35,7 @@ namespace cwc.Compiler {
                 if(!aNode.ContainsKey(_sName)){
                     Node _oNode =  new Node(this, _sName);
                     aNode.Add(_sName,_oNode);
+                      // _oNode.aVal.Add("", new NdValue("") ); //Not work?
                     return _oNode;
                 } else {
                    return aNode[_sName];
@@ -49,6 +50,14 @@ namespace cwc.Compiler {
             }else{
                aVal.Add(_sType, new NdValue(_sValue + " ") );
             }
+
+            if(_sType != "") {
+                 if (!aVal.ContainsKey("")) {
+                     aVal.Add("", new NdValue("") );
+                }
+            }
+
+
         }
     }
 }

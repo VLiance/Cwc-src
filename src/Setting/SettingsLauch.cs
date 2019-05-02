@@ -30,7 +30,7 @@ namespace cwc {
            String _sDir = Path.GetDirectoryName(_sFile);
            String _sFileName = Path.GetFileNameWithoutExtension(_sFile); //Used?
 
-            _sFileName = "_" + _sFileName + ".cwcfg";
+            _sFileName = "_" + _sFileName + ".wdat";
            // _sFileName = "_.cwcfg";
             
             string _sFilePath =  _sDir + "/" + _sFileName;
@@ -80,8 +80,6 @@ namespace cwc {
                     case "TreeViewPrj":
                         oXmlPrjNodeLoaded = _oMasterNode;
                     break;
-
-
 
                 }
             }

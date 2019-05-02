@@ -46,7 +46,7 @@ namespace cwc
            String _sDir = Path.GetDirectoryName(_sFile);
            String _sFileName = Path.GetFileNameWithoutExtension(_sFile); //Used?
 
-            _sFileName = "__.cwcfg";
+            _sFileName = "__.wdat";
            // _sFileName = "_.cwcfg";
             
             string _sFilePath =  _sDir + "/" + _sFileName;

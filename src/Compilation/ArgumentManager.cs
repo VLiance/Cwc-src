@@ -58,15 +58,17 @@ namespace cwc {
         //public bool bHaveCompileWithoutLink = false;
 
 
-		public  void fAddCompiler(string _sName, string _sPlatform = ""){
+		public  CompilerData fAddCompiler(string _sName, string _sType = ""){
+
 			
-			CompilerData _oCompiler = Finder.fGetCompiler(_sName, _sPlatform);
+			CompilerData _oCompiler = Finder.fGetCompiler(_sName, _sType);
 			if(_oCompiler != null){
 				aCompilerList.Add(_oCompiler 	); //Default compiler
 			}else{
 				//Output.TraceError("XXX not exist: " + _sName + "  "  +  _sPlatform  );
-				Debug.fTrace("XXX not exist: " + _sName + "  "  +  _sPlatform  );
+				Debug.fTrace("XXX not exist: " + _sName + "  "  +  _sType  );
 			}
+            return _oCompiler;
 		}
 
 		internal void fAddLib(ModuleData _oLib){
@@ -300,6 +302,7 @@ namespace cwc {
 						     _oCmd.fExecute();
 						
                             if(!Data.bNowBuilding) {
+                               fShowInfo(_oModule,true);
                                 return;
                             }
 						    if( CppCompiler.nError > 0) {
@@ -319,6 +322,7 @@ namespace cwc {
                    foreach(CppCmd _oCmd in _oSeq.aCppCmd) {
                           _oCmd.fFinish();
                               if(!Data.bNowBuilding) {
+                                 fShowInfo(_oModule,true);
                                 return;
                             }
 						    if( CppCompiler.nError > 0) {
@@ -329,6 +333,7 @@ namespace cwc {
                     Data.oLauchProject.fSetOutput(aLinkCmdList,sCurr_wTo);
 
                     if(!Data.bNowBuilding) {
+                        fShowInfo(_oModule,true);
                         return;
                     }
 				    if( CppCompiler.nError > 0) {
@@ -339,6 +344,7 @@ namespace cwc {
             }
 
             if(_bDontExecute){
+                fShowInfo(_oModule,true);
                 return;
             }
 
@@ -352,7 +358,14 @@ namespace cwc {
 		}
 
 
-		  wBuildTime.Stop();
+		 fShowInfo(_oModule, _bShowInfo);
+
+	}
+
+
+
+        public void fShowInfo(ModuleData _oModule, bool _bShowInfo)	{
+             wBuildTime.Stop();
            double nfSec = wBuildTime.ElapsedMilliseconds / 1000.0; int _nSeconde = (int)(nfSec); int _nDotSeconde = ((int)(nfSec * 100.0)) - _nSeconde * 100;
 			
        //     if(Data.bInConsole && !bSubArgMan) {
@@ -383,8 +396,8 @@ namespace cwc {
 				}
                 //  }
             }
+        }
 
-	}
 
 
 		public void fCleanAllCorruptObj()	{

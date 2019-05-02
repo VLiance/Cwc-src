@@ -764,9 +764,13 @@ namespace cwc {
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e) {
               string _sResult = CompilerConfig.fDialogExeFile( PathHelper.ExeWorkDir, "",  "Commands (*.cwMake)|*.cwMake;|Executable (*.exe)|*.exe|All files (*.*)|*.*");
-			if(_sResult.Length > 0){
+            if(_sResult.Length > 2 &&  _sResult[1] != ':') {//If is not absolute (relative)
+              _sResult = PathHelper.ExeWorkDir + _sResult;
+            }
+
+            if (_sResult.Length > 0){
            
-                Delocalise.fDelocaliseInMainThread(PathHelper.ExeWorkDir + _sResult);
+                Delocalise.fDelocaliseInMainThread( _sResult);
                 //CwcRootPath()
                 /*
 				string _sText =  Data.fDelocalise(PathHelper.ExeWorkDir + _sResult);

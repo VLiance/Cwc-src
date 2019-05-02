@@ -142,7 +142,7 @@ namespace cwc
          public static readonly Object oLockTicket = new Object();
          public static volatile uint nTotalTicket = 0;
          public static volatile uint nCurrentTicket = 0;
-         public static volatile uint nErrorTicket = 0;
+         public static volatile int nErrorTicket = -1;
         // public static volatile CppCmd oErrorCmd = null;
 
 
@@ -174,8 +174,14 @@ namespace cwc
                     Output.TraceUndefined(_sOut);
                     return;
                 }
-
-
+                 if (_oOut.eType == OutType.Warning) {
+                    Output.TraceWarningLite(_sOut);
+                    return;
+                }
+                 if (_oOut.eType == OutType.Error) {
+                    Output.TraceErrorLite(_sOut);
+                    return;
+                }
                
 				//Add color manually
 				if(_sOut.Length > 8) {
@@ -209,7 +215,7 @@ namespace cwc
 
 		
 
-		public enum OutType {None, Undefined};
+		public enum OutType {None, Undefined, Error, Warning};
 
         public class OutToken {
             public string sOut = "";
@@ -391,12 +397,15 @@ namespace cwc
                                             if (nErrorTicket == nCurrentTicket &&  (nError > 0 ) ) {
                                                 Console.WriteLine(":: " +  GuiForm.fIsChecked("afterFileErrorToolStripMenuItem")); //TODO TODOTODO
                                          //   if (nErrorTicket == nCurrentTicket &&  (nError > 0 ) ) {
+                                                fShowProcOutput(_oCmd);
                                                 Build.StopBuild(); //Dont display other file errors
+                                                break;
+                                                
                                              }
 
 
-
-                                            nCurrentTicket ++;
+                                             nCurrentTicket ++;
+                                        
                                             break;
                                         }
                                     }
@@ -406,10 +415,14 @@ namespace cwc
 
 
                          } finally   {
+
                              //          outputWaitHandle.WaitOne(timeout);
                              //      errorWaitHandle.WaitOne(timeout);
                              //    nTotal--;
                          }
+
+                       
+
 
                          while (!process.HasExited)
                          {
@@ -418,6 +431,10 @@ namespace cwc
                                  break;
                              }
                          }
+                        /*
+                         lock(oLockTicket) {
+                            nCurrentTicket ++;
+                         }*/
 
                          if(_oCmd != null && !_bLinkTime) { 
                               _oCmd.fAddCommandLineVerificationToDepedancesFile(_oCmd);
@@ -601,6 +618,10 @@ namespace cwc
             //Direct show if current
             lock (oLockTicket) {
                 
+                if(!(Base.bAlive && Data.bNowBuilding)) {
+                    return;
+                }
+
                 if(nCurrentTicket == _nMyTicket) { //Direct show to not wait ending compilation
                     fShowProcOutput(_oCmd);
                 }
@@ -613,8 +634,8 @@ namespace cwc
 					    nError++;
                     //    _bInError = true;
                         
-                        if(_nMyTicket < nErrorTicket  || nErrorTicket == 0){
-                            nErrorTicket = _nMyTicket;
+                        if(_nMyTicket < nErrorTicket  || nErrorTicket ==-1){
+                            nErrorTicket = (int) _nMyTicket;
                         }
                         /*
                         if (nCurrentTicket > nErrorTicket) { //Just to be safe, why required (okay reset ErrorTicket)?
@@ -642,6 +663,13 @@ namespace cwc
            
                      if(_sResult.IndexOf("undefined reference to") != -1) {
                         _oOut.eType = OutType.Undefined;
+                    }
+                     
+                     if(_sResult.IndexOf("error") != -1) {
+                        _oOut.eType = OutType.Error;
+                    }
+                     if(_sResult.IndexOf("warning") != -1) {
+                        _oOut.eType = OutType.Warning;
                     }
 
 

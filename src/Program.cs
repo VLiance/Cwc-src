@@ -114,11 +114,19 @@ namespace cwc
                     }
 	        }
 
-                   Console.WriteLine("7");  
+                  // Console.WriteLine("7");  
 	      //  PipeInput.NewPipeInput();
             Data.fGetMainArg();
 
+            /*
+            if( Data.bGUI) {
+                 fCheckForRegistringFiles(true);
+            }else {
+                 fCheckForRegistringFiles();
+            }
+            */
             fCheckForRegistringFiles();
+
 
              if( !Data.bConsoleMode){
                 GuiManager.fCreateGUI();
@@ -181,10 +189,10 @@ namespace cwc
 
 
         
-    public static bool fCheckForRegistringFiles() {
+    public static bool fCheckForRegistringFiles(bool _bForce = false) {
       
         try { 
-           return  RegisterFile.fRegisterAllFileType(); 
+           return  RegisterFile.fRegisterAllFileType(_bForce); 
         }catch(Exception Ex) {
             Console.WriteLine("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
             return false;

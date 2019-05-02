@@ -10,11 +10,12 @@ namespace cwc.Compiler {
         public Node oMainNode = new Node(null, "");
         public Node oCurrNode ;
 
-
+        CompilerData oParent;
         ConfigType oDefault;
 
         public string sName = "";
-        public ConfigType(string _sName, ConfigType _oGblConfigType) {
+        public ConfigType(CompilerData _oParent, string _sName, ConfigType _oGblConfigType) {
+            oParent = _oParent;
             oDefault = _oGblConfigType;
             sName =  _sName;
 
@@ -114,8 +115,9 @@ namespace cwc.Compiler {
            oCurrNode.fSetValue( _sValue, _sType);
         }
 
-        internal string fGetNode(string[] _aValue, string _sType) {
-           
+        internal string fGetNode(ConfigType _oAddCompilerConfig, string[] _aValue, string _sType) {
+           //TODO _oAddCompilerConfig
+
             bool  _bCombineMode = true;
             Node _oNode = oMainNode;
    
@@ -145,8 +147,11 @@ namespace cwc.Compiler {
                             return  _oNode.aVal[_sType].sValue;
                         }
                     }
-                  
-                    return _oNode.aVal[""].sValue;
+                    if( _oNode.aVal.ContainsKey("") ) {
+                        return _oNode.aVal[""].sValue;
+                    }else {
+                        return "";
+                    }
                 }
             }
                

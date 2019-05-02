@@ -232,7 +232,7 @@ namespace cwc {
 			    if(!Directory.Exists(_sDemoDir)) {
 
 
-                   RegisterFile.fRegisterAllFileType(); //
+                   RegisterFile.fRegisterAllFileType(true); //
 
                     this.BeginInvoke((MethodInvoker)delegate {
 

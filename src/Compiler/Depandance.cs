@@ -70,7 +70,7 @@ namespace cwc{
                             // while(true){Thread.Sleep(1);}	
                             string _sCmd =   _sALine.Substring(4); //_sALine is unmodified : "/ " by " " in include folder
 
-						    string _sOldCmd =  parent.sCompiler + " " +   parent.sPlatform + " " + parent.sExeCmdUnique +  " >> " +  parent.sRecompileOnChangeCmd;
+						    string _sOldCmd =  parent.sCompiler + " " +   parent.sConfig_Type + " " + parent.sExeCmdUnique +  " >> " +  parent.sRecompileOnChangeCmd;
                            // Debug.fTrace("CompareNew:" + _sCmd);
 						    //Debug.fTrace("CompareOld:" +  _sOldCmd);  //TODO   Data.sCompiler Test if may change between files
 						    //    Console.WriteLine("CompareNew:" + _sCmd);

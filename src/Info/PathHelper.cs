@@ -139,8 +139,9 @@ namespace cwc.Utilities
 
                     if(_nLevel <= _nMaxLevel) {
                        foreach (var f in Directory.GetDirectories(_sPath)) {
-                            if ( fFindFolder(f, _sFilter, _nMaxLevel, _nLevel + 1) != ""){
-                            
+                            string _sFind =  fFindFolder(f, _sFilter, _nMaxLevel, _nLevel + 1) ;
+                            if (_sFind != ""){
+                               return _sFind;
                            }
                         }
                     }

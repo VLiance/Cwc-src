@@ -82,5 +82,9 @@ namespace cwc {
 		{
 
 		}
-	}
+
+        private void btnAsscociate_Click(object sender, EventArgs e) {
+            Program. fCheckForRegistringFiles(true);
+        }
+    }
 }

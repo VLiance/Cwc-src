@@ -32,7 +32,7 @@ namespace cwc.Utilities {
 
        public static bool fRegisterAllFileType( bool  _bForce = false)  {
 
-            _bForce=true; //temps
+            //_bForce=true; //temps
             string _sExeIDE = PathHelper.ToolDir +  PathHelper.sExeIDE;
              _sExeIDE = _sExeIDE.Replace('/', '\\');
             string _sExeIDE_Name = PathHelper.sExeIDE_Name;
@@ -41,7 +41,7 @@ namespace cwc.Utilities {
             oSoftwareKey =  Registry.CurrentUser.OpenSubKey("Software",true);
             oClassesKey =  oSoftwareKey.OpenSubKey("Classes",true);
 
-            if(IsAssociated("." + "cwMake")) { //Already set
+            if(!_bForce && IsAssociated("." + "cwMake")) { //Already set
                 return false;
             }
 
@@ -54,6 +54,7 @@ namespace cwc.Utilities {
              fRegisterFileType(_sExeIDE,_sExeIDE_Name,"cpp", "C++ src file",_bForce);
              fRegisterFileType(_sExeIDE,_sExeIDE_Name, "h",  "Header scr file",_bForce);
              fRegisterFileType(_sExeIDE,_sExeIDE_Name, "hh", "Header of Header src file",_bForce);
+             fRegisterFileType(_sExeIDE,_sExeIDE_Name, "cwcfg", "Cwc Module & Lib config file",_bForce);
 
              //   fRefreshTree(); //Update ICONs
 
