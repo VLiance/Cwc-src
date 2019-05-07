@@ -129,6 +129,7 @@ namespace cwc {
 
 			if(_sCmd != "" ){
 				_sCmd = _sCmd.Replace('\n',' ' );
+				//_sCmd = _sCmd.Replace('\r',' ' );
 				_sCmd = _sCmd.Trim();
 				sCmd  = fExtractVar( _sCmd);
 		
@@ -149,25 +150,45 @@ namespace cwc {
     //        aPreArg  = _sCmd.Split(new string[] { " -" }, StringSplitOptions.None); 
 	//		foreach (string _sArg in aPreArg) { if (!FileUtils.IsEmpty(_sArg)) {
 
-            int _nNextIdex = 0;
+          //  int _nNextIdex = 0;
 
  
 
             string _sFullRArg = " " + sCmd;
          
-            _nNextIdex = _sFullRArg.IndexOf(" -");
+      //      _nNextIdex = _sFullRArg.IndexOf(" -");
           
-            while(_nNextIdex != -1){
+            while(true){
 
-             	 _sFullRArg =_sFullRArg.Substring(_nNextIdex+2).TrimStart();
-         
-                 _nNextIdex = _sFullRArg.IndexOf(" -");
+
+                
+                   int _nIdex = _sFullRArg.IndexOf(" -");
+                    if(_nIdex != -1){
+                        _sFullRArg = _sFullRArg.Substring(_nIdex+1);//+2?
+                  }
+
+
+             	// _sFullRArg =_sFullRArg.Substring(_nNextIdex+2).TrimStart();
+                _sFullRArg = _sFullRArg.TrimStart();
+                if(_sFullRArg[0] == '-'){
+                   _sFullRArg = _sFullRArg.Substring(1).Trim();
+                }else {
+                    break;
+                }
+
+          char _cSwithcLetter = _sFullRArg[0];
+
+
+
 
                 string _sRArg = _sFullRArg;
+
+                int _nNextIdex = _sFullRArg.IndexOf(" -");
                 if(_nNextIdex != -1){
                    _sRArg = _sFullRArg.Substring(0,_nNextIdex).TrimEnd();
                 }
 
+      
               //  Console.WriteLine("_sRArg!"  +  _sRArg );
 
 
@@ -180,6 +201,61 @@ namespace cwc {
                 }
 
 
+                 //////Find delemiter///////////////////////////////
+                string _sFullValue = _sFullRArg;
+                int _nRemIndexFullArg = 0;
+                string _sMainSetValue = "";
+                if(_sFullRArg[0] == '{') {
+           	        ///////////////////////////////Same
+
+			        int _nIndex = _sFullRArg.IndexOf('=');
+                    /*
+			        int _nIndexSpace = _sFullRArg.IndexOf(' ');
+			        if(_nIndex < _nIndexSpace) {
+				        _nIndex = _nIndexSpace;
+			        }*/
+			        if(_nIndex != -1) {
+				        _nIndex++;
+                        _nRemIndexFullArg = _nIndex;
+
+
+				        _sFullValue  = _sFullRArg.Substring(_nIndex, _sFullRArg.Length -  _nIndex).Trim();
+                        _sMainSetValue = _sFullRArg.Substring(0, _nIndex-1);
+                       //  _sFullRArg = " " + _sFullValue;
+                         _sFullRArg =  _sFullValue;
+
+
+                        //_sMainSetValue = _sMainSetValue.Replace("}", "").Trim(); //TODO error if  '}' not found
+                        _sMainSetValue = fGetStringVar(_sMainSetValue);
+                        //fGetStringVar TODO
+
+			        }
+                }
+
+                bool _bHaveOtherSetFlag = false;
+                ////////// Find Others delemiter //////////////////
+                //Find endindex of next setting var
+                int _nEndIndex = _sFullRArg.IndexOf('=');
+                if(_nEndIndex > 4) {//Min = -{nX}=  (5)
+                    if(_sFullRArg[_nEndIndex-1] == '}') { 
+                        while(_nEndIndex > 1 && _sFullRArg[_nEndIndex] != '{' ) {
+                            _nEndIndex--;
+                        }
+                        if( _sFullRArg[_nEndIndex-1] == '-') { //TODO retry for next '}' if no '-'
+                            _nNextIdex = _nEndIndex + _nRemIndexFullArg - 2; //-2 --> +2 on substr
+                            _sFullValue = _sFullRArg.Substring(0, _nEndIndex-1).Trim();
+                            _sFullRArg = " " + _sFullRArg.Substring( _nEndIndex-2).Trim();
+                            _bHaveOtherSetFlag = true;
+                        }
+                    }
+                }
+                //////////////////////////
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+           
+
 
 
 				//Debug.fTrace("##--------------:" + _sArg );
@@ -190,9 +266,19 @@ namespace cwc {
 
 
 				// switch(_sCmdName[0]) {
-				 switch(_sFullRArg[0]) {
+				 switch(_cSwithcLetter) {
                             case '{':
-                                 fPre_SetCwcVar( _sRArg);
+                              //   fPre_SetCwcVar( _sRArg);
+                              //  int _nEndIndex = fPre_SetCwcVar( _sFullRArg);
+                                //int _nEndIndex = 
+                                fPre_SetCwcVar(_sMainSetValue, _sFullValue);
+                                if(!_bHaveOtherSetFlag) {
+                                    return;
+                                }
+
+                             //   if(_nEndIndex  != 0) { //Full to be able to set flag in vars, TODO Split other set var (-{vNzIncl}=  ... -{vNzIArg}=..)
+                              //      _nNextIdex = _nEndIndex; //Stop, // TODO Split other set var (-{vNzIncl}=  ... -{vNzIArg}=..) or directive ...
+                              //   }
                     	    break;
                             case '#':
                              //   fPreCwcCommand( _sRArg,_sFullRArg);
@@ -232,6 +318,10 @@ namespace cwc {
 						break;
 			
                        }
+
+
+
+
 			}
 		}
 
@@ -761,7 +851,7 @@ bExtacted = true;
 				}
 				
 				if( !File.Exists(sExecutable)){
-					Output.TraceError("No executable " +  sExecutable+ " for: " + sCompiler + " ("  + sConfig_Type + ") " + "please update the xml: " + oCompiler.sFilePath  + " //Cmd[" + sCmd +"]");
+					Output.TraceError("No executable " +  sExecutable+ " for: " + sCompiler + " ("  + sConfig_Type + ") " + "please update the xml: " + oCompiler.sFilePath  + " :Cmd[" + sCmd +"]");
 					return;
 				}
 
@@ -926,7 +1016,9 @@ bExtacted = true;
                         _sSendCmd  =  _sBackEndCmd + sGenBackEndCmd;
                     }
 
-
+                    ///Cleanup ////
+                    _sSendCmd = _sSendCmd.Replace("//", "/").Replace("//", "/");
+                    ////////
 
 
 
@@ -1300,6 +1392,10 @@ bExtacted = true;
 	public string sToAnyType = "";
 
 		public void fOutputTo(string _sOutput, bool _bwTo = false) {
+
+            if(_sOutput == "") {
+                return;
+            }
 			 string _sToType =  Path.GetExtension(_sOutput).ToLower();
 			if( _sToType == String.Empty) { _sToType = "";}
 
@@ -1438,9 +1534,10 @@ bExtacted = true;
         }
 
 
-        public void fPre_SetCwcVar( string _sArg) {
+        public int fPre_SetCwcVar(string _sVar, string _sArg) {
+             if(_sVar == ""){return 0;}
 
-
+            /*
 			///////////////////////////////Same
 			string _sFullValue = "";
 			int _nIndex = _sArg.IndexOf('=');
@@ -1462,14 +1559,14 @@ bExtacted = true;
             if(_aCmd.Length > 1) {
                 _sMainValue = _aCmd[1].Trim();
             } else {
-                return; //No '='
+                return 0; //No '='
             }
             string  _sFullVar = _aCmd[0];
             
-           
+           */
             
-            string _sVar = fGetStringVar(_sFullVar);
-            if(_sVar == ""){return;}
+          //  string _sVar = fGetStringVar(_sArg);
+         //   if(_sVar == ""){return 0;}
                 /*
             int  _nIndexStart = _sFullVar.IndexOf('{');
             if (_nIndexStart == -1) {return;}
@@ -1490,12 +1587,13 @@ bExtacted = true;
             }
     
 
-            string _sVarArg = fExtractSpaceMultiVals(_sArg);
+           string _sVarArg = fExtracVals(_sArg);
+           // string _sVarArg = _sArg;
             fSetVar(_sVar, _sVarArg);
 
 			 // switch (_sVar){
-             string _sCmd = aVar[0];
-			  switch (_sCmd){
+           // string _sCmd = aVar[0];
+			  switch (_sVar){
 
 
 				 case "wCwcUpd":
@@ -1527,23 +1625,23 @@ bExtacted = true;
 
 				 case "wBuildAnd":
                     //fBuildAndCommand(_sArg);
-					oParent.fSetVar(_sCmd, _sMainValue);
+					oParent.fSetVar(_sVar, _sVarArg);
                  break;
             	 case "_sOpt":
                     //fBuildAndCommand(_sArg);
-					oParent.fSetVar(_sCmd, _sMainValue);
+					oParent.fSetVar(_sVar, _sVarArg);
                  break;
 				
 				case "wArch":
 				case "wArchPC":
-					oParent.fSetVar(_sCmd, _sMainValue);
+					oParent.fSetVar(_sVar, _sVarArg);
 				 break;
 				case "_sPlatform":
 
-					oParent.fSetVar(_sCmd, _sMainValue);
+					oParent.fSetVar(_sVar, _sVarArg);
 			//		Debug.fTrace("_sPlatform : " + _sMainValue);
 			//		Debug.fTrace("_wToolchain : " + oParent.fGetVar("_wToolchain"));
-					oParent.fAddCompiler(oParent.fGetVar("_wToolchain"), _sMainValue); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
+					oParent.fAddCompiler(oParent.fGetVar("_wToolchain"), _sVarArg); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
 				//	oParent.aCompilerList.Add(	Data.fGetCompiler, _sMainValue) );
 
 				 break;
@@ -1562,6 +1660,24 @@ bExtacted = true;
 			         fCmdwConnectHandle(_sVarArg);
                  break;	
             }
+
+
+            //_sFullValue?
+            /*
+            //Find endindex of next setting var
+            int _nEndIndex = _sFullValue.IndexOf('=');
+            if(_nEndIndex > 4) {//Min = -{nX}=  (5)
+                if(_sFullValue[_nEndIndex-1] == '}') { 
+                    while(_nEndIndex > 1 && _sFullValue[_nEndIndex] != '{' ) {
+                        _nEndIndex--;
+                    }
+                    if( _sFullValue[_nEndIndex-1] == '-') { //TODO retry for next '}' if no '-'
+                        return _nEndIndex +  _sFullVar.Length;
+                    }
+                }
+            }
+            */
+            return 1; 
 		}
 
         public static void fSetWorkingDir(ArgumentManager _oArg, string _sFullValue) {
@@ -1954,6 +2070,25 @@ bExtacted = true;
         }
 
 
+
+             public string fExtracVals(string _sValue, char _cRequiredDelim='=' ) {//_cRequiredDelim??
+
+                      string _sResult = _sValue; 
+                            //Remove quote!!
+                        if (_sResult[0] == '\"') {
+                            _sResult = _sResult.Substring(1);
+                        }
+
+                        int _nIndexEnd = _sResult.IndexOf('\"');
+                        if(_nIndexEnd != -1) {
+                            _sResult = _sResult.Substring(0, _nIndexEnd);
+                        }
+
+           
+                return _sResult;
+        }
+
+
         public string sRet_ExtractSpaceMultiValsCmd;
         public string fExtractSpaceMultiVals(string _sValue, char _cRequiredDelim='=' ) {//_cRequiredDelim??
 
@@ -1967,9 +2102,16 @@ bExtacted = true;
             }
 
             string _sResult = "";
-            if(_nIndex != -1) {
+        //    if(_nIndex != -1) {
 
-               _sResult = _sValue.Substring(_nIndex+1).Trim();
+                      // .Replace("\\\"", "\""); ??
+
+              // _sResult = _sValue.Substring(_nIndex+1).Trim().Replace("\\\"", "\"");
+                if(_nIndex != -1) {
+                     _sResult = _sValue.Substring(_nIndex+1).Trim();
+                }else {
+                     _sResult = _sValue.Trim();
+                 }
 
                 if(_sResult.Length >= 2){
                        //Remove quote!!
@@ -1977,18 +2119,32 @@ bExtacted = true;
                         _sResult = _sResult.Substring(1);
                     }
 
+                    int _nIndexEnd = _sResult.IndexOf('\"');
+                    if(_nIndexEnd != -1) {
+                      _sResult = _sResult.Substring(0, _nIndexEnd);
+                    }
+
+                    /*
                     if (_sResult[_sResult.Length-1] == '\"') {
                         _sResult = _sResult.Substring(0, _sResult.Length-1);
-                    }
+                    }*/
                 }
                 //////
-                   
 
-                 sRet_ExtractSpaceMultiValsCmd = _sValue.Substring(0,_nIndex).Trim();
+
+                if(_nIndex != -1) {
+                     sRet_ExtractSpaceMultiValsCmd = _sValue.Substring(0,_nIndex).Trim();
+                }else {
+                     sRet_ExtractSpaceMultiValsCmd= _sValue.Trim();
+                 }
+                    
+                
+
+
 
                 return _sResult;
 
-            }
+        //    }
 
 
              sRet_ExtractSpaceMultiValsCmd = _sValue.Trim();
@@ -2049,7 +2205,7 @@ bExtacted = true;
 
        string[] _aArg = _sArg.Split(' ', '=', '/', ','); 
 		if(_aArg.Length < 2) {
-			Output.TraceError("{_wToolchain} Require argument: \"[Server]/Author/Name/[Version]\"" );
+			Output.TraceError("{_wToolchain} Require argument: \"[Server]/Author/Name/[Version]\" : " + _sArg );
 		}else {
 			string _sName  = _aArg[0] + "/" + _aArg[1];
 			string _sType ="";
@@ -2273,7 +2429,7 @@ bExtacted = true;
 									}
 										
 								//	string _sCmd = " " + sCallerCmd + " " + sSubResidualArg + " " +  sSubArg + " " + _sForceLang + " -c " +_sFile + " -o " + _sOutputFolder + _sSubFolder  + _sName +".o";
-									string _sCmd = " " + sCallerCmd + " " + _sForceLang + " -c " +_sFile + " -o " + _sOutputFolder + _sSubFolder  + _sName +".o";
+									string _sCmd = " " + sCallerCmd.Replace("#To", "") + " " + _sForceLang + " -c " +_sFile + " -o " + _sOutputFolder + _sSubFolder  + _sName +".o";
 									
                 
                 /*

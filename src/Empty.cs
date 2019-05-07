@@ -465,33 +465,45 @@ private const int WM_DESTROY = 0x0002  ;
 
                 List<ModuleLink> _aLink = new List<ModuleLink>();
 
-                Output.TraceWarning( "Recommended version:");
+         
                 foreach(string _sModule in Data.aRequiredModule) {
                     ModuleData _oModule = ModuleData.fFindModule(_sModule);
-                    foreach(string _sKeyLink  in _oModule.aLinkList) {
-                        Output.TraceAction( _oModule.sName + " : " + _sKeyLink );
-                        _aLink.Add(_oModule.aLink[_sKeyLink]);
-                        break;
+                    if( _oModule.aLinkList.Count > 0) {
+                        foreach(string _sKeyLink  in _oModule.aLinkList) {
+                          // Output.TraceWarning( "Recommended version:");
+                            Output.TraceAction( "Recommended version:" + _oModule.sName + " : " + _sKeyLink );
+                            _aLink.Add(_oModule.aLink[_sKeyLink]);
+                            break;
+                        }
+                    }else {
+                         Output.TraceError( "Not found:" + _sModule  );
                     }
-                }
-              //   Output.TraceWarning( "Download? (yes / no)");
-                Output.TraceWarning( "Starting Download ... (press 'n' to cancel)");
-                foreach(ModuleLink _oLink in _aLink) {
-                      _oLink.fDownload();
-                      while(_oLink.bDl_InProgress) {Thread.Sleep(1); }
-                      _oLink.fExtract();
-                      while(_oLink.oModule.bExtact_InProgress) {Thread.Sleep(1); }
-                }
-                   Output.Trace("");
-                Output.TraceGood( "---------------- All Required Module Completed ------------------");
-                foreach(ModuleLink _oLink in _aLink) {
-                       Output.TraceAction(_oLink.oModule.sCurrFolder);
+
                 }
 
+
+                if(_aLink.Count > 0) {
+                  //   Output.TraceWarning( "Download? (yes / no)");
+                    Output.TraceWarning( "Starting Download ... (press 'n' to cancel)");
+                    foreach(ModuleLink _oLink in _aLink) {
+                          _oLink.fDownload();
+                          while(_oLink.bDl_InProgress) {Thread.Sleep(1); }
+                          _oLink.fExtract();
+                          while(_oLink.oModule.bExtact_InProgress) {Thread.Sleep(1); }
+                    }
+                       Output.Trace("");
+                    Output.TraceGood( "---------------- All Required Module Completed ------------------");
+                    foreach(ModuleLink _oLink in _aLink) {
+                           Output.TraceAction(_oLink.oModule.sCurrFolder);
+                    }
+
             
-                Output.TraceGood( "-----------------------------------------------------------------");
-                Data.sCmd = "StartBuild";
-                
+                    Output.TraceGood( "-----------------------------------------------------------------");
+                    Data.sCmd = "StartBuild";
+
+                }
+
+
                /*
                 foreach(ModuleLink _oLink in _aLink) {
                       _oLink.fExtract();
