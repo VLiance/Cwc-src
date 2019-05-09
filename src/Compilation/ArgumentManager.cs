@@ -44,9 +44,17 @@ namespace cwc {
       
 		public string sAllArg = "";
         private static Stopwatch wBuildTime;
+        ArgumentManager oParent;
 
-        public ArgumentManager() {
+        public ArgumentManager(ArgumentManager _oParent = null) {
             Data.aAll_ArgumentManager.Add(this);
+            oParent = _oParent;
+            if(_oParent != null) {
+                foreach(ModuleData _oLib in oParent.aLib ) {
+                     aLib.Add(_oLib);
+                }
+            }
+           
         }
 
 

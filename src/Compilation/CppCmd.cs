@@ -963,10 +963,12 @@ bExtacted = true;
 
 			if(bHave_wTo) {
 
+				// oParent.sCurr_wTo =  "";
+                if(sFile_wTo.Length >= 1  && sFile_wTo[sFile_wTo.Length-1] != '/') {
+                    oParent.sCurr_wTo = sFile_wTo + sToAnyType; //Better way?
+                }
+
 				
-
-				oParent.sCurr_wTo = sFile_wTo + sToAnyType; //Better way?
-
      
 				if(!bSkip) {
 					//	Debug.fTrace("-_wTo " + sPrecOutput_wTo);
@@ -2633,7 +2635,7 @@ bExtacted = true;
             string _sFile = _sAllArg;
 
 			if(_oArg == null){
-				 _oArg = new ArgumentManager();
+				 _oArg = new ArgumentManager(oParent);
 			}
 			_oArg.bSubArgMan = true;
             //Data.bDontExecute = true;

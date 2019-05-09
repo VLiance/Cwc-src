@@ -436,12 +436,15 @@ namespace cwc
                             nCurrentTicket ++;
                          }*/
 
+
+                          Interlocked.Decrement(ref safeInstanceCount); //safeInstanceCount never decremented if after  fAddCommandLineVerificationToDepedancesFile?? on link time : exception?
+
                          if(_oCmd != null && !_bLinkTime) { 
-                              _oCmd.fAddCommandLineVerificationToDepedancesFile(_oCmd);
+                              _oCmd.fAddCommandLineVerificationToDepedancesFile(_oCmd); //TODO is infinite loop?
                          }
 
 
-                         Interlocked.Decrement(ref safeInstanceCount);
+                  
                           // Debug.fTrace("Dec " + safeInstanceCount);
                      }
                  }

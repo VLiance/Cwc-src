@@ -1250,7 +1250,7 @@ namespace cwc
 				_oCmd.sArgument =  fGetArgs(_oCmd, _oCmd.sAllDefine, _bLinkTime, _bSLib, _bDLib, _oCmd.bHaveSourceC);
 
              
-
+            Console.WriteLine(_oCmd.sCmd);
 				////// Libs ////
 				string _sLibArg = "";
 				foreach(ModuleData _oLib in _oCmd.oParent.aLib){

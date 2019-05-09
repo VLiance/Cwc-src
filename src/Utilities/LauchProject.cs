@@ -49,6 +49,10 @@ namespace cwc{
 
 		 public bool fLauch(string _sPath, bool _bSanitize = false) {
 
+            if(_sPath.Length > 1 && _sPath[_sPath.Length-1] =='/') { //Not a file
+                return false;
+            }
+
             bool _bDebug = true;//Temp
 	        if(_bDebug){
 
