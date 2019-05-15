@@ -255,7 +255,7 @@ namespace CreateConfig
 			Console.WriteLine("-{vWebRT_Spider}='" + sPathSpider+ "'");
 			Console.WriteLine("-{vWebRT_Crunch}='" + sPathCrunch+ "'");
 			Console.WriteLine("-{vWebRT_Clang}='" + sPathClang+ "'");
-			Console.WriteLine("-{vWebRT_Binaryen}='" + sPathClang+ "'");
+			Console.WriteLine("-{vWebRT_Binaryen}='" + sPathBinaryen+ "'");
 
 			string _sShell_Folder =  sDirEmsc + "_shell/";
 			Console.WriteLine("-{vWebRT_Shell_Dir}='" + _sShell_Folder + "'");
