@@ -124,7 +124,7 @@ namespace CreateConfig
 		}
        public static void fGetBinaryen() {
 			
-			sPathBinaryen = sPathClang + "/binaryen/";
+			sPathBinaryen = sPathClang + "binaryen/";
 			//Program.fDebug("clang: " + sPathClang);
 		}
 	//fEmscExist();
