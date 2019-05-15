@@ -8,3 +8,9 @@ E:\_Project\_MyProject\CwcSrc\Emsc\CreateConfig\CreateConfig\obj\Debug\CreateCon
 E:\_Project\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wType\CreateConfig.exe.config
 E:\_Project\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wType\CreateConfig.exe
 E:\_Project\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wType\CreateConfig.pdb
+D:\Project\CwcSrc\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wType\CreateConfig.exe.config
+D:\Project\CwcSrc\Cwc-src\src\Emsc\CreateConfig\CreateConfig\obj\Debug\CreateConfig.exe
+D:\Project\CwcSrc\Cwc-src\src\Emsc\CreateConfig\CreateConfig\obj\Debug\CreateConfig.pdb
+D:\Project\CwcSrc\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wType\CreateConfig.exe
+D:\Project\CwcSrc\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wType\CreateConfig.pdb
+D:\Project\CwcSrc\Cwc-src\src\Emsc\CreateConfig\CreateConfig\obj\Debug\CreateConfig.csprojResolveAssemblyReference.cache

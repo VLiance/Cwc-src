@@ -27,6 +27,7 @@ namespace CreateConfig
 		public static  string sPathSpider= "";
 		public static  string sPathCrunch= "";
 		public static  string sPathClang = "";
+		public static  string sPathBinaryen = "";
 
 		public static  string sEmscVer = "";
 		public static  string sPythonVer = "";
@@ -121,7 +122,11 @@ namespace CreateConfig
 			sPathClang = sDirEmsc + "clang/" + sClangVer + "/";
 			//Program.fDebug("clang: " + sPathClang);
 		}
-
+       public static void fGetBinaryen() {
+			
+			sPathBinaryen = sPathClang + "/binaryen/";
+			//Program.fDebug("clang: " + sPathClang);
+		}
 	//fEmscExist();
 		
 		public static bool fEmscExist()	{
@@ -203,6 +208,7 @@ namespace CreateConfig
 			fGetSpider();
 			fGetCrunch();
 			fGetClang();
+			fGetBinaryen();
 
 			/////////////////////////
             string _sPath = sDirEmsc + "Emsc.cfg";
@@ -222,6 +228,7 @@ namespace CreateConfig
                         StreamWriter writer = new StreamWriter(fs1);
                         writer.WriteLine("import os");
                         writer.WriteLine("LLVM_ROOT='" + sPathClang + "'");
+                        writer.WriteLine("BINARYEN_ROOT='" + sPathBinaryen + "'");
                         writer.WriteLine("EMSCRIPTEN_NATIVE_OPTIMIZER='" + sPathClang + "optimizer.exe'");
                         writer.WriteLine("NODE_JS='" + sPathNode + "bin/node.exe'");
                         writer.WriteLine("JAVA = '" + sPathJava + "bin/java.exe'");
@@ -248,6 +255,7 @@ namespace CreateConfig
 			Console.WriteLine("-{vWebRT_Spider}='" + sPathSpider+ "'");
 			Console.WriteLine("-{vWebRT_Crunch}='" + sPathCrunch+ "'");
 			Console.WriteLine("-{vWebRT_Clang}='" + sPathClang+ "'");
+			Console.WriteLine("-{vWebRT_Binaryen}='" + sPathClang+ "'");
 
 			string _sShell_Folder =  sDirEmsc + "_shell/";
 			Console.WriteLine("-{vWebRT_Shell_Dir}='" + _sShell_Folder + "'");
