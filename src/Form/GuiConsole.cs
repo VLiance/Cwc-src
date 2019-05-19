@@ -34,9 +34,12 @@ namespace cwc {
    
         public void fUncheckAll(ToolStripMenuItem _oParent) {
             
-             foreach ( ToolStripMenuItem _oItem in _oParent.DropDownItems) {
-                _oItem.Checked = false;
-                 aOption[ _oItem.Name] = Data.sFALSE;
+             foreach ( Object _oItem in _oParent.DropDownItems) {
+                if( _oItem is ToolStripMenuItem ) {
+                    ToolStripMenuItem _oItemTool = (ToolStripMenuItem)_oItem;
+                     _oItemTool.Checked = false;
+                      aOption[ _oItemTool.Name] = Data.sFALSE;
+                }
             }
 
         }
@@ -63,12 +66,14 @@ namespace cwc {
         }
 
         public void fLoadData() {
+               this.BeginInvoke((MethodInvoker)delegate {
+                       fLoadMenuStrip("Options/", optionsToolStripMenuItem);
+                       if(! fLoadMenuStrip("IDE/", iDEToolStripMenuItem)) {
+                            notePadToolStripMenuItem.Checked = true;
+                            Data.fSetGlobalVar("IDE/Notepad++", Data.sTRUE);
+                        }
 
-           fLoadMenuStrip("Options/", optionsToolStripMenuItem);
-           if(! fLoadMenuStrip("IDE/", iDEToolStripMenuItem)) {
-                notePadToolStripMenuItem.Checked = true;
-                Data.fSetGlobalVar("IDE/Notepad++", Data.sTRUE);
-            }
+               });
         }
 
        public bool fLoadMenuStrip(string _sParent, ToolStripMenuItem _oMenu) {
@@ -856,11 +861,15 @@ namespace cwc {
 
 
     public bool fCheckForDemos() {
+
+           
+        
        // string _sDemoDir =PathHelper.GetExeDirectory() + "_Cwc_Demos/";
         string _sDemoDir =PathHelper.GetExeDirectory() + "Lib/VLiance/Demos/";
+        string _sLibDir =PathHelper.GetExeDirectory() + "Lib/";
 
-	    if(!Directory.Exists(_sDemoDir)) {
-
+	    if(!Directory.Exists(_sLibDir)) {
+                /*
                 this.BeginInvoke((MethodInvoker)delegate {
 
                     var res = MessageBox.Show(this, "You don't have any demos, download?", "Demos Update?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
@@ -878,11 +887,13 @@ namespace cwc {
                          
 
 				    }else {
-					    Directory.CreateDirectory(_sDemoDir);
+					    Directory.CreateDirectory(_sLibDir);
 				    }
 
 
                 });
+                */
+                Directory.CreateDirectory(_sLibDir);
 
                 return false;
 
@@ -2047,11 +2058,17 @@ namespace cwc {
 
                 string _sFile = fTestSelection(_sLink);
     
-                if(_sFile != ""){
-               
+                if(_sLink.Length > 3 &&  _sLink[0] == 'L' &&  _sLink[1] == ':'  &&  _sLink[2] == '['){
 
+                     Data.fAddRequiredModule( "VLiance/Demos"); //TODO others
+                     // Data.sCmd = "StartBuild";
+                           Thread winThread = new Thread(new ThreadStart(() =>  {  
+                            Empty.fLoadModules();
+                          }));  
+		                 winThread.Start();
 
-                  FileUtils.RunInEditor(_sFile,  " -n" + nLine + " -c" +  nColomn);
+                }else { 
+                    FileUtils.RunInEditor(_sFile,  " -n" + nLine + " -c" +  nColomn);
                                   
                 }
              //   _oLink.SetStyle(oHightLightStyle);

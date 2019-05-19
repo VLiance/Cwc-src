@@ -158,7 +158,10 @@ namespace cwc
 
             
            if( Data.oGuiConsole != null){
-                Data.oGuiConsole.fCheckForDemos();
+                if (!Data.oGuiConsole.fCheckForDemos()){
+                    Program. fCheckForRegistringFiles(true); //Register if first use
+                }
+
             }
 
             if(!Data.bConsoleMode) {
@@ -174,6 +177,7 @@ namespace cwc
 
 
             Build.fMainLoop();
+
 
 
 

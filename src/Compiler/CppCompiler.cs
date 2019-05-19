@@ -241,8 +241,14 @@ namespace cwc
 			}
                 
                 string _sInfo = "";
-            if (_bLinkTime) {
-                _sInfo = " [Link]";
+            if (_oCmd != null && _bLinkTime) {
+                if(_oCmd.bToStaticLib) {
+                     _sInfo = " [Static_Link]";
+                }else if(_oCmd.bToDynamicLib) {
+                     _sInfo = " [Dynamic_Link]";
+                }else { 
+                     _sInfo = " [Link]";
+                }
             }
 
           //  	string _sFinalArg = _sArg.Replace("\\\"", "\"") + " -lgdi32 " ; 
@@ -427,6 +433,7 @@ namespace cwc
                          while (!process.HasExited)
                          {
                              Thread.Sleep(1);
+
                             if(!Data.bNowBuilding) {
                                  break;
                              }
@@ -621,6 +628,7 @@ namespace cwc
             //Direct show if current
             lock (oLockTicket) {
                 
+              //  if(!(Base.bAlive && Data.bNowBuilding)) {
                 if(!(Base.bAlive && Data.bNowBuilding)) {
                     return;
                 }

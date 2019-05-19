@@ -124,7 +124,7 @@ namespace cwc{
  
 	    oCurLauch.dExit = new LauchTool.dIExit(fExit);
 
-
+//_bDebug = false;
         if(_bDebug){
 
             //Better way?

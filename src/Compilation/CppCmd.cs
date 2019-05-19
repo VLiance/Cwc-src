@@ -563,6 +563,7 @@ public string sDelimiter = "";
                                             _sBackEndCmd += _sTempCompileCommand + fAddArgBackEnd(_sRArg);
                                         }
                                         _sTempCompileCommand = "";
+                                      
 								break;
                         
                                 case '#':
@@ -788,20 +789,20 @@ bExtacted = true;
 		}
 
 
-        		
-	
-		//// Dir source To sub commands
-		if(bHaveDirectorySource) {
-           	string _sOutputFolder = Path.GetDirectoryName(sOutputFile).Replace('\\','/'); //TODO when sOutputFile var is set
-	    	_sOutputFolder += "/";
-			fCreateCompileByDirectorySubCmd(_sOutputFolder);
-		}
-        else if(bHaveMultipleFileSrc) {
-            string _sOutputFolder = Path.GetDirectoryName(sOutputFile).Replace('\\','/');//TODO when sOutputFile var is set
-		    _sOutputFolder += "/";
-			fCreateCompileByMultiFile(_sOutputFolder);
-		}
-
+        if(sOutputFile.Length!= 0) {
+         
+		    //// Dir source To sub commands
+		    if(bHaveDirectorySource) {
+           	    string _sOutputFolder = Path.GetDirectoryName(sOutputFile).Replace('\\','/'); //TODO when sOutputFile var is set
+	    	    _sOutputFolder += "/";
+			    fCreateCompileByDirectorySubCmd(_sOutputFolder);
+		    }
+            else if(bHaveMultipleFileSrc) {
+                string _sOutputFolder = Path.GetDirectoryName(sOutputFile).Replace('\\','/');//TODO when sOutputFile var is set
+		        _sOutputFolder += "/";
+			    fCreateCompileByMultiFile(_sOutputFolder);
+		    }
+       }
 
 		/////////////////// 
 		if(bHave_wTo) { //Reset prec output
@@ -1000,9 +1001,11 @@ bExtacted = true;
 					}
 
 					if(bToStaticLib) {
-					//	_sTypeArg = " -r -s ";
+                     //   _sTypeArg = " -o"; //TODO not emsc!
+						//_sTypeArg = " -r -s ";
+						//_sTypeArg = " rcs ";
 						//_sBackEndCmd = "";
-						_sBackEndCmd = sBackEndCmd;
+						_sBackEndCmd = fCleanUnknowCmd( sBackEndCmd);
 					}
 
 					//sGenBackEndCmd = _sTypeArg   + sFile_wTo + sToAnyType + " " +  sPrecOutput_wTo + " "  +_sEndWith + sObjectLinkList  ;
@@ -1017,10 +1020,6 @@ bExtacted = true;
                     } else {
                         _sSendCmd  =  _sBackEndCmd + sGenBackEndCmd;
                     }
-
-                    ///Cleanup ////
-                    _sSendCmd = _sSendCmd.Replace("//", "/").Replace("//", "/");
-                    ////////
 
 
 
@@ -1040,6 +1039,14 @@ bExtacted = true;
 				//Debug.fTrace("sGenBackEndCmd " + _sSendCmd);
 				// return;
 			}
+            
+            if(FileUtils.IsEmpty(_sSendCmd)) {
+                return;
+            }
+
+            ///Cleanup ////
+            _sSendCmd = _sSendCmd.Replace("\\", "/").Replace("//", "/").Replace("//", "/");
+            ////////
 
 /*
 			if(bIsGit) {
@@ -1047,9 +1054,7 @@ bExtacted = true;
 				return;
 			}*/
 
-            if(FileUtils.IsEmpty(_sSendCmd)) {
-                return;
-            }
+          
 
              if(bLink) {
                   CppCompiler.CheckAllThreadsHaveFinishedWorking(true); //Force sequence??
@@ -1110,6 +1115,33 @@ bExtacted = true;
        
             
 
+        }
+
+        private string fCleanUnknowCmd(string _sBackEndCmd) { //TODO parametrable
+            _sBackEndCmd = " " + _sBackEndCmd.Trim();
+            if(_sBackEndCmd.Length <= 1) {return ""; }
+            string _sDelemiter = "";
+            if(_sBackEndCmd[1] == '-') { //Can be without '-' of begening
+                _sDelemiter  = " -";
+            }
+
+            string _sResult = "";
+           string[] aArray = _sBackEndCmd.Split(new string[] { " -" }, StringSplitOptions.None);
+            foreach(string _sLine in aArray) {
+                string _sLineTest = _sLine.Trim();
+                if(_sLineTest.Length>0) {
+                    switch(_sLine[0]) {
+                      case 'I': break;
+                      case 'L': break;
+                        default:
+                             _sResult += _sDelemiter + _sLineTest;
+                        break;
+                     }
+                }
+                _sDelemiter = " -"; 
+            }
+
+          return _sResult;
         }
 
         private void fLauchManualExe(string sExePath, string sExtractedCmd) {
@@ -1356,7 +1388,7 @@ bExtacted = true;
 
 
 			//////// Is Output was a directory /////////////
-			if( sOutputFile[sOutputFile.Length-1] == '/') {
+			if(sOutputFile.Length > 0 && sOutputFile[sOutputFile.Length-1] == '/') {
 
 				oParent.fAddPrjDirectoryOutput( new SrcDiry(sOutputFile,"")); //Todo set it like an output
 
@@ -1374,10 +1406,10 @@ bExtacted = true;
 
 				return true;
 			}else {
-
-				oParent.fAddPrjDirectoryOutput( new SrcDiry(Path.GetDirectoryName(sOutputFile),""));
-				
-				if(bHaveDirectorySource  && !bHaveEntrySource && !bHaveMultipleFileSrc) {
+                if(sOutputFile.Length > 0) {
+				    oParent.fAddPrjDirectoryOutput( new SrcDiry(Path.GetDirectoryName(sOutputFile),""));
+                }
+				if( bHaveDirectorySource  && !bHaveEntrySource && !bHaveMultipleFileSrc) {
 					 Output.Trace("\f4C Source directory must have a directory output: " + sCmd);
 					return false;
 				}
@@ -1595,7 +1627,7 @@ bExtacted = true;
 
 			 // switch (_sVar){
            // string _sCmd = aVar[0];
-			  switch (_sVar){
+			  switch (aVar[0]){
 
 
 				 case "wCwcUpd":
@@ -1613,8 +1645,8 @@ bExtacted = true;
 					f_wToolchain( _sVarArg);
                 break;
 
-				case "wLib": //TODO multilib, ","
-					fwLib(_sVarArg);
+				case "_wLib": //TODO multilib, ","
+					fwLib(_sVarArg, _sVar);
 				break;
 				
 				 case "wNoColor":
@@ -2021,6 +2053,10 @@ bExtacted = true;
 
    public string fFindEndSentence(string _sResult) {
             _sResult = _sResult.Trim();
+
+            if(_sResult.Length == 0) {
+                return "";
+            } 
 			
 			if(_sResult[0] == '\"') {
 			//	return _sResult.Substring(0, _sResult.IndexOf("\"", 1)+1); //Keep " ?
@@ -2227,11 +2263,12 @@ bExtacted = true;
                 _sName = _sName.Substring(0, _nStart_Index);
             }
 
-
-
 			Data.fAddRequiredModule(_sName,true);
 		    CompilerData _oCompiler = 	oParent.fAddCompiler(_sName, _sType); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
-            _oCompiler.fSetVar(this);
+
+             if (_oCompiler != null) { 
+                  _oCompiler.fSetVar(this);
+             }
 
         }
 	}
@@ -2239,16 +2276,24 @@ bExtacted = true;
    ModuleData oLib = null;
 	public bool bIsACmdLib = false;
 
-	public void fwLib(string _sArg) {
+	public void fwLib(string _sArg, string _sVar = "") {
        string[] _aArg = _sArg.Split(' ', '=', '/', ','); 
 		if(_aArg.Length < 2) {
-			Output.TraceError("{wLib} Require argument: \"sAutor/sName/(sVersion)\"" );
+			Output.TraceError("{_wLib} Require argument: \"sAutor/sName/(sVersion)\"" );
 		}else {
 			bIsACmdLib = true;
 		    oLib =	Data.fAddRequiredModule(_aArg[0] + "/" + _aArg[1]);
 			oParent.fAddLib(oLib); //Todo multiple lib with separator ,
             oLauchLib_Arg =  new ArgumentManager();
 		}
+        if(_sVar != "") {
+                string _sVarPath = "_p" + _sVar.Substring(2);
+                
+
+                fSetVar(_sVarPath, oLib.sCurrFolder);
+
+         }
+
 	}
 
 	public void fwCwcUpd(string _sArg) {

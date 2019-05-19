@@ -42,6 +42,9 @@ namespace cwc {
             //Reset all
             Data.aVarGlobal.Clear();
              Data.fSetDefaultVar();
+            if(Data.oGuiConsole != null) {
+                Data.oGuiConsole.fLoadData();
+            }
 
            Output.TraceWarning("Lauch " + sDelocaliseCmd);
             string _sText =  Delocalise.fDelocalise(sDelocaliseCmd);

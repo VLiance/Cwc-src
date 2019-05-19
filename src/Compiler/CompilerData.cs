@@ -161,7 +161,7 @@ namespace cwc
 		}
 
 		internal void fFinalize(){
-			if(oCurrentConfigType.sFinally_CopyFolder!=""){
+			if(oCurrentConfigType != null && oCurrentConfigType.sFinally_CopyFolder!=""){
 				string _sVar =  CppCmd.fExtractVar(oCurrentConfigType.sFinally_CopyFolder, null);
 				
 	
@@ -1167,7 +1167,9 @@ namespace cwc
 					else if(_bDLib) {
 					//	_sArg += oCurrentConfigType.sLink_Dynamic;
                       _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", "Linker_Dynamic"}, _oConfig.sName) + " ";
-					}else {
+					}
+                    
+                   if(!_bSLib) {
 
                        _oCmd.sArgLinkerLib += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", "Linker_Lib"}, _oConfig.sName) + " ";
                        _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", "Linker"}, _oConfig.sName) + " ";

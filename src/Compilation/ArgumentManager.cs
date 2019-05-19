@@ -373,9 +373,17 @@ namespace cwc {
 
 
         public void fShowInfo(ModuleData _oModule, bool _bShowInfo)	{
+            if(wBuildTime == null) {
+                 Output.Trace("\f1B --- End --- \f13 " );
+                return;
+             }
+
              wBuildTime.Stop();
-           double nfSec = wBuildTime.ElapsedMilliseconds / 1000.0; int _nSeconde = (int)(nfSec); int _nDotSeconde = ((int)(nfSec * 100.0)) - _nSeconde * 100;
-			
+           double nfSec = wBuildTime.ElapsedMilliseconds / 1000.0;
+           int _nSeconde = (int)(nfSec); int _nDotSeconde = ((int)(nfSec * 100.0)) - _nSeconde * 100;
+     
+
+
        //     if(Data.bInConsole && !bSubArgMan) {
 		 //   if( !bSubArgMan) {
              if(_bShowInfo){

@@ -20,7 +20,8 @@ namespace cwc {
 			//fSetWorkingDir();
             if(!Data.bNowBuilding) {
 
- 
+                 Interlocked.Exchange(ref CppCompiler.safeInstanceCount,0); //Can be negative value, TODO try to kill thread controlling safe instance?
+                
                 Data.aAllInclude.Clear();
                  Data.aAll_ArgumentManager.Clear();
                  Data.aAll_ArgumentManager.Add( Data.oCompilerArg);
@@ -112,17 +113,23 @@ namespace cwc {
 						Data.oModeIDE.fFinishExtractArg();
 					}
 					
+
+          
+
 					if(Data.bNowBuilding && !Data.bDontExecute)  {
+                        
+                     // CppCompiler.CheckAllThreadsHaveFinishedWorking(true);
+
 						Build.fDisableBuild();
 						if( CppCompiler.nError == 0) {
 							Data.oLauchProject.fBuildFinish();
-							/*
-							if(oMainForm != null) {
-								 oMainForm.fBuildFinish();
-							}*/
+
 						}
 
 					}else {
+
+                      
+
 					   Build.fDisableBuild();
 					}
                  	Data.bDontExecute = false;

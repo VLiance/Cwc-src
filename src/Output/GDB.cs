@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -36,12 +37,16 @@ namespace cwc {
             oProcess.bHidden = true;
             oProcess.bRedirectOutput = true; //DBG assole in !bRedirectOutput
 
-
-        //   oProcess.fLauchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills   -no_soft_kills  -pause_at_exit  -batch -crash_at_unaddressable -crash_at_error " + _sExePath   );
+            oProcess.sWorkPath = Path.GetDirectoryName(_sExePath);
+            //Output.TraceAction("Dir: " +  oProcess.sWorkPath );
+            //oProcess.fLauchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills   -no_soft_kills  -pause_at_exit  -batch -crash_at_unaddressable -crash_at_error " + _sExePath   );
          //    oProcess.fLauchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
-            oProcess.fLauchExe(_sGdbPath,   _sExePath ); //GDB only
+            oProcess.fLauchExe(_sGdbPath,  "\"" +  _sExePath + "\"" ); //GDB only
 
             fLoadBreakpoints();
+
+
+             oProcess.fSend("cd " +  Path.GetDirectoryName(_sExePath) );
 
             oProcess.fSend("set width 0");
             oProcess.fSend("set filename-display absolute");
@@ -55,6 +60,8 @@ namespace cwc {
 
            oProcess.fSend("set new-console on");
 
+  
+           
             oProcess.fSend("run");  bRunning = true;
           //    oProcess.bRedirectOutput = false;
          //   oProcess.processStartInfo.RedirectStandardInput = false;Ok
