@@ -138,6 +138,10 @@ namespace cwc
 			///
 //Debug.fTrace("aaaaaasss : " + oModuleData.sAutorName);
 					//		Output.TraceGood(aExe_Preload.Count.ToString());
+
+ 
+
+
 			foreach(string _sPath  in aExe_Preload ){
 				//Output.TraceGood(_sPath);
 				fPreloadExe(_sPath);
@@ -148,6 +152,30 @@ namespace cwc
 				fViewIn(_sPath);
 				
 			}
+
+
+           if(oModuleData.bIsCompiler && sCmd != "") {
+
+               ArgumentManager  _oArg = new ArgumentManager(Data.oArg);
+              // CppCmd.fNewArgCmdRunIt(sCmd,false,_oArg,false);
+                _oArg.ExtractMainArgument( ArgProcess.fExpandAll(sCmd), true);
+                   _oArg.fCompleteExtractMainArgument(null,false);
+				_oArg.fExtract(null);
+				_oArg.fRun(null, true, false, true); //Warning if "_bDontExecute = true" , bug with GZE or other lib?
+
+               //  _oArg = new ArgumentManager(oParent);
+               /*
+                ArgumentManager  _oArg =  new ArgumentManager(Data.oArg);
+			
+                _oArg.fCompleteExtractMainArgument(null,false);
+				_oArg.fExtract(null);
+				_oArg.fRun(null, false, false);*/
+                  //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
+            //  fNewArgCmdRun( sCmd , false,oLauchLib_Arg,false); //Not run
+              // fRunLib();
+        //          Console.WriteLine("havec commmand!! " + oLib.oLibData.sCmd);
+            }
+
             
 /*
 			switch(oModuleData.sAutorName){

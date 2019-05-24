@@ -257,7 +257,7 @@ namespace cwc {
 
 
 
-		internal void fRun(ModuleData _oModule = null, bool _bDontExecute = false, bool _bShowInfo = true){
+		internal void fRun(ModuleData _oModule = null, bool _bDontExecute = false, bool _bShowInfo = true, bool _bSilent = false){ 
 
              if(!_bDontExecute){
 			     aExeWaitingList = new List<LauchTool>();
@@ -282,11 +282,12 @@ namespace cwc {
 		    }
 
             foreach(CppSeq _oSeq in aCppSeq) {
-               // if(Data.bInConsole) {
+
+                if(!_bSilent) {
                     Output.Trace("\f1B> \f13" + _oSeq.sSeq);
                  //   Output.Trace("\f1B> \f13 " + CppCmd.fExtractVar( _oSeq.sSeq,null) ); //Todo preextract var?
 
-            //    }
+                }
 				sCurr_wTo = "";
 
                 
@@ -300,7 +301,8 @@ namespace cwc {
                         }
 						if( CppCompiler.nError > 0) {
 							break;
-						}						
+						}			
+                        			
                 }
                 
 
@@ -310,7 +312,7 @@ namespace cwc {
 						     _oCmd.fExecute();
 						
                             if(!Data.bNowBuilding) {
-                               fShowInfo(_oModule,true);
+                               fShowInfo(_oModule,!_bSilent);
                                 return;
                             }
 						    if( CppCompiler.nError > 0) {
@@ -330,7 +332,7 @@ namespace cwc {
                    foreach(CppCmd _oCmd in _oSeq.aCppCmd) {
                           _oCmd.fFinish();
                               if(!Data.bNowBuilding) {
-                                 fShowInfo(_oModule,true);
+                                 fShowInfo(_oModule,!_bSilent);
                                 return;
                             }
 						    if( CppCompiler.nError > 0) {
@@ -341,7 +343,7 @@ namespace cwc {
                     Data.oLauchProject.fSetOutput(aLinkCmdList,sCurr_wTo);
 
                     if(!Data.bNowBuilding) {
-                        fShowInfo(_oModule,true);
+                        fShowInfo(_oModule,!_bSilent);
                         return;
                     }
 				    if( CppCompiler.nError > 0) {
@@ -352,19 +354,20 @@ namespace cwc {
             }
 
             if(_bDontExecute){
-                fShowInfo(_oModule,true);
+                fShowInfo(_oModule,!_bSilent);
                 return;
             }
 
 	///Finalize compiler commands
 	///
+ 
 		if( CppCompiler.nError == 0) {
 				foreach(CompilerData _oCompiler in  aCompilerList) { //TODO separate subcompiler and extract after!?
 				
 					_oCompiler.fFinalize();
 				}
 		}
-
+            
 
 		 fShowInfo(_oModule, _bShowInfo);
 
@@ -455,9 +458,9 @@ namespace cwc {
 			Data.fSetGlobalVar(_sCmd, _sMainValue);
 		}
 
-		public string fGetVar(string _sVar){
+		public string fGetVar(string _sVar, bool _bWeak = false){
           //  Console.WriteLine("------fGetVar " + _sVar );
-			return Data.fGetGlobalVar(_sVar);
+			return Data.fGetGlobalVar(_sVar,_bWeak);
 		}
 
 		internal void fAddPrjDirectory(SrcDiry _oNewDir){

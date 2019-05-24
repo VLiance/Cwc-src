@@ -131,7 +131,7 @@ namespace cwc {
 				_sCmd = _sCmd.Replace('\n',' ' );
 				//_sCmd = _sCmd.Replace('\r',' ' );
 				_sCmd = _sCmd.Trim();
-				sCmd  = fExtractVar( _sCmd);
+				sCmd  = fExtractVar( _sCmd, true);
 		
            //     Debug.fTrace("_sCmd " + _sCmd);
 			
@@ -355,16 +355,12 @@ namespace cwc {
       
                   oLauchLib_Arg.aLib = oParent.aLib;
 
-              if(oLib.oLibData != null && oLib.oLibData.sCmd != "") {
+              if(oLib.oLibData != null  && oLib.oLibData.sCmd != "") {
 
                   //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
                	     fNewArgCmdRun( oLib.oLibData.sCmd , false,oLauchLib_Arg,false); //Not run
-			
-       
-  
                    fRunLib();
         //          Console.WriteLine("havec commmand!! " + oLib.oLibData.sCmd);
-             
             }
 		}
 
@@ -2059,12 +2055,22 @@ bExtacted = true;
             } 
 			
 			if(_sResult[0] == '\"') {
-			//	return _sResult.Substring(0, _sResult.IndexOf("\"", 1)+1); //Keep " ?
-				return _sResult.Substring(1, _sResult.IndexOf("\"", 1)-1); 
+			    int _nIndex = _sResult.IndexOf("\"", 1)-1;
+                if(_nIndex >= 0) {
+                    return _sResult.Substring(1,_nIndex); 
+                }
+                  Output.TraceError("Missing end '\"' for " + _sResult);
+                 return _sResult.Substring(1); 
+				
 			} 
 			else if(_sResult[0] == '\'') {
-				//return _sResult.Substring(0, _sResult.IndexOf("\'", 1)+1); //Keep " ?
-				return _sResult.Substring(1, _sResult.IndexOf("\'", 1)-1);
+		        int _nIndex = _sResult.IndexOf("\'", 1)-1;
+                if(_nIndex >= 0) {
+                    return _sResult.Substring(1, _nIndex); 
+                }
+                Output.TraceError("Missing end \"'\" for " + _sResult);
+                return _sResult.Substring(1); 
+			//	return _sResult.Substring(1, _sResult.IndexOf("\'", 1)-1);
 
 			} 
 			else  {
@@ -2516,11 +2522,11 @@ bExtacted = true;
         internal string sObjList = "";
         internal string sObjUpToDate = "";
 
-        public  string fExtractVar( string _sCmd) {
-			return CppCmd.fExtractVar(_sCmd, this);
+        public  string fExtractVar( string _sCmd, bool _bWeak = false) {
+			return CppCmd.fExtractVar(_sCmd, this, _bWeak);
 		}
 
-		public  static string fExtractVar( string _sCmd, CppCmd _oCmd) {
+		public  static string fExtractVar( string _sCmd, CppCmd _oCmd, bool _bWeak = false ) {
          //   Debug.fTrace("*#: " + _sCmd);
 
 
@@ -2566,7 +2572,7 @@ bExtacted = true;
 						    string _sOriVar = _sCmd.Substring(_nIndexStart + 1, _nIndexEnd - ( _nIndexStart  + 1));
 						    string _sVar = "";
 						    if(_oCmd != null){
-							    _sVar = _oCmd.fGetVar(_sOriVar);
+							    _sVar = _oCmd.fGetVar(_sOriVar, _bWeak);
 						    }else{
 							    _sVar = Data.fGetGlobalVar(_sOriVar);
 						    }
@@ -2607,8 +2613,8 @@ bExtacted = true;
 			return _oManager.fGetVar(_sVar);
 		}
 */
-		public  string fGetVar(string _sVar) {
-			return oParent.fGetVar(_sVar);
+		public  string fGetVar(string _sVar, bool _bWeak = false) {
+			return oParent.fGetVar(_sVar,_bWeak);
 		}
 /*
 
@@ -2670,18 +2676,24 @@ bExtacted = true;
 }
 
 
-		public ArgumentManager fNewArgCmdRun(string _sAllArg, bool bRun = true,  ArgumentManager _oArg = null, bool bFile = true, string _sSendArg = ""){	
+
+       public ArgumentManager fNewArgCmdRun(string _sAllArg, bool bRun = true,  ArgumentManager _oArg = null, bool bFile = true, string _sSendArg = ""){
+            if(_oArg == null){
+				 _oArg = new ArgumentManager(oParent);
+			}
+            return fNewArgCmdRunIt( _sAllArg, bRun, _oArg, bFile, _sSendArg);
+        }
+
+
+		public static ArgumentManager fNewArgCmdRunIt( string _sAllArg, bool bRun = true,  ArgumentManager _oArg = null, bool bFile = true, string _sSendArg = ""){	
 
 
  
-
-
-
             string _sFile = _sAllArg;
-
+            /*
 			if(_oArg == null){
 				 _oArg = new ArgumentManager(oParent);
-			}
+			}*/
 			_oArg.bSubArgMan = true;
             //Data.bDontExecute = true;
 

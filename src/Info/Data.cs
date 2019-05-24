@@ -243,11 +243,18 @@ namespace cwc {
 
 
         
-		public static string  fGetGlobalVar(string _sVar) {
+		public static string  fGetGlobalVar(string _sVar, bool _bWeak = false) {
 //Output.TraceWarning("fGetGlobalVar " + _sVar);
+            /*
+            if(_sVar == "lPThread") {
+            Output.TraceWarning("fGetGlobalVar " + _sVar);
+             }*/
 			if (Data.aVarGlobal.ContainsKey(_sVar)){
 				return Data.aVarGlobal[_sVar];
 			}
+            if(_bWeak) {
+                return "{" + _sVar + "}";//Keep original
+            }
 			return "";
 		}
 		public static void  fSetGlobalVar(string _sVar, string _sValue) {

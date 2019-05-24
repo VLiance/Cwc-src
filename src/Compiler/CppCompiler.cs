@@ -641,7 +641,8 @@ namespace cwc
               // if(aOutput != null && nError == 0) {
           //  bool _bInError = false;
 			    if(_bStdError) {
-				    if(_sResult.IndexOf("error") != -1) { //Generiquer error check!?
+
+				    if( fFindValidKeyWord(_sResult, "error") != -1 ) { //Generiquer error check!?
 					    nError++;
                     //    _bInError = true;
                         
@@ -676,10 +677,10 @@ namespace cwc
                         _oOut.eType = OutType.Undefined;
                     }
                      
-                     if(_sResult.IndexOf("error") != -1) {
+                     if( fFindValidKeyWord(_sResult, "error") != -1  ) {
                         _oOut.eType = OutType.Error;
                     }
-                     if(_sResult.IndexOf("warning") != -1) {
+                     if(  fFindValidKeyWord(_sResult, "warning") != -1) {
                         _oOut.eType = OutType.Warning;
                     }
 
@@ -743,6 +744,28 @@ namespace cwc
 
         }
 
+
+        public static int fFindValidKeyWord(string _sLine, string _sKey) {
+            int _nIndex = 0;
+           int _nNext = 0;
+            while (_nIndex != -1) {
+               
+                _nIndex =  _sLine.IndexOf(_sKey, _nIndex+1);
+
+                if(_nIndex != -1) {
+                    _nNext = _nIndex + _sKey.Length;
+                    if( _sLine[_nNext]  != '.') { //like error.o -`>  not valid
+                        return _nIndex;
+                    }
+                }
+
+            }
+
+    
+            return _nIndex;
+        }
+
+ 
 
 
 
