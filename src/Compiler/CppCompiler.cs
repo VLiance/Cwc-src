@@ -746,6 +746,7 @@ namespace cwc
 
 
         public static int fFindValidKeyWord(string _sLine, string _sKey) {
+            if(_sLine.Length <= 1) {return -1; }
             int _nIndex = 0;
            int _nNext = 0;
             while (_nIndex != -1) {
@@ -754,7 +755,7 @@ namespace cwc
 
                 if(_nIndex != -1) {
                     _nNext = _nIndex + _sKey.Length;
-                    if( _sLine[_nNext]  != '.') { //like error.o -`>  not valid
+                    if(_nNext < _sLine.Length &&  _sLine[_nNext]  != '.') { //like error.o -`>  not valid
                         return _nIndex;
                     }
                 }
