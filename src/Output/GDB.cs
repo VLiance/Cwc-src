@@ -39,9 +39,27 @@ namespace cwc {
 
             oProcess.sWorkPath = Path.GetDirectoryName(_sExePath);
             //Output.TraceAction("Dir: " +  oProcess.sWorkPath );
+
+
             //oProcess.fLauchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills   -no_soft_kills  -pause_at_exit  -batch -crash_at_unaddressable -crash_at_error " + _sExePath   );
-         //    oProcess.fLauchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
-            oProcess.fLauchExe(_sGdbPath,  "\"" +  _sExePath + "\"" ); //GDB only
+      
+            bool _bSanitize = true;
+            //bool _bSanitize = false;
+            
+            if(Data.fIsDataTrue("Options/Debug Type/Sanitizer") ){
+            //if(_bSanitize) {
+               //oProcess.bExterneLauch = false;
+              //  oProcess.bHidden = false;
+               //     oProcess.bRedirectOutput = false;
+               // oProcess.fLauchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
+               // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
+                oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
+                
+                return;
+
+            } else { //   if(Data.fIsDataTrue("Options/Debug Type/Debugger") ){
+                oProcess.fLauchExe(_sGdbPath,  "\"" +  _sExePath + "\"" ); //GDB only
+            }
 
             fLoadBreakpoints();
 
@@ -58,7 +76,7 @@ namespace cwc {
             fSetAllGdbBreakpoint();
             
 
-           oProcess.fSend("set new-console on");
+           //oProcess.fSend("set new-console on");
 
   
            
@@ -131,11 +149,11 @@ namespace cwc {
          }
 
         public  void 	fAppOut(LauchTool _oTool, string _sOut){
+             bRunning= false;
             if(_sOut == null || _sOut == "") {
                 return;
             }
-            bRunning= false;
-
+           
             oLauchProject.bReceiveOutput = true;
 	        string _sColor ="";
 
@@ -215,6 +233,7 @@ namespace cwc {
         }
 
         public bool fTestEndOfCommand( string _sOut){
+            if(_sOut == null) {return true; }
             //(gdb) Verbose printing of informational messages is on.
             //(gdb) Verbosity is off.
             //(gdb) Verbos
@@ -420,8 +439,9 @@ namespace cwc {
             foreach(Frame _oFrame in aCurrBacktrace) {
                // Console.WriteLine("------ " +     _oFrame.sFuncName  + "(" + _oFrame.sFuncParam  + ")" );
                 Output.Trace("\f0C>>----  \f1C" +     _oFrame.sFuncName  + "\f13(" + _oFrame.sFuncParam  + ")\fs");
-                string _sLine =  "\f05:" + _oFrame.nLine;
-                if (_oFrame.sFile == "??") { _sLine = ""; }
+                string _sLine =  ":" + _oFrame.nLine;//TODO changing color break linking file
+               // string _sLine =  "\f05:" + _oFrame.nLine;
+                if (_oFrame.sFile == "??") { _sLine = ""; } 
                 Output.Trace("    \f05at   \f04" + _oFrame.sFile  +_sLine );
                  foreach(Var _oVar in _oFrame.aVar) {
                      Output.Trace("    \f05--    \f06  " + _oVar.sName + " = " + _oVar.sValue);

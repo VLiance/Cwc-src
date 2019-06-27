@@ -497,6 +497,10 @@ namespace cwc {
                    
                      _nStartIndex = _sRead.LastIndexOf(" ",_nStartIndex) + 2;
                      //Console.Write(_nStartIndex + "aa  \r");
+                     char _sFirtChar = _sRead[_nStartIndex-1];
+                     if(_sFirtChar == '[' || _sFirtChar == '{' || _sFirtChar == '(') { //Drmemory bug with link between bracket //--> [link]
+                        _nStartIndex++;
+                    }
                     bRelative = true;
                  }
           }
@@ -2057,7 +2061,8 @@ namespace cwc {
                 string _sLink = _oLink.Text;
 
                 string _sFile = fTestSelection(_sLink);
-    
+            
+
                 if(_sLink.Length > 3 &&  _sLink[0] == 'L' &&  _sLink[1] == ':'  &&  _sLink[2] == '['){
 
                      Data.fAddRequiredModule( "VLiance/Demos"); //TODO others
@@ -2068,6 +2073,14 @@ namespace cwc {
 		                 winThread.Start();
 
                 }else { 
+                    /*
+                    //It's relative path?
+                    if( !(_sLink.Length > 1 && _sLink[1] == ':') ) {
+
+                        _sFile =  PathHelper.ExeWorkDir + _sFile;
+                    }
+                    */
+
                     FileUtils.RunInEditor(_sFile,  " -n" + nLine + " -c" +  nColomn);
                                   
                 }
@@ -2337,6 +2350,10 @@ namespace cwc {
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e) {
              FileUtils.fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", "",  "" );
+        }
+
+        private void gDBToolStripMenuItem_Click(object sender, EventArgs e) {
+
         }
     }
 
