@@ -132,7 +132,16 @@ namespace cwc{
 			string _sPlatform = Data.fGetGlobalVar("_sConfig_Type");
 		    CompilerData	_oCompiler = Finder.fUseCompiler(_sCompiler, _sPlatform);
 
-             GDB _oGdb  =  new GDB(this, oCurLauch, _oCompiler.oModuleData.sCurrFolder + _oCompiler.sExe_Debugger, _sExePath, _oCompiler); //Create debugger proxy
+                        //GDB _oGdb  =  new GDB(this, oCurLauch, _oCompiler.oModuleData.sCurrFolder + _oCompiler.sExe_Debugger, _sExePath, _oCompiler); //Create debugger proxy
+
+            string _sDebugger =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Debugger"}, "");
+          //  string _sDebugger =  _oCompiler.oModuleData.sCurrFolder + _oCompiler.sExe_Debugger;
+            GDB _oGdb  =  new GDB(this, oCurLauch,_sDebugger, _sExePath, _oCompiler); //Create debugger proxy
+ // _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Linker"}, oCurrentConfigType.sName);
+    //_sRequireResult= _oCompiler.oGblConfigType.fGetNode(_oAddCompilerConfig, _aValue, _sType);
+              
+
+
 
          //   Console.WriteLine("aaa: " +  _oCompiler.oModuleData.sCurrFolder + _oCompiler.sExe_Debugger);
 

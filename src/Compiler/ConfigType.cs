@@ -115,6 +115,18 @@ namespace cwc.Compiler {
            oCurrNode.fSetValue( _sValue, _sType);
         }
 
+
+
+        internal string fFinalizeNode( CompilerData _oCompiler, string[] _aValue,  string _sResult) {
+
+             if(_aValue[0] == "Exe" && _sResult.Length >= 2 && _sResult[1] != ':' ){ //TODO or with fSpecialExtartVar?
+				_sResult = _oCompiler.oModuleData.sCurrFolder + _sResult;
+			}
+             return _sResult;
+        }
+
+
+
         internal string fGetNode(ConfigType _oAddCompilerConfig, string[] _aValue, string _sType) {
             //TODO _oAddCompilerConfig
             bool  _bCombineMode = true;
@@ -124,10 +136,10 @@ namespace cwc.Compiler {
                 _bCombineMode = false;
             }
 
-
+            CompilerData _oCompiler = oParent;
             string _sRequireResult = "";
             foreach(string _sToolchain in oParent.aRequireTC) {
-                CompilerData _oCompiler = Finder.fGetCompiler(_sToolchain); //TODO get the TYPE  ex: LibRT[Mingw]
+                _oCompiler = Finder.fGetCompiler(_sToolchain); //TODO get the TYPE  ex: LibRT[Mingw]
                 _sRequireResult= _oCompiler.oGblConfigType.fGetNode(_oAddCompilerConfig, _aValue, _sType);
                 /*
                  if(_sRequireResult != "" ) {
@@ -135,19 +147,16 @@ namespace cwc.Compiler {
                  //  _sRequireResult =  CppCmd.fExtractVar(_sRequireResult, null);
                 }*/
 
-                if (_sRequireResult != "" && !_bCombineMode) {
+                 if (_sRequireResult != "" && !_bCombineMode) {
                     //Auto add current folder for executable
-                    if(_aValue[0] == "Exe" && _sRequireResult.Length >= 2 && _sRequireResult[1] != ':' ){ //TODO or with fSpecialExtartVar?
-					    _sRequireResult = _oCompiler.oModuleData.sCurrFolder + _sRequireResult;
-				    }
-
-                    return _sRequireResult;
+                    return fFinalizeNode( _oCompiler,_aValue, _sRequireResult);
                 }
-               
-
-                //
-            }
-
+             }
+            /*
+             if(_aValue[0] == "Exe" && _sRequireResult.Length >= 2 && _sRequireResult[1] != ':' ){ //TODO or with fSpecialExtartVar?
+				_sRequireResult = _oCompiler.oModuleData.sCurrFolder + _sRequireResult;
+			}*/
+          
 
 
             //*oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Config", "Required"}, _oConfig.sName) + " ";
@@ -171,24 +180,26 @@ namespace cwc.Compiler {
                 
                  if(_oNode.aVal.Count != 0){
                     if(_sType == "" && _oNode.aVal.ContainsKey("")){
-                        return _sRequireResult + _oNode.aVal[""].sValue;
+                       // return ;
+                          return fFinalizeNode( _oCompiler,_aValue, _sRequireResult + _oNode.aVal[""].sValue);
                     }
                     if (_oNode.aVal.ContainsKey(_sType)) {
                         if(_bCombineMode){
-                             return _sRequireResult + _oNode.aVal[""].sValue + " " + _oNode.aVal[_sType].sValue;
+                            // return _sRequireResult + _oNode.aVal[""].sValue + " " + _oNode.aVal[_sType].sValue;
+                             return fFinalizeNode( _oCompiler,_aValue, _sRequireResult + _oNode.aVal[""].sValue + " " + _oNode.aVal[_sType].sValue);
                         } else {
-                            return  _sRequireResult + _oNode.aVal[_sType].sValue;
+                            return fFinalizeNode( _oCompiler,_aValue, _sRequireResult + _oNode.aVal[_sType].sValue);
                         }
                     }
                     if( _oNode.aVal.ContainsKey("") ) {
-                        return _sRequireResult + _oNode.aVal[""].sValue;
+                        return fFinalizeNode( _oCompiler,_aValue, _sRequireResult + _oNode.aVal[""].sValue);
                     }else {
-                        return _sRequireResult + "";
+                        return fFinalizeNode( _oCompiler,_aValue,_sRequireResult + "");
                     }
                 }
             }
                
-            return _sRequireResult + "";
+            return fFinalizeNode( _oCompiler,_aValue, _sRequireResult + "");
         }
 
 

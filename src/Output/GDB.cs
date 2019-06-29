@@ -47,13 +47,18 @@ namespace cwc {
             //bool _bSanitize = false;
             
             if(Data.fIsDataTrue("Options/Debug Type/Sanitizer") ){
-            //if(_bSanitize) {
-               //oProcess.bExterneLauch = false;
-              //  oProcess.bHidden = false;
-               //     oProcess.bRedirectOutput = false;
-               // oProcess.fLauchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
-               // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
-                oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
+                //if(_bSanitize) {
+                //oProcess.bExterneLauch = false;
+                //  oProcess.bHidden = false;
+                //     oProcess.bRedirectOutput = false;
+                // oProcess.fLauchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
+                // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
+
+                
+            string _sSanitizer =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Sanitizer"}, "");
+
+               // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
+                oProcess.fLauchExe( _sSanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
                 
                 return;
 
