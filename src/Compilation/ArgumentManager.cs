@@ -151,12 +151,11 @@ namespace cwc {
 	//		fLibRtExist();
 			//fGZE_Exist();
 
-            if(Data.bModuleIsRequired) {//Stop if we need more modules
+            if(Data.bModuleIsRequired || Data.bDontExecute) {//Stop if we need more modules
+                Build.fDisableBuild();
 				return;
 			} 
-			if(Data.bDontExecute) {//Stop if we need more modules
-				return;
-			} 
+	 
         
 		    if(_bShowInfo) {
 				if(_oModule == null){
@@ -170,10 +169,20 @@ namespace cwc {
 			///////////////// Extract Compilers
 			fExtractCompiler();
 
+            if(Data.bModuleIsRequired){ //For compiler with "Require" Node //TODO recursive
+                if(!Empty.fLoadModules(false)) {
+                    Build.fDisableBuild();
+				    return;
+			    } 
+            }
+            fExtractCompiler();
+            fMergeCompiler();
+
+
 			foreach(CompilerData _oLib in  aLibList) { //TODO separate subcompiler and extract after!?
 					//Console.WriteLine("Extract Lib: " + _oLib.sFullName);
 			    Debug.fTrace("Extract Lib: " + _oLib.sFullName);
-				_oLib.fExtract();
+				_oLib.fExtract(this);
 			}
 
 
@@ -200,12 +209,23 @@ namespace cwc {
 	
 		private void fExtractCompiler()	{
 					//Debug.fTrace(" Extract Compilers: " );
-			foreach(CompilerData _oCompiler in  aCompilerList) { //TODO separate subcompiler and extract after!?
+          CompilerData[] _aCompilerList =  aCompilerList.ToArray(); //Copy beacause collection may be modified in itiration
+			foreach(CompilerData _oCompiler in  _aCompilerList) { //TODO separate subcompiler and extract after!?
 					//Debug.fTrace("have: " + _oCompiler.sFullName);
-				_oCompiler.fExtract();
+				_oCompiler.fExtract(this);
 			}
 		}
 	
+        private void fMergeCompiler()	{
+
+					//Debug.fTrace(" Extract Compilers: " );
+			foreach(CompilerData _oCompiler in  aCompilerList) { //TODO separate subcompiler and extract after!?
+					//Debug.fTrace("have: " + _oCompiler.sFullName);
+				_oCompiler.fMerge();
+			}
+		}
+
+
 
         
 		private void fDeletOutput() {

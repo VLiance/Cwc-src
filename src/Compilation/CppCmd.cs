@@ -1478,11 +1478,12 @@ bExtacted = true;
             }
 		}
 		
-		public void fGetAppTypeFromPlatform() {
+		public void fGetAppTypeFromPlatform() { ///TODO dynamic
 
 			bToAnyType = true;
 			switch(fGetVar("_sPlatform")){
 				case "Windows":
+				case "CpcDos":
 					sToAnyType = ".exe";
 				break;
 				case "Web_Emsc":
@@ -2244,14 +2245,30 @@ bExtacted = true;
 
 	}
 
-	public void f_wToolchain( string _sArg) {    
-		Data.bCheckLibRTRequired = false;
 
-       string[] _aArg = _sArg.Split(' ', '=', '/', ','); 
+
+	public void f_wToolchain( string _sArg) {
+        Data.bCheckLibRTRequired = false;
+
+        string[] _aArg = _sArg.Split(' ', '=', '/', ','); 
 		if(_aArg.Length < 2) {
 			Output.TraceError("{_wToolchain} Require argument: \"[Server]/Author/Name/[Version]\" : " + _sArg );
 		}else {
+
 			string _sName  = _aArg[0] + "/" + _aArg[1];
+
+             CompilerData _oCompiler = fAddToolchain(_sName, oParent);
+             if (_oCompiler != null) { 
+                _oCompiler.fSetVar(this);
+            }
+
+         }
+
+      //  return null;
+    }
+
+	public static CompilerData fAddToolchain( string _sName, ArgumentManager _oManager) {    
+		
 			string _sType ="";
 			//if(_aArg.Length >= 3){
 		//		_sPlatform = _aArg[2];
@@ -2261,7 +2278,6 @@ bExtacted = true;
 			//oParent.fSetVar("_sPlatform", _sPlatform);
          //   Output.TraceAction("Set _wToolchain " + _sName );
 
-
             int _nStart_Index = _sName.IndexOf('[');
             if(_nStart_Index>0) {
                 int  _nEnd_Index = _sName.IndexOf(']');
@@ -2270,13 +2286,9 @@ bExtacted = true;
             }
 
 			Data.fAddRequiredModule(_sName,true);
-		    CompilerData _oCompiler = 	oParent.fAddCompiler(_sName, _sType); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
+		   return	_oManager.fAddCompiler(_sName, _sType); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
 
-             if (_oCompiler != null) { 
-                  _oCompiler.fSetVar(this);
-             }
-
-        }
+   
 	}
 
    ModuleData oLib = null;

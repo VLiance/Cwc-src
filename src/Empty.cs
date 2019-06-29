@@ -442,7 +442,9 @@ private const int WM_DESTROY = 0x0002  ;
         	
 		public string[] aModuleToLoad;
 		public static int  nLoadModuleIndex =  0 ;
-		public static void  fLoadModules() {
+		public static bool  fLoadModules(bool _bAutoStart = true) {
+
+            bool _bFound = true;
                 if(Data.oGuiConsole != null) {
                   Data.bIWantGoToEnd = true;
                    GuiConsole.sFormCmd = "GoEnd";
@@ -477,6 +479,8 @@ private const int WM_DESTROY = 0x0002  ;
                         }
                     }else {
                          Output.TraceError( "Not found:" + _sModule  );
+                        _bFound = false;
+                        
                     }
 
                 }
@@ -499,10 +503,13 @@ private const int WM_DESTROY = 0x0002  ;
 
             
                     Output.TraceGood( "-----------------------------------------------------------------");
-                    Data.sCmd = "StartBuild";
+                    if(_bAutoStart) {
+                        Data.sCmd = "StartBuild";
+                    }
 
                 }
 
+                return _bFound;
 
                /*
                 foreach(ModuleLink _oLink in _aLink) {

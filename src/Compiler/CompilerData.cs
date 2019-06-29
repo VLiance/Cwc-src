@@ -47,6 +47,7 @@ namespace cwc
 
 		public List<String> aExe_Preload = new List<string>();
 		public List<String> aExe_ViewIn = new List<string>();
+		public List<String> aRequireTC = new List<string>();
       
 
 
@@ -115,13 +116,13 @@ namespace cwc
 
         }
 
-		public void fExtract() {
+		public void fExtract(ArgumentManager _oArg = null) {
 
 			if(!bExtracted) {
 				bExtracted = true;	
 		
 				fLoadConfig();
-				fPerformSpecialCase();
+				fPerformSpecialCase(_oArg);
 	
 				/*
 				if(oParent != null) {
@@ -133,14 +134,19 @@ namespace cwc
 			}
 		}
 
-		void fPerformSpecialCase(){
+		void fPerformSpecialCase(ArgumentManager _oParamArg ){
 			///Load all prelaod exe
 			///
 //Debug.fTrace("aaaaaasss : " + oModuleData.sAutorName);
 					//		Output.TraceGood(aExe_Preload.Count.ToString());
 
- 
+            
 
+ 	        foreach(string _sRequire  in aRequireTC ){
+				//Output.TraceGood(_sPath);
+				fRequireModule(_oParamArg, _sRequire);
+			}
+          
 
 			foreach(string _sPath  in aExe_Preload ){
 				//Output.TraceGood(_sPath);
@@ -188,7 +194,27 @@ namespace cwc
 			}*/
 		}
 
-		internal void fFinalize(){
+        private void fRequireModule(ArgumentManager _oParamArg , string _sPath) {
+
+             CppCmd.fAddToolchain(_sPath, _oParamArg);
+        }
+
+        public void fMerge() { 
+            foreach(string _sModule in aRequireTC) {
+
+               // CompilerData _oCompiler =    Finder.fGetCompiler(_sModule);
+
+
+           }
+        }
+
+
+
+
+
+
+
+        internal void fFinalize(){
 			if(oCurrentConfigType != null && oCurrentConfigType.sFinally_CopyFolder!=""){
 				string _sVar =  CppCmd.fExtractVar(oCurrentConfigType.sFinally_CopyFolder, null);
 				
@@ -217,7 +243,9 @@ namespace cwc
 			
 		}
 
-		void fPreloadExe(string _sPath){
+   
+
+        void fPreloadExe(string _sPath){
 		Output.TraceWarning("PreloadExe: " + _sPath);
 		LauchTool _oPreload = new LauchTool();
 		_oPreload.bWaitEndForOutput = true;
@@ -623,6 +651,8 @@ namespace cwc
             
             _sValue = fSpecialExtartVar( _sValue);
 
+
+
             oGblConfigType.fSetValue(_sValue, sNodeCurrentType);
          //   oCurrentConfigType.fSetValue(_sValue, sNodeCurrentType);
 
@@ -630,7 +660,15 @@ namespace cwc
 
 
 			if (sNode_Arch == "" || sNode_Arch == sCurrentArch ){
-				if(bNode_Exe){
+
+                if(bNode_Config) {
+                    switch(_sCurrent){
+                       case "Require":
+                            aRequireTC.Add(_sValue);
+                        break;
+                    }
+
+                }else if(bNode_Exe){
 					switch(_sCurrent){
 
 						case "C":
@@ -667,6 +705,11 @@ namespace cwc
 						case "ViewIn":
 							aExe_ViewIn.Add(_sValue);
 						break;
+
+              
+
+
+
 					}
 
                 } else if( bNode_CfgType){
@@ -733,7 +776,7 @@ namespace cwc
 			}
         }
 
-		private string fSpecialExtartVar(string _sValue){
+		public string fSpecialExtartVar(string _sValue){
 			//_sValue = _sValue.Replace("{wPath}", oModuleData.sCurrFolder);
 			_sValue = _sValue.Replace("{_pModule}", oModuleData.sCurrFolder);
 			/*
@@ -1238,7 +1281,8 @@ namespace cwc
         public ConfigType fGetConfigFileType(string _sExtention, CompilerData _oCompiler = null) {
             oConfigTypeCompiler = null;
 
-            if( !oModuleData.bIsCompiler &&  _sExtention != "" && _oCompiler != null) { //Selete config from compiler instead
+            //Select config from lib to get config from Toolchain (oModuleData.bIsCompiler = is a lib) and set it to oConfigTypeCompiler instead
+            if( !oModuleData.bIsCompiler &&  _sExtention != "" && _oCompiler != null) { //Select config from compiler instead
                 oConfigTypeCompiler =  _oCompiler.fGetConfigFileType(_sExtention);
                 //Get same name config from compiler (get specified extention)
                 if(oConfigTypeCompiler != null) {

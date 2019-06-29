@@ -116,14 +116,47 @@ namespace cwc.Compiler {
         }
 
         internal string fGetNode(ConfigType _oAddCompilerConfig, string[] _aValue, string _sType) {
-           //TODO _oAddCompilerConfig
-
+            //TODO _oAddCompilerConfig
             bool  _bCombineMode = true;
             Node _oNode = oMainNode;
    
             if (_aValue[0] == "Exe") { //Only one exe at time
                 _bCombineMode = false;
             }
+
+
+            string _sRequireResult = "";
+            foreach(string _sToolchain in oParent.aRequireTC) {
+                CompilerData _oCompiler = Finder.fGetCompiler(_sToolchain); //TODO get the TYPE  ex: LibRT[Mingw]
+                _sRequireResult= _oCompiler.oGblConfigType.fGetNode(_oAddCompilerConfig, _aValue, _sType);
+                /*
+                 if(_sRequireResult != "" ) {
+                   _sRequireResult = _oCompiler.fSpecialExtartVar(_sRequireResult);
+                 //  _sRequireResult =  CppCmd.fExtractVar(_sRequireResult, null);
+                }*/
+
+                if (_sRequireResult != "" && !_bCombineMode) {
+                    //Auto add current folder for executable
+                    if(_aValue[0] == "Exe" && _sRequireResult.Length >= 2 && _sRequireResult[1] != ':' ){ //TODO or with fSpecialExtartVar?
+					    _sRequireResult = _oCompiler.oModuleData.sCurrFolder + _sRequireResult;
+				    }
+
+                    return _sRequireResult;
+                }
+               
+
+                //
+            }
+
+
+
+            //*oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Config", "Required"}, _oConfig.sName) + " ";
+            /**
+            foreach( string _sCompiler in   oParent.aRequireTC) {
+                  _oConfig =  fGetConfigFileType(_oCmd.sCompileExtention, _oCmd.oCompiler );
+
+                    sExe
+            }*/
 
             foreach (string _sStr in _aValue) {
                 if(_oNode.aVal.Count == 0){
@@ -138,24 +171,24 @@ namespace cwc.Compiler {
                 
                  if(_oNode.aVal.Count != 0){
                     if(_sType == "" && _oNode.aVal.ContainsKey("")){
-                        return _oNode.aVal[""].sValue;
+                        return _sRequireResult + _oNode.aVal[""].sValue;
                     }
                     if (_oNode.aVal.ContainsKey(_sType)) {
                         if(_bCombineMode){
-                             return _oNode.aVal[""].sValue + " " + _oNode.aVal[_sType].sValue;
+                             return _sRequireResult + _oNode.aVal[""].sValue + " " + _oNode.aVal[_sType].sValue;
                         } else {
-                            return  _oNode.aVal[_sType].sValue;
+                            return  _sRequireResult + _oNode.aVal[_sType].sValue;
                         }
                     }
                     if( _oNode.aVal.ContainsKey("") ) {
-                        return _oNode.aVal[""].sValue;
+                        return _sRequireResult + _oNode.aVal[""].sValue;
                     }else {
-                        return "";
+                        return _sRequireResult + "";
                     }
                 }
             }
                
-            return "";
+            return _sRequireResult + "";
         }
 
 
