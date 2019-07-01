@@ -285,7 +285,9 @@ namespace cwc
 		}
 
 		public void fGetCompilerData(){
-            if( bExtracting){return;}
+            if( bExtracting){
+                return;
+            }
 
 			aCompilerData = new List<CompilerData>(); //Reset
 			if(sCurrFolder != ""){
@@ -455,11 +457,12 @@ namespace cwc
 
 
         public  void fCompressionExit(LauchTool _oTool)  {
+
 		    		   //Output.TraceWarning("--!!!fCompressionExit!-----: " );
-   
+            	bExtracting = false;
 		        fGetLastVersions();
                 		//   Output.TraceWarning("-#1: " );
-				bExtracting = false;
+			
             	if(oForm != null) {
 				    oForm.fExtractProgress(100, "");
                 }

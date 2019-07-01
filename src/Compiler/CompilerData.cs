@@ -199,12 +199,9 @@ namespace cwc
              CppCmd.fAddToolchain(_sPath, _oParamArg);
         }
 
-        public void fMerge() { 
+        public void fMerge(ArgumentManager _oParamArg ) { 
             foreach(string _sModule in aRequireTC) {
-
-               // CompilerData _oCompiler =    Finder.fGetCompiler(_sModule);
-
-
+                 CppCmd.fAddToolchain(_sModule, _oParamArg);
            }
         }
 
@@ -661,7 +658,17 @@ namespace cwc
 
 			if (sNode_Arch == "" || sNode_Arch == sCurrentArch ){
 
-                if(bNode_Config) {
+                 if( bNode_CfgType){
+
+                    switch(_sCurrent){
+						case "Extention":
+                         ///   oCurrentConfigType.sExtention = _sValue;
+                            oCurrentConfigType.fSetExtentions(_sValue);
+							//sC += _sValue + " ";
+						break;
+                    }
+
+				}else if(bNode_Config) {
                     switch(_sCurrent){
                        case "Require":
                             aRequireTC.Add(_sValue);
@@ -712,17 +719,7 @@ namespace cwc
 
 					}
 
-                } else if( bNode_CfgType){
-
-                    switch(_sCurrent){
-						case "Extention":
-                         ///   oCurrentConfigType.sExtention = _sValue;
-                            oCurrentConfigType.fSetExtentions(_sValue);
-							//sC += _sValue + " ";
-						break;
-                    }
-
-				}else{
+                }else{
 					switch(_sCurrent){
 
 
@@ -1293,6 +1290,12 @@ namespace cwc
                         }
                     }
                 }
+            }
+
+            //Get Recursive compiler depandance
+            foreach(string _sCompiler in aRequireTC) {
+                CompilerData _oReqCompiler = Finder.fGetCompiler(_sCompiler); //TODO get the TYPE  ex: LibRT[Mingw]
+                return _oReqCompiler.fGetConfigFileType(_sExtention);
             }
 
             foreach (KeyValuePair<string, ConfigType> _oKeyConfig in aConfigType) {

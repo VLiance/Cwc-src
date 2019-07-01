@@ -174,9 +174,16 @@ namespace cwc {
                     Build.fDisableBuild();
 				    return;
 			    } 
+
+                 Data.bModuleIsRequired = false;
+				 Data.aRequiredModule.Clear();
+
+              //  Empty.fLoadModules(false);//Reload after download, or look for bExtracting before fGetLastVersions
+                fMergeCompiler();
             }
             fExtractCompiler();
-            fMergeCompiler();
+      
+         
 
 
 			foreach(CompilerData _oLib in  aLibList) { //TODO separate subcompiler and extract after!?
@@ -218,10 +225,10 @@ namespace cwc {
 	
         private void fMergeCompiler()	{
 
-					//Debug.fTrace(" Extract Compilers: " );
-			foreach(CompilerData _oCompiler in  aCompilerList) { //TODO separate subcompiler and extract after!?
+		      CompilerData[] _aCompilerList =  aCompilerList.ToArray(); //Copy beacause collection may be modified in itiration
+			foreach(CompilerData _oCompiler in  _aCompilerList) { //TODO separate subcompiler and extract after!?
 					//Debug.fTrace("have: " + _oCompiler.sFullName);
-				_oCompiler.fMerge();
+				_oCompiler.fMerge(this);
 			}
 		}
 

@@ -144,7 +144,7 @@ namespace cwc {
          
                 bModuleIsRequired = true;
 				bStartWithMessage = true;
-				bDontExecute = true;
+				//bDontExecute = true;
 
 				foreach(string _sModule in aRequiredModule) {
 					if(_sName == _sModule) {

@@ -180,6 +180,7 @@ public  void 	fExit(LauchTool _oTool){
 }
 public  void 	fAppOut(LauchTool _oTool, string _sOut){
 	Output.Trace("O> " +_sOut);
+
      bReceiveOutput = true;
  
 }

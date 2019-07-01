@@ -131,7 +131,11 @@ namespace cwc.Compiler {
             //TODO _oAddCompilerConfig
             bool  _bCombineMode = true;
             Node _oNode = oMainNode;
-   
+
+             if(_sType != "") {
+                Console.WriteLine("_sType " + _sType);
+              }
+              
             if (_aValue[0] == "Exe") { //Only one exe at time
                 _bCombineMode = false;
             }
@@ -152,20 +156,7 @@ namespace cwc.Compiler {
                     return fFinalizeNode( _oCompiler,_aValue, _sRequireResult);
                 }
              }
-            /*
-             if(_aValue[0] == "Exe" && _sRequireResult.Length >= 2 && _sRequireResult[1] != ':' ){ //TODO or with fSpecialExtartVar?
-				_sRequireResult = _oCompiler.oModuleData.sCurrFolder + _sRequireResult;
-			}*/
-          
-
-
-            //*oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Config", "Required"}, _oConfig.sName) + " ";
-            /**
-            foreach( string _sCompiler in   oParent.aRequireTC) {
-                  _oConfig =  fGetConfigFileType(_oCmd.sCompileExtention, _oCmd.oCompiler );
-
-                    sExe
-            }*/
+     
 
             foreach (string _sStr in _aValue) {
                 if(_oNode.aVal.Count == 0){

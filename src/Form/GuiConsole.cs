@@ -610,11 +610,16 @@ namespace cwc {
                 return;
             }
             
-            if(text[0] == '\r') {
+            if(text[0] == '\r' || text.IndexOf('\b') >= 0 ) {
+         //   if(text.IndexOf('\r') >= 0 ) {
+          //  if(text.IndexOf('\r') > 0) {
                 Data.oGuiConsole.Fctb.RemoveLines(aLineToDelete);
                 aLineToDelete.Clear();
                 aLineToDelete.Add( Data.oGuiConsole.Fctb.LinesCount-1);
-                text = text.Substring(1);
+               if(text[0] == '\r') {
+                    text = text.Substring(1);
+                }
+
             }else {
                 aLineToDelete.Clear();
             }
