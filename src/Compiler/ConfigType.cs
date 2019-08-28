@@ -118,8 +118,8 @@ namespace cwc.Compiler {
 
 
         internal string fFinalizeNode( CompilerData _oCompiler, string[] _aValue,  string _sResult) {
-
-             if(_aValue[0] == "Exe" && _sResult.Length >= 2 && _sResult[1] != ':' ){ //TODO or with fSpecialExtartVar?
+          
+             if(_aValue[0] == "Exe" && _sResult.Length >= 2 && _sResult[1] != ':' &&  _sResult[0] != '{' ){ //TODO or with fSpecialExtartVar?
 				_sResult = _oCompiler.oModuleData.sCurrFolder + _sResult;
 			}
              return _sResult;
