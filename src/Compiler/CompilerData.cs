@@ -293,6 +293,8 @@ namespace cwc
 				fFoundBrowser(_sLine.Replace('\n',' ').Trim());
 			}
         }
+
+        Data.oGuiConsole.fAddViewIn(Data.aBrowser);
 	}
 
 	public static void 	fFoundBrowser(string _sLine){

@@ -54,14 +54,13 @@ namespace cwc{
             }
 
             bool _bDebug = true;//Temp
+            bool _bLauchDebug = false;
 	        if(_bDebug){
-
-		    	Output.TraceAction("Debug: " + _sPath);
-               // aBrowser
-
-            } else {
-                Output.TraceAction("Run: " + _sPath);
+                _bLauchDebug = true;
             }
+
+
+
 		//	Debug.fTrace("Lauch: " + _sPath);
 			
 			
@@ -123,6 +122,20 @@ namespace cwc{
         oCurLauch.dOut = new LauchTool.dIOut(fAppOut);
  
 	    oCurLauch.dExit = new LauchTool.dIExit(fExit);
+
+           string _sPrintArg = "";
+          if(_sArg != "") {
+                _sPrintArg = " [" + _sExePath + " " + _sArg + "]";
+          }
+
+         if(_bLauchDebug){
+		    	Output.TraceAction("Debug: " + _sPath +_sPrintArg);
+            } else {
+                Output.TraceAction("Run: " + _sPath  +  _sPrintArg);
+            }
+
+
+
 
 //_bDebug = false;
         if(_bDebug){

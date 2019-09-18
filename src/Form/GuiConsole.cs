@@ -55,21 +55,35 @@ namespace cwc {
                 fUncheckAll((ToolStripMenuItem)_oParent);
             }
 
+
              ((ToolStripMenuItem)(sender)).Checked = true;
             // ((ToolStripMenuItem)(sender)).Checked = !_bChecked;
             //aOption[_sParentName + ((ToolStripMenuItem)(sender)).Text] = (bool) ((ToolStripMenuItem)(sender)).Checked;
 
 
-             aOption[ ((ToolStripMenuItem)(sender)).Name] =  Data.fGetStrBool(  (bool) (((ToolStripMenuItem)(sender)).Checked) );
-   
+            string _sFullName = ((ToolStripMenuItem)(sender)).Name;
+            string _sOptName = Path.GetDirectoryName( _sFullName ).Replace('\\','/'); //Ugly but work
 
+             aOption[ ((ToolStripMenuItem)(sender)).Name] =  Data.fGetStrBool(  (bool) (((ToolStripMenuItem)(sender)).Checked) );
+
+
+         //    aOption[_sOptName] =  ((ToolStripMenuItem)(sender)).Text;
+
+            Data.fSetGlobalVar("_s" + _sOptName,  ((ToolStripMenuItem)(sender)).Text );
+
+
+
+            Output.TraceAction("Set[" + _sOptName + "]:" + ((ToolStripMenuItem)(sender)).Text);
+           // Output.TraceAction("Set[" +  ((ToolStripMenuItem)(sender)).Name + "]:true");
+           
         }
 
         public void fLoadData() {
                this.BeginInvoke((MethodInvoker)delegate {
                        fLoadMenuStrip("Options/", optionsToolStripMenuItem);
                        if(! fLoadMenuStrip("IDE/", iDEToolStripMenuItem)) {
-                            notePadToolStripMenuItem.Checked = true;
+                           notePadToolStripMenuItem.Checked = true;
+                           //  fCheckMenu(notePadToolStripMenuItem, null);
                             Data.fSetGlobalVar("IDE/Notepad++", Data.sTRUE);
                         }
 
@@ -266,6 +280,40 @@ namespace cwc {
                
         }
 
+
+       // public string sSelectedViewIn =
+        internal void fAddViewIn(List<string> _aBrowser) {
+            this.BeginInvoke((MethodInvoker)delegate {
+                 try { 
+
+                     viewInToolStripMenuItem.DropDownItems.Clear();
+                    foreach(string _sBrowser in _aBrowser){
+
+                       ToolStripMenuItem _oNew = new ToolStripMenuItem(_sBrowser);
+                        _oNew.Tag = _sBrowser;
+
+                          _oNew.Text = _sBrowser;
+                          _oNew.Name = "ViewIn/" + _sBrowser;
+                         viewInToolStripMenuItem.DropDownItems.Add(_oNew);
+                        //  _oNew.Checked =  Data.fIsDataTrue(  _oNew.Name);
+                        if( Data.fIsDataTrue(  _oNew.Name)) {
+                            fCheckMenu(_oNew, null);
+                        }
+
+                      //   fCheckMenu(notePadToolStripMenuItem, null);
+
+
+
+                        if(_oNew.Checked ) {
+
+                        }
+
+                        _oNew.Click += fCheckMenu;
+                    }
+
+                }catch( Exception e) { Console.WriteLine(e.Message);};
+            });
+        }
 
         private TextStyle fNewStdStyle(Brush _oFore) {
             TextStyle _oStyle = new TextStyle(_oFore,  null, FontStyle.Bold);
@@ -774,6 +822,18 @@ namespace cwc {
         private void fRecentClick(object sender, EventArgs e) {
 
              Delocalise.fDelocaliseInMainThread( (string) ((ToolStripMenuItem) sender).Tag );
+        }
+
+       private void fViewInClick(object sender, EventArgs e) {
+            /*
+            ToolStripMenuItem _oMenu = (ToolStripMenuItem) sender;
+
+            fUncheckAll(_oMenu);
+            Output.Trace("Click: "  +  (string) (_oMenu).Tag);
+
+            
+             ((ToolStripMenuItem)(sender)).Checked = true;*/
+            // Delocalise.fDelocaliseInMainThread( (string) ((ToolStripMenuItem) sender).Tag );
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e) {

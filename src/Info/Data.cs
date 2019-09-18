@@ -172,13 +172,19 @@ namespace cwc {
 			}
 			aBrowser.Add(_sBrowser);
 
+
+
 			if(oMainForm != null){
 				oMainForm.fUpdateBrowser();
 			}
 		}
 			
 		internal static string fGetViewIn()	{
-		
+          string _sVar =  Data.fGetGlobalVar("_sViewIn");
+            if(_sVar != "") {
+                return _sVar;
+            }
+
 			return sCurrViewIn;
 		}
 

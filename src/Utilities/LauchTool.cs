@@ -316,6 +316,21 @@ public bool bSanitize = false;
         internal void fEnd() {
 		  //  Output.Trace("\f18--Try to Close--");
 			bStopAll = true;
+
+
+            SysAPI.KillProcessAndChildren( Data.MainProcess.Id ); //TODO more gentle with -- SEND WM_CLOSE -- ?
+
+            if(dExit != null){ dExit(this);};
+            while(!ExeProcess.HasExited  && Base.bAlive) {
+                Thread.Sleep(1);
+                }
+     
+
+            return;
+
+
+///////////////////////////////////////////////
+
              if(bSanitize) {
                 List<Process>  children = GetChildProcesses(ExeProcess);
                 foreach(Process _procChild in children) {
@@ -362,10 +377,16 @@ public bool bSanitize = false;
                    //  ExeProcess.Clos();
                   //  _procChild.Kill();
                 }
-            }
 
-            if(!bSanitize) 
+            }else { 
+
+           List<Process>  children = GetChildProcesses(ExeProcess);
+                foreach(Process _procChild in children) { //TODO recursive of child process?
+
                 try{
+
+                    //Output.TraceError("Try to kill");
+                    
                     /*
                      if (ExeProcess.MainWindowHandle == IntPtr.Zero) {
 
@@ -374,24 +395,38 @@ public bool bSanitize = false;
                            ExeProcess.Close();
                      }else {
                      */
-                    if(!ExeProcess.HasExited) {
-                            if(ExeProcess.CloseMainWindow()) { //Todo another process  // SEND WM_CLOSE 
-                                ExeProcess.WaitForExit(1000); //if hang
-                            }
-                            if(!ExeProcess.HasExited) {
+                    if(!_procChild.HasExited) {
+                           //  Output.TraceError("not HasExited");
+
+                            try{if(_procChild.CloseMainWindow()) { //Todo another process  // SEND WM_CLOSE 
+                                _procChild.WaitForExit(1000); //if hang
+                            } }catch(Exception Ex) { }
+
+
+                            if(!_procChild.HasExited) {
+                               // Output.TraceError("alwaus not HasExited");
                                //  Output.Trace("\f4C-- KILL --");
-                                ExeProcess.Kill();
+                                _procChild.Kill();
                                 if(dExit != null){ dExit(this);};
+
+
                             }
                     }
+
+
+
                             //ExeProcess.Close();
                      // }
                }catch(Exception Ex) { }
 
-               while(!ExeProcess.HasExited  && Base.bAlive) {
+            
+
+             }
+            }
+
+                while(!ExeProcess.HasExited  && Base.bAlive) {
                  Thread.Sleep(1);
                  }
-                
                //             Output.Trace("\f18-Finish-");
            }
         

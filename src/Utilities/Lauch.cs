@@ -47,6 +47,10 @@ namespace cwc {
 
 					_sArg = "\"" + Data.fGetGlobalVar("vWebRT_Emsc") + "emrun\" ";
 					//_sArg +=  "--serve_after_close ";
+					_sArg +=  " --kill_exit ";
+					//_sArg +=  " --kill_start ";
+
+                   
 					_sArg +=  "--browser \"" +  sBrowser + "\" ";
 					_sArg += "\"" + _sExePath + "\" ";
 		
