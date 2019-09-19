@@ -3059,7 +3059,7 @@ else {
 
 
         private void btnSanitize_Click(object sender, EventArgs e) {
-             Data.oLauchProject.fLauchExe(true);
+             Data.oLauchProject.fLauchExe("",true);
         }
 
 

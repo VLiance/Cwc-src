@@ -22,25 +22,39 @@ namespace cwc{
 		        
 		public  void fBuildFinish() {
            Debug.fTrace("fBuildFinish: " + Data.fGetGlobalVar("wBuildAnd"));
+            //fLauchDefaultRun();
+        }
 
-			if(!Data.bModeIDE) {
+        public  void fLauchDefaultRun(string _sPath = "") { //"" = Last link file
+            if(!Data.bModeIDE ) {
 			   // switch(Data.sBuildAnd) {
 				switch(Data.fGetGlobalVar("wBuildAnd")) {
 
 					case "Run":
-							fLauchExe();
+							fLauchExe(_sPath);
 					break;
 					 case "Sanitize":
-							fLauchExe(true);
+							fLauchExe(_sPath, true);
 					break;
 				}
 			}
-
-
         }
 
-		 public void fLauchExe(bool _bSanitize = false) {
-            string _sPath = PathHelper.ExeWorkDir +   sOutput;
+
+
+		 public void fLauchExe(string _sPath = "",  bool _bSanitize = false) {
+            if(_sPath == "") {//Lauch default last linked output binary
+                 _sPath = PathHelper.ExeWorkDir +   sOutput;
+            }else {
+
+                //TODO better fonction to detect absolute / relative --> Cleaup
+               if(_sPath.Length > 2 && _sPath[1] == ':'){ //Absolute path
+					///
+				}else{
+					_sPath = PathHelper.ExeWorkDir + _sPath; //Relative path
+				}
+               /////////////
+            }
             if(fLauch(_sPath, _bSanitize)) {
                 
             }
@@ -50,8 +64,10 @@ namespace cwc{
 		 public bool fLauch(string _sPath, bool _bSanitize = false) {
 
             if(_sPath.Length > 1 && _sPath[_sPath.Length-1] =='/') { //Not a file
+                Output.TraceError("Path is not a File: " + _sPath);
                 return false;
             }
+           //   Output.TraceError("Try: " + _sPath);
 
             bool _bDebug = true;//Temp
             bool _bLauchDebug = false;
@@ -102,7 +118,7 @@ namespace cwc{
                	//sArg +=  "--kill_start ";
                 
 				_sArg += "\"" + _sExePath + "\" ";
-		
+		        
 		
 				_sExePath = Data.fGetGlobalVar("vWebRT_Python") + "python.exe";
 
@@ -128,16 +144,14 @@ namespace cwc{
                 _sPrintArg = " [" + _sExePath + " " + _sArg + "]";
           }
 
+
+
          if(_bLauchDebug){
-		    	Output.TraceAction("Debug: " + _sPath +_sPrintArg);
+		        Output.TraceAction("Debug: " + _sPath +_sPrintArg);
             } else {
                 Output.TraceAction("Run: " + _sPath  +  _sPrintArg);
             }
 
-
-
-
-//_bDebug = false;
         if(_bDebug){
 
             //Better way?
@@ -153,13 +167,6 @@ namespace cwc{
  // _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Linker"}, oCurrentConfigType.sName);
     //_sRequireResult= _oCompiler.oGblConfigType.fGetNode(_oAddCompilerConfig, _aValue, _sType);
               
-
-
-
-         //   Console.WriteLine("aaa: " +  _oCompiler.oModuleData.sCurrFolder + _oCompiler.sExe_Debugger);
-
-   
-	
         } else {
           	oCurLauch.fLauchExe( _sExePath,_sArg);
         }

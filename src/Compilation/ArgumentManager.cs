@@ -542,8 +542,10 @@ namespace cwc {
         */
 
         static  public Dictionary<string, DepandanceData> aDependance = new Dictionary<string, DepandanceData>();
+        internal bool bPreOutput_Link =false;
+        internal bool bOverideRunCmd =false;
 
-         internal bool fAddDepandance(Depandance _oFrom, string _sFile) { //Return true if newer file
+        internal bool fAddDepandance(Depandance _oFrom, string _sFile) { //Return true if newer file
 
           //  Console.WriteLine("Check: " +_sFile );
             if(!File.Exists(_sFile)) {

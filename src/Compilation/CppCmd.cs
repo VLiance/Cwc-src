@@ -442,7 +442,7 @@ namespace cwc {
 			//	if(!_bwto){
 					  //onsole.WriteLine("Link TIME!!! " + _sExtention);
 						bLink = true;
-				
+				    oParent.bPreOutput_Link = true;//Use to overide run command
 
 					switch(_sExtention.ToLower()){
 
@@ -1810,6 +1810,9 @@ bExtacted = true;
                  //Do not preextract?
                  sRunToArgDontPrextract_File = _sCmdArg;
                  bRunToArgDontPrextract = true;
+                  //if(oParent.bPreOutput_Link) {
+                    //    oParent.bOverideRunCmd = true;
+                  //}
                break;
 				 
               case "#Lauch":
@@ -2737,10 +2740,12 @@ bExtacted = true;
 
 
 	public void fCmdRun(string _sAllArg){
-		
+		    
+            string _sRealArg = _sAllArg.Replace("#Run", "").Trim();
+          
 
 
-			 string _sExt = Path.GetExtension(_sAllArg).ToLower();
+			string _sExt = Path.GetExtension(_sAllArg).ToLower();
 			switch(_sExt) {
 				case ".cwc":
 						Debug.fTrace("Expand!!!!!: " +  _sAllArg);
@@ -2755,12 +2760,18 @@ bExtacted = true;
 					
 				break;
 			
-				case ".bat":
-				case ".exe":
+				case ".bat": //old method? not sure
 				   Debug.fTrace("Found WRun, delocalising ... ");
 				    Delocalise.fDelocalise(_sAllArg);
                     
 				break;
+                default:
+                   // Output.TraceError(_sAllArg);
+                   Data.oLauchProject.fLauchDefaultRun(_sRealArg);
+            
+                break;
+
+
 
 			}
 	}

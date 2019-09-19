@@ -31,7 +31,7 @@ namespace cwc {
         public Lauch() {
 
         }
-
+        /*
         public void fLauchExe(string _sExePath, bool _bSkipLinkTime  = true) {
 		//	Debug.fTrace("fLauchExe! " + _sExePath);
             if (sViewTarget != "Build Only" && !bExportCpp){
@@ -61,18 +61,7 @@ namespace cwc {
 				//	public
 				}
 
-                /*
-                if (sPlatform == "Web_Emsc")   {
-                    _sArg = PathHelper.ModulesDir + "/Emscripten_x64/emscripten/1.35.0/emrun ";
-                    //_sArg += "--browser \"C:/Program Files (x86)/Mozilla Firefox/firefox.exe\" ";
-                   // _sArg += "--browser \"" + sView + "\" ";
-                    _sArg += "--browser " + sBrowser + " ";
-                    //   _sArg += "--kill_start ";
-                    //   _sArg += "--kill_exit ";
-                    _sArg += _sExePath + " ";
-                    _sExePath = PathHelper.ModulesDir + "/Emscripten_x64/python/2.7.5.3_64bit/python.exe";
-                }
-*/
+
                 bExeLauch = true;
 
                  CppCompiler.CheckAllThreadsHaveFinishedWorking(true);
@@ -163,65 +152,7 @@ namespace cwc {
                              ExeProcess.BeginErrorReadLine();
                         }
 
-                        /*
-                        Thread.Sleep(500);
-                            List<Process>  children = GetChildProcesses(ExeProcess);
-                          foreach(Process _procChild in children) {
-                            _procChild.OutputDataReceived += (sender, e) => {
-                                if (e.Data != null)  {
-                                    fSanitizeAppOutput(e.Data);
-                                }
-                            };
-                             _procChild.StartInfo.UseShellExecute = true;
-                              _procChild.StartInfo.RedirectStandardOutput = true;
-                             _procChild.BeginOutputReadLine();
-                        }*/
-                             
-
-
-
-             //       Output.TraceColored(process.StandardOutput.ReadToEnd());
-           //        Output.TraceColored(process.StandardError.ReadToEnd());
-
-
-                        /*
-                         TraceManager.Add(ExeProcess.StandardOutput.ReadToEnd());
-                        TraceManager.Add(ExeProcess.StandardError.ReadToEnd());*/
-                   
-                        //ExeProcess.WaitForExit();
-/*
-                        if (bWeb)  {
-                            string[] _aTest = sBrowser.Split('_');
-                            string _sProcessName = (((sBrowser.Split('_'))[0]).Split(' '))[0]; //Correct firefox_nighty
-
-                            int _nTimeOut = 0;
-                            while (Process.GetProcessesByName(_sProcessName).Length <= 0 && _nTimeOut < 5000) //5 second if not found  {
-                                  Thread.Sleep(1);
-                                  _nTimeOut++;
-                                    if (bStopAll) {
-                                        break;
-                                    }
-                            }
-
-                            while (!ExeProcess.HasExited && Process.GetProcessesByName(_sProcessName).Length > 0)
-                            { 
-                                Thread.Sleep(1);
-                                if (bStopAll) {
-                                    break;
-                                }
-                            }
-
-                            if (!ExeProcess.HasExited) {
-                                try
-                                {
-                                    ExeProcess.CloseMainWindow();
-                                }
-                                catch { };
-                               // ExeProcess.Kill();
-                               // ExeProcess.Close();
-                            }
-
-                        }else{*/
+                      
                             ////////////////////////////// !!!!! Normal !!!!! //////////////////////////////
 
                             while (!ExeProcess.HasExited)   {
@@ -258,7 +189,7 @@ namespace cwc {
 
             }
         }
-
+        */
         internal void fEnd() {
 
 			bStopAll = true;
