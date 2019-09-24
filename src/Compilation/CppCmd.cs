@@ -932,6 +932,14 @@ bExtacted = true;
                 sAllDefine += "-DDsPlatform=\"" +  oCompiler.sPlatformName + "\" ";;//Type
 				sAllDefine += "-DD_Platform_" +  oCompiler.sPlatformName + " ";//Type
 				sAllDefine += "-DDsPlatform_File=\""  +  oCompiler.sSubName + "\" "; //TODO
+
+                if(Data.fGetGlobalVar("_sOpt") == "Debug") {
+                    sAllDefine += "-DD_Debug ";
+                }else {
+                    sAllDefine += "-DD_Release ";
+                }
+                sAllDefine += "-DDsOpt=\""  + Data.fGetGlobalVar("_sOpt") + "\" " ;
+
 			}
 		}
 

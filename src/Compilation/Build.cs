@@ -129,8 +129,9 @@ namespace cwc {
 					}else {
 
                       
-
+                        
 					   Build.fDisableBuild();
+
 					}
                  	Data.bDontExecute = false;
 			        
@@ -219,6 +220,11 @@ namespace cwc {
         }
 
         public static void fDisableBuild(){
+
+            if(Data.oLauchProject != null && Data.oLauchProject.oCurLauch != null && Data.oLauchProject.oCurLauch.bExeLauch) {
+                return;
+            }
+
             Data.bNowBuilding = false;
          CppCompiler.nTotalTicket = 0;
         CppCompiler.nCurrentTicket = 0;

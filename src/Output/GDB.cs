@@ -195,8 +195,8 @@ namespace cwc {
             }
             
            
-            
-            Output.Trace(_sLetter + "> " +_sColor +_sOut);
+            LauchProject.fPrjOut(_sLetter,  _sColor +_sOut);
+           // Output.Trace(_sLetter + "> " +_sColor +_sOut);
          }
 
          public void fShowBacktrace(){

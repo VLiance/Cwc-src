@@ -111,6 +111,11 @@ namespace cwc
 		public static  string sBuffer = "";
 
 
+        public static void TraceStd(string _sText){
+
+			Output.TraceColored( "\f0F" + _sText ); 
+		}
+
 		public static void TraceWarningLite(string _sText){
 
 			Output.TraceColored( "\f0E" + _sText ); 

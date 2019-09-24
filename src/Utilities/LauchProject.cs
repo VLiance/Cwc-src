@@ -198,14 +198,50 @@ public  void 	fExit(LauchTool _oTool){
     }
 
 }
-public  void 	fAppOut(LauchTool _oTool, string _sOut){
-	Output.Trace("O> " +_sOut);
 
-     bReceiveOutput = true;
- 
+
+public  static void 	fPrjOut(string _sLetter,  string _sOut){
+
+    string _sPrefix = _sLetter + "> " ;
+    if(_sOut.Length > 4) { //ex T[1]:xxxx
+        if(_sOut[1] == '[') {
+            switch(_sOut[0]) {
+                   case 'P':
+                       Output.TraceGood(_sPrefix +_sOut);
+                   break;
+                   case 'E':
+                       Output.TraceError(_sPrefix +_sOut);
+                   break;
+                    case 'W':
+                       Output.TraceWarning(_sPrefix +_sOut);
+                   break;
+                   case 'A':
+                       Output.TraceAction(_sPrefix +_sOut);
+                   break;
+                   case 'T':
+                       Output.TraceStd(_sPrefix +_sOut);
+                   break;
+                   default:
+                      	Output.Trace(_sPrefix +_sOut);
+                   break;
+            }
+            return;
+                
+        }
+    }
+    Output.Trace(_sPrefix  + _sOut);
+    return;
 }
+
+
+public  void 	fAppOut(LauchTool _oTool, string _sOut){
+    fPrjOut("O", _sOut );
+    bReceiveOutput = true;
+}
+
+
 public  void 	fAppError(LauchTool _oTool, string _sOut){
-		Output.Trace("E> " + _sOut);
+		 Output.TraceError("E> " + _sOut);
          bReceiveOutput = true;
  
 }
