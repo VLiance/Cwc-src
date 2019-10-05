@@ -16,6 +16,7 @@ namespace cwc.Compiler {
    public  class Node {
 
         public Node oParent;
+        public NdValue oVal;
        public  string sName;
 
         public Node(Node _oParent, string _sName) {
@@ -29,6 +30,11 @@ namespace cwc.Compiler {
 
 
            public Dictionary<string, Node> aNode = new Dictionary<string, Node>();
+
+            public Node fAddNode( Node _oNodeOther) {
+
+               return  fAddNode(_oNodeOther.sName);
+            }
 
           public Node fAddNode( string _sName) {
 
@@ -47,13 +53,17 @@ namespace cwc.Compiler {
             if (aVal.ContainsKey(_sType)) {
                 NdValue _oVal =  aVal[_sType];
                 _oVal.sValue += _sValue + " ";
+                oVal = _oVal;
             }else{
-               aVal.Add(_sType, new NdValue(_sValue + " ") );
+               oVal =  new NdValue(_sValue + " ");
+               aVal.Add(_sType, oVal);
+              
             }
 
             if(_sType != "") {
                  if (!aVal.ContainsKey("")) {
-                     aVal.Add("", new NdValue("") );
+                     oVal =  new NdValue("");
+                     aVal.Add("", oVal );
                 }
             }
 

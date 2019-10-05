@@ -374,6 +374,15 @@ namespace cwc
 								_oCurrentRead = oCurr_If_Platform;
 							}
                      
+                            bool bAddToNode = true;
+                            string _sNodeName =  reader.Name;
+                            switch(_sNodeName) {
+                                case "If_Compiler":
+					            case "If_Platform":
+                                    bAddToNode = false;
+                                break;
+                             }
+
 
                             if(!_bRootNode){
 
@@ -381,11 +390,13 @@ namespace cwc
                                 {
                                     case XmlNodeType.Element:
                                            _sCurrentNode =  reader.Name;
-									    _oCurrentRead.fAddNode(reader, _sCurrentNode);
+									    _oCurrentRead.fAddNode(reader, _sCurrentNode, bAddToNode);
 							
                           //  lastNode = reader;
 									
 								    //   Debug.fTrace("---------_sCurrentNode " + _sCurrentNode);
+
+
                                         break;
 
                                     case XmlNodeType.Text: //Display the text in each element.
@@ -395,7 +406,7 @@ namespace cwc
                                         break;
 
                                     case XmlNodeType.EndElement:
-									    _oCurrentRead.fRemoveNode( reader.Name);
+									    _oCurrentRead.fRemoveNode( reader.Name, bAddToNode);
 									
 
 									    //	Debug.fTrace("end " +   reader.Name);
@@ -442,14 +453,15 @@ namespace cwc
 		bool bNode_Config = false;
 		bool bNode_CfgType = false;
 
-		 public void fAddNode(XmlTextReader _oNode, string _sName){
+		 public void fAddNode(XmlTextReader _oNode, string _sName, bool bAddToNode){
 
             //Load Config
             if(!bNode_CfgType){ //New config set in parent node -> don't reset it
                oCurrentConfigType = oGblConfigType;
             }
 
-            Node _oCurTypeNode =  oGblConfigType.fAddNode(_sName);
+            //Node _oCurTypeNode =  oGblConfigType.fAddNode(_sName);
+        
           //  _oCurTypeNode.fSetValue("",""); //default node
 
            for (int nIdx = 0; nIdx < _oNode.AttributeCount; nIdx++){
@@ -497,6 +509,7 @@ namespace cwc
 					break;
 				
 				    case "Config":
+                      // oGblConfigType.fAddNode(_sName);
 						bNode_Config = true;
 					break;
 
@@ -520,6 +533,7 @@ namespace cwc
 
 
 					case "Exe":
+                        //oGblConfigType.fAddNode(_sName);
 						bNode_Exe = true;
 					break;
 
@@ -551,6 +565,9 @@ namespace cwc
 									//Debug.fTrace("!!!!!!!!!!!!!!!!!!!!!!!!!FoundType!!!! :  " + Data.fGetGlobalVar("_sPlatform") );
 									
 									oCurr_If_Platform =	fGetConditionalPlatformCompilo(_sType);
+
+                                    fAddAllNode(oCurr_If_Platform);
+                             
 									/*
 									if(_sType ==  Data.fGetGlobalVar("_sPlatform") ){
 										bIf_Platform = true;
@@ -574,11 +591,31 @@ namespace cwc
 							 }
 						  }
 					break;
+
+
+
+
 				}
 			}
+
+            if(bAddToNode) {
+                 oGblConfigType.fAddNode(_sName);
+
+            }
+
+
 		}
 
-		internal void fSetVar(CppCmd cppCmd)
+        private void fAddAllNode(CompilerData oCurr_If_Platform) {
+             oCurrentConfigType.fCloneAllCurrentNode(oCurr_If_Platform);
+             // oGblConfigType.fCloneAllCurrentNode(oCurr_If_Platform);
+           
+        }
+
+
+
+
+        internal void fSetVar(CppCmd cppCmd)
 		{
 			cppCmd.oParent.fSetVar("_wToolchain", oModuleData.sAutorName);
 			cppCmd.oParent.fSetVar("_wToolchain_Dir", oModuleData.sCurrFolder);
@@ -593,7 +630,7 @@ namespace cwc
 //Debug.fTrace("SetVar: " + sType);
 		}
 
-		public void fRemoveNode(string _sName){
+		public void fRemoveNode(string _sName, bool bAddToNode){
 			if (aNode.ContainsKey( _sName )){
 				switch(_sName){
 					case "x16":
@@ -617,14 +654,19 @@ namespace cwc
 						bInside_Conditinal_Compiler = false;
 					break;
 					case "If_Platform":
+                        Output.TraceError("Rem " + oCurr_If_Platform.sPlatformName + " " + sConditionalName);
 						oCurr_If_Platform = null;
 						bInside_Conditinal_Platform = false;
 					break;
 			
 					
 				}
+                if(bAddToNode) {
+                   
+                    oGblConfigType.fRemoveNode(_sName);
+                }
 
-                oGblConfigType.fRemoveNode(_sName);
+
 				aNode.Remove( _sName);
 			}
 		}
@@ -653,6 +695,9 @@ namespace cwc
 
 
             oGblConfigType.fSetValue(_sValue, sNodeCurrentType);
+             Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
+           
+
          //   oCurrentConfigType.fSetValue(_sValue, sNodeCurrentType);
 
 
@@ -1094,13 +1139,15 @@ namespace cwc
 
 
 		public CompilerData fGetConditionalPlatformCompilo(string _sPlatform, bool _bNullIfNotFound = false){
-
+      
 			//If we have a platform specific compiler
 			if (aPlatformCompilo.ContainsKey(_sPlatform)){
+                      Output.TraceError("Retrurn " + _sPlatform + " " + sConditionalName);
 				return aPlatformCompilo[_sPlatform];
 			}
 			CompilerData _oCompilo = null;
 			if(!_bNullIfNotFound){
+                                 Output.TraceError("New " + _sPlatform + " " + sConditionalName);
 				_oCompilo = new CompilerData(oModuleData,"",_sPlatform);
 				aPlatformCompilo.Add(_sPlatform,_oCompilo);
 			}
@@ -1183,7 +1230,9 @@ namespace cwc
           
                 if (_oCmd.sCompileExtention == "cw" || _oCmd.sCompileExtention == "c~") {
                    //   Console.WriteLine("sCWift: " + sCWift);
-                    _sArg += _oConfig.sCWayv;
+                  //  _sArg += _oConfig.sCWayv;
+                    _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler, new string[]{"Arguments", "CWayv"}, _oConfig.sName)+ " ";
+                    
               //     _sArg += oGblConfigType.fGetNode(new string[]{"Platform","arguments", "CWayv"}, oCurrentConfigType.sName).sValue;
 
                     return _sArg; //Rest is for C++
@@ -1269,7 +1318,6 @@ namespace cwc
 			}
 
 			return _sArg;
-			
 		}
 
 

@@ -10,8 +10,8 @@ namespace cwc.Compiler {
         public Node oMainNode = new Node(null, "");
         public Node oCurrNode ;
 
-        CompilerData oParent;
-        ConfigType oDefault;
+        public CompilerData oParent;
+        public ConfigType oDefault;
 
         public string sName = "";
         public ConfigType(CompilerData _oParent, string _sName, ConfigType _oGblConfigType) {
@@ -100,6 +100,10 @@ namespace cwc.Compiler {
                oCurrNode = oCurrNode.fAddNode(_sName);
             return oCurrNode;
         }
+          internal Node fAddNode(Node _oNode) { //Just for master default goblal ConfigType --> else we copy nodes 
+               oCurrNode = oCurrNode.fAddNode(_oNode);
+            return oCurrNode;
+        }
 
         internal void fRemoveNode(string _sName) { //Just for master default goblal ConfigType --> else we copy nodes 
               oCurrNode = oCurrNode.oParent;//TODO TEST IF IS SAME NAME
@@ -125,7 +129,46 @@ namespace cwc.Compiler {
              return _sResult;
         }
 
+        
+   
 
+        internal string fGetStrNode(Node _oNode) {
+              string _sNode = "";
+             if(_oNode.oParent != null) {
+                _sNode = fGetStrNode(_oNode.oParent);
+            }
+            return  _sNode + "|"+ _oNode.sName;
+        }
+
+         internal string fGetCurrentNodeFull() {
+               return fGetStrNode(oCurrNode);
+        }
+
+
+        
+        internal Node fCloneNode(Node _oNode, CompilerData _oCurr_If_Platform) {
+              Node _oGetNode = null;
+             if(_oNode.oParent != null) {
+                _oGetNode = fCloneNode(_oNode.oParent, _oCurr_If_Platform);
+            }
+            if(_oNode!= null && _oNode.sName != "") {
+             _oCurr_If_Platform.oGblConfigType.fAddNode(_oNode);
+            }
+            return  _oNode;
+        }
+
+        internal void fCloneAllCurrentNode(CompilerData _oCurr_If_Platform) {
+                fCloneNode(oCurrNode, _oCurr_If_Platform);
+        }
+
+
+
+        internal string fGetCurrentNodeValue() {
+            if(oCurrNode.oVal != null) {
+                return oCurrNode.oVal.sValue;
+            }
+            return "";
+        }
 
         internal string fGetNode(ConfigType _oAddCompilerConfig, string[] _aValue, string _sType) {
             //TODO _oAddCompilerConfig
@@ -192,6 +235,9 @@ namespace cwc.Compiler {
                
             return fFinalizeNode( _oCompiler,_aValue, _sRequireResult + "");
         }
+
+    
+
 
 
         /*
