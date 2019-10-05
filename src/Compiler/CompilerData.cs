@@ -406,7 +406,7 @@ namespace cwc
                                         break;
 
                                     case XmlNodeType.EndElement:
-									    _oCurrentRead.fRemoveNode( reader.Name, bAddToNode);
+									    this.fRemoveNode( reader.Name, bAddToNode);
 									
 
 									    //	Debug.fTrace("end " +   reader.Name);
@@ -563,7 +563,7 @@ namespace cwc
                                	case "type":
 									string _sType= _oNode.Value;
 									//Debug.fTrace("!!!!!!!!!!!!!!!!!!!!!!!!!FoundType!!!! :  " + Data.fGetGlobalVar("_sPlatform") );
-									
+									Output.TraceAction("IF " + _sType);
 									oCurr_If_Platform =	fGetConditionalPlatformCompilo(_sType);
 
                                     fAddAllNode(oCurr_If_Platform);
@@ -1142,12 +1142,10 @@ namespace cwc
       
 			//If we have a platform specific compiler
 			if (aPlatformCompilo.ContainsKey(_sPlatform)){
-                      Output.TraceError("Retrurn " + _sPlatform + " " + sConditionalName);
 				return aPlatformCompilo[_sPlatform];
 			}
 			CompilerData _oCompilo = null;
 			if(!_bNullIfNotFound){
-                                 Output.TraceError("New " + _sPlatform + " " + sConditionalName);
 				_oCompilo = new CompilerData(oModuleData,"",_sPlatform);
 				aPlatformCompilo.Add(_sPlatform,_oCompilo);
 			}
