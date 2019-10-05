@@ -158,6 +158,7 @@ namespace cwc.Compiler {
         }
 
         internal void fCloneAllCurrentNode(CompilerData _oCurr_If_Platform) {
+                 _oCurr_If_Platform.oGblConfigType.oCurrNode = _oCurr_If_Platform.oGblConfigType.oMainNode; //Restart frtom root
                 fCloneNode(oCurrNode, _oCurr_If_Platform);
         }
 

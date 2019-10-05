@@ -563,8 +563,8 @@ namespace cwc
                                	case "type":
 									string _sType= _oNode.Value;
 									//Debug.fTrace("!!!!!!!!!!!!!!!!!!!!!!!!!FoundType!!!! :  " + Data.fGetGlobalVar("_sPlatform") );
-									Output.TraceAction("IF " + _sType);
-									oCurr_If_Platform =	fGetConditionalPlatformCompilo(_sType);
+									//Output.TraceAction("IF " + _sType);
+									oCurr_If_Platform =	fGetConditionalPlatformCompilo(_sType,true);
 
                                     fAddAllNode(oCurr_If_Platform);
                              
@@ -654,7 +654,7 @@ namespace cwc
 						bInside_Conditinal_Compiler = false;
 					break;
 					case "If_Platform":
-                        Output.TraceError("Rem " + oCurr_If_Platform.sPlatformName + " " + sConditionalName);
+                        //Output.TraceError("Rem " + oCurr_If_Platform.sPlatformName + " " + sConditionalName);
 						oCurr_If_Platform = null;
 						bInside_Conditinal_Platform = false;
 					break;
@@ -695,7 +695,8 @@ namespace cwc
 
 
             oGblConfigType.fSetValue(_sValue, sNodeCurrentType);
-             Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
+            // Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
+             Debug.fTrace("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
            
 
          //   oCurrentConfigType.fSetValue(_sValue, sNodeCurrentType);
@@ -1138,14 +1139,14 @@ namespace cwc
 		}*/
 
 
-		public CompilerData fGetConditionalPlatformCompilo(string _sPlatform, bool _bNullIfNotFound = false){
+		public CompilerData fGetConditionalPlatformCompilo(string _sPlatform, bool _bCreateIfNotFound = false){
       
 			//If we have a platform specific compiler
 			if (aPlatformCompilo.ContainsKey(_sPlatform)){
 				return aPlatformCompilo[_sPlatform];
 			}
 			CompilerData _oCompilo = null;
-			if(!_bNullIfNotFound){
+			if(_bCreateIfNotFound){
 				_oCompilo = new CompilerData(oModuleData,"",_sPlatform);
 				aPlatformCompilo.Add(_sPlatform,_oCompilo);
 			}
@@ -1308,12 +1309,21 @@ namespace cwc
 					_sArg += _sAllDefine;
 				}
 
-		    CompilerData _oCond_Plat =	fGetConditionalPlatformCompilo(_oCmd.fGetVar("_sPlatform"),true);
+   
+		    CompilerData _oCond_Plat =	fGetConditionalPlatformCompilo(_oCmd.fGetVar("_sPlatform"));
 			if(_oCond_Plat != null){
-				_sArg += _oCond_Plat.fGetArgs(_oCmd,_sAllDefine,_bLinkTime,_bSLib,_bDLib,_bHaveSourceC);
-				//Debug.fTrace("--------------------------------------------------P!!!!!!!!!!LAQFORM : " + _oCond_Plat.sConditionalName);
-				//Debug.fTrace("ARG: " +_oCond_Plat.fGetArgs(_oCmd,_sAllDefine,_bLinkTime,_bSLib,_bDLib,_bHaveSourceC));
+                // Output.TraceError("Found: " + _oCond_Plat.sConditionalName);
+                // ConfigType _oTest = _oCond_Plat.oCurrentConfigType;
+                //   Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + _oTest.sName + ">" + _oTest.oParent.sFullName  + "[" + _oTest.sName + "] :" + _oTest.fGetCurrentNodeFull()  + "[" + _oTest.fGetCurrentNodeValue() + "]" );
+           
+                string _sCondArg = _oCond_Plat.fGetArgs(_oCmd,_sAllDefine,_bLinkTime,_bSLib,_bDLib,_bHaveSourceC).Trim();
+                if(_sCondArg != "") {
+                    _sArg += _sCondArg + " ";
+                   // Output.TraceError("Found: " +_sCondArg);
+                }
 			}
+            
+
 
 			return _sArg;
 		}
