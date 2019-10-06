@@ -695,7 +695,7 @@ namespace cwc
 
 
             oGblConfigType.fSetValue(_sValue, sNodeCurrentType);
-            // Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
+           //  Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
              Debug.fTrace("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
            
 
@@ -1227,15 +1227,16 @@ namespace cwc
 
 
           
-                if (_oCmd.sCompileExtention == "cw" || _oCmd.sCompileExtention == "c~") {
-                   //   Console.WriteLine("sCWift: " + sCWift);
-                  //  _sArg += _oConfig.sCWayv;
-                    _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler, new string[]{"Arguments", "CWayv"}, _oConfig.sName)+ " ";
-                    
-              //     _sArg += oGblConfigType.fGetNode(new string[]{"Platform","arguments", "CWayv"}, oCurrentConfigType.sName).sValue;
+            if (_oCmd.sCompileExtention == "cw" || _oCmd.sCompileExtention == "c~") {
+             
+                //   Console.WriteLine("sCWift: " + sCWift);
+                //  _sArg += _oConfig.sCWayv;
+                _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler, new string[]{"Arguments", "CWayv"}, _oConfig.sName)+ " ";
+                    Output.TraceAction("CWayv Arg: ["+ sConditionalName + "]" + _sArg );
+            //     _sArg += oGblConfigType.fGetNode(new string[]{"Platform","arguments", "CWayv"}, oCurrentConfigType.sName).sValue;
 
-                    return _sArg; //Rest is for C++
-                }
+                //return _sArg; //Rest is for C++
+            }else { //Rest is for C++
 
 
               if(!_bSLib && !_bDLib) {
@@ -1308,13 +1309,14 @@ namespace cwc
 
 					_sArg += _sAllDefine;
 				}
-
+            }
    
 		    CompilerData _oCond_Plat =	fGetConditionalPlatformCompilo(_oCmd.fGetVar("_sPlatform"));
 			if(_oCond_Plat != null){
-                // Output.TraceError("Found: " + _oCond_Plat.sConditionalName);
+
+               //  Output.TraceError("Found: " + _oCond_Plat.sConditionalName);
                 // ConfigType _oTest = _oCond_Plat.oCurrentConfigType;
-                //   Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + _oTest.sName + ">" + _oTest.oParent.sFullName  + "[" + _oTest.sName + "] :" + _oTest.fGetCurrentNodeFull()  + "[" + _oTest.fGetCurrentNodeValue() + "]" );
+                 //  Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + _oTest.sName + ">" + _oTest.oParent.sFullName  + "[" + _oTest.sName + "] :" + _oTest.fGetCurrentNodeFull()  + "[" + _oTest.fGetCurrentNodeValue() + "]" );
            
                 string _sCondArg = _oCond_Plat.fGetArgs(_oCmd,_sAllDefine,_bLinkTime,_bSLib,_bDLib,_bHaveSourceC).Trim();
                 if(_sCondArg != "") {
