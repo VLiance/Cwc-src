@@ -85,6 +85,17 @@ namespace cwc {
 
   
            
+           // oProcess.fSend("tbreak main"); 
+
+            //oProcess.fSend("break _start");  //Entry point: 0x4014a0
+            //oProcess.fSend("set backtrace past-entry on");
+                
+                 /*
+            oProcess.fSend("info files");  //Entry point: 0x4014a0
+            oProcess.fSend("break *0x4014a0"); 
+            oProcess.fSend("show backtrace past-entry");
+            */
+         
             oProcess.fSend("run");  bRunning = true;
           //    oProcess.bRedirectOutput = false;
          //   oProcess.processStartInfo.RedirectStandardInput = false;Ok
