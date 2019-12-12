@@ -1167,7 +1167,16 @@ bExtacted = true;
 
             switch (sManuallySetExecutable) {
                 case "CWayv":
-                return PathHelper.ToolDir +  "CWayv/CWayv.exe";
+
+
+                     return PathHelper.ToolDir +  "CWayv/CWayv.exe";
+
+                    string _sWayv = oCompiler.oGblConfigType.fGetNode(null, new string[] { "Exe", "CWayv" }, "");
+                   return _sWayv;
+
+
+
+
             }
             //Shearch all included exe
             return sManuallySetExecutable; //Not found

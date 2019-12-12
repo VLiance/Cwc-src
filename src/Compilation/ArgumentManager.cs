@@ -81,10 +81,20 @@ namespace cwc {
 
 		internal void fAddLib(ModuleData _oLib){
             if(_oLib != null) {
-			    aLib.Add(_oLib);
+
                 if(_oLib.oLibData != null) {
 			      aLibList.Add(_oLib.oLibData);
                 }
+
+                foreach (ModuleData _oIsLib in aLib)
+                {
+                    if (_oLib == _oIsLib)
+                    {
+                        return;
+                    }
+                }
+                aLib.Add(_oLib);
+
             }
 		}
 

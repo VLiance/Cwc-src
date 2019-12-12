@@ -546,6 +546,10 @@ namespace cwc
                         Output.TraceWarning(_sMessage);
                       return true;
 
+                    case 'I':
+                        Output.TraceAction(_sMessage);
+                        return true;
+
                     case 'E':
                         Output.TraceError(_sMessage);
                         nError++;

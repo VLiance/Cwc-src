@@ -35,7 +35,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\Cwc\</OutputPath>
+    <OutputPath>..\..\_Cwc\</OutputPath>
     <DefineConstants>TRACE;DEBUG;tDebug</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -44,10 +44,10 @@
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\Cwc\</OutputPath>
+    <OutputPath>..\..\_Cwc\</OutputPath>
     <DefineConstants>Styles32</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

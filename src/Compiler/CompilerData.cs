@@ -695,7 +695,7 @@ namespace cwc
 
 
             oGblConfigType.fSetValue(_sValue, sNodeCurrentType);
-           //  Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
+         //    Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
              Debug.fTrace("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
            
 
@@ -1154,45 +1154,45 @@ namespace cwc
 		}
 
 
-             /*
-		public CompilerData fGetSubCompiler(string _sPlatform){
+        /*
+   public CompilerData fGetSubCompiler(string _sPlatform){
 
-			//If we have a platform specific compiler
-			if (aSubCompiler.ContainsKey(_sPlatform)){
-				CompilerData _oCompilo = aSubCompiler[_sPlatform];
-				_oCompilo.fPreExtract();
-				return _oCompilo;
-			}
-			fPreExtract();
-			return this;
-		}
-   
-		private void fPreExtract()
-		{	
-			if(!bPreExtracted) {
-				bPreExtracted = true;
-				
-			}
-		}*/
-/*
-		public void fAddSubCompiler(string _sPlatform) {	
+       //If we have a platform specific compiler
+       if (aSubCompiler.ContainsKey(_sPlatform)){
+           CompilerData _oCompilo = aSubCompiler[_sPlatform];
+           _oCompilo.fPreExtract();
+           return _oCompilo;
+       }
+       fPreExtract();
+       return this;
+   }
 
-		//	   aSubCompiler.Add(_sPlatform, new CompilerData(_sPlatform, this));
-		}
-        */
+   private void fPreExtract()
+   {	
+       if(!bPreExtracted) {
+           bPreExtracted = true;
 
-/// //////////////////////////////////
-/*
-		 private static string sPathExePython;
-		 private static string sEmscArgClangExe;
-		 private static string sEmscInclude;
-		 private static string sHtml_Shell = "--shell-file ";
-		 private static string sBind = "--bind ";
-		 private static string sMemFile = "--memory-init-file 0 ";
-		 private static string sCache = "--cache ";
-	*/
+       }
+   }*/
+        /*
+                public void fAddSubCompiler(string _sPlatform) {	
 
-		//cache
+                //	   aSubCompiler.Add(_sPlatform, new CompilerData(_sPlatform, this));
+                }
+                */
+
+        /// //////////////////////////////////
+        /*
+                 private static string sPathExePython;
+                 private static string sEmscArgClangExe;
+                 private static string sEmscInclude;
+                 private static string sHtml_Shell = "--shell-file ";
+                 private static string sBind = "--bind ";
+                 private static string sMemFile = "--memory-init-file 0 ";
+                 private static string sCache = "--cache ";
+            */
+
+        //cache
         /*
 		private static void fGetEmscPaths() {
 			sPathExePython =  Emscripten.sPathPython + "python.exe"; //TODO Autodetect
@@ -1201,21 +1201,52 @@ namespace cwc
 		//	Debug.fTrace("include: " + sEmscInclude);
 		}
         */
-/// //////////////////////////////////		
-			/*
-             sCompilerPath = PathHelper.ModulesDir + "/Emscripten_x64/python/2.7.5.3_64bit/python.exe"; // C:\Emscripten\emscripten\1.34.1\em++
-                sFirstArg = PathHelper.ModulesDir + "/Emscripten_x64/emscripten/1.35.0/em++ " + "--em-config " + PathHelper.ModulesDir + "/Emscripten_x64/Emsc.cfg ";
-                sFirstArg += "-I" + PathHelper.ModulesDir + "/Emscripten_x64/emscripten/1.35.0system/include/emscripten ";
-                sFirstArg += "--bind ";
-             //   sFirstArg += "--memory-init-file 1 ";
-                sFirstArg += "--memory-init-file 0 ";
-                sOutBranch = "Web/" + sDebugModeFolder;
-                sExtention = ".html";
-                sPlatformLinkerFlag = "-s EXPORTED_FUNCTIONS=\"['_main', '_int_sqrt', '_lerp']\" --emrun ";
-			*/
+        /// //////////////////////////////////		
+        /*
+         sCompilerPath = PathHelper.ModulesDir + "/Emscripten_x64/python/2.7.5.3_64bit/python.exe"; // C:\Emscripten\emscripten\1.34.1\em++
+            sFirstArg = PathHelper.ModulesDir + "/Emscripten_x64/emscripten/1.35.0/em++ " + "--em-config " + PathHelper.ModulesDir + "/Emscripten_x64/Emsc.cfg ";
+            sFirstArg += "-I" + PathHelper.ModulesDir + "/Emscripten_x64/emscripten/1.35.0system/include/emscripten ";
+            sFirstArg += "--bind ";
+         //   sFirstArg += "--memory-init-file 1 ";
+            sFirstArg += "--memory-init-file 0 ";
+            sOutBranch = "Web/" + sDebugModeFolder;
+            sExtention = ".html";
+            sPlatformLinkerFlag = "-s EXPORTED_FUNCTIONS=\"['_main', '_int_sqrt', '_lerp']\" --emrun ";
+        */
 
-  
-		 public string fGetArgs(CppCmd _oCmd, string _sAllDefine = "", bool _bLinkTime = false,  bool _bSLib = false, bool _bDLib = false, bool _bHaveSourceC = false){
+
+        public string fGetLibParam(CppCmd _oCmd, string _sRoot = "", string _sNode = "") { 
+
+            string _sResult = "";
+            foreach (ModuleData _oLib in _oCmd.oParent.aLib)
+            {
+                CompilerData _oData = _oLib.oLibData;
+                if (_oData != null)
+                {
+                    //Output.TraceWarning(_oData.sFullName);
+                    _sResult += _oData.fGetParam(_oCmd, _sRoot,  _sNode) + " ";//_oCmd.oParentCmd.bHaveSourceC ?
+                }
+            }
+            return _sResult;
+        }
+
+        public string fGetParam(CppCmd _oCmd, string _sRoot = "", string _sNode = "")
+        {
+             string _sResult = "";
+            ConfigType _oConfig = oCurrentConfigType;
+            _oConfig = fGetConfigFileType(_oCmd.sCompileExtention, _oCmd.oCompiler);
+
+            _sResult += oGblConfigType.fGetNode(oConfigTypeCompiler, new string[] { _sRoot, _sNode }, _oConfig.sName) + " ";
+          //  Output.TraceAction("CWayv Arg: [" + sConditionalName + "]" + _sArg);
+
+
+
+            return _sResult;
+        }
+
+
+
+        public string fGetArgs(CppCmd _oCmd, string _sAllDefine = "", bool _bLinkTime = false,  bool _bSLib = false, bool _bDLib = false, bool _bHaveSourceC = false){
 			string _sArg = "";
   
             
@@ -1224,7 +1255,7 @@ namespace cwc
              _oConfig =  fGetConfigFileType(_oCmd.sCompileExtention, _oCmd.oCompiler );
            
           //      fGetConfigFileType
-
+            
 
           
             if (_oCmd.sCompileExtention == "cw" || _oCmd.sCompileExtention == "c~") {
@@ -1387,7 +1418,7 @@ namespace cwc
 				_oCmd.sArgument =  fGetArgs(_oCmd, _oCmd.sAllDefine, _bLinkTime, _bSLib, _bDLib, _oCmd.bHaveSourceC);
 
              
-            Console.WriteLine(_oCmd.sCmd);
+         //   Console.WriteLine(_oCmd.sCmd);
 				////// Libs ////
 				string _sLibArg = "";
 				foreach(ModuleData _oLib in _oCmd.oParent.aLib){
@@ -1405,11 +1436,43 @@ namespace cwc
 				///// GET EXE /////////////
                  //  Console.WriteLine("Compile type: " + _oCmd.sE);
                 if (_oCmd.sCompileExtention == "cw"  || _oCmd.sCompileExtention == "c~") {
-                   // Console.WriteLine("HAVE CW!");
-                  //  return PathHelper.ToolDir +  "CWift/CWift.exe";
-                 //   return PathHelper.ToolDir +  "CWave/CWave.exe";
-                    return PathHelper.ToolDir +  "CWayv/CWayv.exe";
-                }
+                        // Console.WriteLine("HAVE CW!");
+                        //  return PathHelper.ToolDir +  "CWift/CWift.exe";
+                        //   return PathHelper.ToolDir +  "CWave/CWave.exe";
+
+                        //return PathHelper.ToolDir +  "CWayv/CWayv.exe";
+                        //     _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler, new string[] { "Arguments", "CWayv" }, _oConfig.sName) + " ";
+
+                        //   string _sWayv = oGblConfigType.fGetNode(oConfigTypeCompiler, new string[] { "Exe", "CWayv" }, oCurrentConfigType.sName);
+                        //     Output.TraceWarning("_sWayv : " + _sWayv);
+                        /*
+
+                      ConfigType _oConfig = oCurrentConfigType;
+                      _oConfig = fGetConfigFileType(_oCmd.sCompileExtention, _oCmd.oCompiler);
+                      _sWayv =  oGblConfigType.fGetNode(oConfigTypeCompiler, new string[] { "Exe", "CWayv" }, _oConfig.sName) + " ";
+                      Output.TraceWarning("_sWayv : " + _sWayv);
+                      */
+
+                        /*
+                        string _sLibExe = "";
+                        foreach (ModuleData _oLib in _oCmd.oParent.aLib)
+                        {
+                            CompilerData _oData = _oLib.oLibData;
+                            if (_oData != null)
+                            {
+                                Output.TraceWarning(_oData.sFullName);
+                                _sLibExe += _oData.fGetParam(_oCmd, "Exe", "CWayv") + " ";//_oCmd.oParentCmd.bHaveSourceC ?
+                            }
+                        }
+                        */
+
+                        string _sWayv = fGetLibParam(_oCmd,  "Exe", "CWayv");
+
+                        if (_sWayv == "") {
+                                 return "CWayv";
+                            }
+                           return _sWayv;
+                   }
 
 				if(_bSLib) {
 					if( oCurrentConfigType.sExe_Link_Static != ""){
@@ -1456,6 +1519,7 @@ namespace cwc
 
 			//			_sExe =  oCurrentConfigType.fGet_Exe_Compiler();   
                         
+
                          _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Compiler"}, oCurrentConfigType.sName);
                      //   Console.WriteLine("!!!!***** _sExe !!!! " + _sExe);
 				//	}
