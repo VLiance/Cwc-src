@@ -317,10 +317,10 @@ public bool bSanitize = false;
 		  //  Output.Trace("\f18--Try to Close--");
 			bStopAll = true;
 
-
+            if(dExit != null){ dExit(this);};
             SysAPI.KillProcessAndChildren( Data.MainProcess.Id ); //TODO more gentle with -- SEND WM_CLOSE -- ?
 
-            if(dExit != null){ dExit(this);};
+
             while(!ExeProcess.HasExited  && Base.bAlive) {
                 Thread.Sleep(1);
                 }

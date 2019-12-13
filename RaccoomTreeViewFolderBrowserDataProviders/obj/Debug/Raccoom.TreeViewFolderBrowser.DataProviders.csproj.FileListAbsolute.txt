@@ -40,3 +40,14 @@ E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowserDataProviders\bin\Debu
 E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowserDataProviders\bin\Debug\TreeView.dll
 E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowserDataProviders\bin\Debug\TreeView.pdb
 E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowserDataProviders\obj\Debug\Raccoom.TreeViewFolderBrowser.DataProviders.Properties.Resources.resources
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\bin\Debug\TreeViewDP.dll
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\bin\Debug\TreeViewDP.pdb
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\bin\Debug\TreeView.dll
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\bin\Debug\TreeView.pdb
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\obj\Debug\Raccoom.TreeViewFolderBrowser.DataProviders.csprojResolveAssemblyReference.cache
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\obj\Debug\Raccoom.TreeViewFolderBrowser.DataProviders.Properties.Resources.resources
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\obj\Debug\Raccoom.Windows.Forms.TreeStrategyFolderBrowserProvider.resources
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\obj\Debug\Raccoom.Windows.Forms.TreeStrategyCultureInfoProvider.resources
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\obj\Debug\Raccoom.TreeViewFolderBrowser.DataProviders.csproj.GenerateResource.Cache
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\obj\Debug\TreeViewDP.dll
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowserDataProviders\obj\Debug\TreeViewDP.pdb

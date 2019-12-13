@@ -202,6 +202,10 @@ public  void 	fExit(LauchTool _oTool){
 
 public  static void 	fPrjOut(string _sLetter,  string _sOut){
 
+    if (_sOut == null){
+        return;
+    }
+
     string _sPrefix = _sLetter + "> " ;
     if(_sOut.Length > 4) { //ex T[1]:xxxx
         if(_sOut[1] == '[') {

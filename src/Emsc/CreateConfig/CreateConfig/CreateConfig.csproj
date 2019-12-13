@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wType\</OutputPath>
+    <OutputPath>..\..\..\..\..\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\cwc\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
