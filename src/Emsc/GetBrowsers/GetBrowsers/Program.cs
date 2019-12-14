@@ -176,8 +176,11 @@ namespace GetBrowsers
                  string sCompilerPath  = sPathPython + "python.exe"; // C:\Emscripten\emscripten\1.34.1\em++
                  string _sArg = "\"" + sPathEmsc  + "emrun\" --list_browsers ";
 
+
                 ProcessStartInfo processStartInfo = new ProcessStartInfo(sCompilerPath, _sArg);
                 processStartInfo.WorkingDirectory = Path.GetDirectoryName(sCompilerPath);
+
+               // Console.WriteLine("GetBrowser: " + sCompilerPath + " " +  _sArg);
 
                 if (!File.Exists( sCompilerPath)) {
                     Console.WriteLine("Error: Cannot find python: " + sCompilerPath);
