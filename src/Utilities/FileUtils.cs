@@ -286,7 +286,7 @@ namespace cwc
         }
         public static void CopyFolderContents(string sourceFolder, string destinationFolder, string mask =  "*.*", string _sExept = "", Boolean createFolders = true, Boolean recurseFolders  = true)  {
 
-		
+            Output.TraceAction("Copy: "  + sourceFolder + " to " + destinationFolder);
 
             try     {
 

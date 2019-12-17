@@ -2670,12 +2670,21 @@ bExtacted = true;
 */
 
 		public void fCmdCopy(string _sAllArg) {
-		//	Debug.fTrace("COPY:! " + _sAllArg);
-			string[] _aArg =  _sAllArg.Split(' ');
-			if(_aArg.Length >= 2) {
-				//FileUtils.
-				
-				FileUtils.CopyFolderContents(_aArg[0], _aArg[1]); //TODO on run pass only?
+            //	Debug.fTrace("COPY:! " + _sAllArg);
+           // Output.TraceAction("COPY:! " + _sAllArg);
+
+            string[] _aArg =  _sAllArg.Trim().Split(' ');
+            string _sFirst = _aArg[0];
+            string _sSecond = "";
+            for (int i = 1; i < _aArg.Length; i++)  {
+                _sSecond = _aArg[i].Trim();
+                if (_sSecond != "")  {
+                    break;
+                }
+            }
+
+            if (_sSecond != "") {
+				FileUtils.CopyFolderContents(_sFirst, _sSecond); //TODO on run pass only?
 			}
 
 			
