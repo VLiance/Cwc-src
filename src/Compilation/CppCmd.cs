@@ -346,27 +346,44 @@ namespace cwc {
 
 		
 		public void fExtractLib(){
+                oLauchLib_Arg.aLib = oParent.aLib;
 
 
+            fExtractSubLib(oLib);
+            foreach(ModuleData _oSubLib in  oLib.aSubLib) {
+                 fExtractSubLib(_oSubLib);
+            }
+		}
+
+
+        public void fExtractSubLib(ModuleData _oLib ){
                  // oLauchLib_Arg.fSetVar("wPath",  oLib.sCurrFolder);  		
-                  oLauchLib_Arg.fSetVar("_pModule",  oLib.sCurrFolder);  		
+                  oLauchLib_Arg.fSetVar("_pModule",  _oLib.sCurrFolder);  		
                   oLauchLib_Arg.fSetVar("_pOutput", sLauchLib__pOutput);
 
       
-                  oLauchLib_Arg.aLib = oParent.aLib;
+                  //oLauchLib_Arg.aLib = oParent.aLib;
+              
 
-              if(oLib.oLibData != null  && oLib.oLibData.sCmd != "") {
+               
+            if(_oLib.oLibData != null) {
+                 Output.TraceError("TestNotNull: " + _oLib.sAutorName   + ":" +  _oLib.oLibData.sFullName);
+                 Output.TraceError("TestNotNull2: " + _oLib.sAutorName   + ":" +  _oLib.oLibData.sCmd);
+                if( _oLib.oLibData.bExtracted) {
+                      Output.TraceError("Extracted!"); 
+                }
 
-                  //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
-               	     fNewArgCmdRun( oLib.oLibData.sCmd , false,oLauchLib_Arg,false); //Not run
-                   fRunLib();
-        //          Console.WriteLine("havec commmand!! " + oLib.oLibData.sCmd);
+
             }
 
-
-
+              if(_oLib.oLibData != null  && _oLib.oLibData.sCmd != "") {
+                  Output.TraceError("Extract: " + _oLib.sAutorName);
+                  //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
+               	     fNewArgCmdRun( _oLib.oLibData.sCmd , false,oLauchLib_Arg,false); //Not run
+                   fRunLib();
+        //          Console.WriteLine("havec commmand!! " + oLib.oLibData.sCmd);
+                }
 		}
-
 
 
 
@@ -2762,8 +2779,9 @@ bExtacted = true;
 
        //     	_oArg.fCompleteExtractMainArgument(null,false);
 
-         
+            Output.TraceError("bModuleIsRequired?: " + _sAllArg);
 			if(bRun && !Data.bModuleIsRequired){
+                 Output.TraceError("Ok?: ");
                Output.Trace("\f7F#Run " + _sFile + " : \f78" +  _oArg.sAllArg );
                 _oArg.fCompleteExtractMainArgument(null,false);
 				_oArg.fExtract(null);

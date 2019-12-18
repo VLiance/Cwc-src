@@ -101,11 +101,15 @@ namespace cwc {
                     }
                 }
                 aLib.Add(_oLib);
-                /*
-                foreach (ModuleData _oSubLib in _oLib.aSubLib)
-                {
+                
+
+                //To test
+                foreach (ModuleData _oSubLib in _oLib.aSubLib){
                     aLib.Add(_oSubLib);
-                }*/
+                    if(_oSubLib.oLibData != null) {
+			          aLibList.Add(_oSubLib.oLibData);
+                    }
+                }
 
 
             }
@@ -213,6 +217,7 @@ namespace cwc {
 					//Console.WriteLine("Extract Lib: " + _oLib.sFullName);
 			    Debug.fTrace("Extract Lib: " + _oLib.sFullName);
 				_oLib.fExtract(this);
+
 			}
 
 

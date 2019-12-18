@@ -114,6 +114,8 @@ namespace cwc
 					//fSetCompilerType();
 				}*/
 
+                    Output.TraceError("New: " + sFullName);
+
         }
 
 		public void fExtract(ArgumentManager _oArg = null) {
@@ -121,6 +123,7 @@ namespace cwc
 			if(!bExtracted) {
 				bExtracted = true;	
 		
+                Output.TraceError("EXTRACT " + sFullName);
 				fLoadConfig();
 				fPerformSpecialCase(_oArg);
 	
@@ -813,6 +816,7 @@ namespace cwc
 
                     	case "cmd":
 						    sCmd += _sValue + " > ";
+                            Output.TraceError("SCMD FOUND!! " + sCmd);
 					    break;
 
 					}
