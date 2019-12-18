@@ -362,7 +362,16 @@ namespace cwc {
                    fRunLib();
         //          Console.WriteLine("havec commmand!! " + oLib.oLibData.sCmd);
             }
+
+
+
 		}
+
+
+
+
+
+
 
         		
 		public void fRunLib(){
@@ -2334,7 +2343,9 @@ bExtacted = true;
 
 	}
 
-	public void fwCwcUpd(string _sArg) {
+
+
+        public void fwCwcUpd(string _sArg) {
 
 		Data.bUpdateMode = true;
 		Data.sUpdateModeSrc = _sArg.Replace('\\','/');

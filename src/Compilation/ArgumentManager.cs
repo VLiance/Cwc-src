@@ -47,6 +47,7 @@ namespace cwc {
         ArgumentManager oParent;
 
         public ArgumentManager(ArgumentManager _oParent = null) {
+
             Data.aAll_ArgumentManager.Add(this);
             oParent = _oParent;
             if(_oParent != null) {
@@ -54,7 +55,13 @@ namespace cwc {
                      aLib.Add(_oLib);
                 }
             }
-           
+
+
+
+
+
+
+
         }
 
 
@@ -94,6 +101,12 @@ namespace cwc {
                     }
                 }
                 aLib.Add(_oLib);
+                /*
+                foreach (ModuleData _oSubLib in _oLib.aSubLib)
+                {
+                    aLib.Add(_oSubLib);
+                }*/
+
 
             }
 		}

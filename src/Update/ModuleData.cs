@@ -154,7 +154,38 @@ namespace cwc
 		
 		public string sAutorName;
 
-		public  ModuleData( string _sAutorName, bool _bIsCompiler = false) {
+
+
+        public bool bSubLib = false;
+        public string sSubPath = "";
+        ModuleData oParentLib = null;
+        public List<ModuleData> aSubLib = new List<ModuleData>();
+
+
+        public ModuleData(ModuleData _oParentLib, string _sSubPath = "", string _sName = "")  {
+            oParentLib = _oParentLib;
+            bSubLib = true;
+            bIsCompiler = false;
+
+            sName = _sName;
+            sAutorName = _oParentLib.sAutorName + sName;
+            sAutor = _oParentLib.sAutor;
+
+            sOutFolder = _oParentLib.sOutFolder;
+            sPrefixFolder = _oParentLib.sPrefixFolder;
+
+            sSubPath = _sSubPath;
+         //   sCurrFolder = _oParentLib.sCurrFolder + _sPath;
+         //  fGetCompilerList();
+        }
+        
+
+
+
+
+
+
+        public  ModuleData( string _sAutorName, bool _bIsCompiler = false) {
 			sAutorName = _sAutorName;
 			 string[] _aValue = _sAutorName.Split('/'); //Squential
 			
@@ -190,8 +221,24 @@ namespace cwc
 			sPrefixFolder = sName + "-";
 
 			fUpdateGithubUrls();
-			
-		}
+
+
+            if (sName == "GZE")
+            {
+
+                ModuleData _oLib = new ModuleData(this, "src/SubLib_3rdparty/", "GzNima");
+                aSubLib.Add(_oLib);
+
+
+               
+                Output.TraceAction("ADD NIMA LIB: " + _oLib.sCurrFolder);
+                //Testlib
+                //  ModuleData _oLib = new ModuleData(true, "");
+                // oParent.fAddLib(_oLib); 
+            }
+
+
+        }
 
 
 
@@ -293,6 +340,21 @@ namespace cwc
 			if(sCurrFolder != ""){
 
                 fGetCompilerList();
+
+                foreach ( ModuleData _oModule in aSubLib) {
+                    _oModule.sCurrFolder = sCurrFolder + _oModule.sSubPath + "/Lib_" +_oModule.sName + "/";
+                   // if (Directory.Exists() ) {
+                        _oModule.fGetCompilerList();
+                    // }
+                   // oParent.fAddLib(_oModule.oLibData);
+                    //o
+                }
+
+
+
+
+
+
                 /*
 				if(bIsCompiler){
 					fGetCompilerList();
