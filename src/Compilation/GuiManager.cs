@@ -38,7 +38,7 @@ namespace cwc {
 
                     
 				  winThread.SetApartmentState(ApartmentState.STA);  
-				  winThread.IsBackground = true;  
+				//  winThread.IsBackground = true;  
 				  winThread.Start();
 
                 Thread.Sleep(1);

@@ -372,7 +372,8 @@ namespace cwc {
                             }
 						    if( CppCompiler.nError > 0) {
 							    break;
-						    }						
+						    }
+                       // Thread.Sleep(1);				
                     }
               
 			        //  if(Data.oMainForm != null) { //TODO better way?

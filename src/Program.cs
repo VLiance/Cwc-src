@@ -176,15 +176,26 @@ namespace cwc
             }
 
 
+
+
+
             Build.fMainLoop();
+            /*
+            Thread winThread = new Thread(new ThreadStart(() => {
+                try {
+                    Build.fMainLoop();
+                } catch (Exception Ex){
+                    Console.WriteLine("Error: " + Ex.Message + " : " + Ex.Source + " : " + Ex.StackTrace);
+                }
+            }));
+            winThread.Start();
+            while (Base.bAlive)
+            {
+                Thread.Sleep(1);
+            }
 
-
-
-
-
-
-		    SysAPI.fQuit(); 
-            
+                SysAPI.fQuit(); 
+            */
           //  if(Data.bConsoleMode) {SendKeys.SendWait("{ENTER}"); }
             return 0;
 

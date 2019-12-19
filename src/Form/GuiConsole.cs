@@ -734,10 +734,10 @@ namespace cwc {
             fctbConsole.EndUpdate();
 
 
-     //             new Range(fctb,  new Place(0,0),  new Place(5,0)).SetStyle(oWave);
-  
-              
+            //             new Range(fctb,  new Place(0,0),  new Place(5,0)).SetStyle(oWave);
 
+
+          
             
         }
 

@@ -434,7 +434,7 @@ namespace FastColoredTextBoxNS
             set
             {
                 caretVisible = value;
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -465,7 +465,7 @@ namespace FastColoredTextBoxNS
             set
             {
                 textAreaBorderColor = value;
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -481,7 +481,7 @@ namespace FastColoredTextBoxNS
             set
             {
                 textAreaBorder = value;
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -496,7 +496,7 @@ namespace FastColoredTextBoxNS
             set
             {
                 currentLineColor = value;
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -511,7 +511,7 @@ namespace FastColoredTextBoxNS
             set
             {
                 changedLineColor = value;
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -525,7 +525,7 @@ namespace FastColoredTextBoxNS
             {
                 base.ForeColor = value;
                 lines.InitDefaultStyle();
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -5622,7 +5622,7 @@ namespace FastColoredTextBoxNS
             CheckAndChangeSelectionType();
 
             Selection.EndUpdate();
-            Invalidate();
+            //Invalidate();
             return;
         }
 
@@ -5642,7 +5642,7 @@ namespace FastColoredTextBoxNS
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            Invalidate();
+            //Invalidate();
 
             if (lastModifiers == Keys.Control)
             {
@@ -5774,7 +5774,7 @@ namespace FastColoredTextBoxNS
                 VerticalScroll.Value = Math.Min(VerticalScroll.Maximum, LineInfos[iLine].startY - Paddings.Top);
             UpdateScrollbars();
             //
-            Invalidate();
+            //Invalidate();
             OnVisibleRangeChanged();
         }
 
@@ -5838,7 +5838,7 @@ namespace FastColoredTextBoxNS
                     DoCaretVisible();
                     HorizontalScroll.Value = 0;
                     UpdateScrollbars();
-                    Invalidate();
+                    //Invalidate();
                 }
                 else if (place != Selection.Start)
                 {
@@ -5854,7 +5854,7 @@ namespace FastColoredTextBoxNS
                     Selection.End = oldEnd;
                     Selection.EndUpdate();
                     DoCaretVisible();
-                    Invalidate();
+                    //Invalidate();
                     return;
                 }
             }
@@ -6238,7 +6238,7 @@ namespace FastColoredTextBoxNS
         {
             SetAsCurrentTB();
             base.OnGotFocus(e);
-            Invalidate();
+            //Invalidate();
         }
 
         protected override void OnLostFocus(EventArgs e)
@@ -6246,7 +6246,7 @@ namespace FastColoredTextBoxNS
             lastModifiers = Keys.None;
             DeactivateMiddleClickScrollingMode();
             base.OnLostFocus(e);
-            Invalidate();
+            //Invalidate();
         }
 
         /// <summary>
@@ -6439,7 +6439,7 @@ namespace FastColoredTextBoxNS
                 SetVisibleState(i, VisibleState.Visible);
             needRecalc = true;
 
-            Invalidate();
+            //Invalidate();
             OnVisibleRangeChanged();
         }
 
@@ -6470,7 +6470,7 @@ namespace FastColoredTextBoxNS
                     needRecalc = true;
                 }
 
-            Invalidate();
+            //Invalidate();
             OnVisibleRangeChanged();
         }
 
@@ -6506,7 +6506,7 @@ namespace FastColoredTextBoxNS
             FoldedBlocks.Clear();
 
             OnVisibleRangeChanged();
-            Invalidate();
+            //Invalidate();
             UpdateScrollbars();
         }
 
@@ -6672,7 +6672,7 @@ namespace FastColoredTextBoxNS
                     for (int i = from + 1; i <= to; i++)
                         SetVisibleState(i, VisibleState.Hidden);
                     SetVisibleState(from, VisibleState.StartOfHiddenBlock);
-                    Invalidate();
+                    //Invalidate();
                     break;
                 }
             }
@@ -6685,7 +6685,7 @@ namespace FastColoredTextBoxNS
             Selection.Start = new Place(0, newLine);
             //
             needRecalc = true;
-            Invalidate();
+            //Invalidate();
             OnVisibleRangeChanged();
         }
 
@@ -6799,7 +6799,7 @@ namespace FastColoredTextBoxNS
             needRecalc = true;
             Selection.EndUpdate();
             EndUpdate();
-            Invalidate();
+            //Invalidate();
         }
 
         /// <summary>
@@ -6882,7 +6882,7 @@ namespace FastColoredTextBoxNS
             needRecalc = true;
             Selection.EndUpdate();
             EndUpdate();
-            Invalidate();
+            //Invalidate();
         }
 
         /// <summary>
@@ -6995,7 +6995,7 @@ namespace FastColoredTextBoxNS
             lines.Manager.EndAutoUndoCommands();
             Selection.EndUpdate();
             EndUpdate();
-            Invalidate();
+            //Invalidate();
         }
 
         /// <summary>
@@ -7086,7 +7086,7 @@ namespace FastColoredTextBoxNS
                 Selection.Start = new Place(0, iStart);
                 Selection.End = new Place(lines[iEnd].Count, iEnd);
                 Selection.EndUpdate();
-                Invalidate();
+                //Invalidate();
                 return;
             }
         }
@@ -7096,7 +7096,7 @@ namespace FastColoredTextBoxNS
             if (marker is FoldedAreaMarker)
             {
                 ExpandFoldedBlock((marker as FoldedAreaMarker).iLine);
-                Invalidate();
+                //Invalidate();
                 return;
             }
         }
@@ -7140,7 +7140,9 @@ namespace FastColoredTextBoxNS
 
             if (oldLeftBracketPosition != leftBracketPosition ||
                 oldRightBracketPosition != rightBracketPosition)
-                Invalidate();
+            {
+                //Invalidate();
+            }
         }
 
         /// <summary>
@@ -7256,7 +7258,9 @@ namespace FastColoredTextBoxNS
             }
 
             if (oldLeftBracketPosition != leftBracketPosition || oldRightBracketPosition != rightBracketPosition)
-                Invalidate();
+            {
+                //Invalidate();
+            }
         }
 
         /// <summary>
@@ -7277,7 +7281,7 @@ namespace FastColoredTextBoxNS
 
             if (res == null) return false;
             Selection = res;
-            Invalidate();
+            //Invalidate();
             return true;
         }
 
@@ -7317,12 +7321,14 @@ namespace FastColoredTextBoxNS
 
         private void InitializeComponent()
         {
-            SuspendLayout();
+            this.SuspendLayout();
             // 
             // FastColoredTextBox
             // 
-            Name = "FastColoredTextBox";
-            ResumeLayout(false);
+            this.Name = "FastColoredTextBox";
+            this.Load += new System.EventHandler(this.FastColoredTextBox_Load);
+            this.ResumeLayout(false);
+
         }
 
         /// <summary>
@@ -7589,7 +7595,7 @@ window.status = ""#print"";
                 IsChanged = false;
                 throw;
             }
-            Invalidate();
+            //Invalidate();
         }
 
         /// <summary>
@@ -7605,7 +7611,7 @@ window.status = ""#print"";
                 InitTextSource(CreateTextSource());
                 lines.InsertLine(0, TextSource.CreateLine());
                 IsChanged = false;
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -7690,7 +7696,7 @@ window.status = ""#print"";
             if (LinesCount == 0)
                 Text = "";
             NeedRecalc();
-            Invalidate();
+            //Invalidate();
         }
 
         void ISupportInitialize.BeginInit()
@@ -8039,7 +8045,7 @@ window.status = ""#print"";
                     VerticalScroll.Value = Math.Max(0, VerticalScroll.Value - charHeight);
 
                 DoCaretVisible();
-                Invalidate();
+                //Invalidate();
             }
             base.OnDragOver(e);
         }
@@ -8097,7 +8103,7 @@ window.status = ""#print"";
                 base.Cursor = defaultCursor;
                 // Enable drawing
                 SendMessage(Handle, WM_SETREDRAW, 1, 0);
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -8277,6 +8283,11 @@ window.status = ""#print"";
         }
 
         #endregion
+
+        private void FastColoredTextBox_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class PaintLineEventArgs : PaintEventArgs

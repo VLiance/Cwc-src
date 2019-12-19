@@ -404,7 +404,7 @@
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label2.Location = new System.Drawing.Point(909, 2);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 23);
+            this.label2.Size = new System.Drawing.Size(47, 23);
             this.label2.TabIndex = 53;
             this.label2.Text = " ↴ ";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -548,10 +548,12 @@
         '\''};
             this.fctbConsole.AutoScrollMinSize = new System.Drawing.Size(25, 15);
             this.fctbConsole.AutoSize = true;
+            this.fctbConsole.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
             this.fctbConsole.BackBrush = null;
             this.fctbConsole.BackColor = System.Drawing.Color.Black;
             this.fctbConsole.BookmarkColor = System.Drawing.Color.Aqua;
             this.fctbConsole.CaretColor = System.Drawing.Color.White;
+            this.fctbConsole.CausesValidation = false;
             this.fctbConsole.CharHeight = 15;
             this.fctbConsole.CharWidth = 7;
             this.fctbConsole.Cursor = System.Windows.Forms.Cursors.IBeam;

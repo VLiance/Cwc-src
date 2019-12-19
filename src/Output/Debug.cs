@@ -45,46 +45,9 @@ public static extern int printf(string format, __arglist);
                 Console.WriteLine(_sMsg);
             }
 
-         //   Console.WriteLine(_sMsg);
-        //    Console.Write(_sMsg + "\n");
 
-       //     if(Data.oLauchProject.oCurLauch != null && Data.oLauchProject.bReceiveOutput){
-         //   }
-           
-            /*
-            if(  Data.oSelectForm != null){
-               Data.oSelectForm.fHide();
-            }       
-               
-            bLastWasRPrint = false;
-          PipeInput.fResetCursorPos(false);
-       //    Console.SetCursorPosition(0,0);
-        // Console.WriteLine(_sMsg);
-          printf("%s\n", __arglist(_sMsg));
+
             
-            if(Data.bConsoleMode){ /////    ///Give space end -> bug when reach buffer
-                ///
-
-               //    Console.SetBufferSize(Console.BufferWidth, Console.BufferHeight + PipeInput.nNumOfSpaceEnd); //Only eher require?
-
-                int _nLastPos = Console.CursorTop;
-                if(Console.CursorTop + PipeInput.nNumOfSpaceEnd < Console.BufferHeight){
-                      Console.SetCursorPosition(0,Console.CursorTop + PipeInput.nNumOfSpaceEnd); 
-                }
-
-                Console.SetCursorPosition(0,_nLastPos); 
-
-                // Console.SetBufferSize(Console.BufferWidth, Console.BufferHeight ); //Only eher require?
-
-             }
-             */
-
-
-
-            /*
-        if(oGuiForm != null){
-            oGuiForm.fFocus(); 
-         }*/
     }
 
 
