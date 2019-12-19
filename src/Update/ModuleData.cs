@@ -168,7 +168,7 @@ namespace cwc
             bIsCompiler = false;
 
             sName = _sName;
-            sAutorName = _oParentLib.sAutorName + sName;
+            sAutorName = _oParentLib.sAutorName + "/" +  sName;
             sAutor = _oParentLib.sAutor;
 
             sOutFolder = _oParentLib.sOutFolder;
@@ -331,12 +331,17 @@ namespace cwc
 			
 		}
 
+
+        public bool bCompilerDataProcessed = false;
 		public void fGetCompilerData(){
-            if( bExtracting){
+            if( bExtracting || bCompilerDataProcessed)
+            {
                 return;
             }
+            bCompilerDataProcessed = true;
 
-			aCompilerData = new List<CompilerData>(); //Reset
+
+            aCompilerData = new List<CompilerData>(); //Reset
 			if(sCurrFolder != ""){
 
                 fGetCompilerList();

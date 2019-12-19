@@ -24,3 +24,10 @@ E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser\bin\Debug\TreeView.pd
 E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser\bin\Debug\TreeView.dll.CodeAnalysisLog.xml
 E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser\bin\Debug\TreeView.dll.lastcodeanalysissucceeded
 E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser\obj\Debug\Raccoom.TreeViewFolderBrowser.csprojResolveAssemblyReference.cache
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\bin\Debug\TreeView.dll
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\bin\Debug\TreeView.pdb
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\bin\Debug\TreeView.dll.CodeAnalysisLog.xml
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\bin\Debug\TreeView.dll.lastcodeanalysissucceeded
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\obj\Debug\Raccoom.TreeViewFolderBrowser.csprojResolveAssemblyReference.cache
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\obj\Debug\TreeView.dll
+E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\obj\Debug\TreeView.pdb

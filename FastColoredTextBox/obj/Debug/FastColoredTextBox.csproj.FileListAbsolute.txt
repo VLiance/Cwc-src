@@ -23,3 +23,15 @@ E:\_Project\_MyProject\CwcSrc\FastColoredTextBox\obj\Debug\FastColoredTextBox.cs
 E:\_Project\_MyProject\CwcSrc\FastColoredTextBox\obj\Debug\FastColoredTextBox.dll
 E:\_Project\_MyProject\CwcSrc\FastColoredTextBox\obj\Debug\FastColoredTextBox.pdb
 E:\_Project\_MyProject\CwcSrc\FastColoredTextBox\obj\Debug\FastColoredTextBox.csprojResolveAssemblyReference.cache
+E:\_Project\Cwc-src\FastColoredTextBox\bin\Debug\FastColoredTextBox.XML
+E:\_Project\Cwc-src\FastColoredTextBox\bin\Debug\FastColoredTextBox.dll
+E:\_Project\Cwc-src\FastColoredTextBox\bin\Debug\FastColoredTextBox.pdb
+E:\_Project\Cwc-src\FastColoredTextBox\obj\Debug\FastColoredTextBox.csprojResolveAssemblyReference.cache
+E:\_Project\Cwc-src\FastColoredTextBox\obj\Debug\FastColoredTextBoxNS.FastColoredTextBox.resources
+E:\_Project\Cwc-src\FastColoredTextBox\obj\Debug\FastColoredTextBoxNS.FindForm.resources
+E:\_Project\Cwc-src\FastColoredTextBox\obj\Debug\FastColoredTextBoxNS.GoToForm.resources
+E:\_Project\Cwc-src\FastColoredTextBox\obj\Debug\FastColoredTextBoxNS.HotkeysEditorForm.resources
+E:\_Project\Cwc-src\FastColoredTextBox\obj\Debug\FastColoredTextBoxNS.ReplaceForm.resources
+E:\_Project\Cwc-src\FastColoredTextBox\obj\Debug\FastColoredTextBox.csproj.GenerateResource.Cache
+E:\_Project\Cwc-src\FastColoredTextBox\obj\Debug\FastColoredTextBox.dll
+E:\_Project\Cwc-src\FastColoredTextBox\obj\Debug\FastColoredTextBox.pdb

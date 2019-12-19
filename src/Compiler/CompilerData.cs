@@ -73,6 +73,11 @@ namespace cwc
 		public string sFullName;
 		public string sConditionalName = "";
 
+		public static  int nStaticIndex =0;
+		public   int nIndex = 0;
+
+
+
       //  public CompilerData(string _sCompiler, CompilerData _oParent = null) {
         public CompilerData(ModuleData _oModuleData, string _sFilePath, string _sConditionalName = "") {
 				          
@@ -101,21 +106,22 @@ namespace cwc
                 oGblConfigType = new ConfigType(this, "",null);
                 aConfigType.Add("" ,oGblConfigType );
 
-				/*
-				if(oParent != null) {
-	
-					sSubCompiler = _sCompiler;
-					sCompiler = _oParent.sCompiler;
-					//	fSetValueToParent();
-					//fSetSubCompilerType();
-				}else {
-				   sCompiler = _sCompiler;
-					fAddSubCompilo();
-					//fSetCompilerType();
-				}*/
+            /*
+            if(oParent != null) {
 
-                    Output.TraceError("New: " + sFullName);
+                sSubCompiler = _sCompiler;
+                sCompiler = _oParent.sCompiler;
+                //	fSetValueToParent();
+                //fSetSubCompilerType();
+            }else {
+               sCompiler = _sCompiler;
+                fAddSubCompilo();
+                //fSetCompilerType();
+            }*/
 
+         
+            nIndex = nStaticIndex;   //Just for tests
+            nStaticIndex++;   //Just for tests
         }
 
 		public void fExtract(ArgumentManager _oArg = null) {
@@ -123,7 +129,8 @@ namespace cwc
 			if(!bExtracted) {
 				bExtracted = true;	
 		
-                Output.TraceError("EXTRACT " + sFullName);
+           
+
 				fLoadConfig();
 				fPerformSpecialCase(_oArg);
 	
@@ -164,7 +171,7 @@ namespace cwc
 
 
            if(oModuleData.bIsCompiler && sCmd != "") {
-
+                //Output.TraceWarning("Run " + sCmd);
                ArgumentManager  _oArg = new ArgumentManager(Data.oArg);
               // CppCmd.fNewArgCmdRunIt(sCmd,false,_oArg,false);
                 _oArg.ExtractMainArgument( ArgProcess.fExpandAll(sCmd), true);
@@ -816,7 +823,6 @@ namespace cwc
 
                     	case "cmd":
 						    sCmd += _sValue + " > ";
-                            Output.TraceError("SCMD FOUND!! " + sCmd);
 					    break;
 
 					}

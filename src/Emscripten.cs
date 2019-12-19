@@ -18,6 +18,7 @@ namespace cwc
 
 		public static  string sDirEmsc =  "(unknow)";
 		
+
 		public static  string sPathEmsc = "";
 		public static  string sPathPython = "";
 		public static  string sPathNode= "";

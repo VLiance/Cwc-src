@@ -363,24 +363,12 @@ namespace cwc {
 
       
                   //oLauchLib_Arg.aLib = oParent.aLib;
-              
-
-               
-            if(_oLib.oLibData != null) {
-                 Output.TraceError("TestNotNull: " + _oLib.sAutorName   + ":" +  _oLib.oLibData.sFullName);
-                 Output.TraceError("TestNotNull2: " + _oLib.sAutorName   + ":" +  _oLib.oLibData.sCmd);
-                if( _oLib.oLibData.bExtracted) {
-                      Output.TraceError("Extracted!"); 
-                }
-
-
-            }
-
+             
               if(_oLib.oLibData != null  && _oLib.oLibData.sCmd != "") {
-                  Output.TraceError("Extract: " + _oLib.sAutorName);
+
                   //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
                	     fNewArgCmdRun( _oLib.oLibData.sCmd , false,oLauchLib_Arg,false); //Not run
-                   fRunLib();
+                   fRunLib(_oLib);
         //          Console.WriteLine("havec commmand!! " + oLib.oLibData.sCmd);
                 }
 		}
@@ -391,14 +379,15 @@ namespace cwc {
 
 
         		
-		public void fRunLib(){
+		public void fRunLib(ModuleData _oLib)
+        {
             if(bIsRunLib){
         //        bIsRunLib = false;
-               ///            Output.TraceWarning("#Run "  + sLauchLib_wExPath );
+                    //      Output.TraceWarning("#Run "  + oLib.oLibData.sFullName);
 
-                oLauchLib_Arg.fCompleteExtractMainArgument(oLib);
-                oLauchLib_Arg.fExtract(oLib);
-                oLauchLib_Arg.fRun(oLib);
+                oLauchLib_Arg.fCompleteExtractMainArgument(_oLib);
+                oLauchLib_Arg.fExtract(_oLib);
+                oLauchLib_Arg.fRun(_oLib);
         //         Output.TraceWarning("#End "  + sLauchLib_wExPath );
             }
         }
@@ -2779,9 +2768,7 @@ bExtacted = true;
 
        //     	_oArg.fCompleteExtractMainArgument(null,false);
 
-            Output.TraceError("bModuleIsRequired?: " + _sAllArg);
 			if(bRun && !Data.bModuleIsRequired){
-                 Output.TraceError("Ok?: ");
                Output.Trace("\f7F#Run " + _sFile + " : \f78" +  _oArg.sAllArg );
                 _oArg.fCompleteExtractMainArgument(null,false);
 				_oArg.fExtract(null);
