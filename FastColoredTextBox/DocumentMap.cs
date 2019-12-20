@@ -79,8 +79,10 @@ namespace FastColoredTextBoxNS
 
         void Application_Idle(object sender, EventArgs e)
         {
-            if(needRepaint)
+            if (needRepaint)
+            {
                 Invalidate();
+            }
         }
 
         protected virtual void OnTargetChanged()

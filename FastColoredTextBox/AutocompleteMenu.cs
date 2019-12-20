@@ -436,7 +436,7 @@ namespace FastColoredTextBoxNS
                 }
 
                 DoSelectedVisible();
-                Invalidate();
+               Invalidate();
             }
             else
                 Menu.Close();
@@ -557,7 +557,7 @@ namespace FastColoredTextBoxNS
         protected override void OnScroll(ScrollEventArgs se)
         {
             base.OnScroll(se);
-            Invalidate();
+           Invalidate();
         }
 
         protected override void OnMouseClick(MouseEventArgs e)
@@ -568,7 +568,7 @@ namespace FastColoredTextBoxNS
             {
                 FocussedItemIndex = PointToItemIndex(e.Location);
                 DoSelectedVisible();
-                Invalidate();
+               Invalidate();
             }
         }
 
@@ -576,7 +576,7 @@ namespace FastColoredTextBoxNS
         {
             base.OnMouseDoubleClick(e);
             FocussedItemIndex = PointToItemIndex(e.Location);
-            Invalidate();
+           Invalidate();
             OnSelecting();
         }
 
@@ -599,7 +599,7 @@ namespace FastColoredTextBoxNS
                 if (args.Cancel)
                 {
                     FocussedItemIndex = args.SelectedIndex;
-                    Invalidate();
+                   Invalidate();
                     return;
                 }
 
@@ -704,7 +704,7 @@ namespace FastColoredTextBoxNS
             FocussedItemIndex = Math.Max(0, Math.Min(FocussedItemIndex + shift, visibleItems.Count - 1));
             DoSelectedVisible();
             //
-            Invalidate();
+           Invalidate();
         }
 
         private void DoSelectedVisible()

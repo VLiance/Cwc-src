@@ -55,6 +55,8 @@ namespace FastColoredTextBoxNS
             }
         }
 
+
+
         private void LayoutHint(Hint hint)
         {
             if (hint.Inline)

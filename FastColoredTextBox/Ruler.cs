@@ -75,23 +75,23 @@ namespace FastColoredTextBoxNS
 
         void target_VisibleRangeChanged(object sender, EventArgs e)
         {
-            Invalidate();
+           Invalidate();
         }
 
         void target_SelectionChanged(object sender, EventArgs e)
         {
-            Invalidate();
+           Invalidate();
         }
 
         protected virtual void target_Scroll(object sender, ScrollEventArgs e)
         {
-            Invalidate();
+           Invalidate();
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            Invalidate();
+           Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)

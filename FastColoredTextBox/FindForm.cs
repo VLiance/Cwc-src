@@ -56,7 +56,7 @@ namespace FastColoredTextBoxNS
                 {
                     tb.Selection = r;
                     tb.DoSelectionVisible();
-                    tb.Invalidate();
+                    //tb.Invalidate();
                     return;
                 }
                 //

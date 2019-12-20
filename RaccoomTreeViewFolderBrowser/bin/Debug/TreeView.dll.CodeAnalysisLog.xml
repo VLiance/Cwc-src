@@ -12,7 +12,7 @@
          <Members>
           <Member Name="#SendMessage(System.IntPtr,System.Int32,System.IntPtr,System.IntPtr)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="False">
            <Messages>
-            <Message TypeName="PInvokesShouldNotBeSafeCriticalFxCopRule" Category="Microsoft.Security" CheckId="CA5122" Status="Active" Created="2019-12-19 03:15:42Z" FixCategory="NonBreaking">
+            <Message TypeName="PInvokesShouldNotBeSafeCriticalFxCopRule" Category="Microsoft.Security" CheckId="CA5122" Status="Active" Created="2019-12-19 14:39:10Z" FixCategory="NonBreaking">
              <Issue Certainty="50" Level="Warning">P/Invoke method 'NativeMethods.SendMessage(IntPtr, int, IntPtr, IntPtr)' is marked safe-critical.  Since P/Invokes may only be called by critical code, this declaration should either be marked as security critical, or have its annotation removed entirely to avoid being misleading.</Issue>
             </Message>
            </Messages>
@@ -23,7 +23,7 @@
          <Members>
           <Member Name="#AddDummyNode()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="Raccoom.Windows.Forms.TreeNodePath.#ctor(System.String,System.Boolean)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2019-12-19 03:15:42Z" FixCategory="DependsOnFix">
+            <Message Id="Raccoom.Windows.Forms.TreeNodePath.#ctor(System.String,System.Boolean)" TypeName="Do not pass literals as localized parameters" Category="Microsoft.Globalization" CheckId="CA1303" Status="Active" Created="2019-12-19 14:39:10Z" FixCategory="DependsOnFix">
              <Issue Name="KnownValue" Certainty="75" Level="Warning" Path="E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser" File="TreeNodeBase.cs" Line="107">Method 'TreeNodeBase.AddDummyNode()' passes a literal string as parameter 'text' of a call to 'TreeNodePath.TreeNodePath(string, bool)'. Retrieve the following string(s) from a resource table instead: "@@Dummy@@".</Issue>
             </Message>
            </Messages>
@@ -34,21 +34,21 @@
          <Members>
           <Member Name="#OnBeforeCheck(System.Windows.Forms.TreeViewCancelEventArgs)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 03:15:42Z" FixCategory="DependsOnFix">
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 14:39:10Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowser.cs" Line="482">In externally visible method 'TreeViewFolderBrowser.OnBeforeCheck(TreeViewCancelEventArgs)', validate parameter 'e' before using it.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#OnBeforeExpand(System.Windows.Forms.TreeViewCancelEventArgs)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 03:15:42Z" FixCategory="DependsOnFix">
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 14:39:10Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowser.cs" Line="534">In externally visible method 'TreeViewFolderBrowser.OnBeforeExpand(TreeViewCancelEventArgs)', validate parameter 'e' before using it.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#UIVisualizeErrorMessage(System.String,System.Exception)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="1" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 03:15:42Z" FixCategory="DependsOnFix">
+            <Message Id="1" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 14:39:10Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowser.cs" Line="427">In externally visible method 'TreeViewFolderBrowser.UIVisualizeErrorMessage(string, Exception)', validate parameter 'ex' before using it.</Issue>
             </Message>
            </Messages>
@@ -59,7 +59,7 @@
          <Members>
           <Member Name="#PreFilterProperties(System.Collections.IDictionary)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
            <Messages>
-            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 03:15:42Z" FixCategory="DependsOnFix">
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 14:39:10Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowser.cs" Line="594">In externally visible method 'TreeViewFolderBrowserDesigner.PreFilterProperties(IDictionary)', validate parameter 'properties' before using it.</Issue>
             </Message>
            </Messages>
@@ -70,14 +70,14 @@
          <Members>
           <Member Name="#CreateTreeNode(System.Windows.Forms.TreeNodeCollection,Raccoom.Windows.Forms.TreeNodePath,System.String,System.String,System.Boolean,System.Boolean,System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="3" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 03:15:42Z" FixCategory="DependsOnFix">
+            <Message Id="3" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 14:39:10Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowserNodeFactory.cs" Line="112">In externally visible method 'TreeViewFolderBrowserNodeFactory.CreateTreeNode(TreeNodeCollection, TreeNodePath, string, string, bool, bool, bool)', validate parameter 'path' before using it.</Issue>
             </Message>
            </Messages>
           </Member>
           <Member Name="#ExpandNode(System.Windows.Forms.TreeNode)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 03:15:42Z" FixCategory="DependsOnFix">
+            <Message Id="0" TypeName="Validate arguments of public methods" Category="Microsoft.Design" CheckId="CA1062" Status="Active" Created="2019-12-19 14:39:10Z" FixCategory="DependsOnFix">
              <Issue Certainty="75" Level="Warning" Path="E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser" File="TreeViewFolderBrowserNodeFactory.cs" Line="134">In externally visible method 'TreeViewFolderBrowserNodeFactory.ExpandNode(TreeNode)', validate parameter 'parentNode' before using it.</Issue>
             </Message>
            </Messages>
