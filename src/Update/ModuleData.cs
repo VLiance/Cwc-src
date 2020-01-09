@@ -229,9 +229,11 @@ namespace cwc
                 ModuleData _oLib = new ModuleData(this, "src/SubLib_3rdparty/", "GzNima");
                 aSubLib.Add(_oLib);
 
+                ModuleData _oLibBox2d = new ModuleData(this, "src/SubLib_3rdparty/", "GzBox2D");
+                aSubLib.Add(_oLibBox2d);
 
-               
                 Output.TraceAction("ADD NIMA LIB: " + _oLib.sCurrFolder);
+                Output.TraceAction("ADD Box2D LIB: " + _oLib.sCurrFolder);
                 //Testlib
                 //  ModuleData _oLib = new ModuleData(true, "");
                 // oParent.fAddLib(_oLib); 
