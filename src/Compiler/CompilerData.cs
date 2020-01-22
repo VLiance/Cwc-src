@@ -129,7 +129,7 @@ namespace cwc
 			if(!bExtracted) {
 				bExtracted = true;	
 		
-           
+          
 
 				fLoadConfig();
 				fPerformSpecialCase(_oArg);
@@ -141,6 +141,9 @@ namespace cwc
 				}else {
 					fSetCompilerType();
 				}*/
+
+                //  Output.TraceWarning("fLoadConfig " + sFullName);
+                 // Output.TraceWarning("sCmd " + sCmd);
 			}
 		}
 

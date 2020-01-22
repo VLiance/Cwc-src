@@ -344,13 +344,17 @@ namespace cwc {
         public bool bCallCompiler = false;
 		
 
-		
+		bool bLibExtracted = false;
 		public void fExtractLib(){
-                oLauchLib_Arg.aLib = oParent.aLib;
+            if(bLibExtracted){
+                return;
+            }bLibExtracted = true;
 
+             oLauchLib_Arg.aLib = oParent.aLib;
 
             fExtractSubLib(oLib);
             foreach(ModuleData _oSubLib in  oLib.aSubLib) {
+                Output.TraceAction("_oSubLib "  + _oSubLib.sAutorName);
                  fExtractSubLib(_oSubLib);
             }
 		}
@@ -363,7 +367,8 @@ namespace cwc {
 
       
                   //oLauchLib_Arg.aLib = oParent.aLib;
-             
+
+
               if(_oLib.oLibData != null  && _oLib.oLibData.sCmd != "") {
 
                   //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
@@ -383,12 +388,12 @@ namespace cwc {
         {
             if(bIsRunLib){
         //        bIsRunLib = false;
-                    //      Output.TraceWarning("#Run "  + oLib.oLibData.sFullName);
+                         Output.TraceWarning("#Run "  + oLib.sCurrFolder);
 
                 oLauchLib_Arg.fCompleteExtractMainArgument(_oLib);
                 oLauchLib_Arg.fExtract(_oLib);
                 oLauchLib_Arg.fRun(_oLib);
-        //         Output.TraceWarning("#End "  + sLauchLib_wExPath );
+                 Output.TraceWarning("#End "  +  oLib.sCurrFolder);
             }
         }
 
@@ -963,6 +968,46 @@ bExtacted = true;
 		/// /////////////////////////////////////////////////////////////////
 		/// </summary>
 		public  void  fExecute() {
+
+            if(bTestCmd)
+            {
+                Output.TraceWarning("Execute Test CMD");
+
+              // ModuleData _oMyModule =  oCompiler.oModuleData;
+                    
+                  ModuleData _oMyModule = ModuleData.fGetModule("VLiance/GZE",false);
+
+
+
+                    ModuleData _oLib = new ModuleData(_oMyModule, "src/SubLib_3rdparty/", "GzNima");
+                   // _oMyModule.aSubLib.Add(_oLib);
+                       _oMyModule.fAddSubLib(_oLib);
+
+                    ModuleData _oLibBox2d = new ModuleData(_oMyModule, "src/SubLib_3rdparty/", "GzBox2D");
+                //     _oMyModule.aSubLib.Add(_oLibBox2d);
+                     _oMyModule.fAddSubLib(_oLibBox2d);
+
+                    Output.TraceAction("ADD NIMA LIB: " + _oLib.sCurrFolder);
+                    Output.TraceAction("ADD Box2D LIB: " + _oLib.sCurrFolder);
+
+                    _oMyModule.fGetSubLibCompilerData(oParent);
+                       
+
+              
+
+                  /*
+                    if(_oMyModule.bCompilerDataProcessed)
+                    {
+
+                         Output.TraceAction("Already extract ");
+                    }*/
+
+                    //Testlib
+                    //  ModuleData _oLib = new ModuleData(true, "");
+                    // oParent.fAddLib(_oLib); 
+                
+            }
+
 
 		
 
@@ -1864,6 +1909,11 @@ bExtacted = true;
                  	fPreBuildCmd(_sCmdArg);
 
              break;
+             case "#Test":
+                 	fTestCmd(_sCmdArg);
+             break;
+
+
 
              case "#Obj":
                  	fPrObjCmd(_sCmdArg);
@@ -1873,6 +1923,11 @@ bExtacted = true;
 					
             }
 		}
+
+        private void fTestCmd(string _sCmdArg)
+        {
+           bTestCmd = true;
+        }
 
         public string sObjListVar = "";
         private void fPrObjCmd(string sCmdArg) {
@@ -2570,6 +2625,7 @@ bExtacted = true;
 
         internal string sObjList = "";
         internal string sObjUpToDate = "";
+        private bool bTestCmd = false;
 
         public  string fExtractVar( string _sCmd, bool _bWeak = false) {
 			return CppCmd.fExtractVar(_sCmd, this, _bWeak);
@@ -2769,11 +2825,11 @@ bExtacted = true;
        //     	_oArg.fCompleteExtractMainArgument(null,false);
 
 			if(bRun && !Data.bModuleIsRequired){
-               Output.Trace("\f7F#Run " + _sFile + " : \f78" +  _oArg.sAllArg );
+              // Output.Trace("\f7F#Run " + _sFile + " : \f78" +  _oArg.sAllArg );
                 _oArg.fCompleteExtractMainArgument(null,false);
 				_oArg.fExtract(null);
 				_oArg.fRun(null, false, false);
-               Output.Trace("\f7F#End " +_sFile );
+              // Output.Trace("\f7F#End " +_sFile );
 			}
       
 			return _oArg;

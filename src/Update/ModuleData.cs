@@ -180,7 +180,17 @@ namespace cwc
         }
         
 
+        internal void fAddSubLib(ModuleData _oLib){
 
+                foreach (ModuleData _oIsLib in aSubLib)
+                {
+                    if (_oLib.sName == _oIsLib.sName) //TODO Better check (_sSubPath?)
+                    {
+                        return;
+                    }
+                }
+                aSubLib.Add(_oLib);
+        }
 
 
 
@@ -223,7 +233,8 @@ namespace cwc
 			fUpdateGithubUrls();
 
 
-            if (sName == "GZE")
+          //  if (sName == "GZE")
+            if (sName == "GZE_disable")
             {
 
                 ModuleData _oLib = new ModuleData(this, "src/SubLib_3rdparty/", "GzNima");
@@ -267,8 +278,16 @@ namespace cwc
 
 
 
+            public bool bGetCompilerList = false;
 
 		public void fGetCompilerList(){
+            if(bGetCompilerList) {
+                return; //Already done
+            }
+            bGetCompilerList = true;
+            Output.TraceAction("Get: " + sName);
+
+
 			//fGetCompilerData
 			//Debug.fTrace("fGetCompilerList : " + 	sCurrFolder + "wType/");
 			aCompilerData = new List<CompilerData>();
@@ -334,6 +353,23 @@ namespace cwc
 		}
 
 
+        public void fGetSubLibCompilerData(ArgumentManager _oArg = null){
+            if(sCurrFolder != ""){
+                foreach ( ModuleData _oModule in aSubLib) {
+                    _oModule.sCurrFolder = sCurrFolder + _oModule.sSubPath + "/Lib_" +_oModule.sName + "/";
+                   // if (Directory.Exists() ) {
+                        _oModule.fGetCompilerList();
+                        if(_oArg != null) {
+                             _oModule.oLibData.fExtract(_oArg);
+                        }
+                    // }
+                   // oParent.fAddLib(_oModule.oLibData);
+                    //o
+                }
+			}
+        }
+
+
         public bool bCompilerDataProcessed = false;
 		public void fGetCompilerData(){
             if( bExtracting || bCompilerDataProcessed)
@@ -345,9 +381,12 @@ namespace cwc
 
             aCompilerData = new List<CompilerData>(); //Reset
 			if(sCurrFolder != ""){
-
                 fGetCompilerList();
+            }
 
+            fGetSubLibCompilerData();
+
+            /*
                 foreach ( ModuleData _oModule in aSubLib) {
                     _oModule.sCurrFolder = sCurrFolder + _oModule.sSubPath + "/Lib_" +_oModule.sName + "/";
                    // if (Directory.Exists() ) {
@@ -356,35 +395,7 @@ namespace cwc
                    // oParent.fAddLib(_oModule.oLibData);
                     //o
                 }
-
-
-
-
-
-
-                /*
-				if(bIsCompiler){
-					fGetCompilerList();
-				}else{ //Is a lib
-
-                    string _sFoundPath = PathHelper.fFindFolder(sCurrFolder, "cwc");
-                    if(_sFoundPath == "") { //Default
-                        _sFoundPath = sCurrFolder;
-                    }
-                    
-                    String[] _aFiles = Directory.GetFiles(_sFoundPath, "*.cwcfg");
-                    if(_aFiles.Length == 0) {
-                        Output.TraceError("Cannot find '*.cwcfg' file in " + sCurrFolder );
-                        return;
-                    }
-
-                    foreach ( string _sCwcfg_File in _aFiles){
-                        //   Output.TraceGood("Found " +  _sCwcfg_File);
-                        CompilerData _oCompilerData = new CompilerData(this, _sCwcfg_File );
-						oLibData = _oCompilerData;
-                    }
-				}*/
-			}
+			}*/
 			
 			/*
 			if(	oCompilerData == null){
