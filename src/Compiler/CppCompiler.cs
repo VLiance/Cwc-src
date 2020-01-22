@@ -561,6 +561,10 @@ namespace cwc
                             if(_aMsg.Length>= 2) {
                                     switch (_aMsg[0]) {
                                   
+                                     case "[C~:Lib]":
+                                           Output.TraceAction( _sMessage);
+                                     return true;
+
                                        case "C~>C++":
                                         case "C~2Cpp":
                                         case "Cw2Cpp":
