@@ -562,7 +562,9 @@ namespace cwc
                                     switch (_aMsg[0]) {
                                   
                                      case "[C~:Lib]":
-                                           Output.TraceAction( _sMessage);
+                                            Output.TraceAction( _sMessage);
+                                            fAssistCwLib(_sMessage);
+
                                      return true;
 
                                        case "C~>C++":
@@ -596,7 +598,53 @@ namespace cwc
              return false;
         }
 
-       public static void fShowSendedCmd(CppCmd _oFrom ) {
+        private static void fAssistCwLib(string _sMessage) {
+             string[] _aMessage = _sMessage.Split('|');
+            int _nIndex = 0;
+            string _sParentModule = "";
+            string _sPath = "";
+            string _sName = "";
+
+            foreach(string _sMsg in _aMessage) {_nIndex++;
+                if(_sMsg.Length>3) {
+                    if(_sMsg[0] == '(') {
+                        _sParentModule = _sMsg.Substring(1, _sMsg.LastIndexOf(')')   -1);
+                        _sName = _sMsg.Substring(_sParentModule.Length + 2);
+
+                    }
+                    if(_nIndex != 1 && _sMsg[0] == '[') {
+                        _sPath  = _sMsg.Substring(1, _sMsg.Length-1 -1);
+                    }
+                }
+            }
+            
+            //FOUND a SUBLIB
+            if(_sName != "" && _sParentModule != "" && _sPath != "") {
+
+
+              ModuleData _oMyModule = ModuleData.fGetModule(_sParentModule,false);
+              if(_oMyModule != null) {
+
+                    //            ModuleData _oLib = new ModuleData(_oMyModule, "src/SubLib_3rdparty/", "GzNima");
+                   ModuleData _oLib = new ModuleData(_oMyModule, _sPath, _sName);
+                  _oMyModule.fAddSubLib(_oLib);
+                 _oMyModule.fGetSubLibCompilerData( Data.oArg );//Data.oArg  not sure
+
+
+
+                Output.TraceAction("Add SubLib: " + _sName);
+
+               //  Output.TraceError("_sParentModule!! " + _sParentModule);
+              //   Output.TraceError("_sPath!! " + _sPath);
+               //  Output.TraceError("_sName!! " + _sName);
+
+              }
+            }
+
+
+        }
+
+        public static void fShowSendedCmd(CppCmd _oFrom ) {
                fShowArg(_oFrom.sCommandToShow,_oFrom.bIsSubCmd);
              _oFrom.sCommandToShow = "";
         }

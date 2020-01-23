@@ -968,8 +968,8 @@ bExtacted = true;
 		/// /////////////////////////////////////////////////////////////////
 		/// </summary>
 		public  void  fExecute() {
-
-            if(bTestCmd)
+            /*
+            if(bTestCmd && false) //DISABLED
             {
                 Output.TraceWarning("Execute Test CMD");
 
@@ -987,28 +987,16 @@ bExtacted = true;
                 //     _oMyModule.aSubLib.Add(_oLibBox2d);
                      _oMyModule.fAddSubLib(_oLibBox2d);
 
+
+                  Output.TraceAction("Parent LIB: " + _oMyModule.sName);
                     Output.TraceAction("ADD NIMA LIB: " + _oLib.sCurrFolder);
                     Output.TraceAction("ADD Box2D LIB: " + _oLib.sCurrFolder);
 
                     _oMyModule.fGetSubLibCompilerData(oParent);
                        
-
-              
-
-                  /*
-                    if(_oMyModule.bCompilerDataProcessed)
-                    {
-
-                         Output.TraceAction("Already extract ");
-                    }*/
-
-                    //Testlib
-                    //  ModuleData _oLib = new ModuleData(true, "");
-                    // oParent.fAddLib(_oLib); 
-                
             }
 
-
+            */
 		
 
 

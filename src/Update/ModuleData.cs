@@ -22,6 +22,8 @@ namespace cwc
 
         public  Dictionary<string, CompilerData> aPlatformData = new Dictionary<string, CompilerData>();
 
+
+
 		 public static ModuleData fGetModule(string _sName, bool _bIsCompiler){
 			if (aMData.ContainsKey(_sName) == false) {
 				aMData.Add(_sName, new ModuleData(_sName,_bIsCompiler));
@@ -174,7 +176,16 @@ namespace cwc
             sOutFolder = _oParentLib.sOutFolder;
             sPrefixFolder = _oParentLib.sPrefixFolder;
 
+
+
             sSubPath = _sSubPath;
+
+
+
+            Output.TraceAction("sAutorName " + sAutorName);
+            Output.TraceAction("sOutFolder " + sOutFolder);
+            Output.TraceAction("sPrefixFolder " + sPrefixFolder);
+
          //   sCurrFolder = _oParentLib.sCurrFolder + _sPath;
          //  fGetCompilerList();
         }
@@ -356,7 +367,8 @@ namespace cwc
         public void fGetSubLibCompilerData(ArgumentManager _oArg = null){
             if(sCurrFolder != ""){
                 foreach ( ModuleData _oModule in aSubLib) {
-                    _oModule.sCurrFolder = sCurrFolder + _oModule.sSubPath + "/Lib_" +_oModule.sName + "/";
+                 //   _oModule.sCurrFolder = sCurrFolder + _oModule.sSubPath + "/Lib_" +_oModule.sName + "/";
+                    _oModule.sCurrFolder =  _oModule.sSubPath;
                    // if (Directory.Exists() ) {
                         _oModule.fGetCompilerList();
                         if(_oArg != null) {
