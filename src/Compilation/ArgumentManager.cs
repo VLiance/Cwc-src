@@ -67,10 +67,10 @@ namespace cwc {
         //public bool bHaveCompileWithoutLink = false;
 
 
-		public  CompilerData fAddCompiler(string _sName, string _sType = ""){
+		public  CompilerData fAddCompiler(string _sName, string _sType = "", bool _bIsSubCompiler = false){
 
 			
-			CompilerData _oCompiler = Finder.fGetCompiler(_sName, _sType);
+			CompilerData _oCompiler = Finder.fGetCompiler(_sName, _sType, _bIsSubCompiler);
 			if(_oCompiler != null){
 				aCompilerList.Add(_oCompiler 	); //Default compiler
 			}else{

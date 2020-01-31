@@ -187,7 +187,7 @@ namespace cwc.Compiler {
             CompilerData _oCompiler = oParent;
             string _sRequireResult = "";
             foreach(string _sToolchain in oParent.aRequireTC) {
-                _oCompiler = Finder.fGetCompiler(_sToolchain); //TODO get the TYPE  ex: LibRT[Mingw]
+                _oCompiler = Finder.fGetCompiler(_sToolchain, "", true); //TODO get the TYPE  ex: LibRT[Mingw]
                 _sRequireResult= _oCompiler.oGblConfigType.fGetNode(_oAddCompilerConfig, _aValue, _sType);
                 /*
                  if(_sRequireResult != "" ) {

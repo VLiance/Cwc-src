@@ -209,7 +209,7 @@ namespace cwc
 
         private void fRequireModule(ArgumentManager _oParamArg , string _sPath) {
 
-             CppCmd.fAddToolchain(_sPath, _oParamArg);
+             CppCmd.fAddToolchain(_sPath, _oParamArg, true);
         }
 
         public void fMerge(ArgumentManager _oParamArg ) { 
@@ -1398,7 +1398,7 @@ namespace cwc
 
             //Get Recursive compiler depandance
             foreach(string _sCompiler in aRequireTC) {
-                CompilerData _oReqCompiler = Finder.fGetCompiler(_sCompiler); //TODO get the TYPE  ex: LibRT[Mingw]
+                CompilerData _oReqCompiler = Finder.fGetCompiler(_sCompiler, "", true); //TODO get the TYPE  ex: LibRT[Mingw]
                 return _oReqCompiler.fGetConfigFileType(_sExtention);
             }
 

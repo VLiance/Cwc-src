@@ -2345,7 +2345,7 @@ bExtacted = true;
       //  return null;
     }
 
-	public static CompilerData fAddToolchain( string _sName, ArgumentManager _oManager) {    
+	public static CompilerData fAddToolchain( string _sName, ArgumentManager _oManager, bool _bIsSubCompiler = false) {    
 		
 			string _sType ="";
 			//if(_aArg.Length >= 3){
@@ -2364,7 +2364,7 @@ bExtacted = true;
             }
 
 			Data.fAddRequiredModule(_sName,true);
-		   return	_oManager.fAddCompiler(_sName, _sType); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
+		   return	_oManager.fAddCompiler(_sName, _sType, _bIsSubCompiler); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
 
    
 	}
