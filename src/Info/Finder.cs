@@ -48,9 +48,13 @@ namespace cwc {
 					CompilerData _oPlatform = _oCompiler.aPlatformData[_sType];
 					return _oPlatform;
 				}else{
-					//Output.TraceError("Platform not exist: " + _sVar + " (" + _sPlatform + ")");
-					Debug.fTrace("Compiler Type not exist: " + _sVar + " (" + _sType + ")");
-					
+					Output.TraceWarning("Compiler Type not exist: " + _sVar + " (" + _sType + "), switch to Default...");
+                    _sType = "Default";
+                    if (_oCompiler.aPlatformData.ContainsKey(_sType)){
+					    CompilerData _oPlatform = _oCompiler.aPlatformData[_sType];
+					    return _oPlatform;
+				    }
+
 					return null;
 				}
 			}

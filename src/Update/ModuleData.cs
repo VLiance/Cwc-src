@@ -388,12 +388,13 @@ namespace cwc
             {
                 return;
             }
-            bCompilerDataProcessed = true;
+       
 
 
             aCompilerData = new List<CompilerData>(); //Reset
 			if(sCurrFolder != ""){
                 fGetCompilerList();
+                bCompilerDataProcessed = true;
             }
 
             fGetSubLibCompilerData();
