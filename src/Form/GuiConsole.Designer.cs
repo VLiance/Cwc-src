@@ -55,6 +55,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.liteWayvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notePadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cbTitle = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -68,32 +69,32 @@
             this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnAll = new System.Windows.Forms.Panel();
             this.pnCenter = new System.Windows.Forms.Panel();
-            this.fctbConsole = new cwc.CwFCTB();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.hMyScrollBar = new cwc.CwScrollBar();
             this.pnRight = new System.Windows.Forms.Panel();
+            this.pnTreeView = new System.Windows.Forms.Panel();
+            this.pnTreeButtom = new System.Windows.Forms.Panel();
+            this.pnTreeRight = new System.Windows.Forms.Panel();
+            this.fctbConsole = new cwc.CwFCTB();
+            this.hMyScrollBar = new cwc.CwScrollBar();
             this.vMyScrollBar = new cwc.CwScrollBar();
             this.csPrj = new NJFLib.Controls.CollapsibleSplitter();
-            this.pnTreeView = new System.Windows.Forms.Panel();
             this.pnTreeCenter = new cwc.DoubleBufferedPanel();
             this.pnTtreeViewPrj = new cwc.DoubleBufferedPanel();
             this.treeViewPrj = new cwc.CwTreeView();
-            this.pnTreeButtom = new System.Windows.Forms.Panel();
             this.hTreePrjScrollBar = new cwc.CwScrollBar();
-            this.pnTreeRight = new System.Windows.Forms.Panel();
             this.vTreePrjScrollBar = new cwc.CwScrollBar();
             this.msMenu.SuspendLayout();
             this.cmMain.SuspendLayout();
             this.pnAll.SuspendLayout();
             this.pnCenter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).BeginInit();
             this.panel4.SuspendLayout();
             this.pnRight.SuspendLayout();
             this.pnTreeView.SuspendLayout();
-            this.pnTreeCenter.SuspendLayout();
-            this.pnTtreeViewPrj.SuspendLayout();
             this.pnTreeButtom.SuspendLayout();
             this.pnTreeRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).BeginInit();
+            this.pnTreeCenter.SuspendLayout();
+            this.pnTtreeViewPrj.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
@@ -126,14 +127,15 @@
             this.viewInToolStripMenuItem,
             this.ToolStrip_Build,
             this.updateToolStripMenuItem,
-            this.iDEToolStripMenuItem});
+            this.iDEToolStripMenuItem,
+            this.runToolStripMenuItem});
             this.msMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msMenu.Location = new System.Drawing.Point(609, 2);
+            this.msMenu.Location = new System.Drawing.Point(569, 2);
             this.msMenu.Name = "msMenu";
             this.msMenu.Padding = new System.Windows.Forms.Padding(1);
             this.msMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.msMenu.ShowItemToolTips = true;
-            this.msMenu.Size = new System.Drawing.Size(436, 20);
+            this.msMenu.Size = new System.Drawing.Size(476, 20);
             this.msMenu.TabIndex = 50;
             // 
             // lauchToolStripMenuItem
@@ -379,6 +381,14 @@
             this.notePadToolStripMenuItem.Text = "Notepad++";
             this.notePadToolStripMenuItem.Click += new System.EventHandler(this.notePadToolStripMenuItem_Click);
             // 
+            // runToolStripMenuItem
+            // 
+            this.runToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.runToolStripMenuItem.Name = "runToolStripMenuItem";
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 18);
+            this.runToolStripMenuItem.Text = "Run";
+            this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
+            // 
             // cbTitle
             // 
             this.cbTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -533,6 +543,56 @@
             this.pnCenter.Size = new System.Drawing.Size(950, 564);
             this.pnCenter.TabIndex = 14;
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.textBox1);
+            this.panel4.Controls.Add(this.textBox2);
+            this.panel4.Controls.Add(this.hMyScrollBar);
+            this.panel4.Controls.Add(this.label2);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 564);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(950, 46);
+            this.panel4.TabIndex = 13;
+            // 
+            // pnRight
+            // 
+            this.pnRight.Controls.Add(this.vMyScrollBar);
+            this.pnRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnRight.Location = new System.Drawing.Point(950, 0);
+            this.pnRight.Name = "pnRight";
+            this.pnRight.Size = new System.Drawing.Size(19, 610);
+            this.pnRight.TabIndex = 12;
+            // 
+            // pnTreeView
+            // 
+            this.pnTreeView.Controls.Add(this.pnTreeCenter);
+            this.pnTreeView.Controls.Add(this.pnTreeButtom);
+            this.pnTreeView.Controls.Add(this.pnTreeRight);
+            this.pnTreeView.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnTreeView.Location = new System.Drawing.Point(977, 0);
+            this.pnTreeView.Name = "pnTreeView";
+            this.pnTreeView.Size = new System.Drawing.Size(184, 610);
+            this.pnTreeView.TabIndex = 0;
+            // 
+            // pnTreeButtom
+            // 
+            this.pnTreeButtom.Controls.Add(this.hTreePrjScrollBar);
+            this.pnTreeButtom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnTreeButtom.Location = new System.Drawing.Point(0, 591);
+            this.pnTreeButtom.Name = "pnTreeButtom";
+            this.pnTreeButtom.Size = new System.Drawing.Size(165, 19);
+            this.pnTreeButtom.TabIndex = 60;
+            // 
+            // pnTreeRight
+            // 
+            this.pnTreeRight.Controls.Add(this.vTreePrjScrollBar);
+            this.pnTreeRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnTreeRight.Location = new System.Drawing.Point(165, 0);
+            this.pnTreeRight.Name = "pnTreeRight";
+            this.pnTreeRight.Size = new System.Drawing.Size(19, 610);
+            this.pnTreeRight.TabIndex = 59;
+            // 
             // fctbConsole
             // 
             this.fctbConsole.AutoCompleteBracketsList = new char[] {
@@ -582,18 +642,6 @@
             this.fctbConsole.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fctb_MouseClick);
             this.fctbConsole.MouseMove += new System.Windows.Forms.MouseEventHandler(this.fctb_MouseMove);
             // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.textBox1);
-            this.panel4.Controls.Add(this.textBox2);
-            this.panel4.Controls.Add(this.hMyScrollBar);
-            this.panel4.Controls.Add(this.label2);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 564);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(950, 46);
-            this.panel4.TabIndex = 13;
-            // 
             // hMyScrollBar
             // 
             this.hMyScrollBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -611,15 +659,6 @@
             this.hMyScrollBar.ThumbSize = 480;
             this.hMyScrollBar.Value = 0;
             this.hMyScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hMyScrollBar_Scroll);
-            // 
-            // pnRight
-            // 
-            this.pnRight.Controls.Add(this.vMyScrollBar);
-            this.pnRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnRight.Location = new System.Drawing.Point(950, 0);
-            this.pnRight.Name = "pnRight";
-            this.pnRight.Size = new System.Drawing.Size(19, 610);
-            this.pnRight.TabIndex = 12;
             // 
             // vMyScrollBar
             // 
@@ -656,17 +695,6 @@
             this.csPrj.UseAnimations = false;
             this.csPrj.VisualStyle = NJFLib.Controls.VisualStyles.Mozilla;
             this.csPrj.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.collapsibleSplitter2_SplitterMoved);
-            // 
-            // pnTreeView
-            // 
-            this.pnTreeView.Controls.Add(this.pnTreeCenter);
-            this.pnTreeView.Controls.Add(this.pnTreeButtom);
-            this.pnTreeView.Controls.Add(this.pnTreeRight);
-            this.pnTreeView.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnTreeView.Location = new System.Drawing.Point(977, 0);
-            this.pnTreeView.Name = "pnTreeView";
-            this.pnTreeView.Size = new System.Drawing.Size(184, 610);
-            this.pnTreeView.TabIndex = 0;
             // 
             // pnTreeCenter
             // 
@@ -708,15 +736,6 @@
             this.treeViewPrj.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewPrj_AfterExpand);
             this.treeViewPrj.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewPrj_NodeMouseDoubleClick);
             // 
-            // pnTreeButtom
-            // 
-            this.pnTreeButtom.Controls.Add(this.hTreePrjScrollBar);
-            this.pnTreeButtom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnTreeButtom.Location = new System.Drawing.Point(0, 591);
-            this.pnTreeButtom.Name = "pnTreeButtom";
-            this.pnTreeButtom.Size = new System.Drawing.Size(165, 19);
-            this.pnTreeButtom.TabIndex = 60;
-            // 
             // hTreePrjScrollBar
             // 
             this.hTreePrjScrollBar.BackColor = System.Drawing.Color.Black;
@@ -733,15 +752,6 @@
             this.hTreePrjScrollBar.ThumbSize = 82;
             this.hTreePrjScrollBar.Value = 0;
             this.hTreePrjScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hTreePrjScrollBar_Scroll);
-            // 
-            // pnTreeRight
-            // 
-            this.pnTreeRight.Controls.Add(this.vTreePrjScrollBar);
-            this.pnTreeRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnTreeRight.Location = new System.Drawing.Point(165, 0);
-            this.pnTreeRight.Name = "pnTreeRight";
-            this.pnTreeRight.Size = new System.Drawing.Size(19, 610);
-            this.pnTreeRight.TabIndex = 59;
             // 
             // vTreePrjScrollBar
             // 
@@ -788,15 +798,15 @@
             this.pnAll.ResumeLayout(false);
             this.pnCenter.ResumeLayout(false);
             this.pnCenter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.pnRight.ResumeLayout(false);
             this.pnTreeView.ResumeLayout(false);
-            this.pnTreeCenter.ResumeLayout(false);
-            this.pnTtreeViewPrj.ResumeLayout(false);
             this.pnTreeButtom.ResumeLayout(false);
             this.pnTreeRight.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).EndInit();
+            this.pnTreeCenter.ResumeLayout(false);
+            this.pnTtreeViewPrj.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -861,5 +871,6 @@
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gDBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sanitizerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
     }
 }

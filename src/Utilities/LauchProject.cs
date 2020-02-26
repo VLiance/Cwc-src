@@ -26,14 +26,18 @@ namespace cwc{
         }
 
         public  void fLauchDefaultRun(string _sPath = "") { //"" = Last link file
+
+
             if(!Data.bModeIDE ) {
 			   // switch(Data.sBuildAnd) {
 				switch(Data.fGetGlobalVar("wBuildAnd")) {
 
 					case "Run":
+
 							fLauchExe(_sPath);
 					break;
 					 case "Sanitize":
+                    
 							fLauchExe(_sPath, true);
 					break;
 				}
@@ -45,6 +49,7 @@ namespace cwc{
 		 public void fLauchExe(string _sPath = "",  bool _bSanitize = false) {
             if(_sPath == "") {//Lauch default last linked output binary
                  _sPath = PathHelper.ExeWorkDir +   sOutput;
+
             }else {
 
                 //TODO better fonction to detect absolute / relative --> Cleaup
@@ -55,6 +60,8 @@ namespace cwc{
 				}
                /////////////
             }
+
+                              //        Output.TraceAction("Run:" + _sPath);
             if(fLauch(_sPath, _bSanitize)) {
                 
             }
@@ -81,7 +88,7 @@ namespace cwc{
 			
 			
 
-             if (oCurLauch == null) {
+   // if (oCurLauch == null) { //We can relauch !? => Run button
                 if( File.Exists(  _sPath ) ) {
 							
 					if(Data.oGuiConsole != null) {
@@ -184,7 +191,7 @@ namespace cwc{
                 }else {
 				Output.TraceError("Executable not found: " + _sPath);
 				}
-            }
+      //      }
              return false;
         }
 
@@ -277,7 +284,6 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
              //    fResetList();
                //  Data.StartBuild();
                  Data.sCmd = "StartBuild";
-
             }
 		}
 
@@ -292,7 +298,8 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
 				//return;
 			}else {
 				foreach(CppCmd _oCmd in _aLinkCmd ) {
-					if( _oCmd.sOutputFile != "") {
+					//if( _oCmd.sOutputFile != "") {
+					if( _oCmd.sOutputFile != "" && _oCmd.sOutputFile[_oCmd.sOutputFile.Length-1] != '/') {
 						 sOutput= _oCmd.sOutputFile;
 					}
 				}

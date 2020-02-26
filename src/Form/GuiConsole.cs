@@ -2420,6 +2420,11 @@ namespace cwc {
         private void gDBToolStripMenuItem_Click(object sender, EventArgs e) {
 
         }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+              Data.oLauchProject.fLauchDefaultRun("");
+        }
     }
 
 
