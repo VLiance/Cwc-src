@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\cwc\</OutputPath>
+    <OutputPath>E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\cwc\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

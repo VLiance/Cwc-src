@@ -8,6 +8,92 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
+/*
+ * 
+ LLVM_ROOT='E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/upstream/fastcomp/bin/'
+BINARYEN_ROOT='E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/upstream/fastcomp/bin/'
+EMSCRIPTEN_NATIVE_OPTIMIZER='E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/upstream/fastcomp/bin/optimizer.exe'
+NODE_JS='E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/node/12.9.1_64bit/bin/node.exe'
+JAVA = 'E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/java/8.152_64bit/bin/java.exe'
+SPIDERMONKEY_ENGINE='js.exe'
+EMSCRIPTEN_ROOT='E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/upstream/emscripten/'
+CRUNCH='crunch.exe'
+V8_ENGINE = ''
+TEMP_DIR = 'C:\Windows\TEMP'
+COMPILER_ENGINE = NODE_JS
+JS_ENGINES = [NODE_JS]
+
+
+
+
+E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999>set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\TortoiseGit\bin;C:\Program Files\Git\cmd;C:\Users\Maeiky\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\HaxeToolkit\haxe;C:\HaxeToolkit\neko;C:\HaxeToolkit\haxe\lib;C:\HaxeToolkit\haxe;C:\Program Files (x86)\MSBuild\14.0\Bin;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\MSBuild\14.0\Bin;C:\Users\Maeiky\AppData\Local\Microsoft\WindowsApps;C:\HaxeToolkit\neko;C:\HaxeToolkit\haxe\lib;C:\HaxeToolkit\haxe;C:\Users\Maeiky\AppData\Local;C:\Users\Maeiky\AppData\Local\Mozilla Firefox;C:\Python27\;;
+Writing .emscripten configuration file to user home directory C:\Users\Maeiky/
+Backing up old Emscripten configuration file in C:\Users\Maeiky\.emscripten.old
+The Emscripten configuration file C:\Users\Maeiky\.emscripten has been rewritten with the following contents:
+
+NODE_JS = 'E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/node/12.9.1_64bit/bin/node.exe'
+PYTHON = 'E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/python/3.7.4_64bit/python.exe'
+JAVA = 'E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/java/8.152_64bit/bin/java.exe'
+LLVM_ROOT = 'E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/upstream/bin'
+BINARYEN_ROOT = 'E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/upstream'
+EMSCRIPTEN_ROOT = 'E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/upstream/emscripten'
+TEMP_DIR = 'C:/Users/Maeiky/AppData/Local/Temp'
+COMPILER_ENGINE = NODE_JS
+JS_ENGINES = [NODE_JS]
+
+Adding directories to PATH:
+PATH += E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999
+PATH += E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\node\12.9.1_64bit\bin
+PATH += E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\java\8.152_64bit\bin
+PATH += E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\upstream\emscripten
+
+Setting environment variables:
+EMSDK = E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999
+EM_CONFIG = C:\Users\Maeiky\.emscripten
+EMSDK_NODE = E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\node\12.9.1_64bit\bin\node.exe
+EMSDK_PYTHON = E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\python\3.7.4_64bit\python.exe
+JAVA_HOME = E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\java\8.152_64bit
+
+
+Set the following tools as active:
+   node-12.9.1-64bit
+   python-3.7.4-64bit
+   java-8.152-64bit
+   releases-upstream-9e60f34accb4627d7358223862a7e74291886ab6-64bit
+
+The changes made to environment variables only apply to the currently running shell instance. Use the 'emsdk_env.bat' to re-enter this environment later, or if you'd like to permanently register this environment globally to all users in Windows Registry, rerun this command with the option --global.
+Setting environment variables:
+EMSDK = E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999
+
+E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\python\3.7.4_64bit\python.exe
+cache:INFO: generating system asset: is_vanilla.txt... (this will be cached in "C:\Users\Maeiky\.emscripten_cache\is_vanilla.txt" for subsequent builds)
+cache:INFO:  - ok
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 1.39.8
+clang version 11.0.0 (Cswircachegitchromium.googlesource.com-external-github.com-llvm-llvm--project 9dc84e9b02d1e402503906099d42fbae4da7d8d9)
+Target: x86_64-pc-windows-msvc
+Thread model: posix
+InstalledDir: E:/_Project/_Cwc/Toolchain/VLianceTool/WebRT/WebRT-999/upstream/bin
+shared:INFO: (Emscripten: Running sanity checks)
+Press any key to continue . . .
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+//TODO set pytjon vars:
+//EM_BUILD_VERBOSE=3
+//EMCC_DEBUG=1
+
+
+
 
 namespace CreateConfig
 {
@@ -40,6 +126,7 @@ namespace CreateConfig
 
 
 		public static void fGetPathEmsc() {
+            /* //No subdir version anymore
 			string[] directories = Directory.GetDirectories(sDirEmsc + "emscripten/");
 			string lastDirectory = "";
 
@@ -49,6 +136,9 @@ namespace CreateConfig
 			}
 			sEmscVer =  Path.GetFileName(lastDirectory);
 			sPathEmsc = sDirEmsc + "emscripten/" + sEmscVer + "/";
+            */ 
+			sPathEmsc = sDirEmsc + "upstream/emscripten/" + sEmscVer;
+
 		}
 		
 		public static void fGetPython() {
@@ -87,33 +177,47 @@ namespace CreateConfig
 		//	Program.fDebug("java: " + sPathJava);
 		}
 		public static void fGetSpider() {
-			string[] directories = Directory.GetDirectories(sDirEmsc + "spidermonkey/");
-			string lastDirectory = "";
 
-			if (directories.Length > 0){
-				Array.Sort(directories);
-				lastDirectory = directories[directories.Length - 1];
-			}
-			sSpiderVer =  Path.GetFileName(lastDirectory);
-			sPathSpider = sDirEmsc + "spidermonkey/" + sSpiderVer + "/";
+            string _sDir = sDirEmsc + "spidermonkey/";
+            if(Directory.Exists(_sDir)) {
+			    string[] directories = Directory.GetDirectories(_sDir);
+			    string lastDirectory = "";
+
+			    if (directories.Length > 0){
+				    Array.Sort(directories);
+				    lastDirectory = directories[directories.Length - 1];
+			    }
+			    sSpiderVer =  Path.GetFileName(lastDirectory);
+          
+            
+			    sPathSpider = sDirEmsc + "spidermonkey/" + sSpiderVer + "/";
+            }
+
+
 		//	Program.fDebug("spidermonkey: " + sPathSpider);
 		}
 		public static void fGetCrunch() {
-			string[] directories = Directory.GetDirectories(sDirEmsc + "crunch/");
-			string lastDirectory = "";
 
-			if (directories.Length > 0){
-				Array.Sort(directories);
-				lastDirectory = directories[directories.Length - 1];
-			}
-			sCrunchVer =  Path.GetFileName(lastDirectory);
-			sPathCrunch = sDirEmsc + "crunch/" + sCrunchVer + "/";
+           string _sDir = sDirEmsc + "crunch/";
+            if(Directory.Exists(_sDir)) {
+
+			    string[] directories = Directory.GetDirectories(_sDir);
+			    string lastDirectory = "";
+
+			    if (directories.Length > 0){
+				    Array.Sort(directories);
+				    lastDirectory = directories[directories.Length - 1];
+			    }
+			    sCrunchVer =  Path.GetFileName(lastDirectory);
+			    sPathCrunch = sDirEmsc + "crunch/" + sCrunchVer + "/";
+
+            }
 		//	Program.fDebug("crunch: " + sPathCrunch);
 		}
 		public static void fGetClang() {
+            /* //No subdir anymore
 			string[] directories = Directory.GetDirectories(sDirEmsc + "clang/");
 			string lastDirectory = "";
-
 			if (directories.Length > 0){
 				Array.Sort(directories);
 				lastDirectory = directories[directories.Length - 1];
@@ -121,11 +225,17 @@ namespace CreateConfig
 			sClangVer =  Path.GetFileName(lastDirectory);
 			sPathClang = sDirEmsc + "clang/" + sClangVer + "/";
 			//Program.fDebug("clang: " + sPathClang);
+            */
+
+           //	sPathClang = sDirEmsc +  "upstream/bin/";
+           	sPathClang = sDirEmsc +  "upstream/fastcomp/bin/";
+          
 		}
        public static void fGetBinaryen() {
 			
-			sPathBinaryen = sPathClang + "binaryen/";
-			//Program.fDebug("clang: " + sPathClang);
+			//sPathBinaryen = sPathClang + "binaryen/";
+            //Same as clang
+            sPathBinaryen = sDirEmsc +  "upstream/";
 		}
 	//fEmscExist();
 		
@@ -167,14 +277,17 @@ namespace CreateConfig
 			sDirEmsc = sFullDir.Replace('\\','/');
 
             string _sLast = sDirEmsc;
+
 		     sDirEmsc = sDirEmsc.Substring(0, sDirEmsc.Length - sDirName.Length);
+
+            /*
             if (!Directory.Exists( sDirEmsc + "emscripten")) {
                 sDirEmsc = _sLast;
                   if (!Directory.Exists( sDirEmsc + "emscripten")) {
                     Console.WriteLine("Error Emscripten not found");
                     return;
                 }
-            }
+            }*/
 
 
 			fCreateEmscConfig();
@@ -232,6 +345,7 @@ namespace CreateConfig
                         writer.WriteLine("EMSCRIPTEN_NATIVE_OPTIMIZER='" + sPathClang + "optimizer.exe'");
                         writer.WriteLine("NODE_JS='" + sPathNode + "bin/node.exe'");
                         writer.WriteLine("JAVA = '" + sPathJava + "bin/java.exe'");
+                        writer.WriteLine("PYTHON = '" + sPathPython + "python.exe'");
                         writer.WriteLine("SPIDERMONKEY_ENGINE='" + sPathSpider + "js.exe'");
                         writer.WriteLine("EMSCRIPTEN_ROOT='" + sPathEmsc + "'");
                         writer.WriteLine("CRUNCH='" + sPathCrunch + "crunch.exe'");

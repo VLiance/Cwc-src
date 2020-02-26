@@ -39,7 +39,9 @@ namespace GetBrowsers
 
 
 
+	
 		public static void fGetPathEmsc() {
+            /* //No subdir version anymore
 			string[] directories = Directory.GetDirectories(sDirEmsc + "emscripten/");
 			string lastDirectory = "";
 
@@ -49,8 +51,11 @@ namespace GetBrowsers
 			}
 			sEmscVer =  Path.GetFileName(lastDirectory);
 			sPathEmsc = sDirEmsc + "emscripten/" + sEmscVer + "/";
+            */ 
+			sPathEmsc = sDirEmsc + "upstream/emscripten/" + sEmscVer;
+
 		}
-		
+
 		public static void fGetPython() {
 			string[] directories = Directory.GetDirectories(sDirEmsc + "python/");
 			string lastDirectory = "";
@@ -61,6 +66,7 @@ namespace GetBrowsers
 			}
 			sPythonVer =  Path.GetFileName(lastDirectory);
 			sPathPython = sDirEmsc + "python/" + sPythonVer + "/";
+
 		}
 
 	//fEmscExist();
@@ -104,13 +110,15 @@ namespace GetBrowsers
 
 		  string _sLast = sDirEmsc;
 		     sDirEmsc = sDirEmsc.Substring(0, sDirEmsc.Length - sDirName.Length);
+            /*
+
             if (!Directory.Exists( sDirEmsc + "emscripten")) {
                 sDirEmsc = _sLast;
                   if (!Directory.Exists( sDirEmsc + "emscripten")) {
                     Console.WriteLine("Error Emscripten not found");
                     return;
                 }
-            }
+            }*/
 
 
 			//Console.WriteLine( sDirEmsc);
