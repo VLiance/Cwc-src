@@ -131,17 +131,22 @@ namespace cwc {
         {
             KillProcessAndChildrens(Convert.ToInt32(mo["ProcessID"]));
         }
-               //     MessageBox.Show("Kil: "+  proc.MainWindowTitle);
+                   // MessageBox.Show("Kill: "+  proc.MainWindowTitle);
               //Debug.fTrace("Kil: "+  proc.);
                  Thread.Sleep(1);
 				if(proc.Id != Data.MainProcess.Id && !proc.HasExited ) {
                         bool _bSkip = false;
 
-                        try {
-                       string _sFileName = Path.GetFileName(proc.MainModule.FileName);
-                        if (_sFileName.IndexOf("notepad") != -1) { //never kill notepad app
-                            _bSkip = true;
-                        } 
+
+                     try { //Notepad
+                               string _sFileName = Path.GetFileName(proc.MainModule.FileName);
+                                if (_sFileName.IndexOf("notepad") != -1) { //never kill notepad app
+                                    _bSkip = true;
+                                } 
+                     } catch (Exception ex) { }
+
+
+                      try {
                   //  MessageBox.Show(_sFileName);
                         if(!_bSkip){
                           try{
