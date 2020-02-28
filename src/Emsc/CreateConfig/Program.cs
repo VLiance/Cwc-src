@@ -123,6 +123,8 @@ namespace CreateConfig
 		public static  string sCrunchVer = "";
 		public static  string sClangVer = "";
 
+        public static string sPathLLVM_Optimizer = "";
+        public static string sPathLLVM = "";
 
 
 		public static void fGetPathEmsc() {
@@ -227,8 +229,9 @@ namespace CreateConfig
 			//Program.fDebug("clang: " + sPathClang);
             */
 
-           //	sPathClang = sDirEmsc +  "upstream/bin/";
-           	sPathClang = sDirEmsc +  "upstream/fastcomp/bin/";
+           	sPathLLVM_Optimizer = sDirEmsc +  "upstream/bin/";
+           	sPathLLVM = sDirEmsc +  "upstream/fastcomp/bin/";
+           //	sPathClang = sDirEmsc +  "upstream/fastcomp/bin/";
           
 		}
        public static void fGetBinaryen() {
@@ -340,9 +343,9 @@ namespace CreateConfig
 
                         StreamWriter writer = new StreamWriter(fs1);
                         writer.WriteLine("import os");
-                        writer.WriteLine("LLVM_ROOT='" + sPathClang + "'");
+                        writer.WriteLine("LLVM_ROOT='" + sPathLLVM + "'");
                         writer.WriteLine("BINARYEN_ROOT='" + sPathBinaryen + "'");
-                        writer.WriteLine("EMSCRIPTEN_NATIVE_OPTIMIZER='" + sPathClang + "optimizer.exe'");
+                        writer.WriteLine("EMSCRIPTEN_NATIVE_OPTIMIZER='" + sPathLLVM_Optimizer + "optimizer.exe'");
                         writer.WriteLine("NODE_JS='" + sPathNode + "bin/node.exe'");
                         writer.WriteLine("JAVA = '" + sPathJava + "bin/java.exe'");
                         writer.WriteLine("PYTHON = '" + sPathPython + "python.exe'");
@@ -399,7 +402,9 @@ namespace CreateConfig
 	
 	 public static bool bBrowserSet = false;
 	 public static bool bBrowserProcess = false;
-	 public static void fAddViewTargetBrowser(){
+
+
+        public static void fAddViewTargetBrowser(){
            aBrowser = new List<String> {};
            aBrowserVersion = new List<String> {};
 			
