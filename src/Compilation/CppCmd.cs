@@ -1286,10 +1286,10 @@ bExtacted = true;
                  //   Output.TraceWarning("List: " + sObjList);
                 if(sObjListVar != "") {
                     fSetVar(sObjListVar, "[" + sObjList  + "]");
-
+                    Output.TraceAction("Set: " + sObjListVar + " = "  +   "[" + sObjList  + "]");
                     foreach(var  item  in aObjList){
                         fSetVar(sObjListVar + "_" + item.Key , "[" + item.Value  + "]");
-                     //    Output.TraceAction("Set: " + sObjListVar + "_" + item.Key + " = "  +   "[" + item.Value  + "]");
+                         Output.TraceAction("Set: " + sObjListVar + "_" + item.Key + " = "  +   "[" + item.Value  + "]");
                     }
 
                   //    Output.TraceAction("sObjListVarval + "  + sObjListVar);
