@@ -1295,6 +1295,7 @@ namespace cwc
                          case "OS":
                          case "O3":
                          case "O2":
+                         case "OZ":
                            //  _sArg += "-O2 " + oGblConfigType.sName + "| ";
                              _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", _sOptLevel}, _oConfig.sName)+ " ";
                          break;

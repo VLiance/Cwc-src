@@ -196,8 +196,9 @@ namespace cwc {
                 return;
             }
 
+            //Thread 1 received signal SIGSEGV, Segmentation fault.
             //Program received signal SIGSEGV, Segmentation fault
-            if (   _sOut.IndexOf("Program received signal",0) != -1         ) {
+            if (   _sOut.IndexOf("received signal",0) != -1         ) {
               
                 _sColor = Output.sErrorColor;
                   Output.Trace(_sLetter + "> " +_sColor +_sOut);

@@ -329,9 +329,10 @@ namespace CreateConfig
 			/////////////////////////
             string _sPath = sDirEmsc + "Emsc.cfg";
 
+            //Check if already generated with valid value (don't recreate it)
 			if (File.Exists(_sPath)) {
 				string[] lines =  File.ReadAllLines(_sPath);
-				if (lines[1] != "LLVM_ROOT='" + sPathClang + "'") {
+				if (lines[1] != "LLVM_ROOT='" + sPathLLVM + "'") {
 					File.Delete(_sPath);
 				}
 			}

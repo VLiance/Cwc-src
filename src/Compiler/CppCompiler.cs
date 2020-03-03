@@ -585,7 +585,6 @@ namespace cwc
                                              _oCmd.fAddUpToDateObject(_aMsg[1] + ".cpp");
                                                 
                                          return true;
-                          
                                     }
                               }
                        break;

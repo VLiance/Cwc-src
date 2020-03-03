@@ -177,7 +177,10 @@ namespace cwc {
                 }
 
           char _cSwithcLetter = _sFullRArg[0];
-
+          char _cSecondLetter = ' ';
+           if(_sFullRArg.Length > 1){
+                _cSecondLetter= _sFullRArg[1];
+           }
 
 
 
@@ -300,9 +303,14 @@ namespace cwc {
                         	break;
 
 							case 'c': //Must have a compiler -> use Default backend compiler
-								_bCompiling = true;
-                                //get compilation type
-                                fPreGetCompilationType(_sRArg);
+                              	_bCompiling = true;
+                                if(_cSecondLetter == 'w') {
+                                     fPreGetCompilationType(_sRArg, "cw");
+                                }else { 
+                                     fPreGetCompilationType(_sRArg);
+                                }
+							
+                                //get compilation type 
                                 
 							break;
 							case 'i':
@@ -326,8 +334,13 @@ namespace cwc {
 		}
 
         public string sCompileExtention = "";
-        private void fPreGetCompilationType(string sRArg) {
+        private void fPreGetCompilationType(string sRArg, string _sForce = "") {
          
+            if(_sForce != "") {
+                sCompileExtention = _sForce;
+                return;
+            }
+
             if (sRArg[sRArg.Length-1] == '/') { //It's a folder, it will be processed in subcommands
                 return;
             }
@@ -915,14 +928,43 @@ bExtacted = true;
 
         }
 
+        internal void fAddToObjDic(string _sKey, string _sObj) {
+             if(!aObjList.ContainsKey(_sKey)){
+                aObjList.Add(_sKey, "");
+            }
+            aObjList[_sKey] += _sObj + ",";
+        }
+
+
         internal void fAddCompiledObject(string _sObj) {
-           sObjList += _sObj + ",";
+            int _nEndIndex = _sObj.IndexOf(']');
+            int _nBegIndex = _sObj.IndexOf('[');
+            if(_nEndIndex == -1 || _nBegIndex == -1)
+            {
+                    Output.TraceError(_sObj);
+                return;
+            }
+
+            string _sFile = _sObj.Substring(_nEndIndex+1);
+         
+            string _sFullLib = _sObj.Substring(_nBegIndex + 1 , _nEndIndex - (_nBegIndex + 1));
+           string[] _aLib =  _sFullLib.Split(':');
+
+           // Output.TraceWarning(_aLib[0]);
+
+            fAddToObjDic(_aLib[0], _sFile);
+            if(_aLib.Length > 1) {
+                fAddToObjDic(_aLib[1], _sFile);
+            }
       
+           sObjList += _sFile + ",";
         }
 
         internal void fAddUpToDateObject(string _sObj) {
-            sObjUpToDate += _sObj + ",";
-            sObjList += _sObj + ",";
+            fAddCompiledObject(_sObj);
+
+            sObjUpToDate += _sObj + ","; //TODO add string file to
+           // sObjList += _sObj + ",";
         }
 
         private string fGetConditionalRealCommand() {
@@ -1237,8 +1279,28 @@ bExtacted = true;
               //    Console.WriteLine("--------!!!sObjUpToDate " + sObjUpToDate);
             }
 
+
+           //  .ContainsKey( _oNewDir.sFile)
+           //if(aObjList.Count != 0){
+            if(sObjList != "") {
+                 //   Output.TraceWarning("List: " + sObjList);
+                if(sObjListVar != "") {
+                    fSetVar(sObjListVar, "[" + sObjList  + "]");
+
+                    foreach(var  item  in aObjList){
+                        fSetVar(sObjListVar + "_" + item.Key , "[" + item.Value  + "]");
+                     //    Output.TraceAction("Set: " + sObjListVar + "_" + item.Key + " = "  +   "[" + item.Value  + "]");
+                    }
+
+                  //    Output.TraceAction("sObjListVarval + "  + sObjListVar);
+                   //   Output.TraceAction("sObjListVarSert + "  + sObjList);
+                  //   Console.WriteLine("fSetVar " + sObjListVar +  " " + sObjList);
+                }
+
+            }
+             /*
            if(sObjList != "") {
-             
+             Output.TraceWarning("List: " + sObjList);
                 if(sObjListVar != "") {
                     fSetVar(sObjListVar, "[" + sObjList  + "]");
 
@@ -1247,6 +1309,10 @@ bExtacted = true;
                   //   Console.WriteLine("fSetVar " + sObjListVar +  " " + sObjList);
                 }
             }
+            */
+
+
+
          
         }
    
@@ -2610,6 +2676,10 @@ bExtacted = true;
         private string sHasIncluded_Arg = "";
         private string sHasIncluded_True = "";
         private string sHasIncluded_False = "";
+
+
+
+         public Dictionary<string, string> aObjList = new Dictionary<string, string>();
 
         internal string sObjList = "";
         internal string sObjUpToDate = "";
