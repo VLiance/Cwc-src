@@ -5304,12 +5304,14 @@ namespace FastColoredTextBoxNS
             graphics.Restore(state);
             using (var font = new Font(FontFamily.GenericSansSerif, 8f))
                 graphics.DrawString("Recording...", font, Brushes.Red, new PointF(rect.Left + h, rect.Top));
+            /*
             System.Threading.Timer tm = null;
             tm = new System.Threading.Timer(
                 (o) => {
                     Invalidate(rect);
                     tm.Dispose();
                 }, null, 200, System.Threading.Timeout.Infinite);
+            */
         }
 
         private void DrawTextAreaBorder(Graphics graphics)
