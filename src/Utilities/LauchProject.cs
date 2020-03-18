@@ -25,7 +25,7 @@ namespace cwc{
             //fLauchDefaultRun();
         }
 
-        public  void fLauchDefaultRun(string _sPath = "") { //"" = Last link file
+        public  void fLauchDefaultRun(string _sPath = "", string _sSubArg = "") { //"" = Last link file
 
 
             if(!Data.bModeIDE ) {
@@ -34,11 +34,11 @@ namespace cwc{
 
 					case "Run":
 
-							fLauchExe(_sPath);
+							fLauchExe(_sPath, false, _sSubArg);
 					break;
 					 case "Sanitize":
                     
-							fLauchExe(_sPath, true);
+							fLauchExe(_sPath, true, _sSubArg);
 					break;
 				}
 			}
@@ -46,7 +46,7 @@ namespace cwc{
 
 
 
-		 public void fLauchExe(string _sPath = "",  bool _bSanitize = false) {
+		 public void fLauchExe(string _sPath = "",  bool _bSanitize = false, string _sSubArg = "") {
             if(_sPath == "") {//Lauch default last linked output binary
                  _sPath = PathHelper.ExeWorkDir +   sOutput;
 
@@ -62,13 +62,13 @@ namespace cwc{
             }
 
                               //        Output.TraceAction("Run:" + _sPath);
-            if(fLauch(_sPath, _bSanitize)) {
+            if(fLauch(_sPath, _bSanitize, _sSubArg)) {
                 
             }
         }
 
 
-		 public bool fLauch(string _sPath, bool _bSanitize = false) {
+		 public bool fLauch(string _sPath, bool _bSanitize = false, string _sSubArg = "") {
 
             if(_sPath.Length > 1 && _sPath[_sPath.Length-1] =='/') { //Not a file
                 Output.TraceError("Path is not a File: " + _sPath);
@@ -139,8 +139,10 @@ namespace cwc{
             //oCurLauch.UseShellExecute = false;
         }
         
+        _sArg += _sSubArg;
+        _sArg = _sArg.Trim();
+           Output.TraceWarning("_sSubArg " + _sSubArg);
 
-  
         oCurLauch.dError = new LauchTool.dIError(fAppError); //Too much error in Emsc?
         oCurLauch.dOut = new LauchTool.dIOut(fAppOut);
  
@@ -154,7 +156,7 @@ namespace cwc{
 
 
          if(_bLauchDebug){
-		        Output.TraceAction("Debug: " + _sPath +_sPrintArg);
+		        Output.TraceAction("Debug: " + _sPath + _sPrintArg);
             } else {
                 Output.TraceAction("Run: " + _sPath  +  _sPrintArg);
             }
@@ -165,17 +167,11 @@ namespace cwc{
             string _sCompiler = Data.fGetGlobalVar("_wToolchain");
 			string _sPlatform = Data.fGetGlobalVar("_sConfig_Type");
 		    CompilerData	_oCompiler = Finder.fUseCompiler(_sCompiler, _sPlatform);
-
-                        //GDB _oGdb  =  new GDB(this, oCurLauch, _oCompiler.oModuleData.sCurrFolder + _oCompiler.sExe_Debugger, _sExePath, _oCompiler); //Create debugger proxy
-
             string _sDebugger =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Debugger"}, "");
-          //  string _sDebugger =  _oCompiler.oModuleData.sCurrFolder + _oCompiler.sExe_Debugger;
-            GDB _oGdb  =  new GDB(this, oCurLauch,_sDebugger, _sExePath, _oCompiler); //Create debugger proxy
- // _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Linker"}, oCurrentConfigType.sName);
-    //_sRequireResult= _oCompiler.oGblConfigType.fGetNode(_oAddCompilerConfig, _aValue, _sType);
-              
+            GDB _oGdb  =  new GDB(this, oCurLauch,_sDebugger, _sExePath, _oCompiler, _sArg); //Create debugger proxy
+
         } else {
-          	oCurLauch.fLauchExe( _sExePath,_sArg);
+          	oCurLauch.fLauchExe( _sExePath, _sArg);
         }
 	
 

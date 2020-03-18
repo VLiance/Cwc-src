@@ -26,8 +26,13 @@ namespace cwc {
         string sCmdNameSended = "";
         bool bRunning = false;
 
-        public GDB(LauchProject _oLauchProject, LauchTool _oProcess, string _sGdbPath,string _sExePath,  CompilerData _oCompiler ){
+        public GDB(LauchProject _oLauchProject, LauchTool _oProcess, string _sGdbPath,string _sExePath,  CompilerData _oCompiler, string _sSubArg = "" ){
             
+            if(_sSubArg != ""){
+                _sSubArg = " " + _sSubArg;
+            }
+
+
             oLauchProject = _oLauchProject;
             oProcess = _oProcess;
              
@@ -58,12 +63,12 @@ namespace cwc {
             string _sSanitizer =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Sanitizer"}, "");
 
                // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
-                oProcess.fLauchExe( _sSanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
+                oProcess.fLauchExe( _sSanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath  + _sSubArg   ); //-no_soft_kills
                 
                 return;
 
-            } else { //   if(Data.fIsDataTrue("Options/Debug Type/Debugger") ){
-                oProcess.fLauchExe(_sGdbPath,  "\"" +  _sExePath + "\"" ); //GDB only
+            } else { //   if(Data.fIsDataTrue("Options/Debug Type/Debugger") ){ 
+                oProcess.fLauchExe(_sGdbPath,  "--args \"" +  _sExePath + "\"" + _sSubArg); //GDB only
             }
 
             fLoadBreakpoints();

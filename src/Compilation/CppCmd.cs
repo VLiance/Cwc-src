@@ -401,7 +401,7 @@ namespace cwc {
         {
             if(bIsRunLib){
         //        bIsRunLib = false;
-                         Output.TraceWarning("#Run "  + oLib.sCurrFolder);
+                 Output.TraceWarning("#Run "  + oLib.sCurrFolder);
 
                 oLauchLib_Arg.fCompleteExtractMainArgument(_oLib);
                 oLauchLib_Arg.fExtract(_oLib);
@@ -666,7 +666,7 @@ string sBackEndLinker = "";
        
             if (bRunToArgDontPrextract) {
                  // case "#Run":
-                    fCmdRun(sRunToArgDontPrextract_File);
+                    fCmdRun(sRunToArgDontPrextract_File, sRunToArgDontPrextract_File_Arg);
                 return;
                 // break;
             }
@@ -1883,6 +1883,7 @@ bExtacted = true;
                   }
             }
 
+       
             /*
              string[] _aCond = _sFullRArg.Split(new string[] { "::", "!:" }, StringSplitOptions.None);
             if (_aCond.Length> 0) {
@@ -1898,9 +1899,12 @@ bExtacted = true;
             }
       
             */
-           
+
+
              _sCmdArg = fExtractSpaceMultiVals(_sCmdArg, ' ' );
 
+
+            
 
 /*
 			///////////////////////////////Same
@@ -1939,7 +1943,12 @@ bExtacted = true;
 				 
              case "#Run":
                  //Do not preextract?
+                         //     Output.TraceWarning("_sCmdArg: " + _sCmdArg );
+               //  Output.TraceWarning("sRet_ExtractSpaceMultiValsAltArg: " + sRet_ExtractSpaceMultiValsAltArg );
+
+                    
                  sRunToArgDontPrextract_File = _sCmdArg;
+                 sRunToArgDontPrextract_File_Arg = sRet_ExtractSpaceMultiValsAltArg;
                  bRunToArgDontPrextract = true;
                   //if(oParent.bPreOutput_Link) {
                     //    oParent.bOverideRunCmd = true;
@@ -2279,8 +2288,10 @@ bExtacted = true;
 
 
         public string sRet_ExtractSpaceMultiValsCmd;
+        public string sRet_ExtractSpaceMultiValsAltArg;
         public string fExtractSpaceMultiVals(string _sValue, char _cRequiredDelim='=' ) {//_cRequiredDelim??
 
+            sRet_ExtractSpaceMultiValsAltArg = "";
             int _nIndexSpace =  _sValue.IndexOf(' ');
             int _nIndexEgal =  _sValue.IndexOf('='); 
 
@@ -2291,53 +2302,39 @@ bExtacted = true;
             }
 
             string _sResult = "";
-        //    if(_nIndex != -1) {
 
-                      // .Replace("\\\"", "\""); ??
+            if(_nIndex != -1) {
+                _sResult = _sValue.Substring(_nIndex+1).Trim();
+             }else {
+                _sResult = _sValue.Trim();
+            }
+            //Output.TraceWarning("Result: " + _sResult);
 
-              // _sResult = _sValue.Substring(_nIndex+1).Trim().Replace("\\\"", "\"");
-                if(_nIndex != -1) {
-                     _sResult = _sValue.Substring(_nIndex+1).Trim();
-                }else {
-                     _sResult = _sValue.Trim();
-                 }
-
-                if(_sResult.Length >= 2){
-                       //Remove quote!!
-                    if (_sResult[0] == '\"') {
-                        _sResult = _sResult.Substring(1);
-                    }
-
-                    int _nIndexEnd = _sResult.IndexOf('\"');
-                    if(_nIndexEnd != -1) {
-                      _sResult = _sResult.Substring(0, _nIndexEnd);
-                    }
-
-                    /*
-                    if (_sResult[_sResult.Length-1] == '\"') {
-                        _sResult = _sResult.Substring(0, _sResult.Length-1);
-                    }*/
+            if(_sResult.Length >= 2){
+                    //Remove quote!!
+                int _nIndexEnd = -1;
+                if (_sResult[0] == '\"') {
+                    _sResult = _sResult.Substring(1);
+                     _nIndexEnd = _sResult.IndexOf('\"');
+                }else{
+                     _nIndexEnd =  _sResult.IndexOf(' ');
                 }
-                //////
-
-
-                if(_nIndex != -1) {
-                     sRet_ExtractSpaceMultiValsCmd = _sValue.Substring(0,_nIndex).Trim();
-                }else {
-                     sRet_ExtractSpaceMultiValsCmd= _sValue.Trim();
-                 }
-                    
+                if(_nIndexEnd != -1){
+                    sRet_ExtractSpaceMultiValsAltArg = _sResult.Substring(_nIndexEnd + 1).Trim();
+                    _sResult = _sResult.Substring(0, _nIndexEnd);
+                }
                 
+            }
+    
+
+            if(_nIndex != -1) {
+                    sRet_ExtractSpaceMultiValsCmd = _sValue.Substring(0,_nIndex).Trim();
+            }else {
+                    sRet_ExtractSpaceMultiValsCmd= _sValue.Trim();
+            }
 
 
-
-                return _sResult;
-
-        //    }
-
-
-             sRet_ExtractSpaceMultiValsCmd = _sValue.Trim();
-           return "";
+            return _sResult;
         }
 
 
@@ -2670,6 +2667,7 @@ bExtacted = true;
         private bool bSendCmdToLauch;
         private string sToLauch;
         private string sRunToArgDontPrextract_File;
+        private string sRunToArgDontPrextract_File_Arg;
        // private string sHasIncluded = "";
         private bool bRunToArgDontPrextract;
         private string sRunToArgDontPrextract_Arg = "";
@@ -2895,11 +2893,10 @@ bExtacted = true;
 
 
 
-	public void fCmdRun(string _sAllArg){
+	public void fCmdRun(string _sAllArg, string _sSubArg = ""){
 		    
             string _sRealArg = _sAllArg.Replace("#Run", "").Trim();
-          
-
+          //  Output.TraceWarning("aaaa: " + _sAllArg );
 
 			string _sExt = Path.GetExtension(_sAllArg).ToLower();
 			switch(_sExt) {
@@ -2923,7 +2920,7 @@ bExtacted = true;
 				break;
                 default:
                   
-                   Data.oLauchProject.fLauchDefaultRun(_sRealArg);
+                   Data.oLauchProject.fLauchDefaultRun(_sRealArg, _sSubArg);
             
                 break;
 
