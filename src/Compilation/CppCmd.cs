@@ -2044,7 +2044,7 @@ bExtacted = true;
                  break;
 
 				  case "#Copy":
-                    fCmdCopy(_sCond);
+                    fCmdCopy(_sCond + " " + sRet_ExtractSpaceMultiValsAltArg);
                  break;
 
 				  case "#If_NotExist":

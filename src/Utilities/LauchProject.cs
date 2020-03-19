@@ -141,7 +141,7 @@ namespace cwc{
         
         _sArg += _sSubArg;
         _sArg = _sArg.Trim();
-           Output.TraceWarning("_sSubArg " + _sSubArg);
+           //Output.TraceWarning("_sSubArg " + _sSubArg);
 
         oCurLauch.dError = new LauchTool.dIError(fAppError); //Too much error in Emsc?
         oCurLauch.dOut = new LauchTool.dIOut(fAppOut);
