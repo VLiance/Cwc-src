@@ -821,8 +821,120 @@ namespace cwc
             return _nIndex;
         }
 
- 
+        internal static void fSend2App(CppCmd _oCmd, string _sExplicite_Name, string _sExplicite_App, string _sExplicite_Call)
+        {
+            //TODO merge with fSend2Compiler
+            Output.TraceAction(_sExplicite_Name + " => "  + _sExplicite_Call);
 
+            uint _nMyTicket = 0;
+            lock(oLockTicket) {
+                _nMyTicket = nTotalTicket;
+                nTotalTicket++;
+            }
+
+            if(bHasError || !Data.bNowBuilding) {
+                return;
+            }
+
+            CheckAllThreadsHaveFinishedWorking();
+            if(bHasError || !Data.bNowBuilding) {
+                return;
+            }
+            Interlocked.Increment(ref safeInstanceCount);
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(
+             delegate (object o, DoWorkEventArgs args){
+                if(bHasError || !Data.bNowBuilding) {
+                     Interlocked.Decrement(ref safeInstanceCount);
+                     return;
+                 }
+
+                 StringBuilder output = new StringBuilder();
+                 StringBuilder error = new StringBuilder();
+
+                 using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
+                 using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false)) {
+                 using (Process process = new Process()) {
+                      
+       
+						 process.StartInfo.FileName =  _sExplicite_App;
+                         process.StartInfo.Arguments = _sExplicite_Call;
+
+                         process.StartInfo.CreateNoWindow = true;
+                         process.StartInfo.UseShellExecute = false;
+                         process.StartInfo.RedirectStandardOutput = true;
+                         process.StartInfo.RedirectStandardError = true;
+
+	                    process.StartInfo.WorkingDirectory =_oCmd.s_pProject; 
+	
+                         try  {
+
+
+
+                                 process.OutputDataReceived += (sender, e) => {
+                                     if (e.Data != null)  {
+                                         fCompilerError(e.Data, _sExplicite_Name + " : " + _sExplicite_Call, _nMyTicket,false, _oCmd);
+                                     }
+                                 };
+                                 process.ErrorDataReceived += (sender, e) => {
+                                     if (e.Data != null)  {
+                                         fCompilerError(e.Data, _sExplicite_Name + " : " + _sExplicite_Call, _nMyTicket, true, _oCmd);
+                                     }
+                                 };
+                               
+                            Console.WriteLine("Start " +	 process.StartInfo.FileName );
+                            Console.WriteLine("arg " +	     process.StartInfo.Arguments  );
+ 
+                             process.Start();
+                             process.BeginOutputReadLine();
+                             process.BeginErrorReadLine();
+                             process.WaitForExit();
+
+                             ///////////////////////////////////////
+                             ///Wait for displaying in order
+                              ////////////////////////////////////////*
+                               while(Base.bAlive && Data.bNowBuilding ) {
+                                    Thread.Sleep(1);
+                                    lock(oLockTicket) {
+                                  
+                                        if(nCurrentTicket == _nMyTicket) {
+                                        // Console.WriteLine("*** Process  " + nCurrentTicket + " " + _oCmd == null );
+                                           fShowSendedCmd(_oCmd);
+                                           fShowProcOutput(_oCmd);
+                                           if (nErrorTicket == nCurrentTicket &&  (nError > 0 ) ) {
+                                                //Console.WriteLine(":: " +  GuiForm.fIsChecked("afterFileErrorToolStripMenuItem")); //TODO TODOTODO
+                                                fShowProcOutput(_oCmd);
+                                                Build.StopBuild(); //Dont display other file errors
+                                                break;
+                                                
+                                             }
+                                             nCurrentTicket ++;
+                                            break;
+                                        }
+                                    }
+                                }
+                               ///////////////////////////////////////////////
+                         } finally   {
+                         }
+
+                       
+                         while (!process.HasExited){
+                             Thread.Sleep(1);
+                            if(!Data.bNowBuilding) {
+                                 break;
+                             }
+                         }
+
+                         
+                          Interlocked.Decrement(ref safeInstanceCount); //safeInstanceCount never decremented if after  fAddCommandLineVerificationToDepedancesFile?? on link time : exception?
+
+                     }
+                 
+                    }
+                 });
+                worker.RunWorkerAsync();
+            }
 
 
     }

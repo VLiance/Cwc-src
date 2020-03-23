@@ -16,6 +16,8 @@ namespace cwc {
 
        public  string sFile = "";
        public  string sCondition = "";
+
+
 		public SrcDiry(string _sFile, string _sCondition) {
 			sFile = _sFile;
 			sCondition = _sCondition;
@@ -25,6 +27,11 @@ namespace cwc {
 
 
     public class CppCmd {
+
+       public  string sExplicite_Name = "";
+       public  string sExplicite_App = "";
+       public  string sExplicite_Call = "";
+
 
        public  List<CppCmd> aSubCmd = new List<CppCmd>();
 
@@ -538,7 +545,30 @@ public string sDelimiter = "";
 
         public string fExtractValidCompilerCommand(string _sCmd) {
 
-   
+
+            //   _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Linker_Dynamic"}, oCurrentConfigType.sName);
+            /////////////////////////////////////////////////////////////
+            ////////// Call explicit application argument ///////////////
+            /////////////////////////////////////////////////////////////
+            _sCmd = _sCmd.TrimStart();
+            if(oCompiler != null) {
+                int _indexSpace = _sCmd.IndexOf(' ');
+                if(_indexSpace != -1) {
+                    string fFirstWord = _sCmd.Substring(0, _indexSpace);
+                    string _sNode  =   oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", fFirstWord}, "");
+                    if(_sNode != "") {
+                        sExplicite_App = _sNode;
+                        sExplicite_Name = fFirstWord;
+                        sExplicite_Call = _sCmd.Substring(_indexSpace + 1).Trim();
+                         Debug.fTrace("Found Explicit call: " + fFirstWord + " : " + sExplicite_App + " : " + sExplicite_Call);
+                         return "";
+                    }
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////////
+            //////////////////// Standard Compiler arg ////////////////////////
+            ///////////////////////////////////////////////////////////////////
 
             _sCmd = " " + _sCmd;//Be sure to remove first " -"
 				 string[]  _aArg  = _sCmd.Split(new string[] { " -" }, StringSplitOptions.None); 
@@ -1010,6 +1040,15 @@ bExtacted = true;
 		/// /////////////////////////////////////////////////////////////////
 		/// </summary>
 		public  void  fExecute() {
+
+            if(sExplicite_Name != ""){
+                 CppCompiler.fSend2App(this, sExplicite_Name, sExplicite_App, sExplicite_Call);
+                return;
+            }
+
+
+
+
             /*
             if(bTestCmd && false) //DISABLED
             {
