@@ -171,16 +171,16 @@ namespace cwc.Compiler {
             return "";
         }
 
-        internal string fGetNode(ConfigType _oAddCompilerConfig, string[] _aValue, string _sType) {
+        internal string fGetNode(ConfigType _oAddCompilerConfig, string[] _aValue, string _sType,  bool  _bCombineMode = true) {
             //TODO _oAddCompilerConfig
-            bool  _bCombineMode = true;
+           // bool  _bCombineMode = true;
             Node _oNode = oMainNode;
 
              if(_sType != "") {
                 Console.WriteLine("_sType " + _sType);
               }
               
-            if (_aValue[0] == "Exe") { //Only one exe at time
+            if (_aValue[0] == "Exe" || _aValue[0] == "Config") { //Only one exe / config at time
                 _bCombineMode = false;
             }
 

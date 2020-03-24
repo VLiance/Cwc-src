@@ -1654,6 +1654,7 @@ bExtacted = true;
              string _sBinExt  = "";
             if(oCompiler != null) {
               _sBinExt  =   oCompiler.oGblConfigType.fGetNode(null,new string[]{"Config", "BinExt"}, "");
+              // Output.TraceWarning("_sBinExt " +  _sBinExt );
             }
             if(_sBinExt == "") {
 			    switch(fGetVar("_sPlatform")){
@@ -1674,9 +1675,10 @@ bExtacted = true;
                 }
             }
 
+   
 
 
-		//	Debug.fTrace("***************fGetAppTypeFromPlatform : "   +sToAnyType );
+                //	Debug.fTrace("***************fGetAppTypeFromPlatform : "   +sToAnyType );
 		//	Debug.fTrace("***************fGetAppTypeFromPlatform : "   +sToAnyType );
 			//oParent.sCurr_wTo = sFile_wTo + sToAnyType;
 			//bHave_wTo = true; 
