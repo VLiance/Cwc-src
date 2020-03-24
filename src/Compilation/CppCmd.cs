@@ -1651,15 +1651,31 @@ bExtacted = true;
 		public void fGetAppTypeFromPlatform() { ///TODO dynamic
 
 			bToAnyType = true;
-			switch(fGetVar("_sPlatform")){
-				case "Windows":
-				case "CpcDos":
-					sToAnyType = ".exe";
-				break;
-				case "Web_Emsc":
-					sToAnyType = ".html";
-				break;
-			}
+             string _sBinExt  = "";
+            if(oCompiler != null) {
+              _sBinExt  =   oCompiler.oGblConfigType.fGetNode(null,new string[]{"Config", "BinExt"}, "");
+            }
+            if(_sBinExt == "") {
+			    switch(fGetVar("_sPlatform")){
+                    case "Web_Emsc":
+					    sToAnyType = ".html";
+				    break;
+                    // case "Windows":
+                    // case "CpcDos":
+                    default:
+					    sToAnyType = ".exe";
+				    break;
+			    }
+            }else{
+                if(_sBinExt[0] == '.') {
+                   sToAnyType = _sBinExt;
+                }else {
+                   sToAnyType = "." + _sBinExt;
+                }
+            }
+
+
+
 		//	Debug.fTrace("***************fGetAppTypeFromPlatform : "   +sToAnyType );
 		//	Debug.fTrace("***************fGetAppTypeFromPlatform : "   +sToAnyType );
 			//oParent.sCurr_wTo = sFile_wTo + sToAnyType;

@@ -806,13 +806,14 @@ namespace cwc
            int _nNext = 0;
             while (_nIndex != -1) {
                
-                _nIndex =  _sLine.IndexOf(_sKey, _nIndex+1);
+                _nIndex =  _sLine.IndexOf(_sKey, _nIndex);
 
                 if(_nIndex != -1) {
                     _nNext = _nIndex + _sKey.Length;
                     if(_nNext < _sLine.Length &&  _sLine[_nNext]  != '.') { //like error.o -`>  not valid
                         return _nIndex;
                     }
+                    _nIndex++;
                 }
 
             }
