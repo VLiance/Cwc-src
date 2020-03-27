@@ -822,8 +822,37 @@ namespace cwc
             return _nIndex;
         }
 
-        internal static void fSend2App(CppCmd _oCmd, string _sExplicite_Name, string _sExplicite_App, string _sExplicite_Call)
-        {
+        
+
+          public static string fExtracQuote_sArg = "";
+         public static string fExtracQuote(string _sValue) {//_cRequiredDelim??
+                fExtracQuote_sArg = "";
+                int _nIndexBegin = 0;
+                int _nIndexEnd = -1;
+                string _sResult = _sValue; 
+                    //Remove quote!!
+                if (_sResult[0] == '\"') {
+                   // _sResult = _sResult.Substring(1);
+                    _nIndexBegin = 1;
+                    _nIndexEnd = _sResult.IndexOf('\"',1);
+                }else{
+                    _nIndexEnd = _sResult.IndexOf(' ');
+                }
+                if(_nIndexEnd != -1) {
+                     fExtracQuote_sArg = _sResult.Substring( _nIndexEnd + 1).Trim();
+                    _sResult = _sResult.Substring(_nIndexBegin, _nIndexEnd + (-_nIndexBegin)).Trim();
+                }
+                return _sResult;
+        }
+
+
+
+        internal static void fSend2App(CppCmd _oCmd, string _sExplicite_Name, string _sExplicite_App, string _sExplicite_Call) {
+        
+            string _sExe   = fExtracQuote(_sExplicite_App);
+            string _sArg = fExtracQuote_sArg + " " + _sExplicite_Call;
+           
+
             //TODO merge with fSend2Compiler
             Output.TraceAction(_sExplicite_Name + " => "  + _sExplicite_Call);
 
@@ -859,10 +888,11 @@ namespace cwc
                  using (Process process = new Process()) {
                       
        
-						 process.StartInfo.FileName =  _sExplicite_App;
-                         process.StartInfo.Arguments = _sExplicite_Call;
+						 process.StartInfo.FileName =  _sExe;
+                         process.StartInfo.Arguments = _sArg;
 
                          process.StartInfo.CreateNoWindow = true;
+                         //process.StartInfo.CreateNoWindow = false;
                          process.StartInfo.UseShellExecute = false;
                          process.StartInfo.RedirectStandardOutput = true;
                          process.StartInfo.RedirectStandardError = true;
@@ -916,16 +946,17 @@ namespace cwc
                                     }
                                 }
                                ///////////////////////////////////////////////
+                         }catch(Exception e) {
+                            Output.TraceError("Error with " + process.StartInfo.FileName + "[" + process.StartInfo.Arguments + "]:" + e.Message);
                          } finally   {
                          }
 
-                       
-                         while (!process.HasExited){
+                        try {  while (!process.HasExited){
                              Thread.Sleep(1);
                             if(!Data.bNowBuilding) {
                                  break;
                              }
-                         }
+                         } }catch(Exception e) {}
 
                          
                           Interlocked.Decrement(ref safeInstanceCount); //safeInstanceCount never decremented if after  fAddCommandLineVerificationToDepedancesFile?? on link time : exception?
