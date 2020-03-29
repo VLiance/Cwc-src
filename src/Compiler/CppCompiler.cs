@@ -656,6 +656,8 @@ namespace cwc
         }
 
 
+
+
         public static void fShowProcOutput(CppCmd _oCmd ) {
               //  Console.WriteLine(" aOutput.Count "  +  aOutput.Count);
                 if(aOutput != null && aOutput.Count > 0) {
@@ -677,11 +679,13 @@ namespace cwc
         }
 
 
-
+        
+        public static string sProcOutputRetrun  = "";
         public static void fCompilerError(string _sResult,string _sArg, uint _nMyTicket, bool _bStdError = false,  CppCmd _oCmd = null) {
 
             //Direct show if current
             lock (oLockTicket) {
+                sProcOutputRetrun += " " + _sResult;
                 
               //  if(!(Base.bAlive && Data.bNowBuilding)) {
                 if(!(Base.bAlive && Data.bNowBuilding)) {
@@ -847,8 +851,13 @@ namespace cwc
 
 
 
-        internal static void fSend2App(CppCmd _oCmd, string _sExplicite_Name, string _sExplicite_App, string _sExplicite_Call) {
-        
+        internal static string fSend2App(CppCmd _oCmd, string _sExplicite_Name, string _sExplicite_App, string _sExplicite_Call, bool _bWaitToFinish = false) {
+            
+           bool _bFinished = false;
+            if(_bWaitToFinish){
+                sProcOutputRetrun = "";
+            }
+
             string _sExe   = fExtracQuote(_sExplicite_App);
             string _sArg = fExtracQuote_sArg + " " + _sExplicite_Call;
            
@@ -863,12 +872,12 @@ namespace cwc
             }
 
             if(bHasError || !Data.bNowBuilding) {
-                return;
+                return "";
             }
 
             CheckAllThreadsHaveFinishedWorking();
             if(bHasError || !Data.bNowBuilding) {
-                return;
+                return "";
             }
             Interlocked.Increment(ref safeInstanceCount);
 
@@ -958,7 +967,7 @@ namespace cwc
                              }
                          } }catch(Exception e) {}
 
-                         
+                         _bFinished = true;
                           Interlocked.Decrement(ref safeInstanceCount); //safeInstanceCount never decremented if after  fAddCommandLineVerificationToDepedancesFile?? on link time : exception?
 
                      }
@@ -966,6 +975,14 @@ namespace cwc
                     }
                  });
                 worker.RunWorkerAsync();
+                if(_bWaitToFinish){
+                    while(!_bFinished){
+                       Thread.Sleep(1);
+                    }
+                    return sProcOutputRetrun.Trim();
+                 }
+
+                return "";
             }
 
 

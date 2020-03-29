@@ -34,6 +34,7 @@ namespace cwc {
 
 
        public  List<CppCmd> aSubCmd = new List<CppCmd>();
+       public  List<CppCmd> aSubFBCmd = new List<CppCmd>();
 
 		public CompilerData oCompiler = null;
 
@@ -104,6 +105,7 @@ namespace cwc {
        public string sOutputFile = "";
        bool bSkip = false;
        public bool bIsSubCmd = false;
+       public bool bIsFbCmd = false;
 
 		 string[] aPreArg;
 
@@ -122,12 +124,16 @@ namespace cwc {
 		
 		public CppCmd oParentCmd = null;
 		
-       public CppCmd (ArgumentManager _oParent, string _sCmd, CppCmd _oParentCmd = null) {
+       public CppCmd (ArgumentManager _oParent, string _sCmd, CppCmd _oParentCmd = null, bool _bIsFbCmd = false) {
 			oParentCmd = _oParentCmd;
             oParent = _oParent;
 
 			if(oParentCmd != null){
-				bIsSubCmd = true;
+                if(!_bIsFbCmd) {
+				    bIsSubCmd = true;
+                }else{
+                    bIsFbCmd = true;
+                }
 /*
 				if(_sCmd == oParentCmd.sCmd){ //If is empty don't execute
 					return;
@@ -560,6 +566,8 @@ public string sDelimiter = "";
                         sExplicite_App = _sNode;
                         sExplicite_Name = fFirstWord;
                         sExplicite_Call = _sCmd.Substring(_indexSpace + 1).Trim();
+                        sExplicite_Call = fTest_SubCmdOrCompileMultiFiles(sExplicite_Call);
+
                          Debug.fTrace("Found Explicit call: " + fFirstWord + " : " + sExplicite_App + " : " + sExplicite_Call);
                          return "";
                     }
@@ -758,9 +766,9 @@ bExtacted = true;
                   sBackEndCmd =  fExtractValidCompilerCommand(_sCmd) + sCallerCmd + sArgLinkerLib;
                     
       
-
-                   Output.Trace("\f1B| \f16" + sExtractedCmd);
-
+                    
+                  // Output.Trace("\f1B| \f16" + sExtractedCmd);
+                 CppCompiler.fShowArg(" " + sExtractedCmd, bIsSubCmd | bIsFbCmd);
             
              //   Console.WriteLine("sBackEndCmd " + sBackEndCmd);
                 /*
@@ -1039,11 +1047,19 @@ bExtacted = true;
 		/// <summary>
 		/// /////////////////////////////////////////////////////////////////
 		/// </summary>
-		public  void  fExecute() {
+		public  string  fExecute() {
+
+            if(aSubFBCmd.Count > 0) {
+                foreach(CppCmd _oSubCmd in aSubFBCmd) {
+				    sExplicite_Call += _oSubCmd.fExecute();
+					if(!Data.bNowBuilding) {
+                        return "";
+                    }
+				}
+            }
 
             if(sExplicite_Name != ""){
-                 CppCompiler.fSend2App(this, sExplicite_Name, sExplicite_App, sExplicite_Call);
-                return;
+                return  CppCompiler.fSend2App(this, sExplicite_Name, sExplicite_App, sExplicite_Call, bIsFbCmd);
             }
 
 
@@ -1090,7 +1106,7 @@ bExtacted = true;
 
 						_oSubCmd.fExecute();
 					   if(!Data.bNowBuilding) {
-                            return;
+                            return "";
                         }
 				}
 			}
@@ -1174,7 +1190,7 @@ bExtacted = true;
 			}
             
             if(FileUtils.IsEmpty(_sSendCmd)) {
-                return;
+                return "";
             }
 
             ///Cleanup ////
@@ -1195,7 +1211,7 @@ bExtacted = true;
 
            // Debug.fTrace("--------------Skip: " + bSkip.ToString() );
             if(!Data.bNowBuilding) {
-                  return;
+                  return "";
             }
 
 			if(bCallCompiler ){
@@ -1246,7 +1262,7 @@ bExtacted = true;
 
  
        
-            
+            return "";
 
         }
 
@@ -1443,7 +1459,7 @@ bExtacted = true;
         public List<string> aMultiFile = new List<string>();
         public bool bHaveMultipleFileSrc = false;
 
-        public string fCompileMultiFiles(string _sCmdFiles) {
+        public string fTest_SubCmdOrCompileMultiFiles(string _sCmdFiles) {
 
             int _nStartBracket = _sCmdFiles.IndexOf('[');
             if (_nStartBracket != -1) {
@@ -1452,13 +1468,22 @@ bExtacted = true;
                 if (_nEndBracket != -1) {
                     string _sFileList = _sCmdFiles.Substring(_nStartBracket, _nEndBracket - _nStartBracket );
                     string[] _aFile = _sFileList.Split(',');
-                    foreach (string __sFile in _aFile) {
-                        string _sFile = __sFile.Trim();
-                        if(_sFile != ""){
-                            bHaveMultipleFileSrc = true;
-                            aMultiFile.Add(_sFile);
-                         // Console.WriteLine("_sFile " + _sFile );
+                    if(_aFile.Length > 1) {  //It's multiple files
+                        foreach (string __sFile in _aFile) {
+                            string _sFile = __sFile.Trim();
+                            if(_sFile != ""){
+                                bHaveMultipleFileSrc = true;
+                                aMultiFile.Add(_sFile);
+                             // Console.WriteLine("_sFile " + _sFile );
+                            }
                         }
+                    }else{ //It's a sub command ??
+                        //Output.TraceWarning("Have SubCMD : "  + _sFileList);
+
+					    CppCmd _oSubCmd =  new CppCmd(oParent, _sFileList, this, true);
+                        _oSubCmd.fExtract();
+					    aSubFBCmd.Add(_oSubCmd);
+
                     }
                    return _sCmdFiles.Substring(0,_nStartBracket-1) + _sCmdFiles.Substring(_nEndBracket+1); //remove []
                 }
@@ -1505,7 +1530,7 @@ bExtacted = true;
 			}
 
     
-           _sCmdFiles = fCompileMultiFiles(_sCmdFiles);
+           _sCmdFiles = fTest_SubCmdOrCompileMultiFiles(_sCmdFiles);
  //Console.WriteLine("-_sCmdFiles " + _sCmdFiles);
 
             string[] _aFile = _sCmdFiles.Split(' ', '\t'); //TODO "" or ''
