@@ -1478,7 +1478,6 @@ bExtacted = true;
                             }
                         }
                     }else{ //It's a sub command ??
-                        //Output.TraceWarning("Have SubCMD : "  + _sFileList);
 
 					    CppCmd _oSubCmd =  new CppCmd(oParent, _sFileList, this, true);
                         _oSubCmd.fExtract();
