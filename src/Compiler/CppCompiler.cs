@@ -683,6 +683,11 @@ namespace cwc
         public static string sProcOutputRetrun  = "";
         public static void fCompilerError(string _sResult,string _sArg, uint _nMyTicket, bool _bStdError = false,  CppCmd _oCmd = null) {
 
+            if(_oCmd != null && _oCmd.oToInputProcess != null){
+                 _oCmd.oToInputProcess.StandardInput.WriteLine(_sResult);
+                return;
+            }
+
             //Direct show if current
             lock (oLockTicket) {
                 sProcOutputRetrun += " " + _sResult;
@@ -850,8 +855,16 @@ namespace cwc
         }
 
 
+        internal static void  fLauchInputApp(Process _oToInputProcess, List<CppCmd> aSubInputCmd) {
+            foreach(CppCmd _oCmd in aSubInputCmd) {
+                _oCmd.oToInputProcess = _oToInputProcess;
+                 Output.TraceWarning("Lauch Input App: " + _oCmd.sExplicite_App + ":" +  _oCmd.sExplicite_Call);
+                _oCmd.fExecute();
+            }
+        }
 
-        internal static string fSend2App(CppCmd _oCmd, string _sExplicite_Name, string _sExplicite_App, string _sExplicite_Call, bool _bWaitToFinish = false) {
+
+        internal static string fSend2App(CppCmd _oCmd, string _sExplicite_Name, string _sExplicite_App, string _sExplicite_Call, bool _bWaitToFinish = false, List<CppCmd> aSubInputCmd = null) {
             
            bool _bFinished = false;
             if(_bWaitToFinish){
@@ -906,6 +919,10 @@ namespace cwc
                          process.StartInfo.RedirectStandardOutput = true;
                          process.StartInfo.RedirectStandardError = true;
 
+                         if(aSubInputCmd != null) {
+                            process.StartInfo.RedirectStandardInput = true;
+                         }
+
 	                    process.StartInfo.WorkingDirectory =_oCmd.s_pProject; 
 	
                          try  {
@@ -929,8 +946,9 @@ namespace cwc
                              process.Start();
                              process.BeginOutputReadLine();
                              process.BeginErrorReadLine();
-                             process.WaitForExit();
+                             fLauchInputApp(process, aSubInputCmd);
 
+                             process.WaitForExit();
                              ///////////////////////////////////////
                              ///Wait for displaying in order
                               ////////////////////////////////////////*

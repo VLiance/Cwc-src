@@ -3,6 +3,7 @@
 using cwc.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -35,8 +36,9 @@ namespace cwc {
 
        public  List<CppCmd> aSubCmd = new List<CppCmd>();
        public  List<CppCmd> aSubFBCmd = new List<CppCmd>();
-
-		public CompilerData oCompiler = null;
+       public  List<CppCmd> aSubInputCmd = new List<CppCmd>();
+        
+	    public CompilerData oCompiler = null;
 
        public string sCmd = "";
 
@@ -330,6 +332,7 @@ namespace cwc {
 							case 'o':
 								
 								if(Data.bCheckLibRTRequired){
+                                    Output.TraceWarning("Use Default Compiler [LibRT]");
 									f_wToolchain("VLianceTool/LibRT"); //Default compiler
 								}
 								fPreOutputCmd(_sFullRArg,_bCompiling);
@@ -1048,8 +1051,8 @@ bExtacted = true;
 		/// /////////////////////////////////////////////////////////////////
 		/// </summary>
 		public  string  fExecute() {
-
-            if(aSubFBCmd.Count > 0) {
+            
+            if(aSubFBCmd.Count > 0) { //like: adb logcat --pid=[adb shell pidof -s {sPckName}]
                 foreach(CppCmd _oSubCmd in aSubFBCmd) {
 				    sExplicite_Call += _oSubCmd.fExecute();
 					if(!Data.bNowBuilding) {
@@ -1059,12 +1062,10 @@ bExtacted = true;
             }
 
             if(sExplicite_Name != ""){
-                return  CppCompiler.fSend2App(this, sExplicite_Name, sExplicite_App, sExplicite_Call, bIsFbCmd);
+                return  CppCompiler.fSend2App(this, sExplicite_Name, sExplicite_App, sExplicite_Call, bIsFbCmd, aSubInputCmd);
             }
 
-
-
-
+            
             /*
             if(bTestCmd && false) //DISABLED
             {
@@ -1479,9 +1480,18 @@ bExtacted = true;
                         }
                     }else{ //It's a sub command ??
 
-					    CppCmd _oSubCmd =  new CppCmd(oParent, _sFileList, this, true);
-                        _oSubCmd.fExtract();
-					    aSubFBCmd.Add(_oSubCmd);
+                        _sFileList = _sFileList.Trim();
+
+                        if(_sFileList.Length > 3 && _sFileList[0] == '<' && _sFileList[1] == '<' ){ //Ex: ndk-stack -sym {pObj}build/apk/{pLib_ABI} [<< adb logcat -b crash]
+                             _sFileList = _sFileList.Substring(2);
+                            CppCmd _oSubCmd =  new CppCmd(oParent, _sFileList, this, true);
+                             _oSubCmd.fExtract();
+                            aSubInputCmd.Add(_oSubCmd);
+                        }else { 
+                             CppCmd _oSubCmd =  new CppCmd(oParent, _sFileList, this, true);
+                            _oSubCmd.fExtract();
+					        aSubFBCmd.Add(_oSubCmd);
+                        }
 
                     }
                    return _sCmdFiles.Substring(0,_nStartBracket-1) + _sCmdFiles.Substring(_nEndBracket+1); //remove []
@@ -2763,6 +2773,7 @@ bExtacted = true;
         internal string sObjList = "";
         internal string sObjUpToDate = "";
         private bool bTestCmd = false;
+        public Process oToInputProcess = null;
 
         public  string fExtractVar( string _sCmd, bool _bWeak = false) {
 			return CppCmd.fExtractVar(_sCmd, this, _bWeak);
