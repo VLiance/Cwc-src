@@ -356,8 +356,8 @@ namespace cwc
                                      }
                                  };
                              }*/
-                            Console.WriteLine("Start " +	 process.StartInfo.FileName );
-                              Console.WriteLine("arg " +	     process.StartInfo.Arguments  );
+                        //    Console.WriteLine("Start " +	 process.StartInfo.FileName );
+                         //     Console.WriteLine("arg " +	     process.StartInfo.Arguments  );
                             ///Debug.fTrace("Start " +	 process.StartInfo.FileName );
                            ///  Debug.fTrace("arg " +	     process.StartInfo.Arguments  );
 
@@ -683,11 +683,26 @@ namespace cwc
         public static string sProcOutputRetrun  = "";
         public static void fCompilerError(string _sResult,string _sArg, uint _nMyTicket, bool _bStdError = false,  CppCmd _oCmd = null) {
 
+            if(_oCmd.sCloseWhen != ""){
+                if(_sResult.IndexOf(_oCmd.sCloseWhen) != -1) {
+                    if(_oCmd.oCurrProcess != null && !_oCmd.oCurrProcess.HasExited) {
+                            _oCmd.oCurrProcess.Kill();
+                    }
+                }
+            }
+
+
             if(_oCmd != null && _oCmd.oToInputProcess != null){
                  _oCmd.oToInputProcess.StandardInput.WriteLine(_sResult);
                 return;
             }
-
+                if(_oCmd.sCloseWhen != ""){
+                    if(_sResult.IndexOf(_oCmd.sCloseWhen) != -1) {
+                        if(_oCmd.oCurrProcess != null && !_oCmd.oCurrProcess.HasExited) {
+                             _oCmd.oCurrProcess.Kill();
+                        }
+                    }
+                }
             //Direct show if current
             lock (oLockTicket) {
                 sProcOutputRetrun += " " + _sResult;
@@ -752,6 +767,10 @@ namespace cwc
                 //    _oOut.bInError = _bInError;
                     aOutput.Add(_oOut);
                 }
+
+
+            
+
 
 /*
             int nErrorIndex = -1;
@@ -909,7 +928,8 @@ namespace cwc
                  using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false)) {
                  using (Process process = new Process()) {
                       
-       
+                        _oCmd.oCurrProcess = process;
+
 						 process.StartInfo.FileName =  _sExe;
                          process.StartInfo.Arguments = _sArg;
 

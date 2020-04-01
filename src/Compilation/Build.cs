@@ -195,7 +195,7 @@ namespace cwc {
                             break;
                             case "StartBuild":Data.sCmd = "";
                                    // Debug.fTrace("****StartBuild!!");
-                                   Console.WriteLine("start build");
+                                 //  Console.WriteLine("start build");
                                 Build.StartBuild();
                             break;
                             case "Delocalise":Data.sCmd = "";

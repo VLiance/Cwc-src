@@ -190,8 +190,11 @@ namespace cwc {
 
         
          public static void fClearData(){
+             aVarGlobal.Clear();
+            ModuleData.aMData.Clear();
+
              CppCompiler.aOutput.Clear();
-              ArgumentManager.aDependance.Clear();
+             ArgumentManager.aDependance.Clear();
         }
 
               public static string sToLauch = "";

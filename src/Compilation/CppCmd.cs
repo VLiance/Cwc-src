@@ -332,7 +332,7 @@ namespace cwc {
 							case 'o':
 								
 								if(Data.bCheckLibRTRequired){
-                                    Output.TraceWarning("Use Default Compiler [LibRT]");
+                                  //  Output.TraceWarning("Use Default Compiler [LibRT]");
 									f_wToolchain("VLianceTool/LibRT"); //Default compiler
 								}
 								fPreOutputCmd(_sFullRArg,_bCompiling);
@@ -552,10 +552,63 @@ public string sDelimiter = "";
 
 
 
+        public string fExtractCwcCmd(string _sCmd) {
+
+            _sCmd = " " + _sCmd;//Be sure to remove first " -"
+		     string[]  _aArg  = _sCmd.Split(new string[] { " -" }, StringSplitOptions.None); 
+
+
+            string _sBackEndCmd = "";
+
+            string _sDelimiter = " -";
+            string _sCmdTest = _sCmd.TrimStart();
+            if(_sCmdTest.Length == 0){ return "";}
+             if(_sCmdTest[0] != '-') {
+                _sDelimiter = " "; // begin with "-"
+            }
+
+            foreach (string _sArg in _aArg) { if (!FileUtils.IsEmpty(_sArg)) { 
+              
+				string _sRArg = _sArg.Trim();
+
+                string[] _aCmd = _sRArg.Split(' ', '=', '+'); 
+                string _sCmdName = _aCmd[0].Trim();
+
+                 ////////////// C~ command  ///////////
+               if (!FileUtils.IsEmpty(_sCmdName)) { 
+
+						switch(_sCmdName[0]) {
+                               
+                                case '#':
+                                    fCwcCommand(_sCmdName, _sRArg);
+                                    if( _sCmdName == "#To"){
+                                        _sBackEndCmd += "#To"; //Keep track of it to remplace later by generated command 
+                                    }
+                                 break;
+                            default:
+                                _sBackEndCmd += _sDelimiter + _sRArg;
+                                _sDelimiter = " -";
+                             break;
+
+                       }
+
+  
+                 }
+
+            }}
+
+            return _sBackEndCmd;
+        }
+
+
+
+
         public string fExtractValidCompilerCommand(string _sCmd) {
 
 
             //   _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Linker_Dynamic"}, oCurrentConfigType.sName);
+
+
             /////////////////////////////////////////////////////////////
             ////////// Call explicit application argument ///////////////
             /////////////////////////////////////////////////////////////
@@ -566,9 +619,13 @@ public string sDelimiter = "";
                     string fFirstWord = _sCmd.Substring(0, _indexSpace);
                     string _sNode  =   oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", fFirstWord}, "");
                     if(_sNode != "") {
+                
+
                         sExplicite_App = _sNode;
                         sExplicite_Name = fFirstWord;
+
                         sExplicite_Call = _sCmd.Substring(_indexSpace + 1).Trim();
+                        sExplicite_Call =  fExtractCwcCmd(sExplicite_Call);
                         sExplicite_Call = fTest_SubCmdOrCompileMultiFiles(sExplicite_Call);
 
                          Debug.fTrace("Found Explicit call: " + fFirstWord + " : " + sExplicite_App + " : " + sExplicite_Call);
@@ -2134,25 +2191,27 @@ bExtacted = true;
                     fwTo(_sCond);
                  break;
 
-				  case "#Copy":
+                  case "#CloseWhen":
+                     sCloseWhen = _sCond;
+                  break;
+
+				 case "#Copy":
                     fCmdCopy(_sCond + " " + sRet_ExtractSpaceMultiValsAltArg);
                  break;
 
-				  case "#If_NotExist":
+				 case "#If_NotExist":
                     fCmdIfNotExist(_sCond);
                  break;
 
-            
                case "#If_HasIncluded":
-                 //  fCmdHasInclude(_sCond, _sCmdTrue, _sCmdFalse);
-            /*
+                  //  fCmdHasInclude(_sCond, _sCmdTrue, _sCmdFalse);
+                    /*
                     sHasIncluded = _sCond;
                     
                     Console.WriteLine("****HasIncluded !? " + sHasIncluded );
                     if (oParent.fHasInclude(sHasIncluded)) {
                            Console.WriteLine("YYYYEEESS-INCLUDED !? " + sHasIncluded );
                     } else {
-                        
                     }*/
                break;
 
@@ -2774,6 +2833,8 @@ bExtacted = true;
         internal string sObjUpToDate = "";
         private bool bTestCmd = false;
         public Process oToInputProcess = null;
+        public Process oCurrProcess = null;
+        public string sCloseWhen = "";
 
         public  string fExtractVar( string _sCmd, bool _bWeak = false) {
 			return CppCmd.fExtractVar(_sCmd, this, _bWeak);

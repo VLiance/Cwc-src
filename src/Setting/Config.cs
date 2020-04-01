@@ -65,6 +65,7 @@ namespace cwc
         }
 
 
+        public static string sLastRecentPath = "";
         internal void fAddRecent(string _sPath) {
            _sPath = PathHelper.fNormalizePath(_sPath);
             int _nCount = 0;
@@ -84,6 +85,8 @@ namespace cwc
             if (Data.oGuiConsole != null && Data.oGuiConsole.bCreated) {
                 Data.oGuiConsole.fLoadRecent();
             }
+
+            sLastRecentPath = _sPath;
         }
 
          public bool fTestBool(string _sVal) {

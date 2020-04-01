@@ -279,7 +279,11 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
                     
              //    fResetList();
                //  Data.StartBuild();
-                 Data.sCmd = "StartBuild";
+               //  Data.sCmd = "StartBuild";
+
+                //Start Last lauch
+                  Delocalise.fDelocaliseInMainThread(Config.sLastRecentPath );
+
             }
 		}
 

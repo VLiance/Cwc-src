@@ -177,7 +177,7 @@ namespace cwc.Compiler {
             Node _oNode = oMainNode;
 
              if(_sType != "") {
-                Console.WriteLine("_sType " + _sType);
+              //  Console.WriteLine("_sType " + _sType);
               }
               
             if (_aValue[0] == "Exe" || _aValue[0] == "Config") { //Only one exe / config at time

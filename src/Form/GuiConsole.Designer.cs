@@ -130,12 +130,12 @@
             this.iDEToolStripMenuItem,
             this.runToolStripMenuItem});
             this.msMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msMenu.Location = new System.Drawing.Point(569, 2);
+            this.msMenu.Location = new System.Drawing.Point(477, 2);
             this.msMenu.Name = "msMenu";
             this.msMenu.Padding = new System.Windows.Forms.Padding(1);
             this.msMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.msMenu.ShowItemToolTips = true;
-            this.msMenu.Size = new System.Drawing.Size(476, 20);
+            this.msMenu.Size = new System.Drawing.Size(568, 21);
             this.msMenu.TabIndex = 50;
             // 
             // lauchToolStripMenuItem
