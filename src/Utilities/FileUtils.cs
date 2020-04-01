@@ -421,6 +421,8 @@ namespace cwc
           public static Process firstProcess = null;
           public static void RunInEditor(String file, string Arg = ""){
 
+
+            Console.WriteLine("RunInEditor: " +file  + " " + Arg);
 		//	this.BeginInvoke((MethodInvoker)delegate  {
 
             try  {
@@ -429,13 +431,16 @@ namespace cwc
                      if(Data.fIsDataTrue("IDE/LiteWayv") ){
                         Console.WriteLine(" PathHelper.ExeWorkDir " +  PathHelper.ExeWorkDir );
                         fLauchIDE( PathHelper.CwcRootPath() +  "LiteWayv.exe", file,  Arg );
+                        return;
                     }
                     if(Data.fIsDataTrue("IDE/Notepad++") ){
                         fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", file,  Arg );
+                        return;
                     }
 
-                 //   Console.WriteLine("exist: " +file );
+                   Console.WriteLine("No Editor selected for: " +file  + " " + Arg);
 
+                 //   Console.WriteLine("exist: " +file );
 
                 }else{
 

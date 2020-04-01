@@ -2192,7 +2192,14 @@ bExtacted = true;
                  break;
 
                   case "#CloseWhen":
-                     sCloseWhen = _sCond;
+             
+                     sCloseWhen = sRet_ExtractFullArg;
+                             //  Output.TraceWarning("CloseWhen: "+ sCloseWhen);
+                  break;
+
+                   case "#RetryForInput":
+                     sRetryForInput = _sCond;
+                     bRetryForInput = true;
                   break;
 
 				 case "#Copy":
@@ -2439,6 +2446,7 @@ bExtacted = true;
 
         public string sRet_ExtractSpaceMultiValsCmd;
         public string sRet_ExtractSpaceMultiValsAltArg;
+        public string sRet_ExtractFullArg;
         public string fExtractSpaceMultiVals(string _sValue, char _cRequiredDelim='=' ) {//_cRequiredDelim??
 
             sRet_ExtractSpaceMultiValsAltArg = "";
@@ -2459,6 +2467,7 @@ bExtacted = true;
                 _sResult = _sValue.Trim();
             }
             //Output.TraceWarning("Result: " + _sResult);
+            sRet_ExtractFullArg = _sResult;
 
             if(_sResult.Length >= 2){
                     //Remove quote!!
@@ -2466,6 +2475,7 @@ bExtacted = true;
                 if (_sResult[0] == '\"') {
                     _sResult = _sResult.Substring(1);
                      _nIndexEnd = _sResult.IndexOf('\"');
+                    sRet_ExtractFullArg = _sResult.Substring(0, _nIndexEnd);
                 }else{
                      _nIndexEnd =  _sResult.IndexOf(' ');
                 }
@@ -2835,6 +2845,9 @@ bExtacted = true;
         public Process oToInputProcess = null;
         public Process oCurrProcess = null;
         public string sCloseWhen = "";
+        public string sRetryForInput = "";
+        public bool bRetryForInput = false;
+        internal string sLauchCmdResult;
 
         public  string fExtractVar( string _sCmd, bool _bWeak = false) {
 			return CppCmd.fExtractVar(_sCmd, this, _bWeak);

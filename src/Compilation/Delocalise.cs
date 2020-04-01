@@ -39,12 +39,13 @@ namespace cwc {
    
 	public static void fDelocaliseCmd(){
 
-            //Reset all
+            //Reset all -> Already clear in Data.fClearData()
+            /*
             Data.aVarGlobal.Clear();
              Data.fSetDefaultVar();
             if(Data.oGuiConsole != null) {
                 Data.oGuiConsole.fLoadData();
-            }
+            }*/
 
            Output.TraceWarning("Lauch " + sDelocaliseCmd);
             string _sText =  Delocalise.fDelocalise(sDelocaliseCmd);

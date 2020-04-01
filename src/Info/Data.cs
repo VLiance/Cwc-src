@@ -190,7 +190,13 @@ namespace cwc {
 
         
          public static void fClearData(){
-             aVarGlobal.Clear();
+            Data.aVarGlobal.Clear();
+             Data.fSetDefaultVar();
+            if(Data.oGuiConsole != null) {
+                Data.oGuiConsole.fLoadData();
+            }
+
+
             ModuleData.aMData.Clear();
 
              CppCompiler.aOutput.Clear();
