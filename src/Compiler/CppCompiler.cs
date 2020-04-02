@@ -683,25 +683,29 @@ namespace cwc
         public static string sProcOutputRetrun  = "";
         public static void fCompilerError(string _sResult,string _sArg, uint _nMyTicket, bool _bStdError = false,  CppCmd _oCmd = null) {
 
-            _oCmd.sLauchCmdResult += _sResult + "\n";
-
-            if(_oCmd.sCloseWhen != ""){
-                if(_sResult.IndexOf(_oCmd.sCloseWhen) != -1) {
-                    if(_oCmd.oCurrProcess != null && !_oCmd.oCurrProcess.HasExited) {
-                            _oCmd.oCurrProcess.Kill();
-                    }
-                }
-            }
-
-
-            if(_oCmd != null && _oCmd.oToInputProcess != null){
-                 _oCmd.oToInputProcess.StandardInput.WriteLine(_sResult);
-                return;
-            }
-
 
             //Direct show if current
             lock (oLockTicket) {
+                
+                _oCmd.sLauchCmdResult += _sResult + "\n";
+
+                if(_oCmd.sCloseWhen != ""){
+                    if(_sResult.IndexOf(_oCmd.sCloseWhen) != -1) {
+                        if(_oCmd.oCurrProcess != null && !_oCmd.oCurrProcess.HasExited) {
+                                _oCmd.oCurrProcess.Kill();
+                        }
+                    }
+                }
+
+
+                if(_oCmd != null && _oCmd.oToInputProcess != null){
+                     _oCmd.oToInputProcess.StandardInput.WriteLine(_sResult);
+                    _oCmd.oToInputProcess.Refresh();
+                    Console.WriteLine(_sResult);
+                    return;
+                }
+
+
                 sProcOutputRetrun += " " + _sResult;
                 
               //  if(!(Base.bAlive && Data.bNowBuilding)) {
