@@ -175,6 +175,9 @@ namespace cwc {
                 return;
             }
            
+           //    Output.Trace("Test> "  +_sOut);
+
+
             oLauchProject.bReceiveOutput = true;
 	        string _sColor ="";
 
@@ -213,16 +216,21 @@ namespace cwc {
             
            
             LauchProject.fPrjOut(_sLetter,  _sColor +_sOut);
+            if(nLimitNbOutput == -1){
+                  Output.TraceError("Error: Output exceed Limit");
+            }
+
            // Output.Trace(_sLetter + "> " +_sColor +_sOut);
          }
 
          public void fShowBacktrace(){
              // fSendCmd("GlobalVar", "info variables"); //Too heavy?
+              Output.TraceWarning("--- Backtrace ---");
               fSendCmd("backtrace", "bt full");
 
          }
 
-
+        private static int nLimitNbOutput = 0;
          public void fSendCmd(string _sName, string _sCmd, bool _bWaitResult = true){
             if(oProcess.bExeLauch){
 		    Thread sendCmd = new Thread(new ThreadStart(() =>  {  
@@ -237,6 +245,7 @@ namespace cwc {
                     sCmdNameSended = _sName;
                     if(_bWaitResult){
                         bCmdSend = true;
+                        nLimitNbOutput = 500;
                         oProcess.fSend(_sCmd); //Get Call Stack
                         oProcess.fSend("show verbose");//End sequences 
                                                        //  oProcess.fSend("show width");//End sequences 
@@ -288,8 +297,18 @@ namespace cwc {
                     return true;
                 }*/
 
+          
+                if(nLimitNbOutput> 0) {
+                     nLimitNbOutput--;
+                     return true; //Don't show result //TODO Show unreconized result?
+                }else {
+                    nLimitNbOutput = -1;
+                    oProcess.ExeProcess.Kill();
+                     return false; //TODO Kill gdb?
+                }
+               
                // return false; //Don't show result //TODO Show unreconized result?
-                return true; //Don't show result //TODO Show unreconized result?
+ 
             }
         //    return false;
         }
