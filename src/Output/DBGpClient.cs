@@ -248,6 +248,8 @@ private const bool SHOW_MESSAGES = false;
 
 				var _sCommand = _sParsedMessage.Item1;
 
+                fReceiveCmd(_sCommand);
+
 				String _sOutputMessage;
         //     MessageBox.Show("command " + command  + ": " + transId + " : " +  message);
 				switch(_sCommand) {
@@ -367,6 +369,10 @@ private const bool SHOW_MESSAGES = false;
 			}
 		}
 
+       public virtual void fReceiveCmd(string _sCommand)
+        {
+            throw new NotImplementedException();
+        }
 
         public void fSendMessage(string _sOutputMessage) {
          //   Console.WriteLine(_sOutputMessage);
