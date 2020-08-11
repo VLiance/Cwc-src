@@ -200,7 +200,7 @@ namespace cwc {
 
         
           //  if ( _sOut.StartsWith("Breakpoint") ) {
-            if (  _sOut.IndexOf("Breakpoint ",0) != -1  ) {
+            if (  _sOut.IndexOf("it Breakpoint ",0) != -1  ) {//Hit breakpoint
                 _sColor = Output.sWarningColor;
                   Output.Trace(_sLetter + "> " +_sColor +_sOut);
                  fShowBacktrace();
@@ -231,7 +231,7 @@ namespace cwc {
                  bShowedBacktrace = true;
                 // fSendCmd("GlobalVar", "info variables"); //Too heavy?
                 Output.TraceWarning("--- Backtrace ---");
-                 fSendCmd("backtrace", "bt full",false, 1500);//1500, give time to reveive stdout before TODO find a better way
+                 fSendCmd("backtrace", "bt full",false, 0);//1500, give time to reveive stdout before TODO find a better way
             }
 
          }
