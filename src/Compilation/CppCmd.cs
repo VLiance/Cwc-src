@@ -116,6 +116,8 @@ namespace cwc {
 
        public  List<string> aInclude = new List<string>();
        public  List<string> aCompileFiles = new List<string>();
+       public  List<string> aCompileFilesName = new List<string>();
+        
        public  List<SrcDiry> aDirectory = new List<SrcDiry>();
 
 		
@@ -1289,6 +1291,20 @@ bExtacted = true;
               //  }
             } else {
 
+
+                //// Get obj list /////
+            string _sAllFile = "";
+            string _sObjectList = "";
+            string _sDelim= "";
+       
+            foreach(string _sFile in aCompileFilesName){
+                _sAllFile += _sDelim + _sFile ;
+                _sDelim = ", ";
+            }
+            _sObjectList = _sAllFile;
+               
+             ///////////////////////
+
   
 
 			    if(bCallCompiler && !bIsACmdLib ){
@@ -1301,11 +1317,11 @@ bExtacted = true;
 							    fDoLinkCustomAction();
 						    }
                       
-					       CppCompiler.fSend2Compiler(_sSendCmd, bLink, false, this);
+					       CppCompiler.fSend2Compiler(_sSendCmd, bLink, false, this,_sObjectList);
 					    }
 
 				    }else {
-					      Output.TraceColored("\f27UpToDate: \f28" + sCmd );
+					      Output.TraceColored("\f27UpToDate: \f26[\f26" + _sObjectList + "\f26]\f28" + sCmd );
 				    }
 			    }
 
@@ -1472,10 +1488,16 @@ bExtacted = true;
 			/////////////////////////////////////////////////////////////////
 
 
+
 			aCompileFiles.Add(_sFile);
+            string _sDir = Path.GetDirectoryName(_sFile);
+
+            string _sName = _sFile.Substring(_sDir.Length+1);
+     
+            aCompileFilesName.Add(_sName);
 
 			if(!_b_O_as_SourceFiles) {
-				oParent.fAddPrjDirectory( new SrcDiry(Path.GetDirectoryName(_sFile),_sCondition));
+				oParent.fAddPrjDirectory( new SrcDiry(_sDir,_sCondition));
 			}
 
             string _sExt = Path.GetExtension(_sFile).ToLower();

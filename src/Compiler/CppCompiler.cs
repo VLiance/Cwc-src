@@ -229,7 +229,7 @@ namespace cwc
 
 
      
-        public static void fSend2Compiler(string _sArg, bool _bLinkTime = false, bool _bCompileAndLink = false, CppCmd _oCmd = null) {
+        public static void fSend2Compiler(string _sArg, bool _bLinkTime = false, bool _bCompileAndLink = false, CppCmd _oCmd = null, string _sAllFile = "") {
            
 			//string _sPlatform = _oCmd.oParent.sPlatform;
 			string _sPlatform = _oCmd.oParent.fGetVar("_sPlatform");
@@ -251,12 +251,17 @@ namespace cwc
                 }
             }
 
+            string _sObjectList = "";
+            if(_sAllFile != "") {
+                _sObjectList =  "[\f1B" +_sAllFile + "\f1F]";
+            }
+
           //  	string _sFinalArg = _sArg.Replace("\\\"", "\"") + " -lgdi32 " ; 
          //      string _sFinalArg = _sArg.Replace("\\\"", "\"") + " -lcurl " ; 
                string _sFinalArg = _sArg.Replace("\\\"", "\"");
                 
               //  Output.TraceColored("\f1F (" +   _oCmd.sExecutableName  + ") "  +_sFinalArg);
-                _oCmd.sCommandToShow = "\f1F (" +   _oCmd.sExecutableName  + _oCmd.sExecutableType + _sInfo  + ") "  +_sFinalArg;
+                _oCmd.sCommandToShow = "\f1F (" +   _oCmd.sExecutableName  + _oCmd.sExecutableType + _sInfo  + ")" +  _sObjectList + "  " +_sFinalArg;
 
 
 
