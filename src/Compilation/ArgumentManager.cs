@@ -528,6 +528,7 @@ namespace cwc {
 
         internal void fAddInclude(CppCmd _oCppCmd, string _sPath) {
             
+
            _sPath = PathHelper.fNormalizeFolderAndRel(_sPath);
             /*
             _sPath = _sPath.Replace('\\', '/').Replace('\"', ' ').Trim();

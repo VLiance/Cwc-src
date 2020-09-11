@@ -119,6 +119,17 @@ namespace cwc.Utilities
 
             return _sPath;
         }
+
+         public static String fNormalizeFolderAndRel(string _sPath) {
+          //  _sPath = fNormalizeFolder(_sPath);
+
+            if(_sPath.Length> 0 && _sPath[1] != ':'){ //Is relative
+			    _sPath = ExeWorkDir +_sPath;
+			}
+
+            return  fNormalizeFolder(Path.GetFullPath( _sPath));
+        }
+        /*
         public static String fNormalizeFolderAndRel(string _sPath) {
             _sPath = fNormalizeFolder(_sPath);
 
@@ -127,8 +138,7 @@ namespace cwc.Utilities
 			}
 
             return _sPath;
-        }
-
+        }*/
 
         public static string fFindFolder( string _sPath, string _sFilter, int _nMaxLevel = 9999,int _nLevel = 0){
 

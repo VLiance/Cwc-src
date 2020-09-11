@@ -10,6 +10,7 @@ namespace cwc {
     class XmlManager {
 
         static public void loadNppConfig() {
+           // return;
             /*
             XmlDocument doc = new XmlDocument();
          //   doc.Load(PathHelper.GetExeDirectory() +  "npp/config.xml");
@@ -47,12 +48,29 @@ namespace cwc {
                  _sXml = _sXml.Substring(0, _nNodeIndex);
                 _sXml += "<FileBrowser>\n";
 
-               
+                    int i = 0;
                     foreach(string _sInclude in  Data.aAllInclude) {
-		
-                       // Debug.fTrace("---aInclude : " + _sInclude);
-                           _sXml += " <root foldername=\"" +  _sInclude    + "\" />\n";
-                        // _sXml += " <root foldername=\"E:/AVerMedia HD Capture C985 Bus 105\" />\n";
+                        i++;
+                        bool _bGoodPath = true;
+                        
+		                if(_sInclude.IndexOf("Toolchain") != -1) { //Don't inlcude toolchain paths
+                            _bGoodPath =false;
+                        }
+                        
+                        int j = 0;
+                        foreach(string _sOther in  Data.aAllInclude) {
+                            j++;
+                            if(i != j) {//Not the same
+                                if(_sOther.Length <_sInclude.Length && _sInclude.IndexOf(_sOther) != -1) { //Don't inlcude recursive paths
+                                    _bGoodPath =false;
+                                }
+                            }
+                        }
+
+
+                        if(_bGoodPath) {
+                              _sXml += " <root foldername=\"" +  _sInclude    + "\" />\n";
+                         }
                     }
                 
 
