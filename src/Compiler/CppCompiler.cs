@@ -259,10 +259,18 @@ namespace cwc
           //  	string _sFinalArg = _sArg.Replace("\\\"", "\"") + " -lgdi32 " ; 
          //      string _sFinalArg = _sArg.Replace("\\\"", "\"") + " -lcurl " ; 
                string _sFinalArg = _sArg.Replace("\\\"", "\"");
+
+               _sFinalArg = _sFinalArg.Replace("%%", "¶"); //A way to keep %
+               _sFinalArg = _sFinalArg.Replace('%', '\\'); //Backslash special char % transform, we must have a ways to send backslash to compiler
+               _sFinalArg = _sFinalArg.Replace('¶', '%');  //A way to keep %
+
+                //TODO have a way to send % (maybe double %)
+              //  _sFinalArg = _sFinalArg.Replace("%", "\""); 
+                
                 
               //  Output.TraceColored("\f1F (" +   _oCmd.sExecutableName  + ") "  +_sFinalArg);
                 _oCmd.sCommandToShow = "\f1F (" +   _oCmd.sExecutableName  + _oCmd.sExecutableType + _sInfo  + ")" +  _sObjectList + "  " +_sFinalArg;
-
+                Console.WriteLine(" _oCmd.sCommandToShow  "  +  _oCmd.sCommandToShow );
 
 
 			   //Debug.fTrace("------------" + _sArg );
