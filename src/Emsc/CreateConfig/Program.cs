@@ -230,7 +230,8 @@ namespace CreateConfig
             */
 
            	sPathLLVM_Optimizer = sDirEmsc +  "upstream/bin/";
-           	sPathLLVM = sDirEmsc +  "upstream/fastcomp/bin/";
+          // 	sPathLLVM = sDirEmsc +  "upstream/fastcomp/bin/";
+           	sPathLLVM = sDirEmsc +  "upstream/bin/";
            //	sPathClang = sDirEmsc +  "upstream/fastcomp/bin/";
           
 		}

@@ -29,3 +29,6 @@ E:\_Project\_Cwc\Toolchain\VLianceTool\WebRT\WebRT-999\cwc\CreateConfig.pdb
 E:\_Project\Cwc-src\src\Emsc\CreateConfig\obj\Debug\CreateConfig.exe
 E:\_Project\Cwc-src\src\Emsc\CreateConfig\obj\Debug\CreateConfig.pdb
 E:\_Project\Cwc-src\src\Emsc\CreateConfig\obj\Debug\CreateConfig.csprojResolveAssemblyReference.cache
+E:\Data\autre\Cwc-src\src\Emsc\CreateConfig\obj\Debug\CreateConfig.exe
+E:\Data\autre\Cwc-src\src\Emsc\CreateConfig\obj\Debug\CreateConfig.pdb
+E:\Data\autre\Cwc-src\src\Emsc\CreateConfig\obj\Debug\CreateConfig.csprojResolveAssemblyReference.cache
