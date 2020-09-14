@@ -345,6 +345,7 @@ namespace CreateConfig
 
                         StreamWriter writer = new StreamWriter(fs1);
                         writer.WriteLine("import os");
+                        writer.WriteLine("CACHE='" + sDirEmsc + "_cache/'");
                         writer.WriteLine("LLVM_ROOT='" + sPathLLVM + "'");
                         writer.WriteLine("BINARYEN_ROOT='" + sPathBinaryen + "'");
                         writer.WriteLine("EMSCRIPTEN_NATIVE_OPTIMIZER='" + sPathLLVM_Optimizer + "optimizer.exe'");
