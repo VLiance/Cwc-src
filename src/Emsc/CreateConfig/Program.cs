@@ -231,7 +231,14 @@ namespace CreateConfig
 
            	sPathLLVM_Optimizer = sDirEmsc +  "upstream/bin/";
           // 	sPathLLVM = sDirEmsc +  "upstream/fastcomp/bin/";
-           	sPathLLVM = sDirEmsc +  "upstream/bin/";
+
+
+            if(Directory.Exists( sDirEmsc +  "upstream/fastcomp/" ) ) {
+                sPathLLVM = sDirEmsc +  "upstream/fastcomp/bin/";
+            }else {
+               	sPathLLVM = sDirEmsc +  "upstream/bin/";
+            }
+         
            //	sPathClang = sDirEmsc +  "upstream/fastcomp/bin/";
           
 		}
@@ -345,7 +352,6 @@ namespace CreateConfig
 
                         StreamWriter writer = new StreamWriter(fs1);
                         writer.WriteLine("import os");
-                        writer.WriteLine("CACHE='" + sDirEmsc + "_cache/'");
                         writer.WriteLine("LLVM_ROOT='" + sPathLLVM + "'");
                         writer.WriteLine("BINARYEN_ROOT='" + sPathBinaryen + "'");
                         writer.WriteLine("EMSCRIPTEN_NATIVE_OPTIMIZER='" + sPathLLVM_Optimizer + "optimizer.exe'");
@@ -359,6 +365,7 @@ namespace CreateConfig
                         writer.WriteLine("TEMP_DIR = '" + Environment.GetEnvironmentVariable("TEMP", EnvironmentVariableTarget.Machine) + "'");
                         writer.WriteLine("COMPILER_ENGINE = NODE_JS");
                         writer.WriteLine("JS_ENGINES = [NODE_JS]");
+                        writer.WriteLine("CACHE='" + sDirEmsc + "_cache/'");
                         writer.Close();
                     }
                     catch { }
