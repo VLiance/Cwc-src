@@ -518,13 +518,13 @@ namespace cwc {
 		}
 
         
-		public static void fSetVar(ArgumentManager _oArg, string _sCmd, string _sMainValue){
-            _oArg.fSetVar(_sCmd,_sMainValue );
+		public static void fSetVar(ArgumentManager _oArg, string _sCmd, string _sMainValue, bool _bAssingOnEmpty = false){
+            _oArg.fSetVar(_sCmd,_sMainValue, _bAssingOnEmpty );
 
         }
 
 
-		public void fSetVar(string _sCmd, string _sMainValue)
+		public void fSetVar(string _sCmd, string _sMainValue, bool _bAssingOnEmpty = false)
 		{
 
             
@@ -534,7 +534,7 @@ namespace cwc {
 					_sMainValue = "Default";	
 				}
 			}
-			Data.fSetGlobalVar(_sCmd, _sMainValue);
+			Data.fSetGlobalVar(_sCmd, _sMainValue, _bAssingOnEmpty);
 		}
 
 		public string fGetVar(string _sVar, bool _bWeak = false){

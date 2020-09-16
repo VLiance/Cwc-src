@@ -272,14 +272,18 @@ namespace cwc {
             }
 			return "";
 		}
-		public static void  fSetGlobalVar(string _sVar, string _sValue) {
+		public static void  fSetGlobalVar(string _sVar, string _sValue, bool _bAssingOnEmpty = false) {
 
 			_sValue = _sValue.Replace("\'","" ).Replace("\"","" ).Trim();
 			if (!Data.aVarGlobal.ContainsKey(_sVar)){
 				  Data.aVarGlobal.Add( _sVar, _sValue);
 			//	return;
-			}else { 
-			    aVarGlobal[_sVar] = _sValue;
+			}else {
+                if(_bAssingOnEmpty &&  aVarGlobal[_sVar] == "") {
+                    aVarGlobal[_sVar] = _sValue;
+                }else { 
+			        aVarGlobal[_sVar] = _sValue;
+                }
             }
             //if(_sVar == "_sPlatform" && _sValue == "") {Output.TraceError("Here ");} //For debugging
 			//Output.TraceGood("Set " + _sVar + ":" + _sValue);

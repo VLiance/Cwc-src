@@ -253,10 +253,16 @@ namespace cwc {
                 }
 
                 bool _bHaveOtherSetFlag = false;
+                bool _bAssingOnEmpty = false;
                 ////////// Find Others delemiter //////////////////
                 //Find endindex of next setting var
                 int _nEndIndex = _sFullRArg.IndexOf('=');
                 if(_nEndIndex > 4) {//Min = -{nX}=  (5)
+                   if(_sFullRArg[_nEndIndex-1] == ':') { //Assign only in not initialised or empty
+                        _nEndIndex--;
+                        _bAssingOnEmpty = true;
+                   }
+
                     if(_sFullRArg[_nEndIndex-1] == '}') { 
                         while(_nEndIndex > 1 && _sFullRArg[_nEndIndex] != '{' ) {
                             _nEndIndex--;
@@ -291,7 +297,7 @@ namespace cwc {
                               //   fPre_SetCwcVar( _sRArg);
                               //  int _nEndIndex = fPre_SetCwcVar( _sFullRArg);
                                 //int _nEndIndex = 
-                                fPre_SetCwcVar(_sMainSetValue, _sFullValue);
+                                fPre_SetCwcVar(_sMainSetValue, _sFullValue, _bAssingOnEmpty);
                                 if(!_bHaveOtherSetFlag) {
                                     return;
                                 }
@@ -1850,8 +1856,8 @@ bExtacted = true;
 			}
 		}
 
-       public void fSetVar(string _sName, string _sArg) {
-           oParent.fSetVar(_sName, _sArg);
+       public void fSetVar(string _sName, string _sArg, bool _bAssingOnEmpty = false) {
+           oParent.fSetVar(_sName, _sArg, _bAssingOnEmpty);
         }
 
 
@@ -1866,7 +1872,7 @@ bExtacted = true;
         }
 
 
-        public int fPre_SetCwcVar(string _sVar, string _sArg) {
+        public int fPre_SetCwcVar(string _sVar, string _sArg, bool _bAssingOnEmpty) {
              if(_sVar == ""){return 0;}
 
             /*
@@ -1921,7 +1927,7 @@ bExtacted = true;
 
            string _sVarArg = fExtracVals(_sArg);
            // string _sVarArg = _sArg;
-            fSetVar(_sVar, _sVarArg);
+            fSetVar(_sVar, _sVarArg, _bAssingOnEmpty);
 
 			 // switch (_sVar){
            // string _sCmd = aVar[0];
