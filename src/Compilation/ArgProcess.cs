@@ -54,7 +54,8 @@ namespace cwc {
        public static int fGetEndFile(string _sFullArg, int _nStartIndex ) {
             while(_nStartIndex < _sFullArg.Length) {
 
-                if(_sFullArg[_nStartIndex] <= 32 ) {
+                //if(_sFullArg[_nStartIndex] <= 32 ) {
+                if(_sFullArg[_nStartIndex] < 32 ) { //Keep space?
                     break;
                 }
            

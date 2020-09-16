@@ -3089,6 +3089,7 @@ bExtacted = true;
 			string _sExt = Path.GetExtension(_sAllArg).ToLower();
 			switch(_sExt) {
 				case ".cwc":
+                case ".cwmake":
 						Debug.fTrace("Expand!!!!!: " +  _sAllArg);
 					//	Debug.fTrace("Expand!!!!!: " +  Data.fExpand("@" + _sAllArg,0));
 						fNewArgCmdRun(_sAllArg,true,null,true,sRunToArgDontPrextract_Arg + " > " );
