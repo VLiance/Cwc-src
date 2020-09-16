@@ -52,7 +52,7 @@ namespace cwc
            if(_sText == null) {_sText = ""; };
 
 
-         //   _sText = _sText.Replace('\\', '/'); //Always replace??
+            _sText = _sText.Replace('\\', '/'); //Always replace??
          //	 string _sResult = "";
 
             lock(Debug.oLockOutPut) {
