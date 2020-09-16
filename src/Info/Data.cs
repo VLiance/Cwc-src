@@ -265,7 +265,7 @@ namespace cwc {
             Output.TraceWarning("fGetGlobalVar " + _sVar);
              }*/
 			if (Data.aVarGlobal.ContainsKey(_sVar)){
-				return Data.aVarGlobal[_sVar];
+				return   CppCmd.fExtractVar(Data.aVarGlobal[_sVar], null );
 			}
             if(_bWeak) {
                 return "{" + _sVar + "}";//Keep original
@@ -277,10 +277,12 @@ namespace cwc {
 			_sValue = _sValue.Replace("\'","" ).Replace("\"","" ).Trim();
 			if (!Data.aVarGlobal.ContainsKey(_sVar)){
 				  Data.aVarGlobal.Add( _sVar, _sValue);
-				return;
-			}
-			aVarGlobal[_sVar] = _sValue;
-//			Output.TraceGood("Set_" + _sVar + ":" + _sValue);
+			//	return;
+			}else { 
+			    aVarGlobal[_sVar] = _sValue;
+            }
+            //if(_sVar == "_sPlatform" && _sValue == "") {Output.TraceError("Here ");} //For debugging
+			//Output.TraceGood("Set " + _sVar + ":" + _sValue);
 		}
 
 
