@@ -91,7 +91,10 @@ namespace cwc {
                     if(!Data.bModuleIsRequired){
                         //  fDebug("------RUNN ");
                        Data.oArg.fExtract();
+                       
 				       Data.oArg.fRun(null,Data.bDontExecute);
+                      
+
                     } else {
                           //fDebug("--fLoadModules ");
                     //     Empty.fLoadModules();

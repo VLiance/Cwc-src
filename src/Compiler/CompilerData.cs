@@ -224,7 +224,7 @@ namespace cwc
 
 
 
-        internal void fFinalize(){
+        internal bool fFinalize() {
 			if(oCurrentConfigType != null && oCurrentConfigType.sFinally_CopyFolder!=""){
 				string _sVar =  CppCmd.fExtractVar(oCurrentConfigType.sFinally_CopyFolder, null);
 				
@@ -247,9 +247,12 @@ namespace cwc
 					
 				}
 
+                return true;
+
 				//string _sInputFolder =   Path.GetDirectoryName(oCompiler.sLink_Action_src).Replace("\\", "/") + "/";
 				//string _sOutFolder =  PathHelper.ExeWorkDir + sOutDirectory;
 			}
+            return false;
 			
 		}
 

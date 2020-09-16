@@ -12,6 +12,8 @@ namespace cwc {
     public class ArgumentManager {
 
 
+         public static List<CompilerData> aAllCompilerList= new List<CompilerData>();
+
        //public  List<SrcDiry> aPrjDirectory = new List<SrcDiry>(); 
 
 		  public Dictionary<string, SrcDiry> aPrjDirectory = new Dictionary<string, SrcDiry>();
@@ -41,6 +43,7 @@ namespace cwc {
 
 
        public  bool bSubArgMan = false;
+       public  bool bFinalised = false;
       
 		public string sAllArg = "";
         private static Stopwatch wBuildTime;
@@ -73,6 +76,18 @@ namespace cwc {
 			CompilerData _oCompiler = Finder.fGetCompiler(_sName, _sType, _bIsSubCompiler);
 			if(_oCompiler != null){
 				aCompilerList.Add(_oCompiler 	); //Default compiler
+                bool _bAlreadyExist = false;
+                ///////////TODO:  Mabe only a global list was required ?!
+                foreach(CompilerData _oData in aAllCompilerList) {
+                    if(_oData == _oCompiler) {
+                        _bAlreadyExist = true;
+                        }
+                }
+                if(!_bAlreadyExist) {
+                     aAllCompilerList.Add(_oCompiler);//TODO don't duplicate
+                }
+                //////////////////
+
 			}else{
 				//Output.TraceError("XXX not exist: " + _sName + "  "  +  _sPlatform  );
 				Debug.fTrace("XXX not exist: " + _sName + "  "  +  _sType  );
@@ -307,7 +322,7 @@ namespace cwc {
 
 
 		internal void fRun(ModuleData _oModule = null, bool _bDontExecute = false, bool _bShowInfo = true, bool _bSilent = false){ 
-
+              bFinalised = false;
              if(!_bDontExecute){
 			     aExeWaitingList = new List<LauchTool>();
 			     fDeletOutput();
@@ -330,7 +345,9 @@ namespace cwc {
 //			    Output.Trace("\f9B>> \f97 " + sAllArg);
 		    }
 
+             int i = 0;
             foreach(CppSeq _oSeq in aCppSeq) {
+                i++;
 
                 if(!_bSilent) {
                     Output.Trace("\f1B> \f13" + _oSeq.sSeq);
@@ -354,6 +371,9 @@ namespace cwc {
                         			
                 }
                 
+                if( i == aCppSeq.Count) {//Only last one?
+                   fFinalize();
+                }
 
                 if(!_bDontExecute){
 				     CppCompiler.CheckAllThreadsHaveFinishedWorking(true);
@@ -411,18 +431,27 @@ namespace cwc {
 	///Finalize compiler commands
 	///
  
-		if( CppCompiler.nError == 0) {
-				foreach(CompilerData _oCompiler in  aCompilerList) { //TODO separate subcompiler and extract after!?
-				
-					_oCompiler.fFinalize();
-				}
-		}
+		
             
 
 		 fShowInfo(_oModule, _bShowInfo);
 
 	}
 
+        public void fFinalize(){ //TODO is finallise is essential?!
+            if(oParent == null ) { //Only for master cmMake
+              //   bFinalised = true;
+                if( CppCompiler.nError == 0) {
+				    foreach(CompilerData _oCompiler in  aAllCompilerList) { //TODO separate subcompiler and extract after!?
+				
+					    _oCompiler.fFinalize();
+
+                          
+                        
+				    }
+                  }
+		    }
+        }
 
 
         public void fShowInfo(ModuleData _oModule, bool _bShowInfo)	{
