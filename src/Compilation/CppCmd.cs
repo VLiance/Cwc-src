@@ -147,8 +147,8 @@ namespace cwc {
 			if(_sCmd != "" ){
 				_sCmd = _sCmd.Replace('\n',' ' );
 				//_sCmd = _sCmd.Replace('\r',' ' );
-				_sCmd = _sCmd.Trim();
-				sCmd  = fExtractVar( _sCmd, true);
+				sCmd = _sCmd.Trim();
+				sCmd  = fExtractVar( sCmd, true); //TODO check if this don't break changes
 		
            //     Debug.fTrace("_sCmd " + _sCmd);
 			
@@ -825,6 +825,7 @@ bExtacted = true;
                 }
            
              
+                 // sExtractedCmd = fExtractManualSetExecutable( fExtractVar( sCmd) );
                   sExtractedCmd = fExtractManualSetExecutable( fExtractVar( sCmd) );
           
 	              sCallerCmd =  fExtractValidCompilerCommand(sExtractedCmd);
@@ -2921,7 +2922,11 @@ bExtacted = true;
                        // Debug.fTrace("NextCharIs: " + _nIndexNextChar);
                        // Debug.fTrace("PrevCharIs: " + _sCmd[_nIndexPrevChar]);
                       //  Debug.fTrace("NextCharIs: " + _sCmd[_nIndexNextChar]);
-                        if(  !((_sCmd[_nIndexPrevChar] == '-' && _sCmd[_nIndexNextChar] == '=')  ||  (_sCmd[_nIndexPrevPrevChar] == '=' && _sCmd[_nIndexPrevChar] == '>') ) ){ //Set a var (do not remplace)
+                        if(  !(
+                            (_sCmd[_nIndexPrevChar] == '-' && _sCmd[_nIndexNextChar] == '=')  
+                        ||  (_sCmd[_nIndexPrevChar] == '-' && _sCmd[_nIndexNextChar] == ':'    && _sCmd[_nIndexNextChar + 1] == '=')  
+                        ||  (_sCmd[_nIndexPrevPrevChar] == '=' && _sCmd[_nIndexPrevChar] == '>') 
+                            ) ){ //Set a var (do not remplace)
                             
 
 						    string _sOriVar = _sCmd.Substring(_nIndexStart + 1, _nIndexEnd - ( _nIndexStart  + 1));

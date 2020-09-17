@@ -52,7 +52,7 @@ namespace cwc
            if(_sText == null) {_sText = ""; };
 
 
-            _sText = _sText.Replace('\\', '/'); //Always replace??
+           // _sText = _sText.Replace('\\', '/'); //Always replace??
          //	 string _sResult = "";
 
             lock(Debug.oLockOutPut) {
@@ -212,6 +212,8 @@ namespace cwc
 			if(!Data.bColor) {
 				return TraceWithoutColor(_sText);
 			}
+
+              _sText = _sText.Replace('\\', '/'); //Always replace??
             
             string _sResult = "";
             string s = "\0\0\0\0";
