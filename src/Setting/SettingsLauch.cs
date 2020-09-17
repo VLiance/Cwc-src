@@ -33,7 +33,15 @@ namespace cwc {
             _sFileName = "_" + _sFileName + ".wdat";
            // _sFileName = "_.cwcfg";
             
-            string _sFilePath =  _sDir + "/" + _sFileName;
+
+            string _sDirectory = _sDir + "/.wdat/";
+            if(!Directory.Exists(_sDirectory)){
+                DirectoryInfo di = Directory.CreateDirectory(_sDirectory); 
+                di.Attributes = FileAttributes.Directory | FileAttributes.Hidden; 
+            }
+
+          //  string _sFilePath =  _sDir + "/" + _sFileName;
+            string _sFilePath = _sDirectory + _sFileName;
 
             if( sCurrentFile != _sFilePath ){
                   
