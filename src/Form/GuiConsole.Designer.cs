@@ -55,7 +55,6 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.liteWayvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notePadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cbTitle = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -108,7 +107,7 @@
             this.textBox1.Location = new System.Drawing.Point(62, 2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(846, 23);
+            this.textBox1.Size = new System.Drawing.Size(851, 23);
             this.textBox1.TabIndex = 8;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -127,15 +126,14 @@
             this.viewInToolStripMenuItem,
             this.ToolStrip_Build,
             this.updateToolStripMenuItem,
-            this.iDEToolStripMenuItem,
-            this.runToolStripMenuItem});
+            this.iDEToolStripMenuItem});
             this.msMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msMenu.Location = new System.Drawing.Point(477, 2);
+            this.msMenu.Location = new System.Drawing.Point(609, 2);
             this.msMenu.Name = "msMenu";
             this.msMenu.Padding = new System.Windows.Forms.Padding(1);
             this.msMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.msMenu.ShowItemToolTips = true;
-            this.msMenu.Size = new System.Drawing.Size(568, 21);
+            this.msMenu.Size = new System.Drawing.Size(436, 20);
             this.msMenu.TabIndex = 50;
             // 
             // lauchToolStripMenuItem
@@ -154,14 +152,14 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fileToolStripMenuItem.Text = "File";
             this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(99, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
             // 
             // configToolStripMenuItem
             // 
@@ -380,14 +378,6 @@
             this.notePadToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.notePadToolStripMenuItem.Text = "Notepad++";
             this.notePadToolStripMenuItem.Click += new System.EventHandler(this.notePadToolStripMenuItem_Click);
-            // 
-            // runToolStripMenuItem
-            // 
-            this.runToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.runToolStripMenuItem.Name = "runToolStripMenuItem";
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 18);
-            this.runToolStripMenuItem.Text = "Run";
-            this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
             // cbTitle
             // 
@@ -871,6 +861,5 @@
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gDBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sanitizerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
     }
 }

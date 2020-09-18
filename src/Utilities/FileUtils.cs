@@ -465,10 +465,14 @@ namespace cwc
              Process[] localByName = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(_sFullPath));
             _sFullPath = PathHelper.fNormalizePath(_sFullPath);
             foreach (Process _oProc in  localByName ) {
-                string _sNormPath =  PathHelper.fNormalizePath(_oProc.MainModule.FileName);
-                if (_sNormPath.IndexOf(_sFullPath) != -1) {
-                    firstProcess = _oProc;
+                try { 
+                if(_oProc.MainModule != null) {
+                    string _sNormPath =  PathHelper.fNormalizePath(_oProc.MainModule.FileName);
+                    if (_sNormPath.IndexOf(_sFullPath) != -1) {
+                        firstProcess = _oProc;
+                    }
                 }
+                }catch(Exception ex) { };
             }
         }
 

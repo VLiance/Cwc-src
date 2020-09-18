@@ -225,10 +225,16 @@ namespace cwc {
                 string _sFullValue = _sFullRArg;
                 int _nRemIndexFullArg = 0;
                 string _sMainSetValue = "";
+                 bool _bAssingOnEmpty = false;
                 if(_sFullRArg[0] == '{') {
            	        ///////////////////////////////Same
 
 			        int _nIndex = _sFullRArg.IndexOf('=');
+
+                     if(_nIndex> 0 && _sFullRArg[_nIndex-1] == ':') { //Assign only in not initialised or empty
+                        _bAssingOnEmpty = true;
+                     }
+
                     /*
 			        int _nIndexSpace = _sFullRArg.IndexOf(' ');
 			        if(_nIndex < _nIndexSpace) {
@@ -253,15 +259,12 @@ namespace cwc {
                 }
 
                 bool _bHaveOtherSetFlag = false;
-                bool _bAssingOnEmpty = false;
+               
                 ////////// Find Others delemiter //////////////////
                 //Find endindex of next setting var
                 int _nEndIndex = _sFullRArg.IndexOf('=');
                 if(_nEndIndex > 4) {//Min = -{nX}=  (5)
-                   if(_sFullRArg[_nEndIndex-1] == ':') { //Assign only in not initialised or empty
-                        _nEndIndex--;
-                        _bAssingOnEmpty = true;
-                   }
+                  
 
                     if(_sFullRArg[_nEndIndex-1] == '}') { 
                         while(_nEndIndex > 1 && _sFullRArg[_nEndIndex] != '{' ) {

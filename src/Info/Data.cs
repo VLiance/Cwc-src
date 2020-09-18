@@ -279,8 +279,10 @@ namespace cwc {
 				  Data.aVarGlobal.Add( _sVar, _sValue);
 			//	return;
 			}else {
-                if(_bAssingOnEmpty &&  aVarGlobal[_sVar] == "") {
-                    aVarGlobal[_sVar] = _sValue;
+                if(_bAssingOnEmpty) {
+                    if( aVarGlobal[_sVar] == "") {
+                         aVarGlobal[_sVar] = _sValue;
+                    }
                 }else { 
 			        aVarGlobal[_sVar] = _sValue;
                 }
