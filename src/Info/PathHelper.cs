@@ -89,7 +89,7 @@ namespace cwc.Utilities
 
              _sPath = _sPath.Replace('\\', '/').Replace('\"', ' ').Trim().Replace("//","/");
 
-			if(_sPath[0] == '\''){
+			if( _sPath[0] == '\''){
 				_sPath =_sPath.Substring(1);
 			}
             return _sPath;
@@ -98,6 +98,10 @@ namespace cwc.Utilities
         }
 
         public static String fNormalizeFolder(string _sPath) {
+
+            if(_sPath == "") {
+                return "";
+            }
 
              _sPath = fNormalizePath(_sPath);
 
@@ -127,7 +131,11 @@ namespace cwc.Utilities
 			    _sPath = ExeWorkDir +_sPath;
 			}
 
-            return  fNormalizeFolder(Path.GetFullPath( _sPath));
+            try {
+            _sPath = Path.GetFullPath( _sPath);
+            }catch(Exception e) { }
+
+            return  fNormalizeFolder(_sPath);
         }
         /*
         public static String fNormalizeFolderAndRel(string _sPath) {
