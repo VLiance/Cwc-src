@@ -38,6 +38,7 @@ namespace cwc {
        public  List<CppCmd> aSubFBCmd = new List<CppCmd>();
        public  List<CppCmd> aSubInputCmd = new List<CppCmd>();
         
+        public bool bDontIncludeSubFolder = false;
 	    public CompilerData oCompiler = null;
 
        public string sCmd = "";
@@ -1654,7 +1655,7 @@ bExtacted = true;
 
 					string _sSubItem = _aFile[_nSubIndex ].Trim();
 					if(_sSubItem != null && _sSubItem.Length > 1) {
-						if( _sSubItem[0] != '!' ) { //Begin with exclue special cond
+						if( _sSubItem[0] != '!') { //Begin with exclue special cond
 		
 							break;
 						}else {
@@ -1665,8 +1666,12 @@ bExtacted = true;
 
 					_nSubIndex++;
 				}
-				i = _nSubIndex - 1;
+				//i = _nSubIndex - 1;
 				//////////////////////////////////////////////////////////////////////
+                if(_sFile.Length> 1 && _sFile[0] == '&') { //Disable recursive directories
+                     _sFile = _sFile.Substring(1);
+                    _sCondition += '&';
+                }
 
 				 if(!FileUtils.IsEmpty(_sFile)) {
                     fAddFile(_sFile, _sCondition, _b_O_as_SourceFiles);
@@ -2756,6 +2761,7 @@ bExtacted = true;
                     _sFile = _sFile.Replace('\\', '/');
 
 					bool _bInclude = true;
+					
 					//if(_oDirectory.sCondition != "") {
 					if(_aCond != null) {
 						foreach(string _sCond in _aCond) {if(_sCond != null && _sCond.Length > 1 ) {
@@ -2769,9 +2775,21 @@ bExtacted = true;
 								}
 							
 							}
+                            if(_sCond[0] == '&') { //Exclude folder
+                                //Don't include subfolder
+                                bDontIncludeSubFolder = true;
+                            }
+
+
 						}}
 
 					}
+
+                    if(oParentCmd != null && oParentCmd.bDontIncludeSubFolder) {
+                        _bInclude = false; //Disable recursive folder
+                        //ex: -c &{pSFML_src}/Window/ -o {pObj}/SFML/Window/
+                    }
+
 
 					if(_bInclude) {
 
