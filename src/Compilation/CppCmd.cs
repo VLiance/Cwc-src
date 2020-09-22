@@ -2968,7 +2968,7 @@ bExtacted = true;
 				_nIndexStart = _sCmd.IndexOf('{', _nIndexStart+1); 
 			}
 			
-			return _sCmd;		
+			return _sCmd.Trim();		
 		}
 		
 /*

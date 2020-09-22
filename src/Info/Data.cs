@@ -287,7 +287,7 @@ namespace cwc {
 			        aVarGlobal[_sVar] = _sValue;
                 }
             }
-            //if(_sVar == "_sPlatform" && _sValue == "") {Output.TraceError("Here ");} //For debugging
+           // if(_sVar == "_sPlatform" && _sValue == "") {Output.TraceError("Here ");} //For debugging
 			//Output.TraceGood("Set " + _sVar + ":" + _sValue);
 		}
 
