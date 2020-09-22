@@ -118,7 +118,7 @@ namespace cwc {
 		public static ModeIDE oModeIDE = null;
 		public static int nCloseOnId = 0;
         public static bool bModuleIsRequired = false;
-        public static bool bCheckLibRTRequired = true;
+        public static bool bToolchainDefined = false;
 
 		public static ModuleData fAddRequiredModule(string _sName, bool _bIsCompiler = false)  {
     
@@ -308,7 +308,7 @@ namespace cwc {
 
 		//	Data.fAddRequiredModule("Honera/LibRT",true);
 		//	oArg.fAddCompiler( "Honera/LibRT", ""); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
-        	Data.fSetGlobalVar("_wToolchain", "VLianceTool/LibRT" );
+        	Data.fSetGlobalVar("_wToolchain", "Unknow" );
 
 
 		//	fSetGlobalVar("_wToolchain", "_LibRT_clang" );

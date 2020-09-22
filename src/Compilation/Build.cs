@@ -26,7 +26,7 @@ namespace cwc {
                  Data.aAll_ArgumentManager.Clear();
                  Data.aAll_ArgumentManager.Add( Data.oCompilerArg);
 
-                 Data.bCheckLibRTRequired = true;
+                 Data.bToolchainDefined = false;
                  Data.bModuleIsRequired = false;
                  Data.bNonBuildCommand = false;
 				 Data.aRequiredModule.Clear();

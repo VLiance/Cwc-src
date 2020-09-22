@@ -341,11 +341,12 @@ namespace cwc {
 							break;
 							case 'i':
 							case 'o':
-								
-								if(Data.bCheckLibRTRequired){
+								/*
+								if(Data.bToolchainDefined){
                                   //  Output.TraceWarning("Use Default Compiler [LibRT]");
-									f_wToolchain("VLianceTool/LibRT"); //Default compiler
-								}
+									//f_wToolchain("VLianceTool/LibRT"); //Default compiler
+									f_wToolchain(""); //Default compiler
+								}*/
 								fPreOutputCmd(_sFullRArg,_bCompiling);
 							break;
 						default:
@@ -885,7 +886,16 @@ bExtacted = true;
             if(oCompiler == null) {
               //  if(bHaveSourceC || bHaveMultipleFileSrc || bHaveKnowSourcesFiles) {
                 if(bCallCompiler) {
-                     Output.TraceError("Compiler not exist: " + sCompiler + " (" + sConfig_Type + ")");
+                    if(sCompiler == "" || sCompiler == "Unknow") {
+                      Output.TraceError("Please set the variable  {_wToolchain} to a valid compiler:");
+                       Output.TraceError("-{_wToolchain}=[Server]/Author/Name/[Version]");
+                      Output.TraceError("In example:");
+                      Output.TraceError("-{_wToolchain}=VLianceTool/LibRT");
+		
+                    }else { 
+                      Output.TraceError("Compiler not exist: " + sCompiler + " (" + sConfig_Type + ")");
+                    }
+                    Build.fDisableBuild();
                 }
                 return;
             }
@@ -1933,6 +1943,8 @@ bExtacted = true;
            // string _sVarArg = _sArg;
             fSetVar(_sVar, _sVarArg, _bAssingOnEmpty);
 
+
+            _sVarArg = CppCmd.fExtractVar(_sVarArg, null);
 			 // switch (_sVar){
            // string _sCmd = aVar[0];
 			  switch (aVar[0]){
@@ -2581,7 +2593,7 @@ bExtacted = true;
 
 
 	public void f_wToolchain( string _sArg) {
-        Data.bCheckLibRTRequired = false;
+        Data.bToolchainDefined = true;
 
         string[] _aArg = _sArg.Split(' ', '=', '/', ','); 
 		if(_aArg.Length < 2) {
