@@ -1670,7 +1670,8 @@ bExtacted = true;
 				//////////////////////////////////////////////////////////////////////
                 if(_sFile.Length> 1 && _sFile[0] == '&') { //Disable recursive directories
                      _sFile = _sFile.Substring(1);
-                    _sCondition += '&';
+                    //_sCondition += "& ";
+                      bDontIncludeSubFolder = true;
                 }
 
 				 if(!FileUtils.IsEmpty(_sFile)) {
@@ -2731,7 +2732,7 @@ bExtacted = true;
 
 		public void fCreateCompileByDirectorySubCmd(string _sOutputFolder) {
 	
-
+            
 			//List all files
 			foreach(SrcDiry _oDirectory in aDirectory) {
 				string[] _aCond = null;
@@ -2739,7 +2740,7 @@ bExtacted = true;
 					_aCond = _oDirectory.sCondition.Split(' ');
 				}
 				string _sDirectoryFolder = Path.GetDirectoryName(_oDirectory.sFile);
-				List<String> _aFiles =	FileUtils.GetAllFiles(_sDirectoryFolder);
+				List<String> _aFiles =	FileUtils.GetAllFiles(_sDirectoryFolder, !bDontIncludeSubFolder);
 				foreach(string _sFile in _aFiles) {
                     fCreateCompileMultiFile(_sFile, _sDirectoryFolder, _sOutputFolder,  _aCond );
 				}
@@ -2775,20 +2776,23 @@ bExtacted = true;
 								}
 							
 							}
+                            /*
                             if(_sCond[0] == '&') { //Exclude folder
                                 //Don't include subfolder
                                 bDontIncludeSubFolder = true;
-                            }
+                            }*/
 
 
 						}}
 
 					}
 
+
                     if(oParentCmd != null && oParentCmd.bDontIncludeSubFolder) {
                         _bInclude = false; //Disable recursive folder
                         //ex: -c &{pSFML_src}/Window/ -o {pObj}/SFML/Window/
                     }
+
 
 
 					if(_bInclude) {
