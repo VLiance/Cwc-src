@@ -2767,14 +2767,13 @@ bExtacted = true;
 					if(_aCond != null) {
 						foreach(string _sCond in _aCond) {if(_sCond != null && _sCond.Length > 1 ) {
 							if(_sCond[0] == '!') { //Exclude folder
-							//		Debug.fTrace("-Test !!! "  + _sFile.Substring(0,_sCond.Length-1 ) );
-							//Output.Trace("-Test !!! "  + _sFile.Substring(0,_sCond.Length-1 ) );
-								if( _sCond.Substring(1) == _sFile.Substring(0,_sCond.Length-1)) {
-								//	Debug.fTrace("-Exclude!!! "  + _sCond.Substring(1) );
-								//    Output.Trace("-Exclude!!! "  + _sCond.Substring(1)  + " : " +_sFile );
+                              //  string  _sCond_ = _sCond.Substring(1); //Remove '!'
+                                
+								if(_sCond.Length -1 == _sFile.Length && _sCond.IndexOf(_sFile) != -1) { //Same file
 									_bInclude = false;
 								}
-							
+
+							    
 							}
                             /*
                             if(_sCond[0] == '&') { //Exclude folder
@@ -2787,13 +2786,7 @@ bExtacted = true;
 
 					}
 
-
-                    if(oParentCmd != null && oParentCmd.bDontIncludeSubFolder) {
-                        _bInclude = false; //Disable recursive folder
-                        //ex: -c &{pSFML_src}/Window/ -o {pObj}/SFML/Window/
-                    }
-
-
+ 
 
 					if(_bInclude) {
 
