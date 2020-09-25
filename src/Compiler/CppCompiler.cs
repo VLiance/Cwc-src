@@ -382,6 +382,10 @@ namespace cwc
             //        Output.TraceColored(process.StandardError.ReadToEnd());
                              process.WaitForExit();
 
+                           //  string _sOut = process.StandardOutput.ReadToEnd() + " " + process.StandardError.ReadToEnd();
+
+
+                         
                              ///////////////////////////////////////
                              ///Wait for displaying in order
                               ////////////////////////////////////////*
@@ -695,7 +699,11 @@ namespace cwc
         
         public static string sProcOutputRetrun  = "";
         public static void fCompilerError(string _sResult,string _sArg, uint _nMyTicket, bool _bStdError = false,  CppCmd _oCmd = null) {
-
+            Console.WriteLine("*:" + _sResult);
+            if(_sResult.IndexOf("Stack frame") != -1) {
+                
+                    Console.WriteLine("Found");
+            }
 
             //Direct show if current
             lock (oLockTicket) {
@@ -712,9 +720,10 @@ namespace cwc
 
 
                 if(_oCmd != null && _oCmd.oToInputProcess != null){
-                     _oCmd.oToInputProcess.StandardInput.WriteLine(_sResult);
+                   //  _oCmd.oToInputProcess.StandardInput.WriteLine(_sResult );
+                     _oCmd.oToInputProcess.StandardInput.Write(_sResult + "\n");
                     _oCmd.oToInputProcess.Refresh();
-                    Console.WriteLine(_sResult);
+                    Console.WriteLine("R:" + _sResult);
                     return;
                 }
 
@@ -782,7 +791,9 @@ namespace cwc
                     aOutput.Add(_oOut);
                 }
 
-
+                if(nCurrentTicket == _nMyTicket) { //Direct show to not wait ending compilation
+                    fShowProcOutput(_oCmd);
+                }
             
 
 
@@ -891,7 +902,7 @@ namespace cwc
         internal static void  fLauchInputApp(Process _oToInputProcess, List<CppCmd> aSubInputCmd) {
             foreach(CppCmd _oCmd in aSubInputCmd) {
                 _oCmd.oToInputProcess = _oToInputProcess;
-                 //Output.TraceWarning("Lauch Input App: " + _oCmd.sExplicite_App + ":" +  _oCmd.sExplicite_Call);
+                 Output.TraceWarning("Lauch Input App: " + _oCmd.sExplicite_App + ":" +  _oCmd.sExplicite_Call);
                 _oCmd.fExecute();
             }
         }
