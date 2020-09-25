@@ -699,11 +699,6 @@ namespace cwc
         
         public static string sProcOutputRetrun  = "";
         public static void fCompilerError(string _sResult,string _sArg, uint _nMyTicket, bool _bStdError = false,  CppCmd _oCmd = null) {
-            Console.WriteLine("*:" + _sResult);
-            if(_sResult.IndexOf("Stack frame") != -1) {
-                
-                    Console.WriteLine("Found");
-            }
 
             //Direct show if current
             lock (oLockTicket) {
@@ -720,8 +715,8 @@ namespace cwc
 
 
                 if(_oCmd != null && _oCmd.oToInputProcess != null){
-                   //  _oCmd.oToInputProcess.StandardInput.WriteLine(_sResult );
-                     _oCmd.oToInputProcess.StandardInput.Write(_sResult + "\n");
+                     _oCmd.oToInputProcess.StandardInput.WriteLine(_sResult );
+                  //   _oCmd.oToInputProcess.StandardInput.Write(_sResult + "\n");
                     _oCmd.oToInputProcess.Refresh();
                     Console.WriteLine("R:" + _sResult);
                     return;
