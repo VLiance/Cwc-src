@@ -631,12 +631,21 @@ public string sDelimiter = "";
                 if(_indexSpace != -1) {
                     string fFirstWord = _sCmd.Substring(0, _indexSpace);
                     string _sNode  =   oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", fFirstWord}, "");
-                    if(_sNode != "") {
-                
-
+                    bool _bFound = false;
+                    if (_sNode != "") {
+                        _bFound = true;
                         sExplicite_App = _sNode;
+                    }else{
+                        //Internal explicit program
+                        switch(fFirstWord) {
+                            case "7z":
+                                _bFound = true;
+                                sExplicite_App = PathHelper.ToolDir +  "7z/7z.exe";
+                            break;
+                        }
+                    }
+                    if(_bFound) { //Found
                         sExplicite_Name = fFirstWord;
-
                         sExplicite_Call = _sCmd.Substring(_indexSpace + 1).Trim();
                         sExplicite_Call =  fExtractCwcCmd(sExplicite_Call);
                         sExplicite_Call = fTest_SubCmdOrCompileMultiFiles(sExplicite_Call);
@@ -644,6 +653,10 @@ public string sDelimiter = "";
                          Debug.fTrace("Found Explicit call: " + fFirstWord + " : " + sExplicite_App + " : " + sExplicite_Call);
                          return "";
                     }
+
+
+
+
                 }
             }
 
@@ -2657,10 +2670,7 @@ bExtacted = true;
 		}
         if(_sVar != "") {
                 string _sVarPath = "_p" + _sVar.Substring(2);
-                
-
                 fSetVar(_sVarPath, oLib.sCurrFolder);
-
          }
 
 	}

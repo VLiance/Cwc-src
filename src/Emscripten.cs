@@ -17,7 +17,7 @@ namespace cwc
         public static List<String> aBrowserVersion;
 
 		public static  string sDirEmsc =  "(unknow)";
-		
+
 
 		public static  string sPathEmsc = "";
 		public static  string sPathPython = "";
