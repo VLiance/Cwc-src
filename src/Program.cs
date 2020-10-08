@@ -164,6 +164,8 @@ namespace cwc
 
             }
 
+
+
             if(!Data.bConsoleMode) {
 
 		        if(Data.bModeIDE) {
@@ -196,7 +198,13 @@ namespace cwc
 
                 SysAPI.fQuit(); 
             */
+
           //  if(Data.bConsoleMode) {SendKeys.SendWait("{ENTER}"); }
+          /*
+          //temp
+             while ( true){
+                Thread.Sleep(1);
+            }*/
             return 0;
 
 

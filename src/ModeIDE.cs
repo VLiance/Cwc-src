@@ -21,7 +21,8 @@ namespace cwc
 
    
 		//	LauchTool oCppAst =  new LauchTool();
-			oCppAst.sWorkPath = PathHelper.Module;
+
+			//oCppAst.sWorkPath = PathHelper.Module; //Disabled?
 			oCppAst.dOut = new LauchTool.dIOut(fCppAstOut);
 	//		_oCppAst.dExit = new LauchTool.dIExit(fGitCloneEnd);
   // oCppAst. = false;

@@ -100,7 +100,7 @@ public string sResult ="";
 					Output.TraceError("Unable to lauch: " + sExePath);
 				}*/
 				
-                     processStartInfo = new ProcessStartInfo(sExePath, sArg);
+                     processStartInfo = new ProcessStartInfo( Path.GetFullPath( sExePath), sArg);
                     processStartInfo.UseShellExecute = UseShellExecute;
 
 //bWaitEndForOutput = true;
@@ -172,7 +172,7 @@ public string sResult ="";
                 try{
                         processStarted = ExeProcess.Start();
                 } catch (Exception e) {
-                    Output.TraceError("Unable to lauch: " + sExePath + " : " + e.Message);
+                    Output.TraceError("Unable to lauch: " + sExePath + " ["  + sWorkPath + "] : " + e.Message);
                 }
         
 
@@ -184,6 +184,7 @@ public string sResult ="";
 		
 			if(!bExterneLauch && !bWaitEndForOutput) {
 				ProcessOutputHandler outputHandler = new ProcessOutputHandler(this);
+                   
 				if(bRedirectOutput){
 					Thread stdOutReader = new Thread(new ThreadStart(outputHandler.ReadStdOut));
 					stdOutReader.Start();
@@ -560,8 +561,10 @@ public class ProcessOutputHandler
 
  
     public void ReadStdErr() {
+   
         string _sLine;
 		if(oTool.dError != null){
+                try { 
 			while (!proc.HasExited){
 				_sLine = proc.StandardError.ReadLine();
 				if (_sLine != ""){
@@ -570,11 +573,14 @@ public class ProcessOutputHandler
 					Thread.Sleep(1);
 				}
 			}
+                } catch(Exception e) {       Output.TraceError("Error: " + e.Message);}
 		}
     }
     public void ReadStdOut() {
+    
         string _sLine;
 		if(oTool.dOut != null){
+                           try { 
 			while (!proc.HasExited){
 
 				_sLine = proc.StandardOutput.ReadLine();
@@ -585,6 +591,7 @@ public class ProcessOutputHandler
 					Thread.Sleep(1);
 				}
 			}
+              } catch(Exception e) {       Output.TraceError("Error: " + e.Message);}
 		}
     }
 
