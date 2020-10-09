@@ -60,7 +60,7 @@ namespace cwc {
         public static ArgumentManager oCompilerArg = new ArgumentManager();
 
         		public static SelectForm oSelectForm;
-		public static GuiForm oGuiForm;
+
 		public static GuiConsole oGuiConsole = null;
 
         
