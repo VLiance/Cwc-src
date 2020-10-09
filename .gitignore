@@ -1,2 +1,6 @@
 *.cache
+*.vspx
+
+.vs/
 old/
+bin/
