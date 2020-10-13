@@ -444,7 +444,7 @@ public static extern bool GetWindowRect(IntPtr hwnd, ref Rectangle rectangle);
 
 		public static void fSetMainFormPosition() {
 
-			if(Data.oMainForm != null || Data.oGuiForm != null) {
+			if(Data.oMainForm != null ) {
 				
 				Int32 x; Int32 y; Int32 width; Int32 height; Int32 ClientWidth; Int32 ClientHeight;
 				GetWindowPosition(out x, out y, out width, out height, out ClientWidth, out ClientHeight );
@@ -482,10 +482,11 @@ public static extern bool GetWindowRect(IntPtr hwnd, ref Rectangle rectangle);
 						Data.oSelectForm.fHide();
 					}
 
+                    /*
                     if (Data.oGuiForm != null) {
                         Data.oGuiForm.fSetPosition(x,y, width -x,height-y, ClientWidth, ClientHeight);
                     }
-
+                    */
 					fSaveConsolePosition();//Todo only when mouse is released?
 				}
                  if (Data.oSelectForm != null) {

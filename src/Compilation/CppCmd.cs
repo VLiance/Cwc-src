@@ -377,10 +377,6 @@ namespace cwc {
             if (_nDotIndex>= 0) {
                sCompileExtention = sRArg.Substring(_nDotIndex + 1).ToLower();
             }
-
-            Debug.fTrace("sCompileExtention : " +sCompileExtention );
-        
-
         }
 
         public bool bCallCompiler = false;
@@ -396,7 +392,7 @@ namespace cwc {
 
             fExtractSubLib(oLib);
             foreach(ModuleData _oSubLib in  oLib.aSubLib) {
-                Output.TraceAction("_oSubLib "  + _oSubLib.sAutorName);
+                //Output.TraceAction("_oSubLib "  + _oSubLib.sAutorName);
                  fExtractSubLib(_oSubLib);
             }
 		}
@@ -1527,8 +1523,15 @@ bExtacted = true;
             string _sDir = Path.GetDirectoryName(_sFile);
 
             string _sName = _sFile.Substring(_sDir.Length+1);
-     
-            aCompileFilesName.Add(_sName);
+            //Add one folder to the name?//
+            string _sLastFolder = Path.GetFileName(_sDir)+ "/";
+            string _sPrevFolder =  "";
+            if(_sDir.Length - _sLastFolder.Length > 0) {
+                _sPrevFolder = Path.GetFileName(_sDir.Substring(0, _sDir.Length - _sLastFolder.Length)) + "/";
+            }
+
+            ///////////////////////////////
+            aCompileFilesName.Add(_sPrevFolder + _sLastFolder  + _sName);
 
 			if(!_b_O_as_SourceFiles) {
 				oParent.fAddPrjDirectory( new SrcDiry(_sDir,_sCondition));
@@ -2776,12 +2779,17 @@ bExtacted = true;
 					//if(_oDirectory.sCondition != "") {
 					if(_aCond != null) {
 						foreach(string _sCond in _aCond) {if(_sCond != null && _sCond.Length > 1 ) {
-							if(_sCond[0] == '!') { //Exclude folder
-                              //  string  _sCond_ = _sCond.Substring(1); //Remove '!'
-                                
-								if(_sCond.Length -1 == _sFile.Length && _sCond.IndexOf(_sFile) != -1) { //Same file
-									_bInclude = false;
-								}
+							if(_sCond[0] == '!') { //Exclude folder or file
+                                if(_sCond[_sCond.Length-1] == '/' && _sFile.Length >= (_sCond.Length -1)) {//It's a folder
+                                    string _sIsInclude = _sCond.Substring(1); //TODO optimise!
+                                    if(_sFile.IndexOf(_sIsInclude) == 0) {
+                                         _bInclude = false;
+                                    }
+                                }else { //It's a file
+								    if(_sCond.Length -1 == _sFile.Length && _sCond.IndexOf(_sFile) != -1) { //Exclude file if same
+									    _bInclude = false;
+								    }
+                                }
 
 							    
 							}

@@ -125,7 +125,6 @@ E:\Data\autre\Cwc-src\src\obj\x86\Debug\cwc.CompilerConfig.resources
 E:\Data\autre\Cwc-src\src\obj\x86\Debug\cwc.Empty.resources
 E:\Data\autre\Cwc-src\src\obj\x86\Debug\cwc.Form1.resources
 E:\Data\autre\Cwc-src\src\obj\x86\Debug\NJFLib.Controls.CollapsibleSplitter.resources
-E:\Data\autre\Cwc-src\src\obj\x86\Debug\cwc.GuiForm.resources
 E:\Data\autre\Cwc-src\src\obj\x86\Debug\cwc.GuiConsole.resources
 E:\Data\autre\Cwc-src\src\obj\x86\Debug\cwc.Properties.Resources.resources
 E:\Data\autre\Cwc-src\src\obj\x86\Debug\cwc.Install.resources

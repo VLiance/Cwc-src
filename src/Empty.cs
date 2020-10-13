@@ -416,14 +416,10 @@ private const int WM_DESTROY = 0x0002  ;
                            Data.sCmd ="StartBuild";
                         break;
                         case "StopBuild":
-                      
-                       //    Data.sCmd = "StopBuild";
-                            Data.oLauchProject.fCancel();//Thread?
+                            Data.oLauchProject.fCancel(); //Thread?
                         break;
-                    
-                        case "ShowMenu":
-                           Data.oGuiForm.fShow();
-                        break;
+                        
+
   
                     }
 
