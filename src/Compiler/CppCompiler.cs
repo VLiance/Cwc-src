@@ -192,8 +192,14 @@ namespace cwc
                         process.StartInfo.RedirectStandardError = true;
 
                         process.StartInfo.WorkingDirectory =_oCmd.s_pProject; 
-             
-                         try  {
+
+                        try  {
+
+                            if(process.StartInfo.FileName.Length +  process.StartInfo.Arguments.Length  >= 32700){ // Command line size limitation, real 32768 
+                                //Todo verify for .wdat folder?
+                                process.StartInfo.Arguments = "@.wdat/arg.wdat";
+                                File.WriteAllText(@".wdat/arg.wdat", _sFinalArg);
+                            }
 
                             process.OutputDataReceived += (sender, e) => { if (e.Data != null) {
                                 fCompilerError(e.Data, _sArg, _nMyTicket,false, _oCmd);
@@ -232,7 +238,18 @@ namespace cwc
                                 }
                             }
                             ////////////////////////////////////
-                         } finally{ }
+                         }catch(Exception e){
+                            Output.TraceError(e.Message);
+                            string _sSended = process.StartInfo.FileName + " " + process.StartInfo.Arguments;
+                            Output.TraceAction(_sSended);
+                            if(_sSended.Length >= 32768){
+                                  Output.TraceWarning("You may have exceeded the maximum command line size of 32768 characters: " + _sSended.Length + " chars"  );     
+                            }
+                            Interlocked.Decrement(ref safeInstanceCount);
+                            return;
+                        }
+
+                        
 
                          while (!process.HasExited) {
                             Thread.Sleep(1);

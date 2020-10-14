@@ -77,7 +77,6 @@ E:\_Project\Cwc-src\src\obj\x86\Debug\cwc.CompilerConfig.resources
 E:\_Project\Cwc-src\src\obj\x86\Debug\cwc.Empty.resources
 E:\_Project\Cwc-src\src\obj\x86\Debug\cwc.Form1.resources
 E:\_Project\Cwc-src\src\obj\x86\Debug\NJFLib.Controls.CollapsibleSplitter.resources
-E:\_Project\Cwc-src\src\obj\x86\Debug\cwc.GuiForm.resources
 E:\_Project\Cwc-src\src\obj\x86\Debug\cwc.GuiConsole.resources
 E:\_Project\Cwc-src\src\obj\x86\Debug\cwc.Properties.Resources.resources
 E:\_Project\Cwc-src\src\obj\x86\Debug\cwc.Install.resources
