@@ -1486,7 +1486,9 @@ bExtacted = true;
 
 
          public  void fAddFile(string _sFile, string _sCondition, bool _b_O_as_SourceFiles = false) {
-
+            if(_sFile.Length <= 1){
+                return; //not a valid file
+            }
 		 
 			//Debug.fTrace("---------------_sFile " + _sFile);
 		
@@ -1494,11 +1496,16 @@ bExtacted = true;
 			////////////////////////// Is a Directory / ////////////////////
 			if(_sFile[_sFile.Length-1] == '\\' ||  _sFile[_sFile.Length-1] == '/') { 
 				
+                string _sTestFile = _sFile;
+                if(_sTestFile[0] == '!' || _sTestFile[0] == '&'){
+                    _sTestFile = _sTestFile.Substring(1);
+                }
+
 				bHaveDirectorySource = true; //No error if doesn't exist, just do nothing
-				if(Directory.Exists(_sFile) ) {
+				if(Directory.Exists(_sTestFile) ) {
 					
 				//	Debug.fTrace("Directory.Exists!! " + _sFile);
-					SrcDiry _oNewDir = new SrcDiry(_sFile,_sCondition);
+					SrcDiry _oNewDir = new SrcDiry(_sTestFile,_sCondition);
 
 					aDirectory.Add(_oNewDir);
 
