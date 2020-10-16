@@ -1503,18 +1503,17 @@ bExtacted = true;
 
 				bHaveDirectorySource = true; //No error if doesn't exist, just do nothing
 				if(Directory.Exists(_sTestFile) ) {
-					
-				//	Debug.fTrace("Directory.Exists!! " + _sFile);
-					SrcDiry _oNewDir = new SrcDiry(_sTestFile,_sCondition);
+					 if(_sFile[0] != '!') {
 
-					aDirectory.Add(_oNewDir);
+				    //	Debug.fTrace("Directory.Exists!! " + _sFile);
+					    SrcDiry _oNewDir = new SrcDiry(_sTestFile,_sCondition);
+					    aDirectory.Add(_oNewDir);
 
 
-
-					if(!_b_O_as_SourceFiles) {
-						oParent.fAddPrjDirectory(_oNewDir);
-					}
-
+					    if(!_b_O_as_SourceFiles) {
+						    oParent.fAddPrjDirectory(_oNewDir);
+					    }
+                    }
 					return;
 				}else {
 						// Output.Trace("\f4C Output directory must have a directory source: " +  sCmd);
