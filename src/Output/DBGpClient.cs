@@ -111,7 +111,7 @@ private const bool SHOW_MESSAGES = false;
 
                 while(Base.bAlive){
                     try{
-                        Thread.Sleep(1000);
+                        Thread.CurrentThread.Join(1000);
                         if(oSocket == null) {
                              oSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                         }
@@ -189,7 +189,7 @@ private const bool SHOW_MESSAGES = false;
 				var _aSocketBuffer = new byte[4096];
 				var _oReceiveToken = oSocket.BeginReceive(_aSocketBuffer, 0, _aSocketBuffer.Length, SocketFlags.None, null, null);
 				while(Base.bAlive) {
-                    Thread.Sleep(1);
+                    Thread.CurrentThread.Join(1);
 					var _aWaitArray = _stepWait != null ? new WaitHandle[] { _oReceiveToken.AsyncWaitHandle, _stepWait } : new WaitHandle[] { _oReceiveToken.AsyncWaitHandle };
 					var _nWaitIndex = System.Threading.WaitHandle.WaitAny(_aWaitArray, 50);
 

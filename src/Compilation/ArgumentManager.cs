@@ -511,7 +511,8 @@ namespace cwc {
 		public void fWaitForWaitingList()	{
 			foreach(LauchTool _oExe in aExeWaitingList) {
 				while(_oExe.bExeLauch && Base.bAlive) {
-					Thread.Sleep(1);
+					//Thread.Sleep(1);
+                    Thread.CurrentThread.Join(1);  
 				}
 			}
 			aExeWaitingList = new List<LauchTool>();

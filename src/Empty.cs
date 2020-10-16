@@ -458,7 +458,7 @@ private const int WM_DESTROY = 0x0002  ;
 
                 //Wait to finish
                 while(ModuleData.nRequestTag > 0) {
-                    Thread.Sleep(1);
+                    Thread.CurrentThread.Join(1);
                 }
 
                 List<ModuleLink> _aLink = new List<ModuleLink>();
@@ -487,9 +487,9 @@ private const int WM_DESTROY = 0x0002  ;
                     Output.TraceWarning( "Starting Download ... (press 'n' to cancel)");
                     foreach(ModuleLink _oLink in _aLink) {
                           _oLink.fDownload();
-                          while(_oLink.bDl_InProgress) {Thread.Sleep(1); }
+                          while(_oLink.bDl_InProgress) {Thread.CurrentThread.Join(1); }
                           _oLink.fExtract();
-                          while(_oLink.oModule.bExtact_InProgress) {Thread.Sleep(1); }
+                          while(_oLink.oModule.bExtact_InProgress) {Thread.CurrentThread.Join(1); }
                     }
                        Output.Trace("");
                     Output.TraceGood( "---------------- All Required Module Completed ------------------");

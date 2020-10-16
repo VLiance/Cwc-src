@@ -34,9 +34,9 @@ namespace cwc
             }
 
             while (!(SafeInstanceCount < nNbSimulThread)) {
-                Thread.Sleep(1);
+                Thread.CurrentThread.Join(1);
             }
-            Thread.Sleep(1);
+            Thread.CurrentThread.Join(1);
         }
 
         public static readonly Object oLockTicket = new Object();
@@ -217,7 +217,7 @@ namespace cwc
                             ///Wait for displaying in order
                             //////////////////////////////////////
                             while(Base.bAlive && Data.bNowBuilding ) {
-                                Thread.Sleep(1);
+                                Thread.CurrentThread.Join(1);
                                 lock(oLockTicket) {
                                   
                                     if(nCurrentTicket == _nMyTicket) {
@@ -252,7 +252,7 @@ namespace cwc
                         
 
                          while (!process.HasExited) {
-                            Thread.Sleep(1);
+                            Thread.CurrentThread.Join(1);
                             if(!Data.bNowBuilding) {
                                  break;
                              }
@@ -593,7 +593,7 @@ namespace cwc
                             ///Wait for displaying in order
                             ////////////////////////////////////////*
                             while(Base.bAlive && Data.bNowBuilding ) {
-                                Thread.Sleep(1);
+                                Thread.CurrentThread.Join(1);
                                 lock(oLockTicket) {
                                   
                                     if(nCurrentTicket == _nMyTicket) {
@@ -618,7 +618,7 @@ namespace cwc
                         } finally {}
 
                         try {  while (!process.HasExited){
-                             Thread.Sleep(1);
+                             Thread.CurrentThread.Join(1);
                             if(!Data.bNowBuilding) {
                                  break;
                              }
@@ -635,7 +635,7 @@ namespace cwc
 
                  if( _oCmd.bRetryForInput){
                     while(!_bFinished){
-                       Thread.Sleep(1);
+                      Thread.CurrentThread.Join(1);
                     }
                     if(_oCmd.sLauchCmdResult == "") {
                            //Recursive call
@@ -647,7 +647,7 @@ namespace cwc
 
                 if(_bWaitToFinish){
                     while(!_bFinished){
-                       Thread.Sleep(1);
+                       Thread.CurrentThread.Join(1);
                     }
                     return sProcOutputRetrun.Trim();
                  }

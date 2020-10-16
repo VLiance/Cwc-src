@@ -243,14 +243,14 @@ namespace cwc {
 		    Thread sendCmd = new Thread(new ThreadStart(() =>  {  
 
                  while(bCmdSend == true && Base.bAlive) {
-                    Thread.Sleep(1);
+                    Thread.CurrentThread.Join(1);
                 }
                 if(oProcess.bExeLauch){
                        Debug.fTrace("S> " + _sName + " : " +_sCmd);
                     //sLastGetExp = "";
                     sCmdSended = _sCmd;
                     sCmdNameSended = _sName;
-                    Thread.Sleep(_nWaitTime);
+                    Thread.CurrentThread.Join(_nWaitTime);
                     if(_bWaitResult){
                         bCmdSend = true;
                         nLimitNbOutput = 500;

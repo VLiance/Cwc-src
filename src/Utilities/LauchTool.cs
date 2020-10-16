@@ -267,7 +267,7 @@ public string sResult ="";
 						sError = _sError;
 
                 	     while(!ExeProcess.HasExited  && Base.bAlive) {
-                                Thread.Sleep(1);
+                                Thread.CurrentThread.Join(1);
                           }
                         if(dExit != null) {
                              dExit(this);
@@ -323,7 +323,7 @@ public bool bSanitize = false;
 
 
             while(!ExeProcess.HasExited  && Base.bAlive) {
-                Thread.Sleep(1);
+                Thread.CurrentThread.Join(1);
                 }
      
 
@@ -426,7 +426,7 @@ public bool bSanitize = false;
             }
 
                 while(!ExeProcess.HasExited  && Base.bAlive) {
-                 Thread.Sleep(1);
+                 Thread.CurrentThread.Join(1);
                  }
                //             Output.Trace("\f18-Finish-");
            }
@@ -504,7 +504,7 @@ public bool bSanitize = false;
 
 		   public  void fSend(string _sMsg) {
                 while (bExeLauch && !bExeLauched) { //Wait for starting
-                    Thread.Sleep(1);
+                    Thread.CurrentThread.Join(1);
                 }
                 if(bExeLauch){
 			     ExeProcess.StandardInput.WriteLine(_sMsg ); ///bug
@@ -570,7 +570,7 @@ public class ProcessOutputHandler
 				if (_sLine != ""){
 						oTool.dError(oTool, _sLine);
 				}else{
-					Thread.Sleep(1);
+					Thread.CurrentThread.Join(1);
 				}
 			}
                 } catch(Exception e) {       Output.TraceError("Error: " + e.Message);}

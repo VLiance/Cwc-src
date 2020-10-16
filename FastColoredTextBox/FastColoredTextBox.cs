@@ -269,7 +269,8 @@ namespace FastColoredTextBoxNS
                         OnVisibleRangeChanged();*/
                       });
                 }
-                Thread.Sleep(16);
+                //Thread.Sleep(16);
+                Thread.CurrentThread.Join(16);
             }
         }
         //

@@ -262,7 +262,7 @@ namespace cwc {
                }catch(Exception Ex) { }
 
                while(!ExeProcess.HasExited  && Base.bAlive) {
-                 Thread.Sleep(1);
+                Thread.CurrentThread.Join(1);
                  }
                 
 

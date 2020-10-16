@@ -41,9 +41,9 @@ namespace cwc {
 				//  winThread.IsBackground = true;  
 				  winThread.Start();
 
-                Thread.Sleep(1);
+               Thread.CurrentThread.Join(1);
                 while(   Base.bAlive && Data.oGuiConsole== null) {
-                       Thread.Sleep(1);
+                       Thread.CurrentThread.Join(1);
                 }
 
                 /*

@@ -200,7 +200,7 @@ namespace cwc
                             Debug.fPrint("");
                         }
                     }
-				    Thread.Sleep(1);
+				    Thread.CurrentThread.Join(1);
 			    }
 		    }));  
 		    winThread.Start();

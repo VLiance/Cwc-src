@@ -1001,7 +1001,7 @@ namespace cwc {
                             });
                         }
                    
-				    Thread.Sleep(16);
+				    Thread.CurrentThread.Join(16);
 			     }
 		    }));  
 		    winThread3.Start();

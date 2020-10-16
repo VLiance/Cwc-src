@@ -37,7 +37,7 @@ namespace cwc {
 	Base.bAlive  = false;
    Data.bModeIDE = false;
      Build.StopBuild();
-	Thread.Sleep(1);
+	Thread.CurrentThread.Join(1);
 
 
 /*
@@ -133,7 +133,7 @@ namespace cwc {
         }
                    // MessageBox.Show("Kill: "+  proc.MainWindowTitle);
               //Debug.fTrace("Kil: "+  proc.);
-                 Thread.Sleep(1);
+                 Thread.CurrentThread.Join(1);
 				if(proc.Id != Data.MainProcess.Id && !proc.HasExited ) {
                         bool _bSkip = false;
 

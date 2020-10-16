@@ -1732,7 +1732,7 @@ protected override void OnPaintBackground(PaintEventArgs e)
                     if (Directory.Exists(folder)) Directory.Delete(folder, true);
                     return;
                 }
-                catch (IOException) { Thread.Sleep(50); }
+                catch (IOException) { Thread.CurrentThread.Join(50); }
             }
             throw new Exception(this.localeData.DeleteDirError + folder);
         }

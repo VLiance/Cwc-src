@@ -215,7 +215,8 @@ fGetScroll();
 	            //    NativeMethods.ReadConsoleInput(Data.hConsoleInput, ref record, 1, ref recordLen);
                	fTestSelection(nMousePosX, nMousePosY);
                 
-				Thread.Sleep(32); //30fps
+				//Thread.Sleep(32); //30fps
+                Thread.CurrentThread.Join(32);
             }
             }));  
            	winThreadSelection.Start();
@@ -440,7 +441,7 @@ fGetScroll();
 				while(Base.bAlive) {
 				//	Debug.fTrace("-----NewPipeInput");
 		
-						Thread.Sleep(1);
+						Thread.CurrentThread.Join(1);
 						Console.SetIn(new StreamReader(Console.OpenStandardInput(8192))); // This will allow input >256 chars
 						while (Console.In.Peek() != -1){
 
