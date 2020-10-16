@@ -810,7 +810,7 @@ namespace cwc
 					this.Close();
 				}
 			
-				((MainForm)(oParent)).fLoadNextModule();
+			//	((MainForm)(oParent)).fLoadNextModule();
             });
 
 			
@@ -844,7 +844,7 @@ namespace cwc
 				//	_oUpdateDialog.Location = new Point( _oFrom.Cons_x  + (_oFrom.Cons_width - _oFrom.Cons_x) / 2 - _oUpdateDialog.Width / 2, _oFrom.Cons_y + ( _oFrom.Cons_height -  _oFrom.Cons_y)/ 2  - _oUpdateDialog.Height / 2);
 					_oUpdateDialog.Location = new Point( _oFrom.Location.X , _oFrom.Location.Y);
 		        
-                    ScreenOperations.IsWindowOnAnyScreen(_oUpdateDialog, true );
+                    //ScreenOperations.IsWindowOnAnyScreen(_oUpdateDialog, true );
 
 //_oUpdateDialog.
 					_oUpdateDialog.oParent = _oFrom;

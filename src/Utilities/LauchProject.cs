@@ -10,7 +10,7 @@ namespace cwc{
 
 	public class LauchProject{
 
-		public  MainForm oMainForm = null;
+	//	public  MainForm oMainForm = null;
 			
 		// public Lauch oCurLauch = null;
 		 public LauchTool oCurLauch = null;
@@ -258,9 +258,11 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
 
 
 		 public void fLauchEnd() {
+            /*
 			if(oMainForm!= null) {
 				oMainForm.fLauchEnd();
-			}
+			}*/
+
 			oCurLauch = null; 
 		}
 
@@ -304,10 +306,11 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
 					}
 				}
 			}
+            /*
 			if(oMainForm!= null) {
 				oMainForm.fSetOutput(sOutput);
 			}
-
+            */
 
 
 			

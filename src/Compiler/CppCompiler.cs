@@ -95,9 +95,10 @@ namespace cwc
 				}
 
                  string _sResult = Output.Trace(_sOut, true);
+                /*
                 if( Data.oMainForm != null) {
                      Data.oMainForm.fAddItem(_sResult);
-                }
+                }*/
             }
         }
 

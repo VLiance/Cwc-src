@@ -152,7 +152,7 @@ namespace cwc {
            if(Data.nCloseOnId != 0){
 		        Thread winThread4 = new Thread(new ThreadStart(() =>  {  
                     while(Base.bAlive){
-				        PipeInput.fTestIdeClosed(Data.nCloseOnId); //TODO do it in is thread?
+				      //  PipeInput.fTestIdeClosed(Data.nCloseOnId); //TODO do it in is thread?
 				        Thread.CurrentThread.Join(1000);
                     }
 		        }));   winThread4.Start();

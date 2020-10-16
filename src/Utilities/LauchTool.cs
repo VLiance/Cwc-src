@@ -13,7 +13,7 @@ using System.Windows.Forms;
 namespace cwc {
     public class LauchTool {
 
-         public MainForm oForm = null; //Delegate?
+     ///    public MainForm oForm = null; //Delegate?
 
         public bool bReturnError = false;
         public bool bReturnBoth = false;

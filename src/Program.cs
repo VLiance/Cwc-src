@@ -81,7 +81,7 @@ namespace cwc {
         if(!Data.bConsoleMode) {
             if(Data.bModeIDE) {
 	            Base.bAlive = true;
-                PipeInput.fLauchPipeInput();
+               // PipeInput.fLauchPipeInput();
             }
             Build.fStartLoopTestingIdeLinkedClosing();
         }

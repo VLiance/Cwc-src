@@ -444,7 +444,8 @@ public static extern bool GetWindowRect(IntPtr hwnd, ref Rectangle rectangle);
 
 		public static void fSetMainFormPosition() {
 
-			if(Data.oMainForm != null ) {
+		//	if(Data.oMainForm != null ) {
+			if(false ) {
 				
 				Int32 x; Int32 y; Int32 width; Int32 height; Int32 ClientWidth; Int32 ClientHeight;
 				GetWindowPosition(out x, out y, out width, out height, out ClientWidth, out ClientHeight );
@@ -478,9 +479,10 @@ public static extern bool GetWindowRect(IntPtr hwnd, ref Rectangle rectangle);
 
 
 				if(_bMove){
+                    /*
 					if(Data.oSelectForm != null){
 						Data.oSelectForm.fHide();
-					}
+					}*/
 
                     /*
                     if (Data.oGuiForm != null) {
@@ -489,9 +491,10 @@ public static extern bool GetWindowRect(IntPtr hwnd, ref Rectangle rectangle);
                     */
 					fSaveConsolePosition();//Todo only when mouse is released?
 				}
+                /*
                  if (Data.oSelectForm != null) {
                     Data.oSelectForm.fSetPosition(x,y, width -x,height-y, ClientWidth, ClientHeight);
-                }
+                }*/
 
 
 			//	Rectangle	oRect = new Rectangle();
@@ -575,9 +578,10 @@ public static void fHideConsole() {
         }
 
 	//	Console.Title =	_sDir;
+    /*
 		if(Data.oMainForm != null){
 			Data.oMainForm.fSetWorkingDir(_sDir);
-		}
+		}*/
 	
 	}
 

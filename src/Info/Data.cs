@@ -59,7 +59,7 @@ namespace cwc {
        public static ArgumentManager oArg;
         public static ArgumentManager oCompilerArg = new ArgumentManager();
 
-        		public static SelectForm oSelectForm;
+        		//public static SelectForm oSelectForm;
 
 		public static GuiConsole oGuiConsole = null;
 
@@ -89,8 +89,8 @@ namespace cwc {
 
 
    //     public  static string sCurrFolder =  Directory.GetCurrentDirectory();
-        public  static MainForm oMainForm = null;
-        public  static MainForm oAss= null;
+      //  public  static MainForm oMainForm = null;
+
         public  static Empty oMsgForm = null;
 		public  static LauchProject oLauchProject = new LauchProject();
 
@@ -173,10 +173,10 @@ namespace cwc {
 			aBrowser.Add(_sBrowser);
 
 
-
+            /*
 			if(oMainForm != null){
 				oMainForm.fUpdateBrowser();
-			}
+			}*/
 		}
 			
 		internal static string fGetViewIn()	{

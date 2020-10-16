@@ -244,10 +244,10 @@ namespace cwc {
 
         
         public static void fFinishExtractArg() {
-
+            /*
               if(Data.oMainForm != null) {
                Data.oMainForm.fFinishExtractArg();
-            }
+            }*/
 /*
 Debug.fTrace("fFinishExtractArg!!!!!!!!!!!!!!!!!!!!!!!!-*-*--**--*-*-**-");
 			if(bModeIDE) {

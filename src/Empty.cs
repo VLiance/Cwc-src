@@ -28,12 +28,12 @@ namespace cwc
         
 		public static  Empty oMsgForm = null;
 
-		public static  SelectForm oSelectForm = null;
+		//public static  SelectForm oSelectForm = null;
 
 
 
 		public static  bool bLoaded = false;
-       public  static MainForm oMainForm = null;
+     //  public  static MainForm oMainForm = null;
        public  static IntPtr  nMainHwnd;
        public  static bool  bHaveMsgForm =false;
 

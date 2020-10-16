@@ -836,8 +836,31 @@ namespace cwc {
             // Delocalise.fDelocaliseInMainThread( (string) ((ToolStripMenuItem) sender).Tag );
         }
 
+          public static string fDialogExeFile( string _sRoot, string _sCurrentVal, string _sFilter = "") {
+
+            OpenFileDialog fbd = new OpenFileDialog();
+            _sRoot = _sRoot.Replace('\\', '/');
+            if(_sRoot[_sRoot.Length - 1] != '/' ) {
+                _sRoot += '/';
+            }
+
+            fbd.InitialDirectory  =  Path.GetDirectoryName(_sRoot + _sCurrentVal);
+			if(_sFilter == ""){
+				 fbd.Filter = "Executable (*.exe)|*.exe|All files (*.*)|*.*";
+			}else{
+				 fbd.Filter = _sFilter;
+			}
+            if(fbd.ShowDialog() == DialogResult.OK) {
+               //return Path.GetFileName( fbd.FileName);
+              // Debug.fTrace(_sRoot);
+              // Debug.fTrace( fbd.FileName);
+               return FileUtils.fMakeRelativePath(_sRoot, fbd.FileName);
+            }
+            return _sCurrentVal;
+        }
+
         private void fileToolStripMenuItem_Click(object sender, EventArgs e) {
-              string _sResult = CompilerConfig.fDialogExeFile( PathHelper.ExeWorkDir, "",  "Commands (*.cwMake)|*.cwMake;|Executable (*.exe)|*.exe|All files (*.*)|*.*");
+              string _sResult = fDialogExeFile( PathHelper.ExeWorkDir, "",  "Commands (*.cwMake)|*.cwMake;|Executable (*.exe)|*.exe|All files (*.*)|*.*");
             if(_sResult.Length > 2 &&  _sResult[1] != ':') {//If is not absolute (relative)
               _sResult = PathHelper.ExeWorkDir + _sResult;
             }
