@@ -127,12 +127,12 @@
             this.updateToolStripMenuItem,
             this.iDEToolStripMenuItem});
             this.msMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msMenu.Location = new System.Drawing.Point(517, 2);
+            this.msMenu.Location = new System.Drawing.Point(609, 2);
             this.msMenu.Name = "msMenu";
             this.msMenu.Padding = new System.Windows.Forms.Padding(1);
             this.msMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.msMenu.ShowItemToolTips = true;
-            this.msMenu.Size = new System.Drawing.Size(528, 21);
+            this.msMenu.Size = new System.Drawing.Size(436, 20);
             this.msMenu.TabIndex = 50;
             // 
             // lauchToolStripMenuItem
@@ -353,21 +353,21 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(134, 6);
             // 
             // notePadToolStripMenuItem
             // 
             this.notePadToolStripMenuItem.Checked = true;
             this.notePadToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.notePadToolStripMenuItem.Name = "notePadToolStripMenuItem";
-            this.notePadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.notePadToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.notePadToolStripMenuItem.Text = "Notepad++";
             this.notePadToolStripMenuItem.Click += new System.EventHandler(this.notePadToolStripMenuItem_Click);
             // 

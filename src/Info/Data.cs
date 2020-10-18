@@ -273,18 +273,24 @@ namespace cwc {
 			return "";
 		}
 		public static void  fSetGlobalVar(string _sVar, string _sValue, bool _bAssingOnEmpty = false) {
-
+            /*
+            var _sResult = "";
+            //Remove quotes ... or not??!?
+            for(int i =0; i < _sValue.Length; i++){}
 			_sValue = _sValue.Replace("\'","" ).Replace("\"","" ).Trim();
+            */
+            var _sResult = _sValue.Trim();
+
 			if (!Data.aVarGlobal.ContainsKey(_sVar)){
-				  Data.aVarGlobal.Add( _sVar, _sValue);
+				  Data.aVarGlobal.Add( _sVar, _sResult);
 			//	return;
 			}else {
                 if(_bAssingOnEmpty) {
                     if( aVarGlobal[_sVar] == "") {
-                         aVarGlobal[_sVar] = _sValue;
+                         aVarGlobal[_sVar] = _sResult;
                     }
                 }else { 
-			        aVarGlobal[_sVar] = _sValue;
+			        aVarGlobal[_sVar] = _sResult;
                 }
             }
            // if(_sVar == "_sPlatform" && _sValue == "") {Output.TraceError("Here ");} //For debugging

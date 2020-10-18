@@ -2500,18 +2500,19 @@ bExtacted = true;
 
              public string fExtracVals(string _sValue, char _cRequiredDelim='=' ) {//_cRequiredDelim??
 
-                      string _sResult = _sValue; 
-                            //Remove quote!!
-                        if (_sResult[0] == '\"') {
-                            _sResult = _sResult.Substring(1);
+                string _sResult = _sValue; 
+                    //Remove quote!!
+                if (_sResult[0] == '\"') {
+                    _sResult = _sResult.Substring(1);
+                            
+                    for(int i =0; i < _sResult.Length; i++){
+                        if(_sResult[i] == '%'){
+                            i++; //Skip next, % mean next char is a special
+                        }else if(_sResult[i] == '\"'){
+                            _sResult = _sResult.Substring(0, i);
                         }
-
-                        int _nIndexEnd = _sResult.IndexOf('\"');
-                        if(_nIndexEnd != -1) {
-                            _sResult = _sResult.Substring(0, _nIndexEnd);
-                        }
-
-           
+                    }
+                }
                 return _sResult;
         }
 

@@ -1679,7 +1679,7 @@ namespace cwc {
                             if (_bExtendIntoFrame){
                                 if(bWin10_Style) {
                                     NCCALCSIZE_PARAMS nc = (NCCALCSIZE_PARAMS)Marshal.PtrToStructure(m.LParam, typeof(NCCALCSIZE_PARAMS));
-                                    nc.rect0.Right -= 6;
+                                    nc.rect0.Right += 6;
                                     nc.rect1 = nc.rect0;
                                     Marshal.StructureToPtr(nc, m.LParam, false);
                                     m.Result = (IntPtr)WVR_VALIDRECTS;
@@ -2040,8 +2040,8 @@ namespace cwc {
 
          public void fMaximizedState(){
               // Maximized!
-                msMenu.Top = nInitialPosTop + 9;
-                msMenu.Left =   Width - nInitialPosLeft - 10;
+      //          msMenu.Top = nInitialPosTop + 9;
+        //        msMenu.Left =   Width - nInitialPosLeft - 10;
         }
 
         public bool NeedRestore = false;
