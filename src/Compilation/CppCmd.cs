@@ -1527,7 +1527,7 @@ bExtacted = true;
 
 			aCompileFiles.Add(_sFile);
             string _sDir = Path.GetDirectoryName(_sFile);
-
+            /*
             string _sName = _sFile.Substring(_sDir.Length+1);
             //Add one folder to the name?//
             string _sLastFolder = Path.GetFileName(_sDir)+ "/";
@@ -1538,6 +1538,8 @@ bExtacted = true;
 
             ///////////////////////////////
             aCompileFilesName.Add(_sPrevFolder + _sLastFolder  + _sName);
+            */
+            aCompileFilesName.Add(_sFile);
 
 			if(!_b_O_as_SourceFiles) {
 				oParent.fAddPrjDirectory( new SrcDiry(_sDir,_sCondition));
