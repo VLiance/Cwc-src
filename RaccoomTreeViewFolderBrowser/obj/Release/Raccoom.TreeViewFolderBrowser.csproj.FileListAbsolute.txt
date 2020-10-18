@@ -1,8 +1,0 @@
-E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser\bin\Release\TreeView.xml
-E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser\bin\Release\TreeView.dll
-E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser\obj\Release\TreeView.dll
-E:\_Project\_MyProject\CwcSrc\RaccoomTreeViewFolderBrowser\obj\Release\Raccoom.TreeViewFolderBrowser.csprojResolveAssemblyReference.cache
-E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\bin\Release\TreeView.xml
-E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\bin\Release\TreeView.dll
-E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\obj\Release\Raccoom.TreeViewFolderBrowser.csprojResolveAssemblyReference.cache
-E:\_Project\Cwc-src\RaccoomTreeViewFolderBrowser\obj\Release\TreeView.dll
