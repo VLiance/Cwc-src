@@ -461,20 +461,26 @@ namespace cwc
             if(_sLine.Length <= 1) {return -1; }
             int _nIndex = 0;
            int _nNext = 0;
+             char prev;
             while (_nIndex != -1) {
                
                 _nIndex =  _sLine.IndexOf(_sKey, _nIndex);
 
                 if(_nIndex != -1) {
                     _nNext = _nIndex + _sKey.Length;
-                    if(_nNext < _sLine.Length &&  _sLine[_nNext]  != '.') { //like error.o -`>  not valid
+                    int _nPrev = _nIndex-1;
+                    if (_nPrev<0){ _nPrev = 0;prev = ' ';}else{prev =  _sLine[_nPrev];}
+                    char next =  _sLine[_nNext];
+                    if(_nNext < _sLine.Length &&  next  != '.' && !(next >= 'a' && next <= 'z')  && !(prev >= 'a' && prev <= 'z') ) { //like error.o -`>  not valid
+                   // if(_nNext < _sLine.Length &&  next  != '.' &&  (next  <= 45  || next == ':') &&  !(  (prev  >= 'a' && prev  <= 'z')  ||  (prev  >= 'A' && prev  <= 'Z')  ) ) { //like error.o -`>  not valid
                         return _nIndex;
                     }
                     _nIndex++;
                 }
             }
 
-            return _nIndex;
+             //  return _nIndex;
+            return -1;
         }
 
         
