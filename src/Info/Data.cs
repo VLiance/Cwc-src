@@ -279,7 +279,8 @@ namespace cwc {
             for(int i =0; i < _sValue.Length; i++){}
 			_sValue = _sValue.Replace("\'","" ).Replace("\"","" ).Trim();
             */
-            var _sResult = _sValue.Trim();
+
+            var _sResult = CppCompiler.fExtracQuote(_sValue, false).Trim();
 
 			if (!Data.aVarGlobal.ContainsKey(_sVar)){
 				  Data.aVarGlobal.Add( _sVar, _sResult);

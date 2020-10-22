@@ -485,17 +485,19 @@ namespace cwc
 
         
         public static string fExtracQuote_sArg = "";
-         public static string fExtracQuote(string _sValue) {//_cRequiredDelim??
+         public static string fExtracQuote(string _sValue, bool _bSplitWithSpace = true) {//_cRequiredDelim??
+                if(_sValue.Length < 1){return "";}
+
                 fExtracQuote_sArg = "";
                 int _nIndexBegin = 0;
                 int _nIndexEnd = -1;
                 string _sResult = _sValue; 
                     //Remove quote!!
-                if (_sResult[0] == '\"') {
-                   // _sResult = _sResult.Substring(1);
-                    _nIndexBegin = 1;
+                if (_sResult[0] == '\"' ) { _nIndexBegin = 1;
                     _nIndexEnd = _sResult.IndexOf('\"',1);
-                }else{
+                }else if (_sResult[0] == '\'' ) { _nIndexBegin = 1;
+                    _nIndexEnd = _sResult.IndexOf('\'',1);
+                }else if(_bSplitWithSpace) {
                     _nIndexEnd = _sResult.IndexOf(' ');
                 }
                 if(_nIndexEnd != -1) {
