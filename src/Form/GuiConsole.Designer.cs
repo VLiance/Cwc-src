@@ -25,7 +25,7 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GuiConsole));
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbCmd = new System.Windows.Forms.TextBox();
             this.msMenu = new System.Windows.Forms.MenuStrip();
             this.lauchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,8 +55,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.notePadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cbTitle = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btn_SendCmd = new System.Windows.Forms.Label();
             this.cmMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,6 +68,9 @@
             this.pnCenter = new System.Windows.Forms.Panel();
             this.fctbConsole = new cwc.CwFCTB();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.msCmd = new System.Windows.Forms.MenuStrip();
+            this.cmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmdToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.hMyScrollBar = new cwc.CwScrollBar();
             this.pnRight = new System.Windows.Forms.Panel();
             this.vMyScrollBar = new cwc.CwScrollBar();
@@ -87,6 +89,7 @@
             this.pnCenter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).BeginInit();
             this.panel4.SuspendLayout();
+            this.msCmd.SuspendLayout();
             this.pnRight.SuspendLayout();
             this.pnTreeView.SuspendLayout();
             this.pnTreeCenter.SuspendLayout();
@@ -95,20 +98,20 @@
             this.pnTreeRight.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBox1
+            // tbCmd
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbCmd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.BackColor = System.Drawing.SystemColors.MenuText;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.SystemColors.Window;
-            this.textBox1.Location = new System.Drawing.Point(62, 2);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(851, 23);
-            this.textBox1.TabIndex = 8;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tbCmd.BackColor = System.Drawing.SystemColors.MenuText;
+            this.tbCmd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbCmd.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbCmd.ForeColor = System.Drawing.SystemColors.Window;
+            this.tbCmd.Location = new System.Drawing.Point(50, 2);
+            this.tbCmd.Name = "tbCmd";
+            this.tbCmd.Size = new System.Drawing.Size(858, 22);
+            this.tbCmd.TabIndex = 8;
+            this.tbCmd.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tbCmd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbCmd_KeyDown);
             // 
             // msMenu
             // 
@@ -386,34 +389,20 @@
             this.cbTitle.Size = new System.Drawing.Size(1045, 13);
             this.cbTitle.TabIndex = 52;
             // 
-            // label2
+            // btn_SendCmd
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Black;
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.Font = new System.Drawing.Font("Courier New", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(909, 2);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 23);
-            this.label2.TabIndex = 53;
-            this.label2.Text = " ↴ ";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox2.BackColor = System.Drawing.SystemColors.MenuText;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.ForeColor = System.Drawing.SystemColors.Window;
-            this.textBox2.Location = new System.Drawing.Point(0, 2);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(61, 23);
-            this.textBox2.TabIndex = 54;
-            this.textBox2.Text = "Cmd >>";
+            this.btn_SendCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_SendCmd.AutoSize = true;
+            this.btn_SendCmd.BackColor = System.Drawing.Color.Black;
+            this.btn_SendCmd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.btn_SendCmd.Font = new System.Drawing.Font("Courier New", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_SendCmd.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btn_SendCmd.Location = new System.Drawing.Point(909, 2);
+            this.btn_SendCmd.Name = "btn_SendCmd";
+            this.btn_SendCmd.Size = new System.Drawing.Size(47, 23);
+            this.btn_SendCmd.TabIndex = 53;
+            this.btn_SendCmd.Text = " ↴ ";
+            this.btn_SendCmd.Click += new System.EventHandler(this.btn_SendCmd_Click);
             // 
             // cmMain
             // 
@@ -576,15 +565,51 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.textBox1);
-            this.panel4.Controls.Add(this.textBox2);
+            this.panel4.Controls.Add(this.msCmd);
+            this.panel4.Controls.Add(this.tbCmd);
             this.panel4.Controls.Add(this.hMyScrollBar);
-            this.panel4.Controls.Add(this.label2);
+            this.panel4.Controls.Add(this.btn_SendCmd);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel4.Location = new System.Drawing.Point(0, 564);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(950, 46);
             this.panel4.TabIndex = 13;
+            // 
+            // msCmd
+            // 
+            this.msCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.msCmd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
+            this.msCmd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.msCmd.Dock = System.Windows.Forms.DockStyle.None;
+            this.msCmd.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.msCmd.GripMargin = new System.Windows.Forms.Padding(1);
+            this.msCmd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmdToolStripMenuItem});
+            this.msCmd.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.msCmd.Location = new System.Drawing.Point(3, 2);
+            this.msCmd.Name = "msCmd";
+            this.msCmd.Padding = new System.Windows.Forms.Padding(1);
+            this.msCmd.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.msCmd.ShowItemToolTips = true;
+            this.msCmd.Size = new System.Drawing.Size(46, 22);
+            this.msCmd.TabIndex = 56;
+            // 
+            // cmdToolStripMenuItem
+            // 
+            this.cmdToolStripMenuItem.BackColor = System.Drawing.Color.Black;
+            this.cmdToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmdToolStripMenuItem1});
+            this.cmdToolStripMenuItem.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.cmdToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.cmdToolStripMenuItem.Name = "cmdToolStripMenuItem";
+            this.cmdToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.cmdToolStripMenuItem.Text = "Cmd";
+            // 
+            // cmdToolStripMenuItem1
+            // 
+            this.cmdToolStripMenuItem1.Name = "cmdToolStripMenuItem1";
+            this.cmdToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
+            this.cmdToolStripMenuItem1.Text = "Cmd";
             // 
             // hMyScrollBar
             // 
@@ -783,6 +808,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.msCmd.ResumeLayout(false);
+            this.msCmd.PerformLayout();
             this.pnRight.ResumeLayout(false);
             this.pnTreeView.ResumeLayout(false);
             this.pnTreeCenter.ResumeLayout(false);
@@ -797,7 +824,7 @@
         #endregion
 
         private CwFCTB fctbConsole = null;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbCmd;
         private CwScrollBar hMyScrollBar;
         private CwScrollBar vMyScrollBar;
         private System.Windows.Forms.MenuStrip msMenu;
@@ -820,8 +847,7 @@
         private System.Windows.Forms.ToolStripMenuItem iDEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem notePadToolStripMenuItem;
         private System.Windows.Forms.TextBox cbTitle;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label btn_SendCmd;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
@@ -852,5 +878,8 @@
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gDBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sanitizerToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip msCmd;
+        private System.Windows.Forms.ToolStripMenuItem cmdToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cmdToolStripMenuItem1;
     }
 }

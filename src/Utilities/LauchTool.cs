@@ -60,6 +60,16 @@ public string sResult ="";
         public bool bWaitEndForOutput  = false;
 
 
+
+       // public  LauchTool(string _sName) {
+        public  LauchTool() {
+        }
+
+
+        public static List<LauchTool> aLauchList = new List<LauchTool>();
+        public static bool bListModified = true;
+
+
         public string fLauchExe(string _sExePath, string _sArg, string _sSourceFile = "", string _sTarget= "", bool _bDontKill = false) {
 			  sTarget =  _sTarget;
                 sSourceFile = _sSourceFile;
@@ -170,7 +180,8 @@ public string sResult ="";
 
 
                 try{
-                        processStarted = ExeProcess.Start();
+                    fAddThisToList();
+                    processStarted = ExeProcess.Start();
                 } catch (Exception e) {
                     Output.TraceError("Unable to lauch: " + sExePath + " ["  + sWorkPath + "] : " + e.Message);
                 }
@@ -262,6 +273,7 @@ public string sResult ="";
 
 	
 					     ExeProcess.WaitForExit(); //important for geting last output!	
+                        fRemoveThisFromList();
 						
 						sResult = _sResult;
 						sError = _sError;
@@ -304,10 +316,15 @@ public string sResult ="";
 		}
 
 
-
-
-
-
+         internal void fAddThisToList() {
+            aLauchList.Add(this);
+            bListModified = true;
+        }
+        internal void fRemoveThisFromList() {
+            aLauchList.Remove(this);
+            bListModified = true;
+        }
+        
 
 
 

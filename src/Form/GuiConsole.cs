@@ -881,6 +881,8 @@ namespace cwc {
        int nInitialPosLeft = 0;
          int nInitialPosTop = 0;
         private void GuiConsole_Load(object sender, EventArgs e) {
+             fUpdateCmdList();
+
              csPrj.ToggleState();//Clesed by default
      
             	//		SetWindowPosition(ConfigMng.oConfig.vStartPos.X,ConfigMng.oConfig.vStartPos.Y,ConfigMng.oConfig.vStartSize.Width,ConfigMng.oConfig.vStartSize.Height);
@@ -1000,12 +1002,13 @@ namespace cwc {
 
 
 
-
+        //Update all
         public static string sFormCmd = "";
         private void fCmdManager() {
                 Thread winThread3 = new Thread(new ThreadStart(() =>  {  
 			    while(Base.bAlive) {
-             
+                        
+
                         vMyScrollBar.fUpdate(); 
                         hMyScrollBar.fUpdate(); 
                         hTreePrjScrollBar.fUpdate(); 
@@ -1023,6 +1026,12 @@ namespace cwc {
                                 sFormCmd = "";
                             });
                         }
+
+                        if(LauchTool.bListModified) {
+                            LauchTool.bListModified = false;
+                            fUpdateCmdList();
+                        }
+                        
                    
 				    Thread.CurrentThread.Join(16);
 			     }
@@ -1032,7 +1041,58 @@ namespace cwc {
         }
 
 
+        void fAddItemCmd(string _sName)
+        {
+            ToolStripMenuItem _oNew = new ToolStripMenuItem(_sName);
+            _oNew.Tag = _sName;
+            _oNew.Text = _sName;
+            _oNew.Name = _sName;
+            cmdToolStripMenuItem.DropDownItems.Add(_oNew);
+              _oNew.Click += fCmdLauchSelect;
+        }
+        private void fCmdLauchSelect(object sender, EventArgs e) {
 
+            string _sTag =  (string) ((ToolStripMenuItem) sender).Tag;
+            sCurrentCmdLauch = _sTag;
+            cmdToolStripMenuItem.Text = sCurrentCmdLauch;
+        }
+
+        public string sCurrentCmdLauch = "";
+        public int nLastCmdCount = 0;
+        private void fUpdateCmdList(){
+            this.BeginInvoke((MethodInvoker)delegate  {
+                if(sCurrentCmdLauch == ""){
+                    sCurrentCmdLauch = "Cmd";
+                }
+
+                cmdToolStripMenuItem.DropDownItems.Clear();
+                fAddItemCmd("Cmd");
+                foreach(LauchTool _oLauch in LauchTool.aLauchList)
+                {
+                   fAddItemCmd(_oLauch.sExeName );
+                }
+             
+                //auto select first lauched app
+                if(sCurrentCmdLauch == "Cmd" && nLastCmdCount == 1 && cmdToolStripMenuItem.DropDownItems.Count > 1 ){
+                    bool bFirst = true;
+                    foreach(ToolStripDropDownItem _item in cmdToolStripMenuItem.DropDownItems){ //Get second item
+                        if(bFirst == false){
+                            sCurrentCmdLauch = _item.Text;
+                            //cmdToolStripMenuItem.Text = _item.Text;
+                            break;
+                        }
+                        bFirst = false;
+                    }
+                       
+                }
+             
+                cmdToolStripMenuItem.Text = sCurrentCmdLauch;
+                nLastCmdCount = cmdToolStripMenuItem.DropDownItems.Count;
+            });
+        }
+
+             
+   
         private void textBox1_TextChanged(object sender, EventArgs e) {
 
         }
@@ -1059,10 +1119,6 @@ namespace cwc {
 
 
 
-        private void hMyScrollBar_Click(object sender, EventArgs e) {
-
-        }
-
         public static int nLastScrollValue= 0;
      //   public static int nLastMaxScrollValue= 0;
         private void vMyScrollBar_Scroll(object sender, ScrollEventArgs e) {
@@ -1081,10 +1137,6 @@ namespace cwc {
 
         private void hMyScrollBar_Scroll(object sender, ScrollEventArgs e) {
              fctbConsole.OnScroll(e, e.Type != ScrollEventType.ThumbTrack && e.Type != ScrollEventType.ThumbPosition);
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
         }
 
 
@@ -2448,6 +2500,47 @@ namespace cwc {
         {
               Data.oLauchProject.fLauchDefaultRun("");
         }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_SendCmd_Click(object sender, EventArgs e)
+        {
+           fSendCmd();
+        }
+        private void tbCmd_KeyDown(object sender, KeyEventArgs e) {
+            if(e.KeyCode == Keys.Enter){
+                fSendCmd();
+            }
+        }
+
+        private void fSendCmd(){
+            foreach(LauchTool _oLauch in LauchTool.aLauchList){
+                if(sCurrentCmdLauch == _oLauch.sExeName) {
+                    fSendCmdToLauchTool(_oLauch, tbCmd.Text);
+                     tbCmd.Text = "";//Clear
+                    return;
+                }
+            }
+        }
+        private void fSendCmdToLauchTool(LauchTool _oLauch, string text){
+            Output.TraceAction("[" +_oLauch.sExeName + "]>> " + text);
+            _oLauch.fSend(text);
+        }
+
+        private void cb_cmd_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+      
     }
 
 

@@ -468,13 +468,15 @@ namespace cwc
 
                 if(_nIndex != -1) {
                     _nNext = _nIndex + _sKey.Length;
-                    int _nPrev = _nIndex-1;
-                    if (_nPrev<0){ _nPrev = 0;prev = ' ';}else{prev =  _sLine[_nPrev];}
-                    char next =  _sLine[_nNext];
-                    if(_nNext < _sLine.Length &&  next  != '.' && !(next >= 'a' && next <= 'z')  && !(prev >= 'a' && prev <= 'z')  && prev != '_'  && prev != '/' && prev != '\\'  && prev != '.') { //like error.o -`>  not valid
-                   // if(_nNext < _sLine.Length &&  next  != '.' &&  (next  <= 45  || next == ':') &&  !(  (prev  >= 'a' && prev  <= 'z')  ||  (prev  >= 'A' && prev  <= 'Z')  ) ) { //like error.o -`>  not valid
-                        return _nIndex;
-                    }
+                    if(_nNext < _sLine.Length){
+                        int _nPrev = _nIndex-1;
+                        if (_nPrev<0){ _nPrev = 0;prev = ' ';}else{prev =  _sLine[_nPrev];}
+                        char next =  _sLine[_nNext];
+                        if( next  != '.' && !(next >= 'a' && next <= 'z')  && !(prev >= 'a' && prev <= 'z')  && prev != '_'  && prev != '/' && prev != '\\'  && prev != '.') { //like error.o -`>  not valid
+                       // if(_nNext < _sLine.Length &&  next  != '.' &&  (next  <= 45  || next == ':') &&  !(  (prev  >= 'a' && prev  <= 'z')  ||  (prev  >= 'A' && prev  <= 'Z')  ) ) { //like error.o -`>  not valid
+                            return _nIndex;
+                        }
+                     }
                     _nIndex++;
                 }
             }
