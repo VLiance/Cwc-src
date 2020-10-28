@@ -2501,11 +2501,6 @@ namespace cwc {
               Data.oLauchProject.fLauchDefaultRun("");
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btn_SendCmd_Click(object sender, EventArgs e)
         {
            fSendCmd();
@@ -2596,17 +2591,33 @@ namespace cwc {
        
         }
 
-        private void cb_cmd_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void label1_Click(object sender, EventArgs e) {
 
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
+        private void toolStripMenuItem2_Click(object sender, EventArgs e) {
 
         }
 
-      
+        private void btn_SendCmd_MouseHover(object sender, EventArgs e) {
+            
+        }
+
+        private void btn_SendCmd_MouseEnter(object sender, EventArgs e) {
+            btn_SendCmd.BackColor = Color.BlanchedAlmond;
+        }
+
+        private void btn_SendCmd_MouseLeave(object sender, EventArgs e) {
+            btn_SendCmd.BackColor = Color.Black;
+        }
+
+        private void btn_SendSignal_MouseEnter(object sender, EventArgs e) {
+              btn_SendSignal.BackColor = Color.BlanchedAlmond;
+        }
+
+        private void btn_SendSignal_MouseLeave(object sender, EventArgs e) {
+                btn_SendSignal.BackColor = Color.Black;
+        }
     }
 
 

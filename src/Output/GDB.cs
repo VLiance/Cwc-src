@@ -63,7 +63,7 @@ namespace cwc {
                 // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
 
                 
-            string _sSanitizer =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Sanitizer"}, "");
+                string _sSanitizer =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Sanitizer"}, "");
 
                // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
                 oProcess.fLauchExe( _sSanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath  + _sSubArg   ); //-no_soft_kills
@@ -101,6 +101,8 @@ namespace cwc {
             oProcess.fSend("set width 0");
             oProcess.fSend("set filename-display absolute");
             oProcess.fSend("set breakpoint pending on");
+            oProcess.fSend("break GDB_Func_Break");
+            oProcess.fSend("break GDB_Func_ExecuteCmds");
          
            // oProcess.fSend("set output-radix 16");//All in hex?
 
@@ -187,6 +189,18 @@ namespace cwc {
         
 
         public  void 	fAppError(LauchTool _oTool, string _sOut){
+            
+             //E> Function "GDB_Func_Break" not defined.
+            if(_sOut.IndexOf("Function \"GDB_Func_Break\" not defined") != -1) {
+                Output.TraceActionLite("Tips: To have in-code GDB break, add this function: extern \"C\" GDB_Func_Break(){}");
+                return;
+            }
+             if(_sOut.IndexOf("Function \"GDB_Func_ExecuteCmds\" not defined") != -1) {
+                Output.TraceActionLite("Tips: To have in-code GDB command-line, add this function: extern \"C\" GDB_Func_ExecuteCmds(){}\nSend command like this: fprintf(stderr,\"Cmd[GDB]:yourCmd\")");
+                return;
+            }
+            
+
            // bRunning= false;
             oLauchProject.bReceiveOutput = true;
            // bCmdSend = false;//Proble occur, we can resend cmd

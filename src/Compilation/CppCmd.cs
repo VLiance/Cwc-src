@@ -1125,7 +1125,7 @@ bExtacted = true;
 				sAllDefine += "-DD_Platform_" +  oCompiler.sPlatformName + " ";//Type
 				sAllDefine += "-DDsPlatform_File=\""  +  oCompiler.sSubName + "\" "; //TODO
 
-                if(Data.fGetGlobalVar("_sOpt") == "Debug") {
+                if(Data.fGetGlobalVar("_sOpt") == "Debug" || Data.fGetGlobalVar("_sOpt") == "Profiler") {
                     sAllDefine += "-DD_Debug ";
                 }else {
                     sAllDefine += "-DD_Release ";
