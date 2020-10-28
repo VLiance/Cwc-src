@@ -11,7 +11,7 @@ namespace cwc {
     class GDB : DBGpClient {
 
       
-
+        public static GDB singleton = null;
 
         public List<Frame> aCurrBacktrace = new List<Frame>();
       
@@ -24,11 +24,13 @@ namespace cwc {
         string sCurrentExp = "";
         string sCmdSended = "";
         string sCmdNameSended = "";
-        bool bRunning = false;
+        public bool bRunning = false;
         bool bShowedBacktrace = false;
 
         public GDB(LauchProject _oLauchProject, LauchTool _oProcess, string _sGdbPath,string _sExePath,  CompilerData _oCompiler, string _sSubArg = "" ){
             
+            singleton = this;
+
             if(_sSubArg != ""){
                 _sSubArg = " " + _sSubArg;
             }
@@ -74,6 +76,25 @@ namespace cwc {
 
             fLoadBreakpoints();
 
+           /*
+             
+           To enter non-stop mode, use this sequence of commands before you run or attach to your program:
+
+     # Enable the async interface.
+     set target-async 1
+     
+     # If using the CLI, pagination breaks non-stop.
+     set pagination off
+     
+     # Finally, turn it on!
+     set non-stop on
+
+            * */
+
+               // oProcess.fSend("set target-async 1");
+              //  oProcess.fSend("set pagination off");
+              //  oProcess.fSend("set non-stop on");
+            
 
              oProcess.fSend("cd " +  Path.GetDirectoryName(_sExePath) );
 
@@ -82,6 +103,8 @@ namespace cwc {
             oProcess.fSend("set breakpoint pending on");
          
            // oProcess.fSend("set output-radix 16");//All in hex?
+
+     
 
 
             fSetAllGdbBreakpoint();
@@ -135,7 +158,12 @@ namespace cwc {
                 }
             
             }
-         public override void fStop(){oProcess.fSend("break");}
+         public override void fStop(){
+            SysAPI.fSend_CTRL_C(oProcess.ExeProcess);
+             bRunning = false;
+            oProcess.fSend("break");
+
+        }
          public override void fStepInto(){
            // if(){
               oProcess.fSend("step");
@@ -159,7 +187,7 @@ namespace cwc {
         
 
         public  void 	fAppError(LauchTool _oTool, string _sOut){
-            bRunning= false;
+           // bRunning= false;
             oLauchProject.bReceiveOutput = true;
            // bCmdSend = false;//Proble occur, we can resend cmd
              if (bCmdSend) {
@@ -169,11 +197,15 @@ namespace cwc {
                 _sOut = sCurrentCmd;
                 }
             }
-		    Output.Trace("E> " + _sOut);
+
+             Output.ProcessStdErr(_sOut);
+
+
+		   // Output.Trace("E> " + _sOut);
          }
 
         public  void 	fAppOut(LauchTool _oTool, string _sOut){
-             bRunning= false;
+             //bRunning= false;
             if(_sOut == null || _sOut == "") {
                 return;
             }
@@ -218,7 +250,7 @@ namespace cwc {
             }
             
            
-            LauchProject.fPrjOut(_sLetter,  _sColor +_sOut);
+            Output.fPrjOut(_sLetter,  _sColor +_sOut);
             if(nLimitNbOutput == -1){
                   Output.TraceError("Error: Output exceed Limit");
             }

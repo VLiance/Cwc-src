@@ -2516,18 +2516,84 @@ namespace cwc {
             }
         }
 
+        /*
+        private void  fSendCmdCleanup(){
+            foreach(LauchTool _oLauch in LauchTool.aLauchList){
+                if(!_oLauch.bExeLauch) {
+
+                }
+            }
+        }*/
+
+
+ 
+
+
         private void fSendCmd(){
             foreach(LauchTool _oLauch in LauchTool.aLauchList){
                 if(sCurrentCmdLauch == _oLauch.sExeName) {
-                    fSendCmdToLauchTool(_oLauch, tbCmd.Text);
-                     tbCmd.Text = "";//Clear
-                    return;
+                    if(_oLauch.bExeLauch) {
+                        fSendCmdToLauchTool(_oLauch, tbCmd.Text);
+                         tbCmd.Text = "";//Clear
+                        return;
+                    }
                 }
             }
+            //fSendCmdCleanup();
         }
+
+
         private void fSendCmdToLauchTool(LauchTool _oLauch, string text){
+            text = text.ToLower(); //always?
             Output.TraceAction("[" +_oLauch.sExeName + "]>> " + text);
-            _oLauch.fSend(text);
+
+
+              _oLauch.fSend(text);
+
+            if(_oLauch.sExeName == "gdb"){
+                /*
+                 if (  !(text.IndexOf("run") == 0) ) {
+                    if (text.IndexOf("continue") == 0 ) {
+       
+                    }else { 
+                         SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+                    }
+                }*/
+                if (text.IndexOf("pause") == 0 || text.IndexOf("break") == 0 || text.IndexOf("interrupt") == 0) {
+                     SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+                }
+
+
+                /*
+                 if (text.IndexOf("pause")== 0 ){
+                      SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+                 }else {
+                    _oLauch.fSend(text);
+                }*/
+
+                /*
+                //   if(_oLauch.ExeProcess.HasExited)
+                if( GDB.singleton.bRunning) {
+                    GDB.singleton.bRunning = false;
+                   // if (text.IndexOf("pause") == 0 || text.IndexOf("break") == 0 || text.IndexOf("interrupt") == 0) {
+                        SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+
+                          _oLauch.fSend("interrupt -a");
+
+                        Output.TraceAction("Is Running .. stopping send ... CTRL+C " + _oLauch.ExeProcess.MainWindowTitle);
+                    //}
+               }else{
+                   if (text.IndexOf("continue") == 0 || text.IndexOf("run") == 0 ) {
+                         GDB.singleton.bRunning = true;
+                         Output.TraceAction("Running again ");
+                    
+                    }
+                }
+                */
+
+            }
+            
+       
         }
 
         private void cb_cmd_SelectedIndexChanged(object sender, EventArgs e)

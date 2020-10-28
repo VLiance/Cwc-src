@@ -18,6 +18,90 @@ namespace cwc {
 
         public static bool bQuitSavedCfg = false;
         
+
+        internal const int CTRL_C_EVENT = 0;
+        [DllImport("kernel32.dll")]
+        internal static extern bool GenerateConsoleCtrlEvent(uint dwCtrlEvent, uint dwProcessGroupId);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool AttachConsole(uint dwProcessId);
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        internal static extern bool FreeConsole();
+      //  [DllImport("kernel32.dll")]
+      //  static extern bool SetConsoleCtrlHandler(ConsoleCtrlDelegate HandlerRoutine, bool Add);
+        // Delegate type to be used as the Handler Routine for SCCH
+        delegate Boolean ConsoleCtrlDelegate(uint CtrlType);
+
+
+
+  
+ public static void StopProgram(uint pid)
+{
+     // Disable Ctrl-C handling for our program
+    SetConsoleCtrlHandler(null, true);
+
+    // It's impossible to be attached to 2 consoles at the same time,
+    // so release the current one.
+    FreeConsole();
+
+    // This does not require the console window to be visible.
+    if (AttachConsole(pid)) {
+        GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
+    }
+}
+
+        /*
+        public static Process attachedProcess = null;
+       public static bool fAttachConsole( Process p){
+
+            if(p == null){
+                Output.TraceError("Unable to attach");
+                return false;
+            }
+
+            if (!AttachConsole((uint)p.Id)) {
+                Output.TraceError("AttachConsole fail");
+                return false;
+            }
+             Output.TraceGood("Attached");
+            
+            attachedProcess = p;
+            return true;
+       }
+       */
+
+       public static bool fSend_CTRL_C( Process p){
+            StopProgram((uint)p.Id);
+            /*
+            //Console mnust be attached
+           // if(attachedProcess != p) {
+                fAttachConsole(p);
+           // }
+            if(p != null && p == attachedProcess) {
+              GenerateConsoleCtrlEvent(CTRL_C_EVENT,0);
+            }
+            */
+
+            /*
+            if (AttachConsole((uint)p.Id)) {
+                SetConsoleCtrlHandler(null, true);
+                try { 
+                    if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT,0))
+                        return false;
+                //    p.WaitForExit();
+                } finally {
+          //          FreeConsole();
+          //          SetConsoleCtrlHandler(null, false);
+                }
+                return true;
+            }else{ //Already attached?
+                GenerateConsoleCtrlEvent(CTRL_C_EVENT,0);
+            }
+            */
+             return false;
+        }
+
+
+
         static public void fQuit(bool _bForceQuitConsole = false) {
 
       //      MessageBox.Show("QUIIIIIIIIIIIIIIII!!!!!!!!!!");

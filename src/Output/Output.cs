@@ -111,8 +111,77 @@ namespace cwc
 		public static  string sBuffer = "";
 
 
-        public static void TraceStd(string _sText){
 
+
+        public  static void 	fPrjOut(string _sLetter,  string _sOut){
+
+    if (_sOut == null){
+        return;
+    }
+
+    string _sPrefix = _sLetter + "> " ;
+    if(_sOut.Length > 4) { //ex T[1]:xxxx
+        if(_sOut[1] == '[') {
+            switch(_sOut[0]) {
+                   case 'P':
+                       Output.TraceGood(_sPrefix +_sOut);
+                   break;
+                   case 'E':
+                       Output.TraceError(_sPrefix +_sOut);
+                   break;
+                    case 'W':
+                       Output.TraceWarning(_sPrefix +_sOut);
+                   break;
+                   case 'A':
+                       Output.TraceAction(_sPrefix +_sOut);
+                   break;
+                   case 'T':
+                       Output.TraceStd(_sPrefix +_sOut);
+                   break;
+                   default:
+                      	Output.Trace(_sPrefix +_sOut);
+                   break;
+            }
+            return;
+                
+        }
+    }
+    Output.Trace(_sPrefix  + _sOut);
+    return;
+}
+
+
+        public static List<string> aList = new List<string>();
+        //Begin with "Cmd"
+         public static void ProcessCmd(string _sOut){
+            if(_sOut.Length > 8 && _sOut[3] == '(' && _sOut[4] == 'a' && _sOut[5] == 'd' && _sOut[6] == 'd' && _sOut[7] == ')') {
+                //add to cmd list
+                aList.Add(_sOut.Substring(8));
+                     Output.TraceWarning("Add:" +_sOut.Substring(8) );
+            }
+        }
+
+
+
+
+
+        public static void ProcessStdErr(string _sOut){
+            if(_sOut.Length > 4 && _sOut[0] == 'C' && _sOut[1] == 'm' && _sOut[2] == 'd' && (_sOut[3] == ':' || _sOut[3] == '('|| _sOut[3] == '[')){
+                Output.TraceActionLite("C> " + _sOut);
+                ProcessCmd(_sOut);
+
+            }else { 
+
+                if(_sOut.IndexOf("warning") != -1) {
+                     Output.TraceWarningLite("W> " + _sOut);
+                }else{
+                     Output.TraceErrorLite("E> " + _sOut);
+                }
+            }
+		}
+
+
+        public static void TraceStd(string _sText){
 			Output.TraceColored( "\f0F" + _sText ); 
 		}
 
@@ -125,6 +194,11 @@ namespace cwc
 
 			Output.TraceColored("\f0C" + _sText ); 
 		}
+        public static void TraceActionLite(string _sText)  {
+
+			Output.TraceColored("\f0B" + _sText ); 
+		}
+
 
 
 

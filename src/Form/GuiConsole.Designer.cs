@@ -66,36 +66,36 @@
             this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnAll = new System.Windows.Forms.Panel();
             this.pnCenter = new System.Windows.Forms.Panel();
-            this.fctbConsole = new cwc.CwFCTB();
             this.panel4 = new System.Windows.Forms.Panel();
             this.msCmd = new System.Windows.Forms.MenuStrip();
             this.cmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmdToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.hMyScrollBar = new cwc.CwScrollBar();
             this.pnRight = new System.Windows.Forms.Panel();
+            this.pnTreeView = new System.Windows.Forms.Panel();
+            this.pnTreeButtom = new System.Windows.Forms.Panel();
+            this.pnTreeRight = new System.Windows.Forms.Panel();
+            this.fctbConsole = new cwc.CwFCTB();
+            this.hMyScrollBar = new cwc.CwScrollBar();
             this.vMyScrollBar = new cwc.CwScrollBar();
             this.csPrj = new NJFLib.Controls.CollapsibleSplitter();
-            this.pnTreeView = new System.Windows.Forms.Panel();
             this.pnTreeCenter = new cwc.DoubleBufferedPanel();
             this.pnTtreeViewPrj = new cwc.DoubleBufferedPanel();
             this.treeViewPrj = new cwc.CwTreeView();
-            this.pnTreeButtom = new System.Windows.Forms.Panel();
             this.hTreePrjScrollBar = new cwc.CwScrollBar();
-            this.pnTreeRight = new System.Windows.Forms.Panel();
             this.vTreePrjScrollBar = new cwc.CwScrollBar();
             this.msMenu.SuspendLayout();
             this.cmMain.SuspendLayout();
             this.pnAll.SuspendLayout();
             this.pnCenter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).BeginInit();
             this.panel4.SuspendLayout();
             this.msCmd.SuspendLayout();
             this.pnRight.SuspendLayout();
             this.pnTreeView.SuspendLayout();
-            this.pnTreeCenter.SuspendLayout();
-            this.pnTtreeViewPrj.SuspendLayout();
             this.pnTreeButtom.SuspendLayout();
             this.pnTreeRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).BeginInit();
+            this.pnTreeCenter.SuspendLayout();
+            this.pnTtreeViewPrj.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbCmd
@@ -144,7 +144,7 @@
             this.lauchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.toolStripSeparator3});
-            this.lauchToolStripMenuItem.Image = global::cwc.Properties.Resources.Menu0003;
+            this.lauchToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("lauchToolStripMenuItem.Image")));
             this.lauchToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.lauchToolStripMenuItem.Name = "lauchToolStripMenuItem";
             this.lauchToolStripMenuItem.Size = new System.Drawing.Size(62, 18);
@@ -171,7 +171,7 @@
             this.configToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setCwcToolStripMenuItem});
             this.configToolStripMenuItem.ForeColor = System.Drawing.Color.DarkRed;
-            this.configToolStripMenuItem.Image = global::cwc.Properties.Resources.Menu0001;
+            this.configToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("configToolStripMenuItem.Image")));
             this.configToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.configToolStripMenuItem.Name = "configToolStripMenuItem";
             this.configToolStripMenuItem.Size = new System.Drawing.Size(62, 18);
@@ -192,7 +192,7 @@
             this.buildToolStripMenuItem,
             this.stopBuildToolStripMenuItem,
             this.debugTypeToolStripMenuItem});
-            this.optionsToolStripMenuItem.Image = global::cwc.Properties.Resources.Menu0005;
+            this.optionsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("optionsToolStripMenuItem.Image")));
             this.optionsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(62, 18);
@@ -283,7 +283,7 @@
             this.viewInToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.viewInToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.defaultToolStripMenuItem});
-            this.viewInToolStripMenuItem.Image = global::cwc.Properties.Resources.Menu0004;
+            this.viewInToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("viewInToolStripMenuItem.Image")));
             this.viewInToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.viewInToolStripMenuItem.Name = "viewInToolStripMenuItem";
             this.viewInToolStripMenuItem.Size = new System.Drawing.Size(62, 18);
@@ -302,7 +302,7 @@
             // 
             this.ToolStrip_Build.BackColor = System.Drawing.Color.Teal;
             this.ToolStrip_Build.Font = new System.Drawing.Font("Consolas", 11F);
-            this.ToolStrip_Build.Image = global::cwc.Properties.Resources.Menu0007;
+            this.ToolStrip_Build.Image = ((System.Drawing.Image)(resources.GetObject("ToolStrip_Build.Image")));
             this.ToolStrip_Build.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ToolStrip_Build.Name = "ToolStrip_Build";
             this.ToolStrip_Build.Size = new System.Drawing.Size(62, 18);
@@ -316,7 +316,7 @@
             this.toolStripSeparator1,
             this.toolStripSeparator2,
             this.tODOToolStripMenuItem});
-            this.updateToolStripMenuItem.Image = global::cwc.Properties.Resources.Menu0002;
+            this.updateToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("updateToolStripMenuItem.Image")));
             this.updateToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
             this.updateToolStripMenuItem.RightToLeftAutoMirrorImage = true;
@@ -346,7 +346,7 @@
             this.openToolStripMenuItem,
             this.toolStripSeparator4,
             this.notePadToolStripMenuItem});
-            this.iDEToolStripMenuItem.Image = global::cwc.Properties.Resources.Menu0008;
+            this.iDEToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("iDEToolStripMenuItem.Image")));
             this.iDEToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.iDEToolStripMenuItem.Name = "iDEToolStripMenuItem";
             this.iDEToolStripMenuItem.Size = new System.Drawing.Size(62, 18);
@@ -424,7 +424,7 @@
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(100)))));
-            this.cutToolStripMenuItem.Image = global::cwc.Properties.Resources.Cut;
+            this.cutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripMenuItem.Image")));
             this.cutToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.cutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.White;
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
@@ -514,6 +514,92 @@
             this.pnCenter.Size = new System.Drawing.Size(950, 564);
             this.pnCenter.TabIndex = 14;
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.msCmd);
+            this.panel4.Controls.Add(this.tbCmd);
+            this.panel4.Controls.Add(this.hMyScrollBar);
+            this.panel4.Controls.Add(this.btn_SendCmd);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 564);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(950, 46);
+            this.panel4.TabIndex = 13;
+            // 
+            // msCmd
+            // 
+            this.msCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.msCmd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
+            this.msCmd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.msCmd.Dock = System.Windows.Forms.DockStyle.None;
+            this.msCmd.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.msCmd.GripMargin = new System.Windows.Forms.Padding(1);
+            this.msCmd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmdToolStripMenuItem});
+            this.msCmd.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.msCmd.Location = new System.Drawing.Point(3, 2);
+            this.msCmd.Name = "msCmd";
+            this.msCmd.Padding = new System.Windows.Forms.Padding(1);
+            this.msCmd.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.msCmd.ShowItemToolTips = true;
+            this.msCmd.Size = new System.Drawing.Size(46, 22);
+            this.msCmd.TabIndex = 56;
+            // 
+            // cmdToolStripMenuItem
+            // 
+            this.cmdToolStripMenuItem.BackColor = System.Drawing.Color.Black;
+            this.cmdToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmdToolStripMenuItem1});
+            this.cmdToolStripMenuItem.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.cmdToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.cmdToolStripMenuItem.Name = "cmdToolStripMenuItem";
+            this.cmdToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.cmdToolStripMenuItem.Text = "Cmd";
+            // 
+            // cmdToolStripMenuItem1
+            // 
+            this.cmdToolStripMenuItem1.Name = "cmdToolStripMenuItem1";
+            this.cmdToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
+            this.cmdToolStripMenuItem1.Text = "Cmd";
+            // 
+            // pnRight
+            // 
+            this.pnRight.Controls.Add(this.vMyScrollBar);
+            this.pnRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnRight.Location = new System.Drawing.Point(950, 0);
+            this.pnRight.Name = "pnRight";
+            this.pnRight.Size = new System.Drawing.Size(19, 610);
+            this.pnRight.TabIndex = 12;
+            // 
+            // pnTreeView
+            // 
+            this.pnTreeView.Controls.Add(this.pnTreeCenter);
+            this.pnTreeView.Controls.Add(this.pnTreeButtom);
+            this.pnTreeView.Controls.Add(this.pnTreeRight);
+            this.pnTreeView.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnTreeView.Location = new System.Drawing.Point(977, 0);
+            this.pnTreeView.Name = "pnTreeView";
+            this.pnTreeView.Size = new System.Drawing.Size(184, 610);
+            this.pnTreeView.TabIndex = 0;
+            // 
+            // pnTreeButtom
+            // 
+            this.pnTreeButtom.Controls.Add(this.hTreePrjScrollBar);
+            this.pnTreeButtom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnTreeButtom.Location = new System.Drawing.Point(0, 591);
+            this.pnTreeButtom.Name = "pnTreeButtom";
+            this.pnTreeButtom.Size = new System.Drawing.Size(165, 19);
+            this.pnTreeButtom.TabIndex = 60;
+            // 
+            // pnTreeRight
+            // 
+            this.pnTreeRight.Controls.Add(this.vTreePrjScrollBar);
+            this.pnTreeRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnTreeRight.Location = new System.Drawing.Point(165, 0);
+            this.pnTreeRight.Name = "pnTreeRight";
+            this.pnTreeRight.Size = new System.Drawing.Size(19, 610);
+            this.pnTreeRight.TabIndex = 59;
+            // 
             // fctbConsole
             // 
             this.fctbConsole.AutoCompleteBracketsList = new char[] {
@@ -563,54 +649,6 @@
             this.fctbConsole.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fctb_MouseClick);
             this.fctbConsole.MouseMove += new System.Windows.Forms.MouseEventHandler(this.fctb_MouseMove);
             // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.msCmd);
-            this.panel4.Controls.Add(this.tbCmd);
-            this.panel4.Controls.Add(this.hMyScrollBar);
-            this.panel4.Controls.Add(this.btn_SendCmd);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 564);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(950, 46);
-            this.panel4.TabIndex = 13;
-            // 
-            // msCmd
-            // 
-            this.msCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.msCmd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
-            this.msCmd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.msCmd.Dock = System.Windows.Forms.DockStyle.None;
-            this.msCmd.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
-            this.msCmd.GripMargin = new System.Windows.Forms.Padding(1);
-            this.msCmd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmdToolStripMenuItem});
-            this.msCmd.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msCmd.Location = new System.Drawing.Point(3, 2);
-            this.msCmd.Name = "msCmd";
-            this.msCmd.Padding = new System.Windows.Forms.Padding(1);
-            this.msCmd.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.msCmd.ShowItemToolTips = true;
-            this.msCmd.Size = new System.Drawing.Size(46, 22);
-            this.msCmd.TabIndex = 56;
-            // 
-            // cmdToolStripMenuItem
-            // 
-            this.cmdToolStripMenuItem.BackColor = System.Drawing.Color.Black;
-            this.cmdToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmdToolStripMenuItem1});
-            this.cmdToolStripMenuItem.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
-            this.cmdToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.cmdToolStripMenuItem.Name = "cmdToolStripMenuItem";
-            this.cmdToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.cmdToolStripMenuItem.Text = "Cmd";
-            // 
-            // cmdToolStripMenuItem1
-            // 
-            this.cmdToolStripMenuItem1.Name = "cmdToolStripMenuItem1";
-            this.cmdToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
-            this.cmdToolStripMenuItem1.Text = "Cmd";
-            // 
             // hMyScrollBar
             // 
             this.hMyScrollBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -628,15 +666,6 @@
             this.hMyScrollBar.ThumbSize = 480;
             this.hMyScrollBar.Value = 0;
             this.hMyScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hMyScrollBar_Scroll);
-            // 
-            // pnRight
-            // 
-            this.pnRight.Controls.Add(this.vMyScrollBar);
-            this.pnRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnRight.Location = new System.Drawing.Point(950, 0);
-            this.pnRight.Name = "pnRight";
-            this.pnRight.Size = new System.Drawing.Size(19, 610);
-            this.pnRight.TabIndex = 12;
             // 
             // vMyScrollBar
             // 
@@ -673,17 +702,6 @@
             this.csPrj.UseAnimations = false;
             this.csPrj.VisualStyle = NJFLib.Controls.VisualStyles.Mozilla;
             this.csPrj.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.collapsibleSplitter2_SplitterMoved);
-            // 
-            // pnTreeView
-            // 
-            this.pnTreeView.Controls.Add(this.pnTreeCenter);
-            this.pnTreeView.Controls.Add(this.pnTreeButtom);
-            this.pnTreeView.Controls.Add(this.pnTreeRight);
-            this.pnTreeView.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnTreeView.Location = new System.Drawing.Point(977, 0);
-            this.pnTreeView.Name = "pnTreeView";
-            this.pnTreeView.Size = new System.Drawing.Size(184, 610);
-            this.pnTreeView.TabIndex = 0;
             // 
             // pnTreeCenter
             // 
@@ -725,15 +743,6 @@
             this.treeViewPrj.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewPrj_AfterExpand);
             this.treeViewPrj.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewPrj_NodeMouseDoubleClick);
             // 
-            // pnTreeButtom
-            // 
-            this.pnTreeButtom.Controls.Add(this.hTreePrjScrollBar);
-            this.pnTreeButtom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnTreeButtom.Location = new System.Drawing.Point(0, 591);
-            this.pnTreeButtom.Name = "pnTreeButtom";
-            this.pnTreeButtom.Size = new System.Drawing.Size(165, 19);
-            this.pnTreeButtom.TabIndex = 60;
-            // 
             // hTreePrjScrollBar
             // 
             this.hTreePrjScrollBar.BackColor = System.Drawing.Color.Black;
@@ -750,15 +759,6 @@
             this.hTreePrjScrollBar.ThumbSize = 82;
             this.hTreePrjScrollBar.Value = 0;
             this.hTreePrjScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hTreePrjScrollBar_Scroll);
-            // 
-            // pnTreeRight
-            // 
-            this.pnTreeRight.Controls.Add(this.vTreePrjScrollBar);
-            this.pnTreeRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnTreeRight.Location = new System.Drawing.Point(165, 0);
-            this.pnTreeRight.Name = "pnTreeRight";
-            this.pnTreeRight.Size = new System.Drawing.Size(19, 610);
-            this.pnTreeRight.TabIndex = 59;
             // 
             // vTreePrjScrollBar
             // 
@@ -805,17 +805,17 @@
             this.pnAll.ResumeLayout(false);
             this.pnCenter.ResumeLayout(false);
             this.pnCenter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.msCmd.ResumeLayout(false);
             this.msCmd.PerformLayout();
             this.pnRight.ResumeLayout(false);
             this.pnTreeView.ResumeLayout(false);
-            this.pnTreeCenter.ResumeLayout(false);
-            this.pnTtreeViewPrj.ResumeLayout(false);
             this.pnTreeButtom.ResumeLayout(false);
             this.pnTreeRight.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).EndInit();
+            this.pnTreeCenter.ResumeLayout(false);
+            this.pnTtreeViewPrj.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
