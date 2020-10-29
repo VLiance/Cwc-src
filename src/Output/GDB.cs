@@ -192,11 +192,11 @@ namespace cwc {
             
              //E> Function "GDB_Func_Break" not defined.
             if(_sOut.IndexOf("Function \"GDB_Func_Break\" not defined") != -1) {
-                Output.TraceActionLite("Tips: To have in-code GDB break, add this function: extern \"C\" GDB_Func_Break(){}");
+                Output.TraceActionLite("Tips: To have in-code GDB break, add this function: extern \"C\" void GDB_Func_Break(){}");
                 return;
             }
              if(_sOut.IndexOf("Function \"GDB_Func_ExecuteCmds\" not defined") != -1) {
-                Output.TraceActionLite("Tips: To have in-code GDB command-line, add this function: extern \"C\" GDB_Func_ExecuteCmds(){}\nSend command like this: fprintf(stderr,\"Cmd[GDB]:yourCmd\")");
+                Output.TraceActionLite("Tips: To have in-code GDB command-line, add this function: extern \"C\" void GDB_Func_ExecuteCmds(){}\nSend command like this: fprintf(stderr,\"Cmd[GDB]:yourCmd\")");
                 return;
             }
             
@@ -247,6 +247,12 @@ namespace cwc {
         
           //  if ( _sOut.StartsWith("Breakpoint") ) {
             if (  _sOut.IndexOf("it Breakpoint ",0) != -1  ) {//Hit breakpoint
+                if( _sOut.IndexOf("GDB_Func_ExecuteCmds")!= 1 ){ //Special function
+                     _sColor = Output.sGoodColorLite;
+                      Output.Trace(_sLetter + "> " +_sColor +_sOut);
+                    oProcess.fSend("Continue");
+                    return;
+                }
                 _sColor = Output.sWarningColor;
                   Output.Trace(_sLetter + "> " +_sColor +_sOut);
                  fShowBacktrace();

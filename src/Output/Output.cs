@@ -150,24 +150,55 @@ namespace cwc
     return;
 }
 
+        public static void ProcessCmdSendToApp(string _sCmd, string _sAppName){
+            string _sAppNameNorm = _sAppName.ToLower();
+            foreach(LauchTool _oLauch in LauchTool.aLauchList){
+                if( _oLauch.sExeName.ToLower() == _sAppNameNorm) {
+                    Output.TraceActionLite("C> Send[" +_sAppName + "]:" +_sCmd);
+                  //  _oLauch.fSend(_sCmd.Substring(_sCmd.Length));
+                    _oLauch.fSend(_sCmd.Trim());
+                    return;
+                }
+            }
+             Output.TraceErrorLite("C> Unable to Send:[" +_sAppName + "]" +_sCmd);
+        }
+
 
         public static List<string> aList = new List<string>();
         //Begin with "Cmd"
          public static void ProcessCmd(string _sOut){
+            if(_sOut.Length > 5 && _sOut[3] == '['){
+                //Get app name
+                int _nStartIndex = 4;
+                int _nEndIndex = _sOut.IndexOf(']', _nStartIndex);
+                if(_nEndIndex != -1) {
+                     string _sAppName = _sOut.Substring(_nStartIndex, _nEndIndex-_nStartIndex);
+                     int _nStartCmd = _sOut.IndexOf(':', _nEndIndex);
+                     if(_nStartCmd  != -1) {
+                       string _sCmd = _sOut.Substring(_nStartCmd+1);
+                       ProcessCmdSendToApp(_sCmd, _sAppName);
+                        return;
+                    }
+                }
+                 Output.TraceErrorLite("C> Unable to Process:" + _sOut);
+            }
+
+
+            /*
             if(_sOut.Length > 8 && _sOut[3] == '(' && _sOut[4] == 'a' && _sOut[5] == 'd' && _sOut[6] == 'd' && _sOut[7] == ')') {
                 //add to cmd list
                 aList.Add(_sOut.Substring(8));
                      Output.TraceWarning("Add:" +_sOut.Substring(8) );
-            }
+            }*/
         }
 
 
 
 
 
-        public static void ProcessStdErr(string _sOut){
+        public static void ProcessStdErr( string _sOut){
             if(_sOut.Length > 4 && _sOut[0] == 'C' && _sOut[1] == 'm' && _sOut[2] == 'd' && (_sOut[3] == ':' || _sOut[3] == '('|| _sOut[3] == '[')){
-                Output.TraceActionLite("C> " + _sOut);
+                //Output.TraceActionLite("C> " + _sOut);
                 ProcessCmd(_sOut);
 
             }else { 
@@ -203,6 +234,7 @@ namespace cwc
 
 
          public static  string sWarningColor = "\fE4";
+         public static  string sWarningColorLite = "\f0E";
 		public static void TraceWarning(string _sText){
 
 			Output.TraceColored(sWarningColor + _sText ); 
@@ -221,7 +253,7 @@ namespace cwc
 
 			Output.TraceColored(sErrorColor + _sText ); 
 		}
-
+        public static  string sGoodColorLite = "\f0A";
 		public static void TraceGood(string _sText)
 		{
 				//Output.TraceColored("\fB3" + _sText ); 
