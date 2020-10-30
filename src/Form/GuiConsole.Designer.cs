@@ -66,44 +66,45 @@
             this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnAll = new System.Windows.Forms.Panel();
             this.pnCenter = new System.Windows.Forms.Panel();
+            this.fctbConsole = new cwc.CwFCTB();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.hMyScrollBar = new cwc.CwScrollBar();
             this.btn_SendSignal = new System.Windows.Forms.Label();
             this.msSignal = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsSignal = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.sIGBREAKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeMWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.killToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msCmd = new System.Windows.Forms.MenuStrip();
             this.cmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmdToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pnRight = new System.Windows.Forms.Panel();
-            this.pnTreeView = new System.Windows.Forms.Panel();
-            this.pnTreeButtom = new System.Windows.Forms.Panel();
-            this.pnTreeRight = new System.Windows.Forms.Panel();
-            this.fctbConsole = new cwc.CwFCTB();
-            this.hMyScrollBar = new cwc.CwScrollBar();
             this.vMyScrollBar = new cwc.CwScrollBar();
             this.csPrj = new NJFLib.Controls.CollapsibleSplitter();
+            this.pnTreeView = new System.Windows.Forms.Panel();
             this.pnTreeCenter = new cwc.DoubleBufferedPanel();
             this.pnTtreeViewPrj = new cwc.DoubleBufferedPanel();
             this.treeViewPrj = new cwc.CwTreeView();
+            this.pnTreeButtom = new System.Windows.Forms.Panel();
             this.hTreePrjScrollBar = new cwc.CwScrollBar();
+            this.pnTreeRight = new System.Windows.Forms.Panel();
             this.vTreePrjScrollBar = new cwc.CwScrollBar();
             this.msMenu.SuspendLayout();
             this.cmMain.SuspendLayout();
             this.pnAll.SuspendLayout();
             this.pnCenter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).BeginInit();
             this.panel4.SuspendLayout();
             this.msSignal.SuspendLayout();
             this.msCmd.SuspendLayout();
             this.pnRight.SuspendLayout();
             this.pnTreeView.SuspendLayout();
-            this.pnTreeButtom.SuspendLayout();
-            this.pnTreeRight.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).BeginInit();
             this.pnTreeCenter.SuspendLayout();
             this.pnTtreeViewPrj.SuspendLayout();
+            this.pnTreeButtom.SuspendLayout();
+            this.pnTreeRight.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbCmd
@@ -524,168 +525,6 @@
             this.pnCenter.Size = new System.Drawing.Size(950, 564);
             this.pnCenter.TabIndex = 14;
             // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.hMyScrollBar);
-            this.panel4.Controls.Add(this.btn_SendSignal);
-            this.panel4.Controls.Add(this.msSignal);
-            this.panel4.Controls.Add(this.msCmd);
-            this.panel4.Controls.Add(this.tbCmd);
-            this.panel4.Controls.Add(this.btn_SendCmd);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 564);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(950, 46);
-            this.panel4.TabIndex = 13;
-            // 
-            // btn_SendSignal
-            // 
-            this.btn_SendSignal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_SendSignal.AutoSize = true;
-            this.btn_SendSignal.BackColor = System.Drawing.Color.Black;
-            this.btn_SendSignal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btn_SendSignal.Font = new System.Drawing.Font("Courier New", 13.25F);
-            this.btn_SendSignal.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btn_SendSignal.Location = new System.Drawing.Point(900, 3);
-            this.btn_SendSignal.Name = "btn_SendSignal";
-            this.btn_SendSignal.Size = new System.Drawing.Size(45, 22);
-            this.btn_SendSignal.TabIndex = 57;
-            this.btn_SendSignal.Text = " ↴ ";
-            this.btn_SendSignal.MouseEnter += new System.EventHandler(this.btn_SendSignal_MouseEnter);
-            this.btn_SendSignal.MouseLeave += new System.EventHandler(this.btn_SendSignal_MouseLeave);
-            // 
-            // msSignal
-            // 
-            this.msSignal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.msSignal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
-            this.msSignal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.msSignal.Dock = System.Windows.Forms.DockStyle.None;
-            this.msSignal.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
-            this.msSignal.GripMargin = new System.Windows.Forms.Padding(1);
-            this.msSignal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
-            this.msSignal.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msSignal.Location = new System.Drawing.Point(830, 1);
-            this.msSignal.Name = "msSignal";
-            this.msSignal.Padding = new System.Windows.Forms.Padding(1);
-            this.msSignal.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.msSignal.ShowItemToolTips = true;
-            this.msSignal.Size = new System.Drawing.Size(70, 22);
-            this.msSignal.TabIndex = 58;
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.BackColor = System.Drawing.Color.Black;
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.sIGBREAKToolStripMenuItem,
-            this.closeToolStripMenuItem,
-            this.killToolStripMenuItem});
-            this.toolStripMenuItem1.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
-            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.White;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(68, 20);
-            this.toolStripMenuItem1.Text = "SIGINT";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
-            this.toolStripMenuItem2.Text = "SIGINT";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
-            // 
-            // sIGBREAKToolStripMenuItem
-            // 
-            this.sIGBREAKToolStripMenuItem.Name = "sIGBREAKToolStripMenuItem";
-            this.sIGBREAKToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.sIGBREAKToolStripMenuItem.Text = "SIGBREAK";
-            // 
-            // closeToolStripMenuItem
-            // 
-            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.closeToolStripMenuItem.Text = "Close";
-            // 
-            // killToolStripMenuItem
-            // 
-            this.killToolStripMenuItem.Name = "killToolStripMenuItem";
-            this.killToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.killToolStripMenuItem.Text = "Kill";
-            // 
-            // msCmd
-            // 
-            this.msCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.msCmd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
-            this.msCmd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.msCmd.Dock = System.Windows.Forms.DockStyle.None;
-            this.msCmd.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
-            this.msCmd.GripMargin = new System.Windows.Forms.Padding(1);
-            this.msCmd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmdToolStripMenuItem});
-            this.msCmd.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msCmd.Location = new System.Drawing.Point(3, 2);
-            this.msCmd.Name = "msCmd";
-            this.msCmd.Padding = new System.Windows.Forms.Padding(1);
-            this.msCmd.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.msCmd.ShowItemToolTips = true;
-            this.msCmd.Size = new System.Drawing.Size(46, 22);
-            this.msCmd.TabIndex = 56;
-            // 
-            // cmdToolStripMenuItem
-            // 
-            this.cmdToolStripMenuItem.BackColor = System.Drawing.Color.Black;
-            this.cmdToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmdToolStripMenuItem1});
-            this.cmdToolStripMenuItem.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
-            this.cmdToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.cmdToolStripMenuItem.Name = "cmdToolStripMenuItem";
-            this.cmdToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.cmdToolStripMenuItem.Text = "Cmd";
-            // 
-            // cmdToolStripMenuItem1
-            // 
-            this.cmdToolStripMenuItem1.Name = "cmdToolStripMenuItem1";
-            this.cmdToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
-            this.cmdToolStripMenuItem1.Text = "Cmd";
-            // 
-            // pnRight
-            // 
-            this.pnRight.Controls.Add(this.vMyScrollBar);
-            this.pnRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnRight.Location = new System.Drawing.Point(950, 0);
-            this.pnRight.Name = "pnRight";
-            this.pnRight.Size = new System.Drawing.Size(19, 610);
-            this.pnRight.TabIndex = 12;
-            // 
-            // pnTreeView
-            // 
-            this.pnTreeView.Controls.Add(this.pnTreeCenter);
-            this.pnTreeView.Controls.Add(this.pnTreeButtom);
-            this.pnTreeView.Controls.Add(this.pnTreeRight);
-            this.pnTreeView.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnTreeView.Location = new System.Drawing.Point(977, 0);
-            this.pnTreeView.Name = "pnTreeView";
-            this.pnTreeView.Size = new System.Drawing.Size(184, 610);
-            this.pnTreeView.TabIndex = 0;
-            // 
-            // pnTreeButtom
-            // 
-            this.pnTreeButtom.Controls.Add(this.hTreePrjScrollBar);
-            this.pnTreeButtom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnTreeButtom.Location = new System.Drawing.Point(0, 591);
-            this.pnTreeButtom.Name = "pnTreeButtom";
-            this.pnTreeButtom.Size = new System.Drawing.Size(165, 19);
-            this.pnTreeButtom.TabIndex = 60;
-            // 
-            // pnTreeRight
-            // 
-            this.pnTreeRight.Controls.Add(this.vTreePrjScrollBar);
-            this.pnTreeRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnTreeRight.Location = new System.Drawing.Point(165, 0);
-            this.pnTreeRight.Name = "pnTreeRight";
-            this.pnTreeRight.Size = new System.Drawing.Size(19, 610);
-            this.pnTreeRight.TabIndex = 59;
-            // 
             // fctbConsole
             // 
             this.fctbConsole.AutoCompleteBracketsList = new char[] {
@@ -735,6 +574,20 @@
             this.fctbConsole.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fctb_MouseClick);
             this.fctbConsole.MouseMove += new System.Windows.Forms.MouseEventHandler(this.fctb_MouseMove);
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.hMyScrollBar);
+            this.panel4.Controls.Add(this.btn_SendCmd);
+            this.panel4.Controls.Add(this.btn_SendSignal);
+            this.panel4.Controls.Add(this.msSignal);
+            this.panel4.Controls.Add(this.msCmd);
+            this.panel4.Controls.Add(this.tbCmd);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 564);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(950, 46);
+            this.panel4.TabIndex = 13;
+            // 
             // hMyScrollBar
             // 
             this.hMyScrollBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -752,6 +605,141 @@
             this.hMyScrollBar.ThumbSize = 483;
             this.hMyScrollBar.Value = 0;
             this.hMyScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hMyScrollBar_Scroll);
+            // 
+            // btn_SendSignal
+            // 
+            this.btn_SendSignal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_SendSignal.AutoSize = true;
+            this.btn_SendSignal.BackColor = System.Drawing.Color.Black;
+            this.btn_SendSignal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.btn_SendSignal.Font = new System.Drawing.Font("Courier New", 13.25F);
+            this.btn_SendSignal.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btn_SendSignal.Location = new System.Drawing.Point(899, 2);
+            this.btn_SendSignal.Name = "btn_SendSignal";
+            this.btn_SendSignal.Size = new System.Drawing.Size(45, 22);
+            this.btn_SendSignal.TabIndex = 57;
+            this.btn_SendSignal.Text = " ↴ ";
+            this.btn_SendSignal.Click += new System.EventHandler(this.btn_SendSignal_Click);
+            this.btn_SendSignal.MouseEnter += new System.EventHandler(this.btn_SendSignal_MouseEnter);
+            this.btn_SendSignal.MouseLeave += new System.EventHandler(this.btn_SendSignal_MouseLeave);
+            // 
+            // msSignal
+            // 
+            this.msSignal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.msSignal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
+            this.msSignal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.msSignal.Dock = System.Windows.Forms.DockStyle.None;
+            this.msSignal.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.msSignal.GripMargin = new System.Windows.Forms.Padding(1);
+            this.msSignal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsSignal});
+            this.msSignal.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.msSignal.Location = new System.Drawing.Point(830, 1);
+            this.msSignal.Name = "msSignal";
+            this.msSignal.Padding = new System.Windows.Forms.Padding(1);
+            this.msSignal.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.msSignal.ShowItemToolTips = true;
+            this.msSignal.Size = new System.Drawing.Size(70, 22);
+            this.msSignal.TabIndex = 58;
+            // 
+            // tsSignal
+            // 
+            this.tsSignal.BackColor = System.Drawing.Color.Black;
+            this.tsSignal.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.sIGBREAKToolStripMenuItem,
+            this.closeMWToolStripMenuItem,
+            this.closeToolStripMenuItem,
+            this.killToolStripMenuItem});
+            this.tsSignal.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.tsSignal.ForeColor = System.Drawing.Color.White;
+            this.tsSignal.Name = "tsSignal";
+            this.tsSignal.Size = new System.Drawing.Size(68, 20);
+            this.tsSignal.Text = "SIGINT";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
+            this.toolStripMenuItem2.Text = "SIGINT";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.fCmdSingalSelect);
+            // 
+            // sIGBREAKToolStripMenuItem
+            // 
+            this.sIGBREAKToolStripMenuItem.Name = "sIGBREAKToolStripMenuItem";
+            this.sIGBREAKToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.sIGBREAKToolStripMenuItem.Text = "SIGBREAK";
+            this.sIGBREAKToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
+            // 
+            // closeMWToolStripMenuItem
+            // 
+            this.closeMWToolStripMenuItem.Name = "closeMWToolStripMenuItem";
+            this.closeMWToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.closeMWToolStripMenuItem.Text = "CloseMW";
+            this.closeMWToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
+            // 
+            // killToolStripMenuItem
+            // 
+            this.killToolStripMenuItem.Name = "killToolStripMenuItem";
+            this.killToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.killToolStripMenuItem.Text = "Kill";
+            this.killToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
+            // 
+            // msCmd
+            // 
+            this.msCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.msCmd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
+            this.msCmd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.msCmd.Dock = System.Windows.Forms.DockStyle.None;
+            this.msCmd.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.msCmd.GripMargin = new System.Windows.Forms.Padding(1);
+            this.msCmd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmdToolStripMenuItem});
+            this.msCmd.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.msCmd.Location = new System.Drawing.Point(3, 2);
+            this.msCmd.Name = "msCmd";
+            this.msCmd.Padding = new System.Windows.Forms.Padding(1);
+            this.msCmd.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.msCmd.ShowItemToolTips = true;
+            this.msCmd.Size = new System.Drawing.Size(138, 22);
+            this.msCmd.TabIndex = 56;
+            // 
+            // cmdToolStripMenuItem
+            // 
+            this.cmdToolStripMenuItem.BackColor = System.Drawing.Color.Black;
+            this.cmdToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmdToolStripMenuItem1});
+            this.cmdToolStripMenuItem.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.cmdToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.cmdToolStripMenuItem.Name = "cmdToolStripMenuItem";
+            this.cmdToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.cmdToolStripMenuItem.Text = "Cmd";
+            this.cmdToolStripMenuItem.DropDownOpening += new System.EventHandler(this.cmdToolStripMenuItem_DropDownOpening);
+            this.cmdToolStripMenuItem.Click += new System.EventHandler(this.cmdToolStripMenuItem_Click);
+            this.cmdToolStripMenuItem.MouseEnter += new System.EventHandler(this.cmdToolStripMenuItem_MouseEnter);
+            // 
+            // cmdToolStripMenuItem1
+            // 
+            this.cmdToolStripMenuItem1.Name = "cmdToolStripMenuItem1";
+            this.cmdToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.cmdToolStripMenuItem1.Text = "Cmd";
+            this.cmdToolStripMenuItem1.Click += new System.EventHandler(this.cmdToolStripMenuItem1_Click);
+            // 
+            // pnRight
+            // 
+            this.pnRight.Controls.Add(this.vMyScrollBar);
+            this.pnRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnRight.Location = new System.Drawing.Point(950, 0);
+            this.pnRight.Name = "pnRight";
+            this.pnRight.Size = new System.Drawing.Size(19, 610);
+            this.pnRight.TabIndex = 12;
             // 
             // vMyScrollBar
             // 
@@ -788,6 +776,17 @@
             this.csPrj.UseAnimations = false;
             this.csPrj.VisualStyle = NJFLib.Controls.VisualStyles.Mozilla;
             this.csPrj.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.collapsibleSplitter2_SplitterMoved);
+            // 
+            // pnTreeView
+            // 
+            this.pnTreeView.Controls.Add(this.pnTreeCenter);
+            this.pnTreeView.Controls.Add(this.pnTreeButtom);
+            this.pnTreeView.Controls.Add(this.pnTreeRight);
+            this.pnTreeView.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnTreeView.Location = new System.Drawing.Point(977, 0);
+            this.pnTreeView.Name = "pnTreeView";
+            this.pnTreeView.Size = new System.Drawing.Size(184, 610);
+            this.pnTreeView.TabIndex = 0;
             // 
             // pnTreeCenter
             // 
@@ -829,6 +828,15 @@
             this.treeViewPrj.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewPrj_AfterExpand);
             this.treeViewPrj.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewPrj_NodeMouseDoubleClick);
             // 
+            // pnTreeButtom
+            // 
+            this.pnTreeButtom.Controls.Add(this.hTreePrjScrollBar);
+            this.pnTreeButtom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnTreeButtom.Location = new System.Drawing.Point(0, 591);
+            this.pnTreeButtom.Name = "pnTreeButtom";
+            this.pnTreeButtom.Size = new System.Drawing.Size(165, 19);
+            this.pnTreeButtom.TabIndex = 60;
+            // 
             // hTreePrjScrollBar
             // 
             this.hTreePrjScrollBar.BackColor = System.Drawing.Color.Black;
@@ -845,6 +853,15 @@
             this.hTreePrjScrollBar.ThumbSize = 82;
             this.hTreePrjScrollBar.Value = 0;
             this.hTreePrjScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hTreePrjScrollBar_Scroll);
+            // 
+            // pnTreeRight
+            // 
+            this.pnTreeRight.Controls.Add(this.vTreePrjScrollBar);
+            this.pnTreeRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnTreeRight.Location = new System.Drawing.Point(165, 0);
+            this.pnTreeRight.Name = "pnTreeRight";
+            this.pnTreeRight.Size = new System.Drawing.Size(19, 610);
+            this.pnTreeRight.TabIndex = 59;
             // 
             // vTreePrjScrollBar
             // 
@@ -891,6 +908,7 @@
             this.pnAll.ResumeLayout(false);
             this.pnCenter.ResumeLayout(false);
             this.pnCenter.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.msSignal.ResumeLayout(false);
@@ -899,11 +917,10 @@
             this.msCmd.PerformLayout();
             this.pnRight.ResumeLayout(false);
             this.pnTreeView.ResumeLayout(false);
-            this.pnTreeButtom.ResumeLayout(false);
-            this.pnTreeRight.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).EndInit();
             this.pnTreeCenter.ResumeLayout(false);
             this.pnTtreeViewPrj.ResumeLayout(false);
+            this.pnTreeButtom.ResumeLayout(false);
+            this.pnTreeRight.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -971,10 +988,11 @@
         private System.Windows.Forms.ToolStripMenuItem cmdToolStripMenuItem1;
         private System.Windows.Forms.Label btn_SendSignal;
         private System.Windows.Forms.MenuStrip msSignal;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem tsSignal;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem sIGBREAKToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem killToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeMWToolStripMenuItem;
     }
 }

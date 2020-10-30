@@ -20,6 +20,7 @@ namespace cwc {
         
 
         internal const int CTRL_C_EVENT = 0;
+        internal const int CTRL_BREAK_EVENT = 1;
         [DllImport("kernel32.dll")]
         internal static extern bool GenerateConsoleCtrlEvent(uint dwCtrlEvent, uint dwProcessGroupId);
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -34,7 +35,7 @@ namespace cwc {
 
 
   
- public static void StopProgram(uint pid)
+ public static void StopProgram(uint pid, uint _event)
 {
      // Disable Ctrl-C handling for our program
     SetConsoleCtrlHandler(null, true);
@@ -45,7 +46,7 @@ namespace cwc {
 
     // This does not require the console window to be visible.
     if (AttachConsole(pid)) {
-        GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
+        GenerateConsoleCtrlEvent(_event, 0);
     }
 }
 
@@ -69,8 +70,8 @@ namespace cwc {
        }
        */
 
-       public static bool fSend_CTRL_C( Process p){
-            StopProgram((uint)p.Id);
+       public static bool fSend_CTRL_C( Process p, uint _event = CTRL_C_EVENT){
+            StopProgram((uint)p.Id, _event);
             /*
             //Console mnust be attached
            // if(attachedProcess != p) {
@@ -252,6 +253,35 @@ namespace cwc {
             // Process already exited.
         }
      }
+
+
+
+
+   public static List<Process> ListProcessAndChildrens(int pid){
+             List<Process> _aProc = new List<Process>();
+     try{
+        if (!ProcessExists(pid)) {
+         return _aProc;
+        }
+
+        Process proc = Process.GetProcessById(pid);
+
+        ManagementObjectSearcher searcher = new ManagementObjectSearcher
+        ("Select * From Win32_Process Where ParentProcessID=" + pid);
+        ManagementObjectCollection moc = searcher.Get();
+        foreach (ManagementObject mo in moc){
+            _aProc.AddRange(ListProcessAndChildrens(Convert.ToInt32(mo["ProcessID"])));
+        }
+        if(proc.Id != Data.MainProcess.Id && !proc.HasExited ) {
+             _aProc.Add(proc);
+             return _aProc;
+        }
+
+    }catch (Exception ex){
+ 
+    }
+    return _aProc;
+   }
 
 
 

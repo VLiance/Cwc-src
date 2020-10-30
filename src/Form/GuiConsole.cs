@@ -46,36 +46,7 @@ namespace cwc {
 
 
         public void fCheckMenu(object sender, EventArgs e) {
-            string _sParentName = "";
-          //  bool _bChecked = ((ToolStripMenuItem)(sender)).Checked;
 
-              ToolStripItem _oParent = ((ToolStripMenuItem)(sender)).OwnerItem;
-            if (_oParent != null) {
-                _sParentName = _oParent.Text + "/";
-                fUncheckAll((ToolStripMenuItem)_oParent);
-            }
-
-
-             ((ToolStripMenuItem)(sender)).Checked = true;
-            // ((ToolStripMenuItem)(sender)).Checked = !_bChecked;
-            //aOption[_sParentName + ((ToolStripMenuItem)(sender)).Text] = (bool) ((ToolStripMenuItem)(sender)).Checked;
-
-
-            string _sFullName = ((ToolStripMenuItem)(sender)).Name;
-            string _sOptName = Path.GetDirectoryName( _sFullName ).Replace('\\','/'); //Ugly but work
-
-             aOption[ ((ToolStripMenuItem)(sender)).Name] =  Data.fGetStrBool(  (bool) (((ToolStripMenuItem)(sender)).Checked) );
-
-
-         //    aOption[_sOptName] =  ((ToolStripMenuItem)(sender)).Text;
-
-            Data.fSetGlobalVar("_s" + _sOptName,  ((ToolStripMenuItem)(sender)).Text );
-
-
-
-            Output.TraceAction("Set[" + _sOptName + "]:" + ((ToolStripMenuItem)(sender)).Text);
-           // Output.TraceAction("Set[" +  ((ToolStripMenuItem)(sender)).Name + "]:true");
-           
         }
 
         public void fLoadData() {
@@ -1040,9 +1011,12 @@ namespace cwc {
  
         }
 
-
-        void fAddItemCmd(string _sName)
+        public static List<Process> aProcList = new List<Process>();
+        void fAddItemCmd(string _sName, Process _oProc)
         {
+            if(_oProc != null) {
+            aProcList.Add(_oProc);
+            }
             ToolStripMenuItem _oNew = new ToolStripMenuItem(_sName);
             _oNew.Tag = _sName;
             _oNew.Text = _sName;
@@ -1056,6 +1030,12 @@ namespace cwc {
             sCurrentCmdLauch = _sTag;
             cmdToolStripMenuItem.Text = sCurrentCmdLauch;
         }
+         private void fCmdSingalSelect(object sender, EventArgs e) {
+
+            string _sTag =  (string) ((ToolStripMenuItem) sender).Text;
+            sCurrentSignal = _sTag;
+            tsSignal.Text = sCurrentSignal;
+        }
 
         public string sCurrentCmdLauch = "";
         public int nLastCmdCount = 0;
@@ -1066,10 +1046,11 @@ namespace cwc {
                 }
 
                 cmdToolStripMenuItem.DropDownItems.Clear();
-                fAddItemCmd("Cmd");
+                fAddItemCmd("Cmd", null);
                 foreach(LauchTool _oLauch in LauchTool.aLauchList)
                 {
-                   fAddItemCmd(_oLauch.sExeName );
+                   fAddItemCmd(_oLauch.sExeName, _oLauch.ExeProcess );
+                   //fAddItemCmd(_oLauch.ExeProcess.ProcessName, _oLauch.ExeProcess );
                 }
              
                 //auto select first lauched app
@@ -2373,6 +2354,8 @@ namespace cwc {
         private const int GWL_STYLE = -16;
         private const int WS_VSCROLL = 0x00200000;
         private const int WS_HSCROLL = 0x00100000;
+        private string sCurrentSignal;
+
         [DllImport("user32.dll", ExactSpelling = false, CharSet = CharSet.Auto)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
@@ -2522,8 +2505,7 @@ namespace cwc {
 
 
  
-
-
+       // foreach(Process _oProc in GuiConsole.aProcList){ if(sCurrentCmdLauch == _oProc.ProcessName) {
         private void fSendCmd(){
             foreach(LauchTool _oLauch in LauchTool.aLauchList){
                 if(sCurrentCmdLauch == _oLauch.sExeName) {
@@ -2535,6 +2517,16 @@ namespace cwc {
                 }
             }
             //fSendCmdCleanup();
+        }
+          private void fSendSignal(){
+            foreach(LauchTool _oLauch in LauchTool.aLauchList){
+                if(sCurrentCmdLauch == _oLauch.sExeName) {
+                    if(_oLauch.bExeLauch) {
+                        fSendSignal(_oLauch, tsSignal.Text);
+                        return;
+                    }
+                }
+            }
         }
 
 
@@ -2591,6 +2583,27 @@ namespace cwc {
        
         }
 
+         private void fSendSignal(LauchTool _oLauch, string text){
+            switch(text){
+                case "SIGINT":
+                      SysAPI.fSend_CTRL_C(_oLauch.ExeProcess, SysAPI.CTRL_C_EVENT);
+                break;
+                case "SIGBREAK":
+                      SysAPI.fSend_CTRL_C(_oLauch.ExeProcess, SysAPI.CTRL_BREAK_EVENT);
+                break;
+                case "CloseMW":
+                    _oLauch.ExeProcess.CloseMainWindow();
+                break;
+                case "Close":
+                    _oLauch.ExeProcess.Close();
+                break;
+                case "Kill":
+                     _oLauch.ExeProcess.Kill();
+                break;
+            }
+          
+        }
+
         private void label1_Click(object sender, EventArgs e) {
 
         }
@@ -2617,6 +2630,49 @@ namespace cwc {
 
         private void btn_SendSignal_MouseLeave(object sender, EventArgs e) {
                 btn_SendSignal.BackColor = Color.Black;
+        }
+
+        private void btn_SendSignal_Click(object sender, EventArgs e){
+              fSendSignal();
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+         
+        }
+
+       private void  GetProcessListToMenu() {
+            cmdToolStripMenuItem.DropDownItems.Clear();
+            
+             List<Process> _aProcess = SysAPI.ListProcessAndChildrens( Data.MainProcess.Id);
+            foreach(Process _oProcess in _aProcess)
+            {
+                 fAddItemCmd( _oProcess.ProcessName,  _oProcess);
+               
+            }
+
+           
+         }
+
+        
+        private void cmdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           // GetProcessListToMenu();
+        }
+
+        private void cmdToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+             //  GetProcessListToMenu();
+        }
+
+        private void cmdToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+          //    GetProcessListToMenu();
+        }
+
+        private void cmdToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
