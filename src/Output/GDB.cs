@@ -247,10 +247,10 @@ namespace cwc {
         
           //  if ( _sOut.StartsWith("Breakpoint") ) {
             if (  _sOut.IndexOf("it Breakpoint ",0) != -1  ) {//Hit breakpoint
-                if( _sOut.IndexOf("GDB_Func_ExecuteCmds")!= 1 ){ //Special function
+                if( _sOut.IndexOf("GDB_Func_ExecuteCmds")!= -1 ){ //Special function
                      _sColor = Output.sGoodColorLite;
                       Output.Trace(_sLetter + "> " +_sColor +_sOut);
-                    oProcess.fSend("Continue");
+                     oProcess.fSend("Continue");
                     return;
                 }
                 _sColor = Output.sWarningColor;
