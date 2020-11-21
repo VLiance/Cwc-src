@@ -879,7 +879,7 @@ bExtacted = true;
                 //Output.TraceWarning("sCmd:" + sCmd);
                // Output.TraceWarning("sArg:" + sArgument);
 
-                _sCmd = " " + sResidualArg   + " " + sCmd +  " " +   sArgument  ;
+                _sCmd = " " + sResidualArg   + " " + sArgument  +  " " +   sCmd  ;
                // _sCmd = " " + sResidualArg   + " " + sCmd  ;
     
                 sBackEndCmd =  fExtractValidCompilerCommand(_sCmd);
