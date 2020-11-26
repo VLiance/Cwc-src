@@ -32,7 +32,8 @@ namespace cwc {
 						
 
 					 }catch(Exception Ex) {
-                         Console.WriteLine("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
+                        // Console.WriteLine("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
+                         Output.TraceError("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
 					 }
 				  }));  
 

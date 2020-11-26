@@ -422,13 +422,13 @@ fixed (char* pString = _sText) { char* pChar = pString;
                            bCustomEscape = false;
 
                     }
-                    if(c == ';'){
+                    if(c == ';' && sb.Length > _nNumIndex){
                          sb[_nNumIndex] = '\0';
                         _nNumIndex = 0;
                           fExecuteCode(sb.ToString() );
 
                     }
-                    if(c >= '0' && c <= '9') {
+                    if(c >= '0' && c <= '9' && sb.Length > _nNumIndex) {
                          sb[_nNumIndex] = c;
                         _nNumIndex++;
                     }
@@ -486,8 +486,11 @@ fixed (char* pString = _sText) { char* pChar = pString;
 
         public static void fExecuteCode(string _sTest)  {
              // fExecuteCode( Int32.Parse(sb.ToString() ) );
+            uint _nNumber = 0;
+            try { 
+             _nNumber =  UInt32.Parse( _sTest);
+            }catch(Exception e) {return;};
 
-            uint _nNumber =  UInt32.Parse( _sTest);
              if(bCustomEscape) {
                 nLetterColor = _nNumber;
                 return;
