@@ -401,7 +401,7 @@ fixed (char* pString = _sText) { char* pChar = pString;
 
                 }else if (bInEscape)  {
 
-                    if(c == 'm'){
+                    if(c == 'm'  && sb.Length > _nNumIndex){
                         bInEscape = false;
                      
                          sb[_nNumIndex] = '\0';

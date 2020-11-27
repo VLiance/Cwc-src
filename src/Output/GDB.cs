@@ -17,6 +17,7 @@ namespace cwc {
       
 
         int nLastID = 0;
+        public static int LIMIT_OUTPUT = 2000;
         LauchProject oLauchProject;
         LauchTool oProcess;
         Boolean bCmdSend = false;
@@ -28,7 +29,7 @@ namespace cwc {
         bool bShowedBacktrace = false;
 
         public GDB(LauchProject _oLauchProject, LauchTool _oProcess, string _sGdbPath,string _sExePath,  CompilerData _oCompiler, string _sSubArg = "" ){
-            
+            nLimitNbOutput = LIMIT_OUTPUT;
             singleton = this;
 
             if(_sSubArg != ""){
@@ -305,7 +306,7 @@ namespace cwc {
                     Thread.CurrentThread.Join(_nWaitTime);
                     if(_bWaitResult){
                         bCmdSend = true;
-                        nLimitNbOutput = 500;
+                        nLimitNbOutput = LIMIT_OUTPUT;
                         oProcess.fSend(_sCmd); //Get Call Stack
                         oProcess.fSend("show verbose");//End sequences 
                                                        //  oProcess.fSend("show width");//End sequences 
