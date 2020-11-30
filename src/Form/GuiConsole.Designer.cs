@@ -708,7 +708,7 @@
             this.msCmd.Padding = new System.Windows.Forms.Padding(1);
             this.msCmd.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.msCmd.ShowItemToolTips = true;
-            this.msCmd.Size = new System.Drawing.Size(138, 22);
+            this.msCmd.Size = new System.Drawing.Size(46, 22);
             this.msCmd.TabIndex = 56;
             // 
             // cmdToolStripMenuItem
@@ -728,7 +728,7 @@
             // cmdToolStripMenuItem1
             // 
             this.cmdToolStripMenuItem1.Name = "cmdToolStripMenuItem1";
-            this.cmdToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.cmdToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
             this.cmdToolStripMenuItem1.Text = "Cmd";
             this.cmdToolStripMenuItem1.Click += new System.EventHandler(this.cmdToolStripMenuItem1_Click);
             // 

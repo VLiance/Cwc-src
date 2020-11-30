@@ -98,7 +98,7 @@ namespace cwc {
          public  int nTreePrjScrollBar_IniY = 0;
 
 
-
+        public static bool bReady = false;
         public GuiConsole() {
                     //   Console.WriteLine("GuiConsole");
 
@@ -116,7 +116,7 @@ namespace cwc {
         //    Populate(true); //Slow to load
               //    Console.WriteLine("Finish");
       
-
+          
         }
         
          private ITreeStrategyDataProvider _dataProvider;
@@ -402,9 +402,82 @@ namespace cwc {
              });
             }catch(Exception e) { }
         }
+          private static  TextStyle oStyle ;
 
-        private static  TextStyle oStyle ;
-       internal void fTraceColorCode(string _sMsg, int _nColorCode) {
+        
+         public class MsgTrace{
+            public string sMsg;
+            public int nCode;
+            public MsgTrace(string _sMsg, int _nCode) {
+                sMsg = _sMsg;
+                nCode = _nCode;
+
+            }
+        }
+
+        static Queue<MsgTrace> aBacklog = new Queue<MsgTrace>();
+
+   
+
+
+        public void fUpdateTrace() {
+             while(aBacklog.Count>0) {
+                MsgTrace _oMsg = null;
+                    lock(aBacklog) {
+                      if(aBacklog.Count>0) {
+                         _oMsg = aBacklog.Dequeue();
+                        }
+                    }
+                 if(_oMsg != null) {
+                      try {
+                     fTraceColorCodeGui( _oMsg);
+                    }catch(Exception e) { }
+                }
+            }
+        
+        }
+
+        public void fTraceColorCodeGui(MsgTrace _oMsg) {
+            if(_oMsg == null) {return; }
+            string _sMsg = _oMsg.sMsg;
+             int _nColorCode = _oMsg.nCode;
+
+
+                 FontStyle _oFont = FontStyle.Regular;
+
+                Brush _oFore = Brushes.Red;
+                Brush _oBack = null;
+
+
+                int _nBack = _nColorCode >> 4;
+                int _nFore = _nColorCode & 0xF;
+
+                if (_nColorCode < 0) {
+                _nFore = 6;
+                }
+                fTrace(_sMsg, _nFore, _nBack);
+                //  fTrace(_sMsg, aStdStyle[_nFore]);
+                sFormCmd = "GoEnd";
+
+        }
+
+
+
+        static bool bForcePrintNext = true;
+       public void fTraceColorCode(string _sMsg, int _nColorCode) {
+            if(_sMsg == null || _sMsg == "") {return; }
+            lock(aBacklog) {
+                if(aBacklog.Count < 100) { //Skip if too many
+                    aBacklog.Enqueue(new MsgTrace(_sMsg, _nColorCode));
+                }else{
+                    int _nCount = aBacklog.Count;
+                    aBacklog.Clear();
+                    aBacklog.Enqueue(new MsgTrace("[Skiped " + _nCount + " items]\n", -1));
+                }
+            }
+        }
+        /*
+       internal void fTraceColorCode2(string _sMsg, int _nColorCode) {
           
 
 
@@ -424,47 +497,13 @@ namespace cwc {
                   _nFore = 6;
             }
 
-            /*
-            if (_nBack != 0) {
-                switch (_nFore) {
-                    case 0: _oFore = Brushes.Black; break;
-                    case 1: _oFore = Brushes.DarkBlue; break;
-                    case 2: _oFore = Brushes.DarkGreen; break;
-                    case 3: _oFore = Brushes.DarkMagenta; break;
-                    case 4: _oFore = Brushes.DarkRed; break;
-                    case 5: _oFore = Brushes.DeepPink; break;
-                    case 6: _oFore = Brushes.DarkGoldenrod; break;
-                    case 7: _oFore = Brushes.LightGray; break;
-                    case 8: _oFore = Brushes.Gray; break;
-                    case 9: _oFore = Brushes.DarkViolet; break;
-                     case 10: _oFore = Brushes.Green; break;
-                     case 11: _oFore = Brushes.LightBlue; break;
-                     case 12: _oFore = Brushes.Red; break;
-                     case 13: _oFore = Brushes.Pink; break;
-                     case 14: _oFore = Brushes.Yellow; break;
-                   default:  case 15: _oFore = Brushes.White; break;
-                }
-            }*/
-            
-
-                 //  fctb.ClearStylesBuffer();      
-        // TextStyle _oStyle = new TextStyle(_oFore,  Brushes.Yellow, FontStyle.Regular);
-          //  TextStyle _oStyle =new TextStyle(Brushes.Black, null, FontStyle.Regular);
-
-            
-         //       fTrace(_sMsg, _oStyle);
-            
-       //     return;
-
-          
-       //    fTrace(_sMsg, _oStyle);
                       fTrace(_sMsg, _nFore, _nBack);
                     //  fTrace(_sMsg, aStdStyle[_nFore]);
                       sFormCmd = "GoEnd";
 
                         });
 
-        }
+        }*/
 
 
 
@@ -920,8 +959,8 @@ namespace cwc {
             }
 
             fLoadData();
-              
- 
+              bReady = true;
+            
         }
 
 
@@ -969,42 +1008,41 @@ namespace cwc {
 
 
 
-
-
-
-
         //Update all
         public static string sFormCmd = "";
         private void fCmdManager() {
                 Thread winThread3 = new Thread(new ThreadStart(() =>  {  
 			    while(Base.bAlive) {
                         
-
-                        vMyScrollBar.fUpdate(); 
-                        hMyScrollBar.fUpdate(); 
-                        hTreePrjScrollBar.fUpdate(); 
-                        vTreePrjScrollBar.fUpdate(); 
+                      if(bReady){
+                            vMyScrollBar.fUpdate(); 
+                            hMyScrollBar.fUpdate(); 
+                            hTreePrjScrollBar.fUpdate(); 
+                            vTreePrjScrollBar.fUpdate(); 
                 
 
-                        if(sFormCmd != ""){
-                             this.BeginInvoke((MethodInvoker)delegate {
-			                     if(sFormCmd == "GoEnd"){
-                                     if(Data.bIWantGoToEnd){
-                                         bIgnoreNextSelectionChange = true;
-                                        fctbConsole.GoEnd();
-                                     }
-                                }
-                                sFormCmd = "";
-                            });
-                        }
+                            if(sFormCmd != ""){
+                                 this.BeginInvoke((MethodInvoker)delegate {
+			                         if(sFormCmd == "GoEnd"){
+                                         if(Data.bIWantGoToEnd){
+                                             bIgnoreNextSelectionChange = true;
+                                            fctbConsole.GoEnd();
+                                         }
+                                    }
+                                    sFormCmd = "";
+                                });
+                            }
 
-                        if(LauchTool.bListModified) {
-                            LauchTool.bListModified = false;
-                            fUpdateCmdList();
+                            if(LauchTool.bListModified) {
+                                LauchTool.bListModified = false;
+                                fUpdateCmdList();
+                            }
                         }
-                        
-                   
+              
+
+
 				    Thread.CurrentThread.Join(16);
+                             fUpdateTrace();
 			     }
 		    }));  
 		    winThread3.Start();
@@ -2673,6 +2711,16 @@ namespace cwc {
         private void cmdToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void GuiConsole_ControlAdded(object sender, ControlEventArgs e)
+        {
+             
+        }
+
+        private void GuiConsole_VisibleChanged(object sender, EventArgs e)
+        {
+             bReady = true;
         }
     }
 
