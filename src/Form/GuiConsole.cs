@@ -467,7 +467,7 @@ namespace cwc {
        public void fTraceColorCode(string _sMsg, int _nColorCode) {
             if(_sMsg == null || _sMsg == "") {return; }
             lock(aBacklog) {
-                if(aBacklog.Count < 100) { //Skip if too many
+                if(aBacklog.Count < 500) { //Skip if too many
                     aBacklog.Enqueue(new MsgTrace(_sMsg, _nColorCode));
                 }else{
                     int _nCount = aBacklog.Count;
