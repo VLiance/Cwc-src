@@ -360,7 +360,7 @@ namespace cwc {
 
           
                 if(nLimitNbOutput> 0) {
-                     nLimitNbOutput--;
+             //        nLimitNbOutput--; //DISABLE LIMIT
                      return true; //Don't show result //TODO Show unreconized result?
                 }else {
                     nLimitNbOutput = -1;
