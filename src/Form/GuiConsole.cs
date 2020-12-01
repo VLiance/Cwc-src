@@ -2513,10 +2513,7 @@ namespace cwc {
              FileUtils.fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", "",  "" );
         }
 
-        private void gDBToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
-
+      
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
               Data.oLauchProject.fLauchDefaultRun("");
@@ -2721,6 +2718,20 @@ namespace cwc {
         private void GuiConsole_VisibleChanged(object sender, EventArgs e)
         {
              bReady = true;
+        }
+
+         private void gDBToolStripMenuItem_Click(object sender, EventArgs e) {
+            ConfigMng.oConfig.fSetOption("Options/Debug Type/Debugger", Data.sTRUE);
+            ConfigMng.oConfig.fSetOption("Options/Debug Type/Sanitizer", Data.sFALSE);
+            Output.TraceAction("Options/Debug Type/Debugger = TRUE");
+        }
+
+
+        private void sanitizerToolStripMenuItem_Click(object sender, EventArgs e) {
+             
+           ConfigMng.oConfig.fSetOption("Options/Debug Type/Debugger", Data.sFALSE);
+           ConfigMng.oConfig.fSetOption("Options/Debug Type/Sanitizer", Data.sTRUE);
+            Output.TraceAction("Options/Debug Type/Sanitizer = TRUE");
         }
     }
 

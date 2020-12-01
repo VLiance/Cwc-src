@@ -139,12 +139,12 @@
             this.updateToolStripMenuItem,
             this.iDEToolStripMenuItem});
             this.msMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msMenu.Location = new System.Drawing.Point(609, 2);
+            this.msMenu.Location = new System.Drawing.Point(517, 2);
             this.msMenu.Name = "msMenu";
             this.msMenu.Padding = new System.Windows.Forms.Padding(1);
             this.msMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.msMenu.ShowItemToolTips = true;
-            this.msMenu.Size = new System.Drawing.Size(436, 20);
+            this.msMenu.Size = new System.Drawing.Size(528, 21);
             this.msMenu.TabIndex = 50;
             // 
             // lauchToolStripMenuItem
@@ -215,7 +215,7 @@
             this.runToolStripMenuItem1,
             this.sanitizeToolStripMenuItem1});
             this.buildToolStripMenuItem.Name = "buildToolStripMenuItem";
-            this.buildToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.buildToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.buildToolStripMenuItem.Text = "Build &&";
             // 
             // nothingToolStripMenuItem1
@@ -246,7 +246,7 @@
             this.stopBuildToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.afterFileErrorToolStripMenuItem});
             this.stopBuildToolStripMenuItem.Name = "stopBuildToolStripMenuItem";
-            this.stopBuildToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.stopBuildToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.stopBuildToolStripMenuItem.Text = "Stop build";
             // 
             // afterFileErrorToolStripMenuItem
@@ -265,27 +265,28 @@
             this.gDBToolStripMenuItem,
             this.sanitizerToolStripMenuItem});
             this.debugTypeToolStripMenuItem.Name = "debugTypeToolStripMenuItem";
-            this.debugTypeToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.debugTypeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.debugTypeToolStripMenuItem.Text = "Debug Type";
             // 
             // noneToolStripMenuItem
             // 
             this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
-            this.noneToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.noneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.noneToolStripMenuItem.Text = "None";
             // 
             // gDBToolStripMenuItem
             // 
             this.gDBToolStripMenuItem.Name = "gDBToolStripMenuItem";
-            this.gDBToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.gDBToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.gDBToolStripMenuItem.Text = "Debugger";
             this.gDBToolStripMenuItem.Click += new System.EventHandler(this.gDBToolStripMenuItem_Click);
             // 
             // sanitizerToolStripMenuItem
             // 
             this.sanitizerToolStripMenuItem.Name = "sanitizerToolStripMenuItem";
-            this.sanitizerToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.sanitizerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.sanitizerToolStripMenuItem.Text = "Sanitizer";
+            this.sanitizerToolStripMenuItem.Click += new System.EventHandler(this.sanitizerToolStripMenuItem_Click);
             // 
             // viewInToolStripMenuItem
             // 
