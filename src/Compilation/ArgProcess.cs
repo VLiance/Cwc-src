@@ -55,7 +55,7 @@ namespace cwc {
             while(_nStartIndex < _sFullArg.Length) {
 
                 //if(_sFullArg[_nStartIndex] <= 32 ) {
-                if(_sFullArg[_nStartIndex] < 32 ) { //Keep space?
+                if(_sFullArg[_nStartIndex] < 32 || _sFullArg[_nStartIndex] == '\"') { //Keep space?
                     break;
                 }
            
