@@ -11,12 +11,13 @@ namespace cwc {
     class GDB : DBGpClient {
 
       
-
+        public static GDB singleton = null;
 
         public List<Frame> aCurrBacktrace = new List<Frame>();
       
 
         int nLastID = 0;
+        public static int LIMIT_OUTPUT = 2000;
         LauchProject oLauchProject;
         LauchTool oProcess;
         Boolean bCmdSend = false;
@@ -24,11 +25,13 @@ namespace cwc {
         string sCurrentExp = "";
         string sCmdSended = "";
         string sCmdNameSended = "";
-        bool bRunning = false;
+        public bool bRunning = false;
         bool bShowedBacktrace = false;
 
         public GDB(LauchProject _oLauchProject, LauchTool _oProcess, string _sGdbPath,string _sExePath,  CompilerData _oCompiler, string _sSubArg = "" ){
-            
+            nLimitNbOutput = LIMIT_OUTPUT;
+            singleton = this;
+
             if(_sSubArg != ""){
                 _sSubArg = " " + _sSubArg;
             }
@@ -61,7 +64,7 @@ namespace cwc {
                 // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
 
                 
-            string _sSanitizer =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Sanitizer"}, "");
+                string _sSanitizer =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Sanitizer"}, "");
 
                // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
                 oProcess.fLauchExe( _sSanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath  + _sSubArg   ); //-no_soft_kills
@@ -74,14 +77,37 @@ namespace cwc {
 
             fLoadBreakpoints();
 
+           /*
+             
+           To enter non-stop mode, use this sequence of commands before you run or attach to your program:
+
+     # Enable the async interface.
+     set target-async 1
+     
+     # If using the CLI, pagination breaks non-stop.
+     set pagination off
+     
+     # Finally, turn it on!
+     set non-stop on
+
+            * */
+
+               // oProcess.fSend("set target-async 1");
+              //  oProcess.fSend("set pagination off");
+              //  oProcess.fSend("set non-stop on");
+            
 
              oProcess.fSend("cd " +  Path.GetDirectoryName(_sExePath) );
 
             oProcess.fSend("set width 0");
             oProcess.fSend("set filename-display absolute");
             oProcess.fSend("set breakpoint pending on");
+            oProcess.fSend("break GDB_Func_Break");
+            oProcess.fSend("break GDB_Func_ExecuteCmds");
          
            // oProcess.fSend("set output-radix 16");//All in hex?
+
+     
 
 
             fSetAllGdbBreakpoint();
@@ -135,7 +161,12 @@ namespace cwc {
                 }
             
             }
-         public override void fStop(){oProcess.fSend("break");}
+         public override void fStop(){
+            SysAPI.fSend_CTRL_C(oProcess.ExeProcess);
+             bRunning = false;
+            oProcess.fSend("break");
+
+        }
          public override void fStepInto(){
            // if(){
               oProcess.fSend("step");
@@ -159,7 +190,19 @@ namespace cwc {
         
 
         public  void 	fAppError(LauchTool _oTool, string _sOut){
-            bRunning= false;
+            
+             //E> Function "GDB_Func_Break" not defined.
+            if(_sOut.IndexOf("Function \"GDB_Func_Break\" not defined") != -1) {
+                Output.TraceActionLite("Tips: To have in-code GDB break, add this function: extern \"C\" void GDB_Func_Break(){}");
+                return;
+            }
+             if(_sOut.IndexOf("Function \"GDB_Func_ExecuteCmds\" not defined") != -1) {
+                Output.TraceActionLite("Tips: To have in-code GDB command-line, add this function: extern \"C\" void GDB_Func_ExecuteCmds(){}\nSend command like this: fprintf(stderr,\"Cmd[GDB]:yourCmd\")");
+                return;
+            }
+            
+
+           // bRunning= false;
             oLauchProject.bReceiveOutput = true;
            // bCmdSend = false;//Proble occur, we can resend cmd
              if (bCmdSend) {
@@ -169,11 +212,15 @@ namespace cwc {
                 _sOut = sCurrentCmd;
                 }
             }
-		    Output.Trace("E> " + _sOut);
+
+             Output.ProcessStdErr(_sOut);
+
+
+		   // Output.Trace("E> " + _sOut);
          }
 
         public  void 	fAppOut(LauchTool _oTool, string _sOut){
-             bRunning= false;
+             //bRunning= false;
             if(_sOut == null || _sOut == "") {
                 return;
             }
@@ -201,6 +248,12 @@ namespace cwc {
         
           //  if ( _sOut.StartsWith("Breakpoint") ) {
             if (  _sOut.IndexOf("it Breakpoint ",0) != -1  ) {//Hit breakpoint
+                if( _sOut.IndexOf("GDB_Func_ExecuteCmds")!= -1 ){ //Special function
+                     _sColor = Output.sGoodColorLite;
+                      Output.Trace(_sLetter + "> " +_sColor +_sOut);
+                     oProcess.fSend("Continue");
+                    return;
+                }
                 _sColor = Output.sWarningColor;
                   Output.Trace(_sLetter + "> " +_sColor +_sOut);
                  fShowBacktrace();
@@ -218,7 +271,7 @@ namespace cwc {
             }
             
            
-            LauchProject.fPrjOut(_sLetter,  _sColor +_sOut);
+            Output.fPrjOut(_sLetter,  _sColor +_sOut);
             if(nLimitNbOutput == -1){
                   Output.TraceError("Error: Output exceed Limit");
             }
@@ -243,17 +296,17 @@ namespace cwc {
 		    Thread sendCmd = new Thread(new ThreadStart(() =>  {  
 
                  while(bCmdSend == true && Base.bAlive) {
-                    Thread.Sleep(1);
+                    Thread.CurrentThread.Join(1);
                 }
                 if(oProcess.bExeLauch){
                        Debug.fTrace("S> " + _sName + " : " +_sCmd);
                     //sLastGetExp = "";
                     sCmdSended = _sCmd;
                     sCmdNameSended = _sName;
-                    Thread.Sleep(_nWaitTime);
+                    Thread.CurrentThread.Join(_nWaitTime);
                     if(_bWaitResult){
                         bCmdSend = true;
-                        nLimitNbOutput = 500;
+                        nLimitNbOutput = LIMIT_OUTPUT;
                         oProcess.fSend(_sCmd); //Get Call Stack
                         oProcess.fSend("show verbose");//End sequences 
                                                        //  oProcess.fSend("show width");//End sequences 
@@ -307,7 +360,7 @@ namespace cwc {
 
           
                 if(nLimitNbOutput> 0) {
-                     nLimitNbOutput--;
+             //        nLimitNbOutput--; //DISABLE LIMIT
                      return true; //Don't show result //TODO Show unreconized result?
                 }else {
                     nLimitNbOutput = -1;

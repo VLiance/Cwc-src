@@ -269,7 +269,8 @@ namespace FastColoredTextBoxNS
                         OnVisibleRangeChanged();*/
                       });
                 }
-                Thread.Sleep(16);
+                //Thread.Sleep(16);
+                Thread.CurrentThread.Join(16);
             }
         }
         //
@@ -5010,6 +5011,8 @@ namespace FastColoredTextBoxNS
         /// </summary>
         protected override void OnPaint(PaintEventArgs e)
         {
+
+            try { 
             if (needRecalc)
                 Recalc();
 
@@ -5253,12 +5256,14 @@ namespace FastColoredTextBoxNS
             indentBrush.Dispose();
             currentLineBrush.Dispose();
             paddingBrush.Dispose();
-            //
+                //
 #if debug
             sw.Stop();
             Console.WriteLine("OnPaint: "+ sw.ElapsedMilliseconds);
 #endif
-            //
+                //
+
+            }catch(Exception ex) { }
             base.OnPaint(e);
         }
 

@@ -262,7 +262,7 @@ namespace cwc {
                }catch(Exception Ex) { }
 
                while(!ExeProcess.HasExited  && Base.bAlive) {
-                 Thread.Sleep(1);
+                Thread.CurrentThread.Join(1);
                  }
                 
 
@@ -300,10 +300,10 @@ namespace cwc {
         public static void fSanitizeOutput(string _sOut) {
 
             //    try{Context.oSingleton.oPluginMain.pluginUI.BeginInvoke((MethodInvoker)delegate { try {
-
+            /*
              if( Data.oMainForm != null) {
                      Data.oMainForm.fAddSanitized(_sOut);
-                }
+                }*/
             //I:/ FlashDev / _MyProject / Simacode / LDK / LinxDemo / _out / _MainDemo / Windows / Debug / obj / Lib_Demo / Screen / DemoText.o:(.rdata + 0x60): undefined reference to `Lib_GZ::Gfx::cDispacher::fClearChild(Lib_GZ::Gfx::cRoot *)'
 
             //I:/ FlashDev / _MyProject / Simacode / LDK / LinxDemo / _out / _MainDemo / _cpp / _Lib / GZE / Lib_GZ / Gfx / Dispacher.cpp:43:5: error: expected ';' after expression

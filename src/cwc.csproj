@@ -114,31 +114,13 @@
     <Compile Include="Compiler\Node.cs" />
     <Compile Include="Output\DBGpClient.cs" />
     <Compile Include="Output\GDB.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Generate\ProjectCreator.cs" />
-    <Compile Include="Form\GuiForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\GuiForm.Designer.cs">
-      <DependentUpon>GuiForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Compilation\Build.cs" />
     <Compile Include="Info\Data.cs" />
     <Compile Include="Info\Finder.cs" />
     <Compile Include="Info\Msg.cs" />
     <Compile Include="Setting\Setting.cs" />
     <Compile Include="System\Sys.cs" />
-    <Compile Include="SelectForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SelectForm.Designer.cs">
-      <DependentUpon>SelectForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Setting\SettingsLauch.cs" />
     <Compile Include="Update\ModuleUpdate.cs" />
     <Compile Include="Update\UpdateCwc.cs" />
@@ -152,13 +134,6 @@
     <Compile Include="Update\Http.cs" />
     <Compile Include="Update\UpdateManager.cs" />
     <Compile Include="Utilities\LauchProject.cs" />
-    <Compile Include="Emscripten.cs" />
-    <Compile Include="CompilerConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CompilerConfig.Designer.cs">
-      <DependentUpon>CompilerConfig.cs</DependentUpon>
-    </Compile>
     <Compile Include="Compiler\CompilerData.cs" />
     <Compile Include="Compilation\CppSeq.cs" />
     <Compile Include="Compilation\CppCmd.cs" />
@@ -175,17 +150,10 @@
     </Compile>
     <Compile Include="Utilities\Lauch.cs" />
     <Compile Include="Utilities\LauchTool.cs" />
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utilities\MarkdownSharp.cs" />
     <Compile Include="ModeIDE.cs" />
     <Compile Include="System\NativeMethods.cs" />
     <Compile Include="Output\Output.cs" />
-    <Compile Include="Utilities\PipeInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Update\ModuleData.cs" />
@@ -221,23 +189,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CompilerConfig.resx">
-      <DependentUpon>CompilerConfig.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Empty.resx">
       <DependentUpon>Empty.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\CollapsibleSplitter.resx">
       <DependentUpon>CollapsibleSplitter.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\GuiForm.resx">
-      <DependentUpon>GuiForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\GuiConsole.resx">
       <DependentUpon>GuiConsole.cs</DependentUpon>
@@ -249,13 +207,7 @@
     <EmbeddedResource Include="Update\Install.resx">
       <DependentUpon>Install.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\cwc.ico" />
-    <EmbeddedResource Include="SelectForm.resx">
-      <DependentUpon>SelectForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Update\UpdateForm.resx">
       <DependentUpon>UpdateForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -324,43 +276,43 @@
     <None Include="Resources\Cut.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FatCow\Link\application_link.ico" />
-    <Content Include="FatCow\Link\book_link.ico" />
+    <Content Include="RC\FatCow\Link\application_link.ico" />
+    <Content Include="RC\FatCow\Link\book_link.ico" />
     <None Include="Resources\Menu0006.png" />
-    <EmbeddedResource Include="FatCow\Link\brick_link.ico">
+    <EmbeddedResource Include="RC\FatCow\Link\brick_link.ico">
       <CustomToolNamespace>Icon</CustomToolNamespace>
     </EmbeddedResource>
-    <Content Include="FatCow\Link\bug_link.ico" />
-    <Content Include="FatCow\Link\building_link.ico" />
-    <Content Include="FatCow\Link\calculator_link.ico" />
-    <Content Include="FatCow\Link\chart_bar_link.ico" />
-    <Content Include="FatCow\Link\chart_pie_link.ico" />
-    <Content Include="FatCow\Link\computer_link.ico" />
-    <Content Include="FatCow\Link\cup_link.ico" />
-    <Content Include="FatCow\Link\database_link.ico" />
-    <Content Include="FatCow\Link\drive_link.ico" />
-    <Content Include="FatCow\Link\email_link.ico" />
-    <Content Include="FatCow\Link\group_link.ico" />
-    <Content Include="FatCow\Link\hourglass_link.ico" />
-    <Content Include="FatCow\Link\layout_link.ico" />
-    <Content Include="FatCow\Link\link_break.ico" />
-    <Content Include="FatCow\Link\link_delete.ico" />
-    <Content Include="FatCow\Link\link_edit.ico" />
-    <Content Include="FatCow\Link\link_go.ico" />
-    <Content Include="FatCow\Link\lorry_link.ico" />
-    <Content Include="FatCow\Link\monitor_link.ico" />
-    <Content Include="FatCow\Link\newspaper_link.ico" />
-    <Content Include="FatCow\Link\package_link.ico" />
-    <Content Include="FatCow\Link\page_link.ico" />
-    <Content Include="FatCow\Link\page_white_link.ico" />
-    <Content Include="FatCow\Link\photo_link.ico" />
-    <Content Include="FatCow\Link\picture_link.ico" />
-    <Content Include="FatCow\Link\plugin_link.ico" />
-    <Content Include="FatCow\Link\script_link.ico" />
-    <Content Include="FatCow\Link\server_link.ico" />
-    <Content Include="FatCow\Link\shape_square_link.ico" />
-    <Content Include="FatCow\Link\table_link.ico" />
-    <Content Include="FatCow\Link\world_link.ico" />
+    <Content Include="RC\FatCow\Link\bug_link.ico" />
+    <Content Include="RC\FatCow\Link\building_link.ico" />
+    <Content Include="RC\FatCow\Link\calculator_link.ico" />
+    <Content Include="RC\FatCow\Link\chart_bar_link.ico" />
+    <Content Include="RC\FatCow\Link\chart_pie_link.ico" />
+    <Content Include="RC\FatCow\Link\computer_link.ico" />
+    <Content Include="RC\FatCow\Link\cup_link.ico" />
+    <Content Include="RC\FatCow\Link\database_link.ico" />
+    <Content Include="RC\FatCow\Link\drive_link.ico" />
+    <Content Include="RC\FatCow\Link\email_link.ico" />
+    <Content Include="RC\FatCow\Link\group_link.ico" />
+    <Content Include="RC\FatCow\Link\hourglass_link.ico" />
+    <Content Include="RC\FatCow\Link\layout_link.ico" />
+    <Content Include="RC\FatCow\Link\link_break.ico" />
+    <Content Include="RC\FatCow\Link\link_delete.ico" />
+    <Content Include="RC\FatCow\Link\link_edit.ico" />
+    <Content Include="RC\FatCow\Link\link_go.ico" />
+    <Content Include="RC\FatCow\Link\lorry_link.ico" />
+    <Content Include="RC\FatCow\Link\monitor_link.ico" />
+    <Content Include="RC\FatCow\Link\newspaper_link.ico" />
+    <Content Include="RC\FatCow\Link\package_link.ico" />
+    <Content Include="RC\FatCow\Link\page_link.ico" />
+    <Content Include="RC\FatCow\Link\page_white_link.ico" />
+    <Content Include="RC\FatCow\Link\photo_link.ico" />
+    <Content Include="RC\FatCow\Link\picture_link.ico" />
+    <Content Include="RC\FatCow\Link\plugin_link.ico" />
+    <Content Include="RC\FatCow\Link\script_link.ico" />
+    <Content Include="RC\FatCow\Link\server_link.ico" />
+    <Content Include="RC\FatCow\Link\shape_square_link.ico" />
+    <Content Include="RC\FatCow\Link\table_link.ico" />
+    <Content Include="RC\FatCow\Link\world_link.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

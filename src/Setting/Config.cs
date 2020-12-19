@@ -162,8 +162,17 @@ namespace cwc
             } else {
                 Data.aOption[_sName] = _sVal;
             }
-
         }
+
+       public void fSetOption(string key, string val) {
+
+            if(!Data.aOption.ContainsKey(key)){
+                Data.aOption.Add(key, val);
+            } else {
+                Data.aOption[key] = val;
+            }
+        }
+
 
         private void fExtractRecent(XmlNode _oNode) {
             foreach( XmlAttribute _oAtt in _oNode.Attributes) {

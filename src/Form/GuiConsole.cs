@@ -46,36 +46,7 @@ namespace cwc {
 
 
         public void fCheckMenu(object sender, EventArgs e) {
-            string _sParentName = "";
-          //  bool _bChecked = ((ToolStripMenuItem)(sender)).Checked;
 
-              ToolStripItem _oParent = ((ToolStripMenuItem)(sender)).OwnerItem;
-            if (_oParent != null) {
-                _sParentName = _oParent.Text + "/";
-                fUncheckAll((ToolStripMenuItem)_oParent);
-            }
-
-
-             ((ToolStripMenuItem)(sender)).Checked = true;
-            // ((ToolStripMenuItem)(sender)).Checked = !_bChecked;
-            //aOption[_sParentName + ((ToolStripMenuItem)(sender)).Text] = (bool) ((ToolStripMenuItem)(sender)).Checked;
-
-
-            string _sFullName = ((ToolStripMenuItem)(sender)).Name;
-            string _sOptName = Path.GetDirectoryName( _sFullName ).Replace('\\','/'); //Ugly but work
-
-             aOption[ ((ToolStripMenuItem)(sender)).Name] =  Data.fGetStrBool(  (bool) (((ToolStripMenuItem)(sender)).Checked) );
-
-
-         //    aOption[_sOptName] =  ((ToolStripMenuItem)(sender)).Text;
-
-            Data.fSetGlobalVar("_s" + _sOptName,  ((ToolStripMenuItem)(sender)).Text );
-
-
-
-            Output.TraceAction("Set[" + _sOptName + "]:" + ((ToolStripMenuItem)(sender)).Text);
-           // Output.TraceAction("Set[" +  ((ToolStripMenuItem)(sender)).Name + "]:true");
-           
         }
 
         public void fLoadData() {
@@ -127,7 +98,7 @@ namespace cwc {
          public  int nTreePrjScrollBar_IniY = 0;
 
 
-
+        public static bool bReady = false;
         public GuiConsole() {
                     //   Console.WriteLine("GuiConsole");
 
@@ -145,7 +116,7 @@ namespace cwc {
         //    Populate(true); //Slow to load
               //    Console.WriteLine("Finish");
       
-
+          
         }
         
          private ITreeStrategyDataProvider _dataProvider;
@@ -431,9 +402,82 @@ namespace cwc {
              });
             }catch(Exception e) { }
         }
+          private static  TextStyle oStyle ;
 
-        private static  TextStyle oStyle ;
-       internal void fTraceColorCode(string _sMsg, int _nColorCode) {
+        
+         public class MsgTrace{
+            public string sMsg;
+            public int nCode;
+            public MsgTrace(string _sMsg, int _nCode) {
+                sMsg = _sMsg;
+                nCode = _nCode;
+
+            }
+        }
+
+        static Queue<MsgTrace> aBacklog = new Queue<MsgTrace>();
+
+   
+
+
+        public void fUpdateTrace() {
+             while(aBacklog.Count>0) {
+                MsgTrace _oMsg = null;
+                    lock(aBacklog) {
+                      if(aBacklog.Count>0) {
+                         _oMsg = aBacklog.Dequeue();
+                        }
+                    }
+                 if(_oMsg != null) {
+                      try {
+                     fTraceColorCodeGui( _oMsg);
+                    }catch(Exception e) { }
+                }
+            }
+        
+        }
+
+        public void fTraceColorCodeGui(MsgTrace _oMsg) {
+            if(_oMsg == null) {return; }
+            string _sMsg = _oMsg.sMsg;
+             int _nColorCode = _oMsg.nCode;
+
+
+                 FontStyle _oFont = FontStyle.Regular;
+
+                Brush _oFore = Brushes.Red;
+                Brush _oBack = null;
+
+
+                int _nBack = _nColorCode >> 4;
+                int _nFore = _nColorCode & 0xF;
+
+                if (_nColorCode < 0) {
+                _nFore = 6;
+                }
+                fTrace(_sMsg, _nFore, _nBack);
+                //  fTrace(_sMsg, aStdStyle[_nFore]);
+                sFormCmd = "GoEnd";
+
+        }
+
+
+
+        static bool bForcePrintNext = true;
+       public void fTraceColorCode(string _sMsg, int _nColorCode) {
+            if(_sMsg == null || _sMsg == "") {return; }
+            lock(aBacklog) {
+                if(aBacklog.Count < 500) { //Skip if too many
+                    aBacklog.Enqueue(new MsgTrace(_sMsg, _nColorCode));
+                }else{
+                    int _nCount = aBacklog.Count;
+                    aBacklog.Clear();
+                    aBacklog.Enqueue(new MsgTrace("[Skiped " + _nCount + " items]\n", -1));
+                }
+            }
+        }
+        /*
+       internal void fTraceColorCode2(string _sMsg, int _nColorCode) {
           
 
 
@@ -453,47 +497,13 @@ namespace cwc {
                   _nFore = 6;
             }
 
-            /*
-            if (_nBack != 0) {
-                switch (_nFore) {
-                    case 0: _oFore = Brushes.Black; break;
-                    case 1: _oFore = Brushes.DarkBlue; break;
-                    case 2: _oFore = Brushes.DarkGreen; break;
-                    case 3: _oFore = Brushes.DarkMagenta; break;
-                    case 4: _oFore = Brushes.DarkRed; break;
-                    case 5: _oFore = Brushes.DeepPink; break;
-                    case 6: _oFore = Brushes.DarkGoldenrod; break;
-                    case 7: _oFore = Brushes.LightGray; break;
-                    case 8: _oFore = Brushes.Gray; break;
-                    case 9: _oFore = Brushes.DarkViolet; break;
-                     case 10: _oFore = Brushes.Green; break;
-                     case 11: _oFore = Brushes.LightBlue; break;
-                     case 12: _oFore = Brushes.Red; break;
-                     case 13: _oFore = Brushes.Pink; break;
-                     case 14: _oFore = Brushes.Yellow; break;
-                   default:  case 15: _oFore = Brushes.White; break;
-                }
-            }*/
-            
-
-                 //  fctb.ClearStylesBuffer();      
-        // TextStyle _oStyle = new TextStyle(_oFore,  Brushes.Yellow, FontStyle.Regular);
-          //  TextStyle _oStyle =new TextStyle(Brushes.Black, null, FontStyle.Regular);
-
-            
-         //       fTrace(_sMsg, _oStyle);
-            
-       //     return;
-
-          
-       //    fTrace(_sMsg, _oStyle);
                       fTrace(_sMsg, _nFore, _nBack);
                     //  fTrace(_sMsg, aStdStyle[_nFore]);
                       sFormCmd = "GoEnd";
 
                         });
 
-        }
+        }*/
 
 
 
@@ -836,8 +846,31 @@ namespace cwc {
             // Delocalise.fDelocaliseInMainThread( (string) ((ToolStripMenuItem) sender).Tag );
         }
 
+          public static string fDialogExeFile( string _sRoot, string _sCurrentVal, string _sFilter = "") {
+
+            OpenFileDialog fbd = new OpenFileDialog();
+            _sRoot = _sRoot.Replace('\\', '/');
+            if(_sRoot[_sRoot.Length - 1] != '/' ) {
+                _sRoot += '/';
+            }
+
+            fbd.InitialDirectory  =  Path.GetDirectoryName(_sRoot + _sCurrentVal);
+			if(_sFilter == ""){
+				 fbd.Filter = "Executable (*.exe)|*.exe|All files (*.*)|*.*";
+			}else{
+				 fbd.Filter = _sFilter;
+			}
+            if(fbd.ShowDialog() == DialogResult.OK) {
+               //return Path.GetFileName( fbd.FileName);
+              // Debug.fTrace(_sRoot);
+              // Debug.fTrace( fbd.FileName);
+               return FileUtils.fMakeRelativePath(_sRoot, fbd.FileName);
+            }
+            return _sCurrentVal;
+        }
+
         private void fileToolStripMenuItem_Click(object sender, EventArgs e) {
-              string _sResult = CompilerConfig.fDialogExeFile( PathHelper.ExeWorkDir, "",  "Commands (*.cwMake)|*.cwMake;|Executable (*.exe)|*.exe|All files (*.*)|*.*");
+              string _sResult = fDialogExeFile( PathHelper.ExeWorkDir, "",  "Commands (*.cwMake)|*.cwMake;|Executable (*.exe)|*.exe|All files (*.*)|*.*");
             if(_sResult.Length > 2 &&  _sResult[1] != ':') {//If is not absolute (relative)
               _sResult = PathHelper.ExeWorkDir + _sResult;
             }
@@ -858,6 +891,8 @@ namespace cwc {
        int nInitialPosLeft = 0;
          int nInitialPosTop = 0;
         private void GuiConsole_Load(object sender, EventArgs e) {
+             fUpdateCmdList();
+
              csPrj.ToggleState();//Clesed by default
      
             	//		SetWindowPosition(ConfigMng.oConfig.vStartPos.X,ConfigMng.oConfig.vStartPos.Y,ConfigMng.oConfig.vStartSize.Width,ConfigMng.oConfig.vStartSize.Height);
@@ -924,8 +959,8 @@ namespace cwc {
             }
 
             fLoadData();
-              
- 
+              bReady = true;
+            
         }
 
 
@@ -973,43 +1008,110 @@ namespace cwc {
 
 
 
-
-
-
-
-
+        //Update all
         public static string sFormCmd = "";
         private void fCmdManager() {
                 Thread winThread3 = new Thread(new ThreadStart(() =>  {  
 			    while(Base.bAlive) {
-             
-                        vMyScrollBar.fUpdate(); 
-                        hMyScrollBar.fUpdate(); 
-                        hTreePrjScrollBar.fUpdate(); 
-                        vTreePrjScrollBar.fUpdate(); 
+                        
+                      if(bReady){
+                            vMyScrollBar.fUpdate(); 
+                            hMyScrollBar.fUpdate(); 
+                            hTreePrjScrollBar.fUpdate(); 
+                            vTreePrjScrollBar.fUpdate(); 
                 
 
-                        if(sFormCmd != ""){
-                             this.BeginInvoke((MethodInvoker)delegate {
-			                     if(sFormCmd == "GoEnd"){
-                                     if(Data.bIWantGoToEnd){
-                                         bIgnoreNextSelectionChange = true;
-                                        fctbConsole.GoEnd();
-                                     }
-                                }
-                                sFormCmd = "";
-                            });
+                            if(sFormCmd != ""){
+                                 this.BeginInvoke((MethodInvoker)delegate {
+			                         if(sFormCmd == "GoEnd"){
+                                         if(Data.bIWantGoToEnd){
+                                             bIgnoreNextSelectionChange = true;
+                                            fctbConsole.GoEnd();
+                                         }
+                                    }
+                                    sFormCmd = "";
+                                });
+                            }
+
+                            if(LauchTool.bListModified) {
+                                LauchTool.bListModified = false;
+                                fUpdateCmdList();
+                            }
                         }
-                   
-				    Thread.Sleep(16);
+              
+
+
+				    Thread.CurrentThread.Join(16);
+                             fUpdateTrace();
 			     }
 		    }));  
 		    winThread3.Start();
  
         }
 
+        public static List<Process> aProcList = new List<Process>();
+        void fAddItemCmd(string _sName, Process _oProc)
+        {
+            if(_oProc != null) {
+            aProcList.Add(_oProc);
+            }
+            ToolStripMenuItem _oNew = new ToolStripMenuItem(_sName);
+            _oNew.Tag = _sName;
+            _oNew.Text = _sName;
+            _oNew.Name = _sName;
+            cmdToolStripMenuItem.DropDownItems.Add(_oNew);
+              _oNew.Click += fCmdLauchSelect;
+        }
+        private void fCmdLauchSelect(object sender, EventArgs e) {
 
+            string _sTag =  (string) ((ToolStripMenuItem) sender).Tag;
+            sCurrentCmdLauch = _sTag;
+            cmdToolStripMenuItem.Text = sCurrentCmdLauch;
+        }
+         private void fCmdSingalSelect(object sender, EventArgs e) {
 
+            string _sTag =  (string) ((ToolStripMenuItem) sender).Text;
+            sCurrentSignal = _sTag;
+            tsSignal.Text = sCurrentSignal;
+        }
+
+        public string sCurrentCmdLauch = "";
+        public int nLastCmdCount = 0;
+        private void fUpdateCmdList(){
+            this.BeginInvoke((MethodInvoker)delegate  {
+                if(sCurrentCmdLauch == ""){
+                    sCurrentCmdLauch = "Cmd";
+                }
+
+                cmdToolStripMenuItem.DropDownItems.Clear();
+                fAddItemCmd("Cmd", null);
+                foreach(LauchTool _oLauch in LauchTool.aLauchList)
+                {
+                   fAddItemCmd(_oLauch.sExeName, _oLauch.ExeProcess );
+                   //fAddItemCmd(_oLauch.ExeProcess.ProcessName, _oLauch.ExeProcess );
+                }
+             
+                //auto select first lauched app
+                if(sCurrentCmdLauch == "Cmd" && nLastCmdCount == 1 && cmdToolStripMenuItem.DropDownItems.Count > 1 ){
+                    bool bFirst = true;
+                    foreach(ToolStripDropDownItem _item in cmdToolStripMenuItem.DropDownItems){ //Get second item
+                        if(bFirst == false){
+                            sCurrentCmdLauch = _item.Text;
+                            //cmdToolStripMenuItem.Text = _item.Text;
+                            break;
+                        }
+                        bFirst = false;
+                    }
+                       
+                }
+             
+                cmdToolStripMenuItem.Text = sCurrentCmdLauch;
+                nLastCmdCount = cmdToolStripMenuItem.DropDownItems.Count;
+            });
+        }
+
+             
+   
         private void textBox1_TextChanged(object sender, EventArgs e) {
 
         }
@@ -1036,10 +1138,6 @@ namespace cwc {
 
 
 
-        private void hMyScrollBar_Click(object sender, EventArgs e) {
-
-        }
-
         public static int nLastScrollValue= 0;
      //   public static int nLastMaxScrollValue= 0;
         private void vMyScrollBar_Scroll(object sender, ScrollEventArgs e) {
@@ -1058,10 +1156,6 @@ namespace cwc {
 
         private void hMyScrollBar_Scroll(object sender, ScrollEventArgs e) {
              fctbConsole.OnScroll(e, e.Type != ScrollEventType.ThumbTrack && e.Type != ScrollEventType.ThumbPosition);
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
         }
 
 
@@ -1656,7 +1750,7 @@ namespace cwc {
                             if (_bExtendIntoFrame){
                                 if(bWin10_Style) {
                                     NCCALCSIZE_PARAMS nc = (NCCALCSIZE_PARAMS)Marshal.PtrToStructure(m.LParam, typeof(NCCALCSIZE_PARAMS));
-                                    nc.rect0.Right -= 6;
+                                    nc.rect0.Right += 6;
                                     nc.rect1 = nc.rect0;
                                     Marshal.StructureToPtr(nc, m.LParam, false);
                                     m.Result = (IntPtr)WVR_VALIDRECTS;
@@ -2017,8 +2111,8 @@ namespace cwc {
 
          public void fMaximizedState(){
               // Maximized!
-                msMenu.Top = nInitialPosTop + 9;
-                msMenu.Left =   Width - nInitialPosLeft - 10;
+      //          msMenu.Top = nInitialPosTop + 9;
+        //        msMenu.Left =   Width - nInitialPosLeft - 10;
         }
 
         public bool NeedRestore = false;
@@ -2298,6 +2392,8 @@ namespace cwc {
         private const int GWL_STYLE = -16;
         private const int WS_VSCROLL = 0x00200000;
         private const int WS_HSCROLL = 0x00100000;
+        private string sCurrentSignal;
+
         [DllImport("user32.dll", ExactSpelling = false, CharSet = CharSet.Auto)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
@@ -2417,13 +2513,225 @@ namespace cwc {
              FileUtils.fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", "",  "" );
         }
 
-        private void gDBToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
-
+      
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
               Data.oLauchProject.fLauchDefaultRun("");
+        }
+
+        private void btn_SendCmd_Click(object sender, EventArgs e)
+        {
+           fSendCmd();
+        }
+        private void tbCmd_KeyDown(object sender, KeyEventArgs e) {
+            if(e.KeyCode == Keys.Enter){
+                fSendCmd();
+            }
+        }
+
+        /*
+        private void  fSendCmdCleanup(){
+            foreach(LauchTool _oLauch in LauchTool.aLauchList){
+                if(!_oLauch.bExeLauch) {
+
+                }
+            }
+        }*/
+
+
+ 
+       // foreach(Process _oProc in GuiConsole.aProcList){ if(sCurrentCmdLauch == _oProc.ProcessName) {
+        private void fSendCmd(){
+            foreach(LauchTool _oLauch in LauchTool.aLauchList){
+                if(sCurrentCmdLauch == _oLauch.sExeName) {
+                    if(_oLauch.bExeLauch) {
+                        fSendCmdToLauchTool(_oLauch, tbCmd.Text);
+                         tbCmd.Text = "";//Clear
+                        return;
+                    }
+                }
+            }
+            //fSendCmdCleanup();
+        }
+          private void fSendSignal(){
+            foreach(LauchTool _oLauch in LauchTool.aLauchList){
+                if(sCurrentCmdLauch == _oLauch.sExeName) {
+                    if(_oLauch.bExeLauch) {
+                        fSendSignal(_oLauch, tsSignal.Text);
+                        return;
+                    }
+                }
+            }
+        }
+
+
+        private void fSendCmdToLauchTool(LauchTool _oLauch, string text){
+            text = text.ToLower(); //always?
+            Output.TraceAction("[" +_oLauch.sExeName + "]>> " + text);
+
+
+              _oLauch.fSend(text);
+
+            if(_oLauch.sExeName == "gdb"){
+                /*
+                 if (  !(text.IndexOf("run") == 0) ) {
+                    if (text.IndexOf("continue") == 0 ) {
+       
+                    }else { 
+                         SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+                    }
+                }*/
+                if (text.IndexOf("pause") == 0 || text.IndexOf("break") == 0 || text.IndexOf("interrupt") == 0) {
+                     SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+                }
+
+
+                /*
+                 if (text.IndexOf("pause")== 0 ){
+                      SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+                 }else {
+                    _oLauch.fSend(text);
+                }*/
+
+                /*
+                //   if(_oLauch.ExeProcess.HasExited)
+                if( GDB.singleton.bRunning) {
+                    GDB.singleton.bRunning = false;
+                   // if (text.IndexOf("pause") == 0 || text.IndexOf("break") == 0 || text.IndexOf("interrupt") == 0) {
+                        SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+
+                          _oLauch.fSend("interrupt -a");
+
+                        Output.TraceAction("Is Running .. stopping send ... CTRL+C " + _oLauch.ExeProcess.MainWindowTitle);
+                    //}
+               }else{
+                   if (text.IndexOf("continue") == 0 || text.IndexOf("run") == 0 ) {
+                         GDB.singleton.bRunning = true;
+                         Output.TraceAction("Running again ");
+                    
+                    }
+                }
+                */
+
+            }
+            
+       
+        }
+
+         private void fSendSignal(LauchTool _oLauch, string text){
+            switch(text){
+                case "SIGINT":
+                      SysAPI.fSend_CTRL_C(_oLauch.ExeProcess, SysAPI.CTRL_C_EVENT);
+                break;
+                case "SIGBREAK":
+                      SysAPI.fSend_CTRL_C(_oLauch.ExeProcess, SysAPI.CTRL_BREAK_EVENT);
+                break;
+                case "CloseMW":
+                    _oLauch.ExeProcess.CloseMainWindow();
+                break;
+                case "Close":
+                    _oLauch.ExeProcess.Close();
+                break;
+                case "Kill":
+                     _oLauch.ExeProcess.Kill();
+                break;
+            }
+          
+        }
+
+        private void label1_Click(object sender, EventArgs e) {
+
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e) {
+
+        }
+
+        private void btn_SendCmd_MouseHover(object sender, EventArgs e) {
+            
+        }
+
+        private void btn_SendCmd_MouseEnter(object sender, EventArgs e) {
+            btn_SendCmd.BackColor = Color.BlanchedAlmond;
+        }
+
+        private void btn_SendCmd_MouseLeave(object sender, EventArgs e) {
+            btn_SendCmd.BackColor = Color.Black;
+        }
+
+        private void btn_SendSignal_MouseEnter(object sender, EventArgs e) {
+              btn_SendSignal.BackColor = Color.BlanchedAlmond;
+        }
+
+        private void btn_SendSignal_MouseLeave(object sender, EventArgs e) {
+                btn_SendSignal.BackColor = Color.Black;
+        }
+
+        private void btn_SendSignal_Click(object sender, EventArgs e){
+              fSendSignal();
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+         
+        }
+
+       private void  GetProcessListToMenu() {
+            cmdToolStripMenuItem.DropDownItems.Clear();
+            
+             List<Process> _aProcess = SysAPI.ListProcessAndChildrens( Data.MainProcess.Id);
+            foreach(Process _oProcess in _aProcess)
+            {
+                 fAddItemCmd( _oProcess.ProcessName,  _oProcess);
+               
+            }
+
+           
+         }
+
+        
+        private void cmdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           // GetProcessListToMenu();
+        }
+
+        private void cmdToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+             //  GetProcessListToMenu();
+        }
+
+        private void cmdToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+          //    GetProcessListToMenu();
+        }
+
+        private void cmdToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GuiConsole_ControlAdded(object sender, ControlEventArgs e)
+        {
+             
+        }
+
+        private void GuiConsole_VisibleChanged(object sender, EventArgs e)
+        {
+             bReady = true;
+        }
+
+         private void gDBToolStripMenuItem_Click(object sender, EventArgs e) {
+            ConfigMng.oConfig.fSetOption("Options/Debug Type/Debugger", Data.sTRUE);
+            ConfigMng.oConfig.fSetOption("Options/Debug Type/Sanitizer", Data.sFALSE);
+            Output.TraceAction("Options/Debug Type/Debugger = TRUE");
+        }
+
+
+        private void sanitizerToolStripMenuItem_Click(object sender, EventArgs e) {
+             
+           ConfigMng.oConfig.fSetOption("Options/Debug Type/Debugger", Data.sFALSE);
+           ConfigMng.oConfig.fSetOption("Options/Debug Type/Sanitizer", Data.sTRUE);
+            Output.TraceAction("Options/Debug Type/Sanitizer = TRUE");
         }
     }
 

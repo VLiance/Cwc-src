@@ -132,7 +132,8 @@ namespace cwc {
          _oSubCmd.fSend("Cwc:Lauch by " + Data.MainProcess.Handle); //Remove "pause" bug ?
 
 		while(_oSubCmd.bExeLauch){
-			Thread.Sleep(1);
+			//Thread.Sleep(1);
+            Thread.CurrentThread.Join(1);
 		}
 		sResult = _oSubCmd.sError;
 

@@ -111,8 +111,108 @@ namespace cwc
 		public static  string sBuffer = "";
 
 
-        public static void TraceStd(string _sText){
 
+
+        public  static void 	fPrjOut(string _sLetter,  string _sOut){
+
+    if (_sOut == null){
+        return;
+    }
+
+    string _sPrefix = _sLetter + "> " ;
+    if(_sOut.Length > 4) { //ex T[1]:xxxx
+        if(_sOut[1] == '[') {
+            switch(_sOut[0]) {
+                   case 'P':
+                       Output.TraceGood(_sPrefix +_sOut);
+                   break;
+                   case 'E':
+                       Output.TraceError(_sPrefix +_sOut);
+                   break;
+                    case 'W':
+                       Output.TraceWarning(_sPrefix +_sOut);
+                   break;
+                   case 'A':
+                       Output.TraceAction(_sPrefix +_sOut);
+                   break;
+                   case 'T':
+                       Output.TraceStd(_sPrefix +_sOut);
+                   break;
+                   default:
+                      	Output.Trace(_sPrefix +_sOut);
+                   break;
+            }
+            return;
+                
+        }
+    }
+    Output.Trace(_sPrefix  + _sOut);
+    return;
+}
+
+        public static void ProcessCmdSendToApp(string _sCmd, string _sAppName){
+            string _sAppNameNorm = _sAppName.ToLower();
+            foreach(LauchTool _oLauch in LauchTool.aLauchList){
+                if( _oLauch.sExeName.ToLower() == _sAppNameNorm) {
+                    Output.TraceActionLite("C> Send[" +_sAppName + "]:" +_sCmd);
+                  //  _oLauch.fSend(_sCmd.Substring(_sCmd.Length));
+                    _oLauch.fSend(_sCmd.Trim());
+                    return;
+                }
+            }
+             Output.TraceErrorLite("C> Unable to Send:[" +_sAppName + "]" +_sCmd);
+        }
+
+
+        public static List<string> aList = new List<string>();
+        //Begin with "Cmd"
+         public static void ProcessCmd(string _sOut){
+            if(_sOut.Length > 5 && _sOut[3] == '['){
+                //Get app name
+                int _nStartIndex = 4;
+                int _nEndIndex = _sOut.IndexOf(']', _nStartIndex);
+                if(_nEndIndex != -1) {
+                     string _sAppName = _sOut.Substring(_nStartIndex, _nEndIndex-_nStartIndex);
+                     int _nStartCmd = _sOut.IndexOf(':', _nEndIndex);
+                     if(_nStartCmd  != -1) {
+                       string _sCmd = _sOut.Substring(_nStartCmd+1);
+                       ProcessCmdSendToApp(_sCmd, _sAppName);
+                        return;
+                    }
+                }
+                 Output.TraceErrorLite("C> Unable to Process:" + _sOut);
+            }
+
+
+            /*
+            if(_sOut.Length > 8 && _sOut[3] == '(' && _sOut[4] == 'a' && _sOut[5] == 'd' && _sOut[6] == 'd' && _sOut[7] == ')') {
+                //add to cmd list
+                aList.Add(_sOut.Substring(8));
+                     Output.TraceWarning("Add:" +_sOut.Substring(8) );
+            }*/
+        }
+
+
+
+
+
+        public static void ProcessStdErr( string _sOut){
+            if(_sOut.Length > 4 && _sOut[0] == 'C' && _sOut[1] == 'm' && _sOut[2] == 'd' && (_sOut[3] == ':' || _sOut[3] == '('|| _sOut[3] == '[')){
+                //Output.TraceActionLite("C> " + _sOut);
+                ProcessCmd(_sOut);
+
+            }else { 
+
+                if(_sOut.IndexOf("warning") != -1) {
+                     Output.TraceWarningLite("W> " + _sOut);
+                }else{
+                     Output.TraceErrorLite("E> " + _sOut);
+                }
+            }
+		}
+
+
+        public static void TraceStd(string _sText){
 			Output.TraceColored( "\f0F" + _sText ); 
 		}
 
@@ -125,10 +225,16 @@ namespace cwc
 
 			Output.TraceColored("\f0C" + _sText ); 
 		}
+        public static void TraceActionLite(string _sText)  {
+
+			Output.TraceColored("\f0B" + _sText ); 
+		}
+
 
 
 
          public static  string sWarningColor = "\fE4";
+         public static  string sWarningColorLite = "\f0E";
 		public static void TraceWarning(string _sText){
 
 			Output.TraceColored(sWarningColor + _sText ); 
@@ -147,7 +253,7 @@ namespace cwc
 
 			Output.TraceColored(sErrorColor + _sText ); 
 		}
-
+        public static  string sGoodColorLite = "\f0A";
 		public static void TraceGood(string _sText)
 		{
 				//Output.TraceColored("\fB3" + _sText ); 
@@ -200,7 +306,7 @@ namespace cwc
                             Debug.fPrint("");
                         }
                     }
-				    Thread.Sleep(1);
+				    Thread.CurrentThread.Join(1);
 			    }
 		    }));  
 		    winThread.Start();
@@ -295,7 +401,7 @@ fixed (char* pString = _sText) { char* pChar = pString;
 
                 }else if (bInEscape)  {
 
-                    if(c == 'm'){
+                    if(c == 'm'  && sb.Length > _nNumIndex){
                         bInEscape = false;
                      
                          sb[_nNumIndex] = '\0';
@@ -316,13 +422,13 @@ fixed (char* pString = _sText) { char* pChar = pString;
                            bCustomEscape = false;
 
                     }
-                    if(c == ';'){
+                    if(c == ';' && sb.Length > _nNumIndex){
                          sb[_nNumIndex] = '\0';
                         _nNumIndex = 0;
                           fExecuteCode(sb.ToString() );
 
                     }
-                    if(c >= '0' && c <= '9') {
+                    if(c >= '0' && c <= '9' && sb.Length > _nNumIndex) {
                          sb[_nNumIndex] = c;
                         _nNumIndex++;
                     }
@@ -380,8 +486,11 @@ fixed (char* pString = _sText) { char* pChar = pString;
 
         public static void fExecuteCode(string _sTest)  {
              // fExecuteCode( Int32.Parse(sb.ToString() ) );
+            uint _nNumber = 0;
+            try { 
+             _nNumber =  UInt32.Parse( _sTest);
+            }catch(Exception e) {return;};
 
-            uint _nNumber =  UInt32.Parse( _sTest);
              if(bCustomEscape) {
                 nLetterColor = _nNumber;
                 return;

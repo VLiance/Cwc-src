@@ -1,7 +1,0 @@
-E:\_Project\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wPlatform\ViewIn.exe.config
-E:\_Project\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wPlatform\ViewIn.exe
-E:\_Project\Cwc\Compiler\Honera\WebRT\WebRT-1.35.0.0\wPlatform\ViewIn.pdb
-E:\_Project\_MyProject\CwcSrc\Emsc\ViewIn\ViewIn\obj\Debug\ViewIn.csprojResolveAssemblyReference.cache
-E:\_Project\_MyProject\CwcSrc\Emsc\ViewIn\ViewIn\obj\Debug\ViewIn.csproj.CoreCompileInputs.cache
-E:\_Project\_MyProject\CwcSrc\Emsc\ViewIn\ViewIn\obj\Debug\ViewIn.exe
-E:\_Project\_MyProject\CwcSrc\Emsc\ViewIn\ViewIn\obj\Debug\ViewIn.pdb

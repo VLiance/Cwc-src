@@ -152,8 +152,8 @@ namespace cwc {
            if(Data.nCloseOnId != 0){
 		        Thread winThread4 = new Thread(new ThreadStart(() =>  {  
                     while(Base.bAlive){
-				        PipeInput.fTestIdeClosed(Data.nCloseOnId); //TODO do it in is thread?
-				        Thread.Sleep(1000);
+				      //  PipeInput.fTestIdeClosed(Data.nCloseOnId); //TODO do it in is thread?
+				        Thread.CurrentThread.Join(1000);
                     }
 		        }));   winThread4.Start();
             }
@@ -210,7 +210,8 @@ namespace cwc {
 
                       
                      //   Thread.Sleep(1);
-                       Thread.Sleep(1);
+                       //Thread.Sleep(1);
+                        Thread.CurrentThread.Join(1);
                         if (Data.bConsoleMode && !Data.bNowBuilding) {
                             Base.bAlive = false;
                         }

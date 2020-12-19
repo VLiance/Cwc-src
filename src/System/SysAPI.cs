@@ -18,6 +18,91 @@ namespace cwc {
 
         public static bool bQuitSavedCfg = false;
         
+
+        internal const int CTRL_C_EVENT = 0;
+        internal const int CTRL_BREAK_EVENT = 1;
+        [DllImport("kernel32.dll")]
+        internal static extern bool GenerateConsoleCtrlEvent(uint dwCtrlEvent, uint dwProcessGroupId);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool AttachConsole(uint dwProcessId);
+        [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        internal static extern bool FreeConsole();
+      //  [DllImport("kernel32.dll")]
+      //  static extern bool SetConsoleCtrlHandler(ConsoleCtrlDelegate HandlerRoutine, bool Add);
+        // Delegate type to be used as the Handler Routine for SCCH
+        delegate Boolean ConsoleCtrlDelegate(uint CtrlType);
+
+
+
+  
+ public static void StopProgram(uint pid, uint _event)
+{
+     // Disable Ctrl-C handling for our program
+    SetConsoleCtrlHandler(null, true);
+
+    // It's impossible to be attached to 2 consoles at the same time,
+    // so release the current one.
+    FreeConsole();
+
+    // This does not require the console window to be visible.
+    if (AttachConsole(pid)) {
+        GenerateConsoleCtrlEvent(_event, 0);
+    }
+}
+
+        /*
+        public static Process attachedProcess = null;
+       public static bool fAttachConsole( Process p){
+
+            if(p == null){
+                Output.TraceError("Unable to attach");
+                return false;
+            }
+
+            if (!AttachConsole((uint)p.Id)) {
+                Output.TraceError("AttachConsole fail");
+                return false;
+            }
+             Output.TraceGood("Attached");
+            
+            attachedProcess = p;
+            return true;
+       }
+       */
+
+       public static bool fSend_CTRL_C( Process p, uint _event = CTRL_C_EVENT){
+            StopProgram((uint)p.Id, _event);
+            /*
+            //Console mnust be attached
+           // if(attachedProcess != p) {
+                fAttachConsole(p);
+           // }
+            if(p != null && p == attachedProcess) {
+              GenerateConsoleCtrlEvent(CTRL_C_EVENT,0);
+            }
+            */
+
+            /*
+            if (AttachConsole((uint)p.Id)) {
+                SetConsoleCtrlHandler(null, true);
+                try { 
+                    if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT,0))
+                        return false;
+                //    p.WaitForExit();
+                } finally {
+          //          FreeConsole();
+          //          SetConsoleCtrlHandler(null, false);
+                }
+                return true;
+            }else{ //Already attached?
+                GenerateConsoleCtrlEvent(CTRL_C_EVENT,0);
+            }
+            */
+             return false;
+        }
+
+
+
         static public void fQuit(bool _bForceQuitConsole = false) {
 
       //      MessageBox.Show("QUIIIIIIIIIIIIIIII!!!!!!!!!!");
@@ -37,7 +122,7 @@ namespace cwc {
 	Base.bAlive  = false;
    Data.bModeIDE = false;
      Build.StopBuild();
-	Thread.Sleep(1);
+	Thread.CurrentThread.Join(1);
 
 
 /*
@@ -133,7 +218,7 @@ namespace cwc {
         }
                    // MessageBox.Show("Kill: "+  proc.MainWindowTitle);
               //Debug.fTrace("Kil: "+  proc.);
-                 Thread.Sleep(1);
+                 Thread.CurrentThread.Join(1);
 				if(proc.Id != Data.MainProcess.Id && !proc.HasExited ) {
                         bool _bSkip = false;
 
@@ -168,6 +253,35 @@ namespace cwc {
             // Process already exited.
         }
      }
+
+
+
+
+   public static List<Process> ListProcessAndChildrens(int pid){
+             List<Process> _aProc = new List<Process>();
+     try{
+        if (!ProcessExists(pid)) {
+         return _aProc;
+        }
+
+        Process proc = Process.GetProcessById(pid);
+
+        ManagementObjectSearcher searcher = new ManagementObjectSearcher
+        ("Select * From Win32_Process Where ParentProcessID=" + pid);
+        ManagementObjectCollection moc = searcher.Get();
+        foreach (ManagementObject mo in moc){
+            _aProc.AddRange(ListProcessAndChildrens(Convert.ToInt32(mo["ProcessID"])));
+        }
+        if(proc.Id != Data.MainProcess.Id && !proc.HasExited ) {
+             _aProc.Add(proc);
+             return _aProc;
+        }
+
+    }catch (Exception ex){
+ 
+    }
+    return _aProc;
+   }
 
 
 
@@ -444,7 +558,8 @@ public static extern bool GetWindowRect(IntPtr hwnd, ref Rectangle rectangle);
 
 		public static void fSetMainFormPosition() {
 
-			if(Data.oMainForm != null || Data.oGuiForm != null) {
+		//	if(Data.oMainForm != null ) {
+			if(false ) {
 				
 				Int32 x; Int32 y; Int32 width; Int32 height; Int32 ClientWidth; Int32 ClientHeight;
 				GetWindowPosition(out x, out y, out width, out height, out ClientWidth, out ClientHeight );
@@ -478,19 +593,22 @@ public static extern bool GetWindowRect(IntPtr hwnd, ref Rectangle rectangle);
 
 
 				if(_bMove){
+                    /*
 					if(Data.oSelectForm != null){
 						Data.oSelectForm.fHide();
-					}
+					}*/
 
+                    /*
                     if (Data.oGuiForm != null) {
                         Data.oGuiForm.fSetPosition(x,y, width -x,height-y, ClientWidth, ClientHeight);
                     }
-
+                    */
 					fSaveConsolePosition();//Todo only when mouse is released?
 				}
+                /*
                  if (Data.oSelectForm != null) {
                     Data.oSelectForm.fSetPosition(x,y, width -x,height-y, ClientWidth, ClientHeight);
-                }
+                }*/
 
 
 			//	Rectangle	oRect = new Rectangle();
@@ -574,9 +692,10 @@ public static void fHideConsole() {
         }
 
 	//	Console.Title =	_sDir;
+    /*
 		if(Data.oMainForm != null){
 			Data.oMainForm.fSetWorkingDir(_sDir);
-		}
+		}*/
 	
 	}
 

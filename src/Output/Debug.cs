@@ -14,7 +14,9 @@ namespace cwc {
     	public static void  fTrace(string _sTxt) {
     	//public static void  fDebug(string _sTxt) {
 			#if tDebug
+            try { 
 			Console.WriteLine(_sTxt);
+            }catch(Exception e) { };
 			#endif
 		}
 

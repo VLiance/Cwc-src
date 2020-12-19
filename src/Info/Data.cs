@@ -59,8 +59,8 @@ namespace cwc {
        public static ArgumentManager oArg;
         public static ArgumentManager oCompilerArg = new ArgumentManager();
 
-        		public static SelectForm oSelectForm;
-		public static GuiForm oGuiForm;
+        		//public static SelectForm oSelectForm;
+
 		public static GuiConsole oGuiConsole = null;
 
         
@@ -89,8 +89,8 @@ namespace cwc {
 
 
    //     public  static string sCurrFolder =  Directory.GetCurrentDirectory();
-        public  static MainForm oMainForm = null;
-        public  static MainForm oAss= null;
+      //  public  static MainForm oMainForm = null;
+
         public  static Empty oMsgForm = null;
 		public  static LauchProject oLauchProject = new LauchProject();
 
@@ -173,10 +173,10 @@ namespace cwc {
 			aBrowser.Add(_sBrowser);
 
 
-
+            /*
 			if(oMainForm != null){
 				oMainForm.fUpdateBrowser();
-			}
+			}*/
 		}
 			
 		internal static string fGetViewIn()	{
@@ -273,18 +273,25 @@ namespace cwc {
 			return "";
 		}
 		public static void  fSetGlobalVar(string _sVar, string _sValue, bool _bAssingOnEmpty = false) {
-
+            /*
+            var _sResult = "";
+            //Remove quotes ... or not??!?
+            for(int i =0; i < _sValue.Length; i++){}
 			_sValue = _sValue.Replace("\'","" ).Replace("\"","" ).Trim();
+            */
+
+            var _sResult = CppCompiler.fExtracQuote(_sValue, false).Trim();
+
 			if (!Data.aVarGlobal.ContainsKey(_sVar)){
-				  Data.aVarGlobal.Add( _sVar, _sValue);
+				  Data.aVarGlobal.Add( _sVar, _sResult);
 			//	return;
 			}else {
                 if(_bAssingOnEmpty) {
                     if( aVarGlobal[_sVar] == "") {
-                         aVarGlobal[_sVar] = _sValue;
+                         aVarGlobal[_sVar] = _sResult;
                     }
                 }else { 
-			        aVarGlobal[_sVar] = _sValue;
+			        aVarGlobal[_sVar] = _sResult;
                 }
             }
            // if(_sVar == "_sPlatform" && _sValue == "") {Output.TraceError("Here ");} //For debugging

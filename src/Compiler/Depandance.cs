@@ -51,8 +51,8 @@ namespace cwc{
 
 
 
-
-            string[] aReadLine = _sText.Replace('\\','/').Split(new[]{ "/\r\n", "\r\n", "\n"  }, StringSplitOptions.None);
+            //Replace("/:",":") (=> dgcpp)
+            string[] aReadLine = _sText.Replace('\\','/').Replace("/:",":").Split(new[]{ "/\r\n", "\r\n", "\n"  }, StringSplitOptions.None);
             foreach (string _sALine in aReadLine) {
                     
    
@@ -95,8 +95,8 @@ namespace cwc{
 
         public bool fChekdependance(string _sPath) {
             
-            ///////////////
-            if (_sPath.Length >= 2 && _sPath[1]  != ':') { //It's a relative path
+    
+            if (_sPath.Length >= 3 && _sPath[1]  != ':') { //It's a relative path
                     _sPath = PathHelper.ExeWorkDir + _sPath;
             }
             if(parent.oParent.fAddDepandance(this, _sPath)) { //  Stop if IsNewer??

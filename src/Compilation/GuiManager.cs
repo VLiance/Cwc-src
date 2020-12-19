@@ -32,7 +32,8 @@ namespace cwc {
 						
 
 					 }catch(Exception Ex) {
-                         Console.WriteLine("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
+                        // Console.WriteLine("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
+                         Output.TraceError("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
 					 }
 				  }));  
 
@@ -41,9 +42,9 @@ namespace cwc {
 				//  winThread.IsBackground = true;  
 				  winThread.Start();
 
-                Thread.Sleep(1);
+               Thread.CurrentThread.Join(1);
                 while(   Base.bAlive && Data.oGuiConsole== null) {
-                       Thread.Sleep(1);
+                       Thread.CurrentThread.Join(1);
                 }
 
                 /*

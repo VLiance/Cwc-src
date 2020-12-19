@@ -1,6 +1,10 @@
 *.cache
+*.Cache
 *.vspx
-
+*.exe
+*.pdb
 .vs/
 old/
+bin/
+obj/
 bin/

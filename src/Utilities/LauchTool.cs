@@ -13,7 +13,7 @@ using System.Windows.Forms;
 namespace cwc {
     public class LauchTool {
 
-         public MainForm oForm = null; //Delegate?
+     ///    public MainForm oForm = null; //Delegate?
 
         public bool bReturnError = false;
         public bool bReturnBoth = false;
@@ -58,6 +58,16 @@ public string sResult ="";
         public ProcessStartInfo processStartInfo = null;
 		
         public bool bWaitEndForOutput  = false;
+
+
+
+       // public  LauchTool(string _sName) {
+        public  LauchTool() {
+        }
+
+
+        public static List<LauchTool> aLauchList = new List<LauchTool>();
+        public static bool bListModified = true;
 
 
         public string fLauchExe(string _sExePath, string _sArg, string _sSourceFile = "", string _sTarget= "", bool _bDontKill = false) {
@@ -170,7 +180,8 @@ public string sResult ="";
 
 
                 try{
-                        processStarted = ExeProcess.Start();
+                    fAddThisToList();
+                    processStarted = ExeProcess.Start();
                 } catch (Exception e) {
                     Output.TraceError("Unable to lauch: " + sExePath + " ["  + sWorkPath + "] : " + e.Message);
                 }
@@ -262,12 +273,13 @@ public string sResult ="";
 
 	
 					     ExeProcess.WaitForExit(); //important for geting last output!	
+                        fRemoveThisFromList();
 						
 						sResult = _sResult;
 						sError = _sError;
 
                 	     while(!ExeProcess.HasExited  && Base.bAlive) {
-                                Thread.Sleep(1);
+                                Thread.CurrentThread.Join(1);
                           }
                         if(dExit != null) {
                              dExit(this);
@@ -304,10 +316,15 @@ public string sResult ="";
 		}
 
 
-
-
-
-
+         internal void fAddThisToList() {
+            aLauchList.Add(this);
+            bListModified = true;
+        }
+        internal void fRemoveThisFromList() {
+            aLauchList.Remove(this);
+            bListModified = true;
+        }
+        
 
 
 
@@ -323,7 +340,7 @@ public bool bSanitize = false;
 
 
             while(!ExeProcess.HasExited  && Base.bAlive) {
-                Thread.Sleep(1);
+                Thread.CurrentThread.Join(1);
                 }
      
 
@@ -426,7 +443,7 @@ public bool bSanitize = false;
             }
 
                 while(!ExeProcess.HasExited  && Base.bAlive) {
-                 Thread.Sleep(1);
+                 Thread.CurrentThread.Join(1);
                  }
                //             Output.Trace("\f18-Finish-");
            }
@@ -504,7 +521,7 @@ public bool bSanitize = false;
 
 		   public  void fSend(string _sMsg) {
                 while (bExeLauch && !bExeLauched) { //Wait for starting
-                    Thread.Sleep(1);
+                    Thread.CurrentThread.Join(1);
                 }
                 if(bExeLauch){
 			     ExeProcess.StandardInput.WriteLine(_sMsg ); ///bug
@@ -570,7 +587,7 @@ public class ProcessOutputHandler
 				if (_sLine != ""){
 						oTool.dError(oTool, _sLine);
 				}else{
-					Thread.Sleep(1);
+					Thread.CurrentThread.Join(1);
 				}
 			}
                 } catch(Exception e) {       Output.TraceError("Error: " + e.Message);}

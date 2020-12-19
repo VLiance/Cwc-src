@@ -322,7 +322,7 @@ namespace cwc
 		}
 	}
 
-/*
+        /*
 		private void fSetValueToParent(){
 				sPath =  oParent.sPath;
 				sCpp =  oParent.sCpp;
@@ -1287,14 +1287,18 @@ namespace cwc
 
 
               if(!_bSLib && !_bDLib) {
-                   string _sOptLevel =   Data.fGetGlobalVar("_sOpt").ToUpper();
+                   string _sOptLevel =   Data.fGetGlobalVar("_sOpt");
+                    if(_sOptLevel.Length <= 2) {
+                            _sOptLevel = _sOptLevel.ToUpper(); //Os to OS --> TODO make non-case sensitive for all
+                    }
+
                     switch(_sOptLevel) {
+                          /*
                          case "DEBUG":
                              _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler, new string[]{"Arguments", "Debug"}, _oConfig.sName)+ " ";
                             // _sArg += "-g ";
 
                          break;
-
                          case "OS":
                          case "O3":
                          case "O2":
@@ -1302,8 +1306,9 @@ namespace cwc
                            //  _sArg += "-O2 " + oGblConfigType.sName + "| ";
                              _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", _sOptLevel}, _oConfig.sName)+ " ";
                          break;
-            
+                        */
                         default:
+                            _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", _sOptLevel}, _oConfig.sName)+ " ";
                         break;
                   }
               }
