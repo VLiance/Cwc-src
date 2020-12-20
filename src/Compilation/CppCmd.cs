@@ -149,11 +149,11 @@ namespace cwc {
 				_sCmd = _sCmd.Replace('\n',' ' );
 				//_sCmd = _sCmd.Replace('\r',' ' );
 				sCmd = _sCmd.Trim();
-				sCmd  = fExtractVar( sCmd, true); //TODO check if this don't break changes
+				//sCmd  = fExtractVar( sCmd, true); //TODO check if this don't break changes
 		
            //     Debug.fTrace("_sCmd " + _sCmd);
 			
-				fPreExtract();
+				//fPreExtract();
 			}
 		}
 
@@ -782,7 +782,22 @@ string sBackEndLinker = "";
         string sCallerCmd = "";
         string sArgCmd = "";
 //public bool bExtacted = false;
+
+
+
 		public void fExtract() {
+
+			/////////////////////////////
+			/////////////////////////////
+			/////////////////////////////
+			oParent.fGetAndExtractAllModule();
+			sCmd  = fExtractVar( sCmd, true); //TODO check if this don't break changes
+			fPreExtract();
+			/////////////////////////////
+			/////////////////////////////
+			/////////////////////////////
+
+
        
             if (bRunToArgDontPrextract) {
                  // case "#Run":
@@ -2235,6 +2250,8 @@ bExtacted = true;
 
           //  Setting.fNewSettingsLauch(_sToLauch);
            Data.sToLauch = _sToLauch;//Broken??
+
+		   Delocalise.fDelocaliseInMainThread(Data.sToLauch);
 
            Data.bNonBuildCommand = true;
 

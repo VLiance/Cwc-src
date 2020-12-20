@@ -58,7 +58,7 @@ namespace cwc {
                     }*/
                                      
                     if(Data.sToLauch != ""){
-					    Delocalise.fDelocaliseInMainThread(Data.sToLauch);
+					  //  Delocalise.fDelocaliseInMainThread(Data.sToLauch);
                     } else {
                        Msg.fShowIntroMessage();
 		

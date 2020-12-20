@@ -87,7 +87,7 @@ namespace cwc {
                      aAllCompilerList.Add(_oCompiler);//TODO don't duplicate
                 }
                 //////////////////
-
+				fGetAndExtractAllModule();///test
 			}else{
 				//Output.TraceError("XXX not exist: " + _sName + "  "  +  _sPlatform  );
 				Debug.fTrace("XXX not exist: " + _sName + "  "  +  _sType  );
@@ -202,6 +202,26 @@ namespace cwc {
 				}
               }
 
+			
+			fGetAndExtractAllModule();
+
+			/////////////////////////////
+            //Output.Trace("\f2A-Extracted--");
+		/*
+			 foreach(CppSeq _oSeq in aCppSeq) {
+					sCurr_wTo = "";
+					foreach(CppCmd _oCmd in _oSeq.aCppCmd) {
+						//	_oCmd.fExtract();
+					}
+				}
+                */
+		
+
+              ArgProcess.fFinishExtractArg();
+		
+		}
+
+		public void fGetAndExtractAllModule() {
 			///////////////// Extract Compilers
 			fExtractCompiler();
 
@@ -218,8 +238,6 @@ namespace cwc {
                 fMergeCompiler();
             }
             fExtractCompiler();
-      
-         
 
 
 			foreach(CompilerData _oLib in  aLibList) { //TODO separate subcompiler and extract after!?
@@ -229,23 +247,9 @@ namespace cwc {
 
 			}
 
-
-			/////////////////////////////
-            //Output.Trace("\f2A-Extracted--");
-		/*
-			 foreach(CppSeq _oSeq in aCppSeq) {
-					sCurr_wTo = "";
-					foreach(CppCmd _oCmd in _oSeq.aCppCmd) {
-						//	_oCmd.fExtract();
-					}
-				}
-                */
-		
-
-              ArgProcess.fFinishExtractArg();
-
-
 		}
+
+
 
 
 
@@ -253,6 +257,7 @@ namespace cwc {
 	
 		private void fExtractCompiler()	{
 					//Debug.fTrace(" Extract Compilers: " );
+       //   CompilerData[] _aCompilerList =  aAllCompilerList.ToArray(); //?? maybe
           CompilerData[] _aCompilerList =  aCompilerList.ToArray(); //Copy beacause collection may be modified in itiration
 			foreach(CompilerData _oCompiler in  _aCompilerList) { //TODO separate subcompiler and extract after!?
 					//Debug.fTrace("have: " + _oCompiler.sFullName);
