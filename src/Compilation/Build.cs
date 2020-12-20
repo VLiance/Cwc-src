@@ -161,7 +161,7 @@ namespace cwc {
 
         internal static void fBeginBuild() {
             //sArg = " -wCwcUpd C:/aaa ";
-            Data.sArgExpand = ArgProcess.fExpandAll( Data.sArg); //TODO Expand in another thread
+            Data.sArgExpand = ArgProcess.fExpandAll(Data.oArg , Data.sArg); //TODO Expand in another thread
             Data.sArgExpand = ArgProcess.fTestIfBeginWithAFile( Data.sArgExpand);
 
             Build.StartBuild();
@@ -203,8 +203,9 @@ namespace cwc {
                             break;
                             case "Delocalise":Data.sCmd = "";
                     //    Console.WriteLine("fDelocaliseCmd");
+								
                                Delocalise.fDelocaliseCmd();
-
+							
                             break;
                          }
 

@@ -177,7 +177,7 @@ namespace cwc
                 //Output.TraceWarning("Run " + sCmd);
                ArgumentManager  _oArg = new ArgumentManager(Data.oArg);
               // CppCmd.fNewArgCmdRunIt(sCmd,false,_oArg,false);
-                _oArg.ExtractMainArgument( ArgProcess.fExpandAll(sCmd), true);
+                _oArg.ExtractMainArgument( ArgProcess.fExpandAll(Data.oArg, sCmd), true);
                    _oArg.fCompleteExtractMainArgument(null,false);
 				_oArg.fExtract(null);
 				_oArg.fRun(null, true, false, true); //Warning if "_bDontExecute = true" , bug with GZE or other lib?

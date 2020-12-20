@@ -64,7 +64,7 @@ namespace cwc {
             return _nStartIndex;
         }
 
-        public static string fExpandAll(string _sFullArg ) {
+        public static string fExpandAll(ArgumentManager _oArg, string _sFullArg ) {
 			string _sResult = _sFullArg;
 			int _nIndex = _sResult.IndexOf('@');
 			while(_nIndex != -1 ) {
@@ -74,7 +74,7 @@ namespace cwc {
                 }
 
                 if(_cPrecIndex == ' ' || _cPrecIndex == '\t' || _cPrecIndex == '\n'  || _cPrecIndex == '\r'  || _cPrecIndex == '-') {
-				    _sResult = fExpand(_sResult, _nIndex );
+				    _sResult = fExpand(_oArg, _sResult, _nIndex );
 				     _nIndex = _sResult.IndexOf('@');
                 }else {
                      _nIndex = _sResult.IndexOf('@', _nIndex+1);
@@ -131,7 +131,7 @@ namespace cwc {
         }
 
         
-        public static string fExpand(string _sFullArg , int _nIndex) {
+        public static string fExpand(ArgumentManager _oArg, string _sFullArg , int _nIndex) {
 //	Debug.fTrace("---fExpand!!!!! " + _sFullArg);
             //List<string> _sList = new List<string> ();
 
@@ -160,7 +160,8 @@ namespace cwc {
 				if(_sFile.Length > 2 && _sFile[1] == ':'){ //Absolute path
 					_sPath = _sFile;
 				}else{
-					_sPath = PathHelper.ExeWorkDir + _sFile; //Relative path
+					//_sPath = PathHelper.ExeWorkDir + _sFile; //Relative path
+					_sPath = _oArg.sWorkingDir + _sFile; //Relative path
 				}
 
                  string _sText = "";

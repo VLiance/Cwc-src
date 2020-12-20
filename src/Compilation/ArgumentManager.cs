@@ -40,6 +40,7 @@ namespace cwc {
         public  List<CppCmd> aPrecObjOutput = new List<CppCmd>();
         public  string sPrecObjOutput = "";
         public  string sCurr_wTo = "";
+        public  string sWorkingDir = "";
 
 
        public  bool bSubArgMan = false;
@@ -47,9 +48,15 @@ namespace cwc {
       
 		public string sAllArg = "";
         private static Stopwatch wBuildTime;
-        ArgumentManager oParent;
+        public ArgumentManager oParent;
 
-        public ArgumentManager(ArgumentManager _oParent = null) {
+        public ArgumentManager(ArgumentManager _oParent = null, string _sWorkingDir = "") {
+			sWorkingDir = _sWorkingDir;
+			if(sWorkingDir == "") {
+				sWorkingDir = PathHelper.ExeWorkDir;
+			}
+			sWorkingDir = PathHelper.fNormalizeFolder(sWorkingDir);
+			
 
             Data.aAll_ArgumentManager.Add(this);
             oParent = _oParent;

@@ -21,18 +21,7 @@ namespace cwc {
 
            Data.sCmd = "Delocalise";
             Delocalise.sDelocaliseCmd = _sPath;
-
             Setting.fNewSettingsLauch(_sPath);
-       
-
-            /*
-         Thread delocThread = new Thread(new ThreadStart(() =>  {  
-            string _sText =  Data.fDelocalise(_sPath);
-			Data.sArgExpand  = Data.fExpandAll(_sText);
-	       Data.sCmd = "StartBuild";
-    	  }));  
-		delocThread.Start();*/
-
 
     }
     
@@ -49,7 +38,7 @@ namespace cwc {
 
            Output.TraceWarning("Lauch " + sDelocaliseCmd);
             string _sText =  Delocalise.fDelocalise(sDelocaliseCmd);
-			Data.sArgExpand  = ArgProcess.fExpandAll(_sText);
+			Data.sArgExpand  = ArgProcess.fExpandAll(Data.oArg , _sText);
 	       Data.sCmd = "StartBuild";
             Data.bForceTestNextCmd = true;
       }
@@ -97,7 +86,7 @@ namespace cwc {
                      // Debug.fTrace("wDir = " + _sDirectory);
                     	//fSetGlobalVar("wDir", _sDirectory );
 
-                     Data.oArg = new ArgumentManager(); //Reset ARG Sure?
+                     Data.oArg = new ArgumentManager(null, _sDirectory); //Reset ARG Sure?
      
                    CppCmd.fSetWorkingDir(Data.oArg, _sDirectory);
                  

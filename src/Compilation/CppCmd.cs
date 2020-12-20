@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace cwc {
@@ -2244,16 +2245,28 @@ bExtacted = true;
 
             //Create settings file
 
-
+	/*
             bSendCmdToLauch = true;
             sToLauch = _sToLauch;
 
+		
           //  Setting.fNewSettingsLauch(_sToLauch);
            Data.sToLauch = _sToLauch;//Broken??
-
 		   Delocalise.fDelocaliseInMainThread(Data.sToLauch);
 
-           Data.bNonBuildCommand = true;
+			//Delocalise.fDelocaliseCmd(); //temp
+			Data.bNonBuildCommand = true;
+			//Wait to finish execution
+			while(Data.sCmd != "") {
+				Thread.CurrentThread.Join(1);
+			}
+			*/
+
+			    
+                 sRunToArgDontPrextract_File = _sToLauch;
+                 sRunToArgDontPrextract_File_Arg = sRet_ExtractSpaceMultiValsAltArg;
+                 bRunToArgDontPrextract = true;
+          
 
         }
 
@@ -3120,11 +3133,28 @@ bExtacted = true;
 
 
 
-       public ArgumentManager fNewArgCmdRun(string _sAllArg, bool bRun = true,  ArgumentManager _oArg = null, bool bFile = true, string _sSendArg = ""){
-            if(_oArg == null){
-				 _oArg = new ArgumentManager(oParent);
+       public ArgumentManager fNewArgCmdRun(string _sAllArg, bool bRun = true,  ArgumentManager _oArg = null, bool bFile = true, string _sSendArg = "", bool _bNewWorkDir = false){
+          
+
+			 if(_oArg == null){
+
+				string _sDirectory = "";
+
+				if(_bNewWorkDir) {
+					_sDirectory = Path.GetDirectoryName( Path.GetFullPath(_sAllArg));
+				}
+
+				_oArg = new ArgumentManager(oParent, _sDirectory);
+
+				if(_bNewWorkDir) {
+				 CppCmd.fSetWorkingDir(_oArg, _sDirectory);
+				}
 			}
-            return fNewArgCmdRunIt( _sAllArg, bRun, _oArg, bFile, _sSendArg);
+            ArgumentManager _oRet = fNewArgCmdRunIt( _sAllArg, bRun, _oArg, bFile, _sSendArg);
+
+			//Restore working dir
+			 CppCmd.fSetWorkingDir(oParent, oParent.sWorkingDir);
+			return _oRet;
         }
 
 
@@ -3146,7 +3176,7 @@ bExtacted = true;
 
           
 
-			_oArg.ExtractMainArgument( ArgProcess.fExpandAll(_sAllArg), !bRun);
+			_oArg.ExtractMainArgument( ArgProcess.fExpandAll(_oArg.oParent, _sAllArg), !bRun); //_oArg.oParent is where working dir created from
              // Output.TraceWarning("#Run " + _oArg.sAllArg );
 
 
@@ -3165,6 +3195,21 @@ bExtacted = true;
 		}
 
 
+		public void fLauchCwc(string _sAllArg, string _sSubArg = "", bool _bNewWorkDir = false){
+				Debug.fTrace("Expand!!!!!: " +  _sAllArg);
+			//	Debug.fTrace("Expand!!!!!: " +  Data.fExpand("@" + _sAllArg,0));
+				fNewArgCmdRun(_sAllArg,true,null,true,sRunToArgDontPrextract_Arg + " > " , _bNewWorkDir );
+
+				/*
+				string _sFile = ;
+				CppCmd _oSubCmd =  new CppCmd(oParent, _sFile , true);
+				_oSubCmd.fExtract();
+				aSubCmd.Add(_oSubCmd);*/
+		}
+
+
+
+
 
 	public void fCmdRun(string _sAllArg, string _sSubArg = ""){
 		    
@@ -3174,17 +3219,11 @@ bExtacted = true;
 			string _sExt = Path.GetExtension(_sAllArg).ToLower();
 			switch(_sExt) {
 				case ".cwc":
-                case ".cwmake":
-						Debug.fTrace("Expand!!!!!: " +  _sAllArg);
-					//	Debug.fTrace("Expand!!!!!: " +  Data.fExpand("@" + _sAllArg,0));
-						fNewArgCmdRun(_sAllArg,true,null,true,sRunToArgDontPrextract_Arg + " > " );
+					fLauchCwc(_sAllArg, _sSubArg, false);
+				break;
 
-						/*
-						string _sFile = ;
-						CppCmd _oSubCmd =  new CppCmd(oParent, _sFile , true);
-						_oSubCmd.fExtract();
-						aSubCmd.Add(_oSubCmd);*/
-					
+                case ".cwmake":
+						fLauchCwc(_sAllArg, _sSubArg, true);
 				break;
 			
 				case ".bat": //old method? not sure
