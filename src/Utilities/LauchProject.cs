@@ -249,7 +249,12 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
                //  Data.sCmd = "StartBuild";
 
                 //Start Last lauch
+				if(Config.sLastRecentPath != "") {
                   Delocalise.fDelocaliseInMainThread(Config.sLastRecentPath );
+				}else {
+					Output.TraceWarning("Nothing to build...");
+
+				}
 
             }
 		}

@@ -86,6 +86,7 @@ namespace cwc.Utilities
 
 
         public static String fNormalizePath(string _sPath) {
+			if(_sPath == "") {return "";}
 
              _sPath = _sPath.Replace('\\', '/').Replace('\"', ' ').Trim().Replace("//","/");
 
