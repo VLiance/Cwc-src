@@ -882,7 +882,8 @@ namespace cwc {
                 /*
 				string _sText =  Data.fDelocalise(PathHelper.ExeWorkDir + _sResult);
 				Data.sArgExpand  = Data.fExpandAll(_sText);
-				Data.StartBuild();*/
+				Data.StartBuild();
+				*/
 			//	Debug.fTrace("!!!---- " + _sText);
 			}
         }

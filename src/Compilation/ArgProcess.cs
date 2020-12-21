@@ -8,7 +8,7 @@ using System.Text;
 namespace cwc {
     class ArgProcess {
         
-         public static string fTestIfBeginWithAFile(string sArgExpand) {
+         public static string fTestIfBeginWithAFile(string sArgExpand, bool _bAddFileToRecent = false) {
           //  sArgExpand.Split();
           //  string[]  aPreArg = sArgExpand.Split(new string[] { " -", "|", ">" }, StringSplitOptions.None);
           int _nIndex = 0;
@@ -26,6 +26,9 @@ namespace cwc {
                              case "exe":
                              case "bat":
                             case "cwMake":
+									if(_bAddFileToRecent) {
+
+									}
                                    return "-#Lauch " + sArgExpand;
                              break;
                         }

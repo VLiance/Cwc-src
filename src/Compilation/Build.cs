@@ -162,9 +162,10 @@ namespace cwc {
         internal static void fBeginBuild() {
             //sArg = " -wCwcUpd C:/aaa ";
             Data.sArgExpand = ArgProcess.fExpandAll(Data.oArg , Data.sArg); //TODO Expand in another thread
-            Data.sArgExpand = ArgProcess.fTestIfBeginWithAFile( Data.sArgExpand);
+     //     Data.sArgExpand = ArgProcess.fTestIfBeginWithAFile( Data.sArgExpand, true);//add lauch arg
 
-            Build.StartBuild();
+          //Build.StartBuild();
+			 Delocalise.fDelocaliseInMainThread(Data.sArgExpand );
         }
 
         public static void fEnableBuild(){

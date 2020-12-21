@@ -18,6 +18,7 @@ namespace cwc {
  public static string sDelocaliseCmd = "";
     public static void  fDelocaliseInMainThread(string _sPath){
        
+			_sPath = CppCompiler.fExtracQuote(_sPath, false).Trim();
 
            Data.sCmd = "Delocalise";
             Delocalise.sDelocaliseCmd = _sPath;
