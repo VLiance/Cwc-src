@@ -18,6 +18,7 @@ namespace cwc{
 
 
 		 public string sOutput = "";
+		 public string sOutputExecutable = "";
 
 		        
 		public  void fBuildFinish() {
@@ -48,7 +49,7 @@ namespace cwc{
 
 		 public void fLauchExe(string _sPath = "",  bool _bSanitize = false, string _sSubArg = "") {
             if(_sPath == "") {//Lauch default last linked output binary
-                 _sPath = PathHelper.ExeWorkDir +   sOutput;
+                 _sPath = PathHelper.ExeWorkDir +   sOutputExecutable;
 
             }else {
 
@@ -265,6 +266,16 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
 			if(_wTo != "") {
 				
 				sOutput =_wTo;
+                try {
+					 string _sExt = Path.GetExtension(_wTo).ToLower();
+					switch(_sExt) {
+						case ".bat":
+						case ".exe":
+								sOutputExecutable = _wTo;
+						break;
+					}
+                }catch(Exception Ex) {};
+
 	//Debug.fTrace("---------  _wTo - " +_wTo );
 
 				//return;

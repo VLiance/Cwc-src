@@ -1221,7 +1221,7 @@ bExtacted = true;
 
 				// oParent.sCurr_wTo =  "";
                 if(sFile_wTo.Length >= 1  && sFile_wTo[sFile_wTo.Length-1] != '/') {
-                    oParent.sCurr_wTo = sFile_wTo + sToAnyType; //Better way?
+                    oParent.sCurr_wTo = (sFile_wTo + sToAnyType).Trim(); //Better way?
                 }
 
 				
@@ -2645,7 +2645,7 @@ bExtacted = true;
 				sFile_wTo = sFile_wTo.Substring(0,sFile_wTo.Length-2);//remove .*
 		}}
 
-		oParent.sCurr_wTo = sFile_wTo + sToAnyType;
+		oParent.sCurr_wTo = (sFile_wTo + sToAnyType).Trim();
 
 		fOutputTo(_sArg, true);
 
