@@ -3135,7 +3135,7 @@ bExtacted = true;
 
        public ArgumentManager fNewArgCmdRun(string _sAllArg, bool bRun = true,  ArgumentManager _oArg = null, bool bFile = true, string _sSendArg = "", bool _bNewWorkDir = false){
           
-
+	
 			 if(_oArg == null){
 
 				string _sDirectory = "";
@@ -3158,8 +3158,9 @@ bExtacted = true;
         }
 
 
-		public static ArgumentManager fNewArgCmdRunIt( string _sAllArg, bool bRun = true,  ArgumentManager _oArg = null, bool bFile = true, string _sSendArg = ""){	
-
+		public static ArgumentManager fNewArgCmdRunIt( string _sAllArg, bool bRun,  ArgumentManager _oArg , bool bFile , string _sSendArg ){
+			
+			
 
  
             string _sFile = _sAllArg;
@@ -3171,12 +3172,13 @@ bExtacted = true;
             //Data.bDontExecute = true;
 
             if (bFile) {
-                _sAllArg = _sSendArg + "@" + _sAllArg;
+                _sAllArg = _sSendArg + "@" +_oArg.oParent.sWorkingDir +  _sAllArg;
             }
 
           
 
-			_oArg.ExtractMainArgument( ArgProcess.fExpandAll(_oArg.oParent, _sAllArg), !bRun); //_oArg.oParent is where working dir created from
+			//_oArg.ExtractMainArgument( ArgProcess.fExpandAll(_oArg.oParent, _sAllArg), !bRun); //_oArg.oParent is where working dir created from
+			_oArg.ExtractMainArgument( ArgProcess.fExpandAll(_oArg, _sAllArg), !bRun); //_oArg.oParent is where working dir created from
              // Output.TraceWarning("#Run " + _oArg.sAllArg );
 
 
