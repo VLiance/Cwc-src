@@ -497,7 +497,9 @@ private const int WM_DESTROY = 0x0002  ;
                            Output.TraceAction(_oLink.oModule.sCurrFolder);
                     }
 
-            
+				  
+				
+
                     Output.TraceGood( "-----------------------------------------------------------------");
                     if(_bAutoStart) {
                         Data.sCmd = "StartBuild";

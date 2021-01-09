@@ -94,7 +94,7 @@ namespace cwc {
                      aAllCompilerList.Add(_oCompiler);//TODO don't duplicate
                 }
                 //////////////////
-				fGetAndExtractAllModule();///test
+				fGetAndExtractAllModule();///test --> not used?
 			}else{
 				//Output.TraceError("XXX not exist: " + _sName + "  "  +  _sPlatform  );
 				Debug.fTrace("XXX not exist: " + _sName + "  "  +  _sType  );

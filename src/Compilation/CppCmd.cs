@@ -2692,6 +2692,8 @@ bExtacted = true;
             }
 
 			Data.fAddRequiredModule(_sName,true);
+			_oManager.fGetAndExtractAllModule();///Good
+			
 		   return	_oManager.fAddCompiler(_sName, _sType, _bIsSubCompiler); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
 
    
