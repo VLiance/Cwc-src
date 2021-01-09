@@ -25,6 +25,7 @@ namespace cwc {
                              case "cwc":
                              case "exe":
                              case "bat":
+                            case "cwClean":
                             case "cwMake":
 									if(_bAddFileToRecent) {
 

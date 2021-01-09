@@ -3225,6 +3225,7 @@ bExtacted = true;
 				break;
 
                 case ".cwmake":
+                case ".cwclean":
 						fLauchCwc(_sAllArg, _sSubArg, true);
 				break;
 			

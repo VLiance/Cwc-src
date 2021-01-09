@@ -182,9 +182,10 @@ namespace cwc {
         }
 		
 		public  void fCompleteExtractMainArgument(ModuleData _oModule = null, bool _bShowInfo = true){
+			
 			Build.fEnableBuild();
 
-
+			
 			///Check missing modules lib 
 			//if(Data.aCompilerData.Count == 0){
 				

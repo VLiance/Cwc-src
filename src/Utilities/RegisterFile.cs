@@ -41,12 +41,13 @@ namespace cwc.Utilities {
             oSoftwareKey =  Registry.CurrentUser.OpenSubKey("Software",true);
             oClassesKey =  oSoftwareKey.OpenSubKey("Classes",true);
 
-            if(!_bForce && IsAssociated("." + "cwMake")) { //Already set
+            if(!_bForce && IsAssociated("." + "cwClean")) { //Already set / or cwMake
                 return false;
             }
 
-             fRegisterFileType(fCwcExe(),sExeCwc_Name, "cwMake", "Header of Header src file",_bForce);
-             fRegisterFileType(_sExeIDE,_sExeIDE_Name, "cwc", "Header of Header src file",_bForce);
+             fRegisterFileType(fCwcExe(),sExeCwc_Name, "cwMake", "CWeet Make file",_bForce);
+             fRegisterFileType(fCwcExe(),sExeCwc_Name, "cwClean", "CWeet Clean file",_bForce);
+             fRegisterFileType(_sExeIDE,_sExeIDE_Name, "cwc", "CWeet Command file",_bForce);
 
              fRegisterFileType(_sExeIDE,_sExeIDE_Name, "cw",  "C~ src file",_bForce);
              fRegisterFileType(_sExeIDE,_sExeIDE_Name, "c",  "C src file",_bForce);

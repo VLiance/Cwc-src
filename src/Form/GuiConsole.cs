@@ -130,24 +130,37 @@ namespace cwc {
         {
             if(!_bHaveBeenPopulated) {
                 _bHaveBeenPopulated = true;
-          
 
+				// * !!Flicker on Desktop!!! => Disabled
+				/*
+				
+			
                 Raccoom.Windows.Forms.TreeStrategyShell32Provider shell32Provider = new Raccoom.Windows.Forms.TreeStrategyShell32Provider();
-                shell32Provider.EnableContextMenu = true;
+					
+				shell32Provider.EnableContextMenu = true;
                 shell32Provider.ShowAllShellObjects = true;
+				*/
+
                 // collection.Add(shell32Provider);
                 //  treeViewPrj.DataSource = shell32Provider;
+
+
 
                 FolderBrowser = new Raccoom.Windows.Forms.TreeStrategyFolderBrowserProvider();
                 FolderBrowser.fIni();
                 FolderBrowser.ShowFiles = true;
+
                 treeViewPrj.DataSource = FolderBrowser;
                 treeViewPrj.CheckBoxBehaviorMode = CheckBoxBehaviorMode.None;
-                // return;
+                //return;
                 // FolderBrowser.sCustomRootDir = @"E:\_Project";
                 FolderBrowser.RootFolder = Environment.SpecialFolder.Desktop;
    
+
                 treeViewPrj.Populate(true);
+
+
+
 
            }
 
@@ -293,11 +306,13 @@ namespace cwc {
         }
         
        internal void fSetWorkingDir(string _sDir) {
+			try { 
              this.BeginInvoke((MethodInvoker)delegate {
                  cbTitle.Text =  _sDir;
                 // fSetTreeFolder(_sDir.Substring(0,_sDir.Length-1));
                  fSetTreeFolder(_sDir);
              });
+			}catch(Exception e) { }
         }
 
 
@@ -870,7 +885,7 @@ namespace cwc {
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e) {
-              string _sResult = fDialogExeFile( PathHelper.ExeWorkDir, "",  "Commands (*.cwMake)|*.cwMake;|Executable (*.exe)|*.exe|All files (*.*)|*.*");
+              string _sResult = fDialogExeFile( PathHelper.ExeWorkDir, "",  "Commands (*.cwMake)|*.cwMake;|Clean (*.cwClean)|*.cwClean;|Executable (*.exe)|*.exe|All files (*.*)|*.*");
             if(_sResult.Length > 2 &&  _sResult[1] != ':') {//If is not absolute (relative)
               _sResult = PathHelper.ExeWorkDir + _sResult;
             }
@@ -2080,12 +2095,15 @@ namespace cwc {
 
         }
          internal void fEnableBuild() {
+
                try {  this.BeginInvoke((MethodInvoker)delegate  {
                  Populate(true);
          //        ToolStrip_Build.Text = "STOP ";
                 ToolStrip_Build.Image = Resources.Menu0007;
                 ToolStrip_Build.BackColor = Color.DarkRed;
            });}catch(Exception e) { };
+
+
         }
 
         internal void fDisableBuild() {

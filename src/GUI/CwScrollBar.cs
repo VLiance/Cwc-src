@@ -217,7 +217,7 @@ namespace cwc {
         }
 
         internal void fUpdate() {   
-
+			 try { 
                 this.BeginInvoke((MethodInvoker)delegate  {
                       if(Base.bAlive){
                             nPos += (value  - nPos) / 5;
@@ -229,6 +229,7 @@ namespace cwc {
                         }
                    
                 });
+			}catch( Exception e) { }
             
         }
     }

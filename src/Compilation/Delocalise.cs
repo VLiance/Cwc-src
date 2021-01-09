@@ -59,6 +59,7 @@ namespace cwc {
           //  Debug.fTrace("GetExtension: " + Path.GetExtension(_sPath).ToLower());
             switch (_sExtention.ToLower()) {
 
+                case ".cwclean":
                 case ".cwmake":
                 case ".cwc":
                      // Debug.fTrace("!!!");
@@ -82,7 +83,7 @@ namespace cwc {
                  //  Debug.fTrace("fDelocaliseFile: " + _sPath);
             try{
                  _sResult = File.ReadAllText(_sPath);
-                if(_sExtention.ToLower() == ".cwmake") {//Change default dir
+                if(_sExtention.ToLower() == ".cwmake" || _sExtention.ToLower() == ".cwclean") {//Change default dir
                     string _sDirectory = Path.GetDirectoryName( Path.GetFullPath(_sPath));
                      // Debug.fTrace("wDir = " + _sDirectory);
                     	//fSetGlobalVar("wDir", _sDirectory );
