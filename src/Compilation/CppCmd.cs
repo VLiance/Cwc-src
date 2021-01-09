@@ -2310,6 +2310,10 @@ bExtacted = true;
                     fCmdCopy(_sCond + " " + sRet_ExtractSpaceMultiValsAltArg);
                  break;
 
+				case "#Remove":
+                    fCmdRemove(_sCond + " " + sRet_ExtractSpaceMultiValsAltArg);
+                 break;
+
 				 case "#If_NotExist":
                     fCmdIfNotExist(_sCond);
                  break;
@@ -3109,6 +3113,28 @@ bExtacted = true;
 		//	}
 		}
 
+		public void fCmdRemove(string _sAllArg) {
+            //	Debug.fTrace("COPY:! " + _sAllArg);
+           // Output.TraceAction("COPY:! " + _sAllArg);
+
+            string[] _aArg =  _sAllArg.Trim().Split(' ');
+            string _sFirst = _aArg[0];
+            string _sSecond = "";
+            for (int i = 1; i < _aArg.Length; i++)  {
+                _sSecond = _aArg[i].Trim();
+                if (_sSecond != "")  {
+                    break;
+                }
+            }
+
+            //if (_sSecond != "") {
+				//FileUtils.RemoveFolderContents(_sFirst, _sSecond); //TODO on run pass only?
+			FileUtils.RemoveFolderOrFile(oParent.sWorkingDir,  _sFirst); //TODO on run pass only?
+			//}
+
+
+		}
+
 		public void fCmdIfNotExist(string _sAllArg){
 
 	        string[] _aCond =_sAllArg.Split(new string[] { "::" }, StringSplitOptions.None); if(_aCond.Length >= 2) {//Condition
@@ -3131,7 +3157,7 @@ bExtacted = true;
 					}
 
 			}}   
-}
+	}
 
 
 

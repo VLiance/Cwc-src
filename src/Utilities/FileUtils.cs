@@ -281,6 +281,37 @@ namespace cwc
 			}*/
 
 
+		public static void RemoveFolderOrFile(string sWorkingDir, string source){
+			source = PathHelper.fNormalizePath(source);
+		
+			//Remove must be a subfolder of cwClean
+			if(source.IndexOf(':') != -1 || source.IndexOf("../") != -1) {
+				Output.TraceError("For security reason you cannot remove folder or files outside the working directory");
+				return;
+			}
+			 
+			string _sPath = sWorkingDir + source;
+			if(_sPath[_sPath.Length-1] == '/') {
+				//Folder
+				if(Directory.Exists(_sPath)) {
+					Output.TraceAction("Remove: " + "[" + sWorkingDir + "]" + source);
+					Directory.Delete(_sPath, true);
+				}
+			}else {
+				//File
+				if(File.Exists(_sPath)) {
+					Output.TraceAction("Remove: " + "[" + sWorkingDir + "]" + source);
+					File.Delete(_sPath);
+				}
+				
+			}
+
+
+
+        }
+
+
+
         ///////////////////////////// Copy Directory //////////////////////
         public static void CopyFolderContents(string sourceFolder, string destinationFolder){
             CopyFolderContents(sourceFolder, destinationFolder, "*.*", "", true, true);
