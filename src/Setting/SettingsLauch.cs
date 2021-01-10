@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -16,6 +17,7 @@ namespace cwc {
         TreeView oPrjNode; 
         XmlNode oXmlPrjNodeLoaded; 
 
+		public static bool bSettingFail = false;
 
         public SettingsLauch(string _sFile) {
 
@@ -24,35 +26,57 @@ namespace cwc {
 
 
 
+		public bool IsRunAsAdmin(){
+			try{
+				WindowsIdentity user = WindowsIdentity.GetCurrent();
+				WindowsPrincipal principal = new WindowsPrincipal(user);
+				return principal.IsInRole(WindowsBuiltInRole.Administrator);
+			}catch{
+				return false;
+			}
+		}
+
         string sCurrentFile = "";
         internal void fSetNewFile(string _sFile) {
-        
-           String _sDir = Path.GetDirectoryName(_sFile);
-           String _sFileName = Path.GetFileNameWithoutExtension(_sFile); //Used?
+			
+			try { 
 
-            _sFileName = "_" + _sFileName + ".wdat";
-           // _sFileName = "_.cwcfg";
+			   String _sDir = Path.GetDirectoryName(_sFile);
+			   String _sFileName = Path.GetFileNameWithoutExtension(_sFile); //Used?
+
+				_sFileName = "_" + _sFileName + ".wdat";
+			   // _sFileName = "_.cwcfg";
             
 
-            string _sDirectory = _sDir + "/.wdat/";
-            if(!Directory.Exists(_sDirectory)){
-                DirectoryInfo di = Directory.CreateDirectory(_sDirectory); 
-                di.Attributes = FileAttributes.Directory | FileAttributes.Hidden; 
-            }
+				string _sDirectory = _sDir + "/.wdat/";
+				if(!Directory.Exists(_sDirectory)){
+					DirectoryInfo di = Directory.CreateDirectory(_sDirectory); 
+					di.Attributes = FileAttributes.Directory | FileAttributes.Hidden; 
+				}
 
-          //  string _sFilePath =  _sDir + "/" + _sFileName;
-            string _sFilePath = _sDirectory + _sFileName;
+			  //  string _sFilePath =  _sDir + "/" + _sFileName;
+				string _sFilePath = _sDirectory + _sFileName;
 
-            if( sCurrentFile != _sFilePath ){
+				if( sCurrentFile != _sFilePath ){
                   
-                fSaveSetting();      
-                sCurrentFile = _sDir  + "/" + _sFileName;
+					fSaveSetting();      
+					sCurrentFile = _sDir  + "/" + _sFileName;
          
-                if(fIniFile(_sFilePath, false,false)){
+					if(fIniFile(_sFilePath, false,false)){
                   
-                    fLoadSettings();
-                }
-            }
+						fLoadSettings();
+					}
+				}
+			}catch(Exception e) {
+				//Fail? no admin right?
+				if (!IsRunAsAdmin()) {
+					Output.TraceWarning("Cwc Require Admin Rights");
+				}
+				Output.TraceError(e.Message);
+				bSettingFail = true;
+			}
+
+
             bSettingLoaded = true;
         }
 
