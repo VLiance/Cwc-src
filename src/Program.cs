@@ -22,7 +22,7 @@ namespace cwc {
 
     [STAThread]
     static int Main(string[] args){
- 
+		try {
                     
         // redirect console output to parent process;
         // must be before any calls to Console.WriteLine()
@@ -58,7 +58,6 @@ namespace cwc {
             GuiManager.fCreateGUI();
         }
 
-
         if ( Data.sArg == "") { //No Argument
           
             Output.Trace("\f0AVersion " + Data.sVersion + "\fs \n" );
@@ -68,7 +67,7 @@ namespace cwc {
             Console.WriteLine("fBeginBuild ");
             Build.fBeginBuild();
         }
-                 
+        
         CppCompiler.CheckAllThreadsHaveFinishedWorking(true);
         Build.fDisableBuild();
             
@@ -88,7 +87,19 @@ namespace cwc {
         Build.fMainLoop();
 
          //if(Data.bConsoleMode) {SendKeys.SendWait("{ENTER}"); }
-        return 0;
+        //return 0;
+
+		} catch (Exception e) {
+			if( Data.oGuiConsole != null) {
+				Output.TraceError(e.Message);
+				while(true) {
+					Thread.Sleep(1);
+				}
+			}else {
+				Console.WriteLine(e.Message);
+			}
+		}
+		return 0;
     }
 
     public static bool fCheckForRegistringFiles(bool _bForce = false) {
