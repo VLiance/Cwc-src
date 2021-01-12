@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -113,23 +114,46 @@ namespace cwc {
       }
 
 	public static string fDelocaliseExe(string _sPath){
-        
-//fLauchConsoleCmd("");
+          
 
-   
+            var process = Process.Start("cmd.exe", "/c where cmd");
+
+            return "";
+      //  Data.oLauchProject.fLauchConsoleCmd("where test");
+      //  Data.oLauchProject.fLauchConsoleCmd(@"E:\Data\setting\ExeLoader\build\test.bat");
+ 
+		LauchTool _oLauch = new LauchTool();
+            _oLauch.dOut =  Data.oLauchProject.fAppOut;
+            _oLauch.dError =  Data.oLauchProject.fAppError;
+            _oLauch.UseShellExecute = false;
+            _oLauch.bRedirectOutput = true;
+            _oLauch.bReturnBoth = true;
+            _oLauch.fLauchExe(@"C:\Windows\System32\cmd.exe", @"/C E:\Data\setting\ExeLoader\build\test.bat");
+           // _oLauch.fLauchExe(@"cmd.exe", @"/C E:\Data\setting\ExeLoader\build\test.bat");
+            _oLauch.bWaitEndForOutput = true;
+            
+		while(_oLauch.bExeLauch){
+			//Thread.Sleep(1);
+            Thread.CurrentThread.Join(1);
+		}
+		string sResults = _oLauch.sResult;
+
+    return "aa";
 
 		LauchTool _oSubCmd = new LauchTool();
 		_oSubCmd.dExit  = new LauchTool.dIExit(fDelocaliseEnd);
-		
-        _oSubCmd.bRedirectOutput = false;
-		//_oSubCmd.bReturnBoth= true;
-		_oSubCmd.bReturnError = true;
+		//_oSubCmd.UseShellExecute = true;
+       // _oSubCmd.bRedirectOutput = false;
+        _oSubCmd.bRedirectOutput = true;
+		_oSubCmd.bReturnBoth= true;
+		//_oSubCmd.bReturnError = true;
 		//_oSubCmd.bRunInThread = false;
 		_oSubCmd.bWaitEndForOutput = true;
 
-		string sResult = _oSubCmd.fLauchExe(_sPath, " @wDeloc ");
+		//string sResult = _oSubCmd.fLauchExe(_sPath, " @wDeloc ");
+		string sResult = _oSubCmd.fLauchExe(_sPath, "");
 
-         _oSubCmd.fSend("Cwc:Lauch by " + Data.MainProcess.Handle); //Remove "pause" bug ?
+       //  _oSubCmd.fSend("Cwc:Lauch by " + Data.MainProcess.Handle); //Remove "pause" bug ?
 
 		while(_oSubCmd.bExeLauch){
 			//Thread.Sleep(1);

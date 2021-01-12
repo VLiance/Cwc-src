@@ -126,14 +126,12 @@ public string sResult ="";
                      if(bOutput) {
          
 						if(!bExterneLauch){
-								//processStartInfo.UseShellExecute = false;
 								processStartInfo.UseShellExecute = false;
-                    processStartInfo.CreateNoWindow = bHidden;
-                   // processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-						//		processStartInfo.CreateNoWindow = true;
-							processStartInfo.RedirectStandardOutput = bRedirectOutput;
-							processStartInfo.RedirectStandardError = true;
-							processStartInfo.RedirectStandardInput = true;
+                                processStartInfo.CreateNoWindow = bHidden;
+                                 // processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+							    processStartInfo.RedirectStandardOutput = bRedirectOutput;
+							    processStartInfo.RedirectStandardError = true;
+							    processStartInfo.RedirectStandardInput = true;
 						}
 
 /*
