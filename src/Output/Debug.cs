@@ -39,19 +39,14 @@ public static extern int printf(string format, __arglist);
         }
 
       
-     public static void fPrint(string _sMsg, int _nColorCode = -2) {
+         public static void fPrint(string _sMsg, int _nColorCode = -2) {
        
-            if(Data.oGuiConsole != null){
-              Data.oGuiConsole.fTraceColorCode(_sMsg + "\n", _nColorCode);
-            } else {
-                Console.WriteLine(_sMsg);
-            }
-
-
-
-            
-    }
-
+                if(Data.oGuiConsole != null){
+                  Data.oGuiConsole.fTraceColorCode(_sMsg + "\n", _nColorCode);
+                } else {
+                    Console.WriteLine(_sMsg);
+                }   
+          }
 
           public static void fWPrint(string _sMsg, int _nColorCode = -1) {
                 
@@ -60,31 +55,14 @@ public static extern int printf(string format, __arglist);
             } else {
                 Console.Write(_sMsg);
             }
-            
-        //             bLastWasRPrint = false;
-         //   PipeInput.fResetCursorPos();
-
-
-             // printf("%s", __arglist(_sMsg));
-          //      OutputDebugString(_sMsg  );
-
+        
         }
-            public static bool bLastWasRPrint = false;
-      
 
+
+            /* Not used?
             public static void fRPrint(string _sMsg) {
-
-                   Console.Write("\r" + _sMsg);
-            /*
-                if (!bLastWasRPrint) {
-                     printf("%s\n",__arglist(""));
-                }
-                bLastWasRPrint = true;
-            PipeInput.fResetCursorPos();
-           // Console.Write(_sMsg);
-              printf("%s\r", __arglist(_sMsg));
-              */
-        }
+                Console.Write("\r" + _sMsg);
+            }*/
 
     }
 }

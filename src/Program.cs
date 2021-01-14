@@ -29,7 +29,7 @@ namespace cwc {
         AttachConsole(ATTACH_PARENT_PROCESS);
 
         Sys.fGetParentProcess();
-        Console.WriteLine("Systeme mode: " + Sys.sParentName);
+        Debug.fTrace("Systeme mode: " + Sys.sParentName);
                          
         if (Sys.sParentName == "cmd") {
             Data.bConsoleMode = true;
@@ -64,7 +64,6 @@ namespace cwc {
             Msg.fShowIntroMessage();
             SysAPI.fSetWorkingDir(PathHelper.ExeWorkDir);
         }else {
-            Console.WriteLine("fBeginBuild ");
             Build.fBeginBuild();
         }
         
@@ -96,7 +95,7 @@ namespace cwc {
 					Thread.Sleep(1);
 				}
 			}else {
-				Console.WriteLine(e.Message);
+				Output.TraceError(e.Message);
 			}
 		}
 		return 0;
@@ -106,7 +105,7 @@ namespace cwc {
         try { 
             return  RegisterFile.fRegisterAllFileType(_bForce); 
         }catch(Exception Ex) {
-            Console.WriteLine("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
+            Output.TraceWarning("Warning: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
             return false;
         }
     }

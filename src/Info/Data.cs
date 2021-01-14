@@ -229,17 +229,12 @@ namespace cwc {
 
         internal static void fGetMainArg() {
                Data.sArg = Environment.CommandLine.Trim() ;
-     //     sArg = String.Join(" ", CmdArgs); //Fail to parse quotes
 
-        //   fDebug("Environment.CommandLine: "+Environment.CommandLine);
-
-            
              if(sArg[0] == '\"'){ //Remove current file arg when loaded from file
                     int _nFindEndQuote =  sArg.IndexOf("\"",1)+1;
                     //fDebug("_nFindEndQuote:"+_nFindEndQuote);
                     sArg = sArg.Substring( _nFindEndQuote ,sArg.Length-_nFindEndQuote).Trim();
                 }
-            //    Console.WriteLine(sArg);
                 //Remove current name exe cwc
                 if (sArg.Length >= 3 && sArg[0] == 'c' && sArg[1] == 'w'  && sArg[2] == 'c') {
                       sArg = sArg.Substring(3).Trim();
@@ -248,7 +243,7 @@ namespace cwc {
                 }
 
 
-                   //First arg is current file
+               //First arg is current file
             if(Sys.oParentProcess.ProcessName == "cmd"){ //Remove escape sequence
                 Data.sArg =  Data.sArg.Replace("\"|\"", "|");
            }
@@ -306,20 +301,8 @@ namespace cwc {
         }
 
          public static void  fSetDefaultVar() {
-            
 
-//Console.WriteLine("fSetDefaultVar!!");
-
-		//	fSetGlobalVar("_wToolchain", "Honera/LibRT" );
-		//	fSetGlobalVar("_sPlatform", "" );
-
-		//	Data.fAddRequiredModule("Honera/LibRT",true);
-		//	oArg.fAddCompiler( "Honera/LibRT", ""); ///Force create CompilerData ex: detect Emscriptem, maydo do a list?
         	Data.fSetGlobalVar("_wToolchain", "Unknow" );
-
-
-		//	fSetGlobalVar("_wToolchain", "_LibRT_clang" );
-
 
 			Data.fSetGlobalVar("wArch", "x32" );
 			Data.fSetGlobalVar("wArchPC", "x86" );

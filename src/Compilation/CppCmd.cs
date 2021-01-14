@@ -210,14 +210,7 @@ namespace cwc {
                    _sRArg = _sFullRArg.Substring(0,_nNextIdex).TrimEnd();
                 }
 
-      
-              //  Console.WriteLine("_sRArg!"  +  _sRArg );
-
-
                 if (bRunToArgDontPrextract) {
-                    //Save following arg
-            //        sRunToArgDontPrextract_Arg += " -" + _sRArg;
-             //       continue;
                      sRunToArgDontPrextract_Arg = " -" + _sFullRArg;
                      return;
                 }
@@ -404,16 +397,9 @@ namespace cwc {
                   oLauchLib_Arg.fSetVar("_pModule",  _oLib.sCurrFolder);  		
                   oLauchLib_Arg.fSetVar("_pOutput", sLauchLib__pOutput);
 
-      
-                  //oLauchLib_Arg.aLib = oParent.aLib;
-
-
               if(_oLib.oLibData != null  && _oLib.oLibData.sCmd != "") {
-
-                  //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
-               	     fNewArgCmdRun( _oLib.oLibData.sCmd , false,oLauchLib_Arg,false); //Not run
+               	   fNewArgCmdRun( _oLib.oLibData.sCmd , false,oLauchLib_Arg,false); //Not run
                    fRunLib(_oLib);
-        //          Console.WriteLine("havec commmand!! " + oLib.oLibData.sCmd);
                 }
 		}
 
@@ -444,27 +430,8 @@ namespace cwc {
         public bool bIsRunLib = false;
 
         private void fPreBuildCmd( string _sArg) {
-
             string _sVar = fExtractVar(_sArg);
-         //   Console.WriteLine("Extract! : "  + _sVar);
-
-           fwLib(_sVar);
-          //  bIsRunLib = true;
-      
-            
-           //  fExtractArg(_sArg)
-                /*
-            bIsACmdLib = true;
-		    oLib =	Data.fAddRequiredModule(_aArg[0] + "/" + _aArg[1]);
-			oParent.fAddLib(oLib); //Todo multiple lib with separator ,
-            oLauchLib_Arg =  new ArgumentManager();
-
-
-            //extract varz
-            _sArg
-            */
-           // sLauchLib_wExPath =  fGetVar("wDir") + _sArg;
-            
+            fwLib(_sVar);
         }
 
 
@@ -847,65 +814,25 @@ bExtacted = true;
                
 	             if (sManuallySetExecutable == "" && oCompiler != null) { 
 				    sExecutable = oCompiler.fGetExecutableAndArgForCmd(this, bLink, false,  bToStaticLib, bToDynamicLib);
-                    //  Console.WriteLine("sExecutable " + sExecutable);
-                                     
                 } else {
                     sExecutable = sManuallySetExecutable;
                       
                 }
            
-             
-                 // sExtractedCmd = fExtractManualSetExecutable( fExtractVar( sCmd) );
                   sExtractedCmd = fExtractManualSetExecutable( fExtractVar( sCmd) );
-          
 	              sCallerCmd =  fExtractValidCompilerCommand(sExtractedCmd);
-
 
 		        	_sCmd = " " + sResidualArg +  " " +   sArgument  ;
                   sBackEndCmd =  fExtractValidCompilerCommand(_sCmd) + sCallerCmd + sArgLinkerLib;
                     
-      
-                    
-                  // Output.Trace("\f1B| \f16" + sExtractedCmd);
                  CppCompiler.fShowArg(" " + sExtractedCmd, bIsSubCmd | bIsFbCmd);
             
-             //   Console.WriteLine("sBackEndCmd " + sBackEndCmd);
-                /*
-			   	  Debug.fTrace("--------CMD--------- " );
-			   	  Debug.fTrace("-------------------_sExtractedCmd " + _sExtractedCmd );
-			   	  Debug.fTrace("-------------------sCallerCmd " + sCallerCmd );
-			   	  Debug.fTrace("sResidualArg " + sResidualArg );
-			   	  Debug.fTrace("sArgument " + sArgument );
-			   	  Debug.fTrace("_sExtractedCmd " + _sExtractedCmd );
-                	   	  Debug.fTrace("--------------------- " );*/
-/*
-                if (sExecutable == "") {
-                    throw new Exception("Receive failed");
-                }
-                */
-
 
 			}else{  ///Sub command (Generated)
-				//_sCmd = " " + sCmd; //SubCommand herite "sArgument" of parent cmd
-			//TODO verify + optimize
-                //   sArgument = oParentCmd.sSubArg ;
 
                  sExecutable = oCompiler.fGetExecutableAndArgForCmd(this, bLink, false,  bToStaticLib, bToDynamicLib);
-             
-                //Output.TraceWarning("sCmd:" + sCmd);
-               // Output.TraceWarning("sArg:" + sArgument);
-
                 _sCmd = " " + sResidualArg   + " " + sArgument  +  " " +   sCmd  ;
-               // _sCmd = " " + sResidualArg   + " " + sCmd  ;
-    
                 sBackEndCmd =  fExtractValidCompilerCommand(_sCmd);
-
-                /*
-				sArgument = oParentCmd.sSubArg ;
-				sResidualArg = oParentCmd.sSubResidualArg;
-				sExecutable = oParentCmd.sSubExe;
-                sBackEndCmd =  fExtractValidCompilerCommand(_sCmd);
-                 */
 			}
 
 
@@ -928,39 +855,17 @@ bExtacted = true;
        
             sExecutableName = Path.GetFileNameWithoutExtension(sExecutable);
             sExecutableType = "<" +  oCompiler.oCurrentConfigType.sName + ">";
-//_sCmd = _sCmd + "  -  ";
-           
 
-
-          
-
-
-            /*
-			if(!bIsSubCmd){ 
-	             if (oCompiler != null) { 
-				    sExecutable = oCompiler.fGetExecutableAndArgForCmd(this, bLink, false,  bToStaticLib, bToDynamicLib);
-                }
-		
-			}else{  ///Sub command (Generated)
-				sExecutable = oParentCmd.sSubExe; //Not sure ...
-			}
-            sExecutableName = Path.GetFileNameWithoutExtension(sExecutable);
-            Console.WriteLine("sExecutable " + sExecutable);
-            */
-		
 
 		if(oParentCmd != null ){
 			sRecompileOnChangeCmd =  oParentCmd.sBackEndCmd;
 		}else{
 			sRecompileOnChangeCmd = sBackEndCmd;
 		}
-//Console.WriteLine("sRecompileOnChangeCmd " + sRecompileOnChangeCmd);
 
 		if(!bHaveMultipleFileSrc &&   !bHaveDirectorySource && sOutputFile != "") {
 			oParent.aPrecObjOutput.Add(this);
 			oParent.sPrecObjOutput += sOutputFile + " ";
-			
-		//	Debug.fTrace("--sOutputFile : " + sOutputFile);
 		}
 
 
@@ -985,10 +890,8 @@ bExtacted = true;
 			sPrecOutput_wTo = oParent.sPrecObjOutput;
 			oParent.sPrecObjOutput = "";
 
-
 			///// Check all file if one is modified
 			if(File.Exists(sFile_wTo + sToAnyType)) {
-                 //   Console.WriteLine("---SET SKIP : true" );
 				bPrecOutputSkip = true;
 				foreach(CppCmd _oSubCmd in oParent.aPrecObjOutput ) {
 					if(_oSubCmd.bSkip == false) {
@@ -1002,24 +905,6 @@ bExtacted = true;
 
 		}
 
-
-
-/*
-        if(bLink & bHaveKnowSourcesFiles) {
-            bCompileAndLink = true; //When compiling & link at the same time it's bug with the linker ( HelloWorld.cpp -o bin\HelloWorld.exe)
-        }*/
-          
-
-		
-
-
-
-                           
-		
-			
-			
-			//sExecutable = CppCompiler.fGetExecutableForCmd(sBackEndCmd, bLink, bCompileAndLink, this, bToStaticLib, bToDynamicLib);
-			
 			if(sExecutable != "") {
 				if(sExecutable.Length == 1 || (sExecutable.Length >= 2 && sExecutable[1] != ':') ){
 					sExecutable = oCompiler.oModuleData.sCurrFolder + sExecutable;
@@ -1070,7 +955,6 @@ bExtacted = true;
 			if(oLauchLib_Arg != null){
 				fExtractLib();
 			}
-			
 
         }
 
@@ -1096,8 +980,6 @@ bExtacted = true;
             string _sFullLib = _sObj.Substring(_nBegIndex + 1 , _nEndIndex - (_nBegIndex + 1));
            string[] _aLib =  _sFullLib.Split(':');
 
-           // Output.TraceWarning(_aLib[0]);
-
             fAddToObjDic(_aLib[0], _sFile);
             if(_aLib.Length > 1) {
                 fAddToObjDic(_aLib[1], _sFile);
@@ -1110,7 +992,6 @@ bExtacted = true;
             fAddCompiledObject(_sObj);
 
             sObjUpToDate += _sObj + ","; //TODO add string file to
-           // sObjList += _sObj + ",";
         }
 
         private string fGetConditionalRealCommand() {
@@ -1130,9 +1011,7 @@ bExtacted = true;
 		{	
 			sAllDefine = "";
 			sAllDefine += "-DDsToolchain=\"" +  sCompiler.Replace('/','_') + "\" ";
-		//	if(sPlatform == "CpcDos") {
-		//		sAllDefine += "-DtPlatform_Windows "; //CpcDos will be Always compatible with windows, define a subplatform var?
-		//	}
+
 			if(oCompiler != null){
 			//	sAllDefine += "-DDwPlatform=\"" +  oCompiler.sType + "\" ";;//Type
 				//sAllDefine += "-DDwPlatform_File=\""  +  oCompiler.sSubName + "\" "; //TODO
@@ -1147,7 +1026,6 @@ bExtacted = true;
                     sAllDefine += "-DD_Release ";
                 }
                 sAllDefine += "-DDsOpt=\""  + Data.fGetGlobalVar("_sOpt") + "\" " ;
-
 			}
 		}
 
@@ -1179,9 +1057,6 @@ bExtacted = true;
               // ModuleData _oMyModule =  oCompiler.oModuleData;
                     
                   ModuleData _oMyModule = ModuleData.fGetModule("VLiance/GZE",false);
-
-
-
                     ModuleData _oLib = new ModuleData(_oMyModule, "src/SubLib_3rdparty/", "GzNima");
                    // _oMyModule.aSubLib.Add(_oLib);
                        _oMyModule.fAddSubLib(_oLib);
@@ -1276,23 +1151,7 @@ bExtacted = true;
                         _sSendCmd  =  _sBackEndCmd + sGenBackEndCmd;
                     }
 
-
-
-/*
-	Console.WriteLine("_sBackEndCmd " + _sBackEndCmd);
-	Console.WriteLine("sToAnyType " + sToAnyType);
-	Console.WriteLine("sFile_wTo " + sFile_wTo);
-	Console.WriteLine("sToAnyType " + sToAnyType);
-	Console.WriteLine("sObjectLinkList " + sObjectLinkList);
-	Console.WriteLine("_sEndWith " + _sEndWith);
-	Console.WriteLine("sGenBackEndCmd " + sGenBackEndCmd);
-	Console.WriteLine("_sSendCmd " + _sSendCmd);
-*/
 				}
-
-
-				//Debug.fTrace("sGenBackEndCmd " + _sSendCmd);
-				// return;
 			}
             
             if(FileUtils.IsEmpty(_sSendCmd)) {
@@ -1303,19 +1162,10 @@ bExtacted = true;
             _sSendCmd = _sSendCmd.Replace("\\", "/").Replace("//", "/").Replace("//", "/");
             ////////
 
-/*
-			if(bIsGit) {
-				fExecuteGit();
-				return;
-			}*/
-
-          
-
              if(bLink) {
                   CppCompiler.CheckAllThreadsHaveFinishedWorking(true); //Force sequence??
             }
 
-           // Debug.fTrace("--------------Skip: " + bSkip.ToString() );
             if(!Data.bNowBuilding) {
                   return "";
             }
@@ -1329,11 +1179,7 @@ bExtacted = true;
             if (sManuallySetExecutable != "" ) {
               // if(!( CppCompiler.nError > 0)) {
                 string _sExePath =  fFindManualExecutableLocation(sManuallySetExecutable);
-
-                  //   CppCompiler.fSend2Compiler(_sSendCmd, bLink, false, this);
-                    fLauchManualExe(_sExePath, sExtractedCmd);
-
-                    
+                 fLauchManualExe(_sExePath, sExtractedCmd);
               //  }
             } else {
 
@@ -1448,17 +1294,12 @@ bExtacted = true;
         }
 
         public void fFinish() {
-           
 
              if(sObjUpToDate != "") {
-              //    Console.WriteLine("--------!!!sObjUpToDate " + sObjUpToDate);
             }
 
-
-           //  .ContainsKey( _oNewDir.sFile)
-           //if(aObjList.Count != 0){
             if(sObjList != "") {
-                 //   Output.TraceWarning("List: " + sObjList);
+
                 if(sObjListVar != "") {
                     fSetVar(sObjListVar, "[" + sObjList  + "]");
                     Output.TraceAction("Set: " + sObjListVar + " = "  +   "[" + sObjList  + "]");
@@ -1467,28 +1308,9 @@ bExtacted = true;
                          Output.TraceAction("Set: " + sObjListVar + "_" + item.Key + " = "  +   "[" + item.Value  + "]");
                     }
 
-                  //    Output.TraceAction("sObjListVarval + "  + sObjListVar);
-                   //   Output.TraceAction("sObjListVarSert + "  + sObjList);
-                  //   Console.WriteLine("fSetVar " + sObjListVar +  " " + sObjList);
                 }
 
             }
-             /*
-           if(sObjList != "") {
-             Output.TraceWarning("List: " + sObjList);
-                if(sObjListVar != "") {
-                    fSetVar(sObjListVar, "[" + sObjList  + "]");
-
-                  //    Output.TraceAction("sObjListVarval + "  + sObjListVar);
-                   //   Output.TraceAction("sObjListVarSert + "  + sObjList);
-                  //   Console.WriteLine("fSetVar " + sObjListVar +  " " + sObjList);
-                }
-            }
-            */
-
-
-
-         
         }
    
         ///////////////////////////////////////////////////
@@ -1506,8 +1328,6 @@ bExtacted = true;
                 return; //not a valid file
             }
 		 
-			//Debug.fTrace("---------------_sFile " + _sFile);
-		
 			
 			////////////////////////// Is a Directory / ////////////////////
 			if(_sFile[_sFile.Length-1] == '\\' ||  _sFile[_sFile.Length-1] == '/') { 
@@ -1543,18 +1363,6 @@ bExtacted = true;
 
 			aCompileFiles.Add(_sFile);
             string _sDir = Path.GetDirectoryName(_sFile);
-            /*
-            string _sName = _sFile.Substring(_sDir.Length+1);
-            //Add one folder to the name?//
-            string _sLastFolder = Path.GetFileName(_sDir)+ "/";
-            string _sPrevFolder =  "";
-            if(_sDir.Length - _sLastFolder.Length > 0) {
-                _sPrevFolder = Path.GetFileName(_sDir.Substring(0, _sDir.Length - _sLastFolder.Length)) + "/";
-            }
-
-            ///////////////////////////////
-            aCompileFilesName.Add(_sPrevFolder + _sLastFolder  + _sName);
-            */
             aCompileFilesName.Add(_sFile);
 
 			if(!_b_O_as_SourceFiles) {
@@ -1562,7 +1370,6 @@ bExtacted = true;
 			}
 
             string _sExt = Path.GetExtension(_sFile).ToLower();
-           // Console.WriteLine("_sExt C!!!" + _sExt);
             switch(_sExt) {
                 case ".c":
 					bHaveSourceC = true; 
@@ -1570,7 +1377,6 @@ bExtacted = true;
 				break;
 
                 case ".cw":
-               //     Console.WriteLine("Have cw");
                     bHaveCW = true;
                     bHaveKnowSourcesFiles = true;
                 break;
@@ -1615,7 +1421,6 @@ bExtacted = true;
                             if(_sFile != ""){
                                 bHaveMultipleFileSrc = true;
                                 aMultiFile.Add(_sFile);
-                             // Console.WriteLine("_sFile " + _sFile );
                             }
                         }
                     }else{ //It's a sub command ??
@@ -1648,11 +1453,9 @@ bExtacted = true;
                     return false;
                 }
                 
-
 				bCallCompiler = true;
 				bool _bHaveC_Compile = false;
 				bool _b_O_as_SourceFiles = false;
-
 
 				//Just remove -c option (gcc -c compiles source files without linking.)
                  if (_sCmdFiles.Length > 2 && (_sCmdFiles[1] == ' ' || _sCmdFiles[1] == '\t'  || _sCmdFiles[1] == '\n') ) {
@@ -1670,17 +1473,12 @@ bExtacted = true;
                     }
                 }
 		
-
-           //	if(_sCmdFiles == "") { //IF we don't specifiy files with "-c", take "-o" as source for "-wTo" param, example "-o obj/  -wTo bin/test.exe"
-           	//_sCmdFiles[0] was precarg
 			if(!_bHaveC_Compile) { //IF we don't specifiy files with "-c", take "-o" as source for "-wTo" param, example "-o obj/  -wTo bin/test.exe"
 				_sCmdFiles = _sPath; //TODO multiple files !!!
 				_b_O_as_SourceFiles = true;
 			}
 
-    
            _sCmdFiles = fTest_SubCmdOrCompileMultiFiles(_sCmdFiles);
- //Console.WriteLine("-_sCmdFiles " + _sCmdFiles);
 
             string[] _aFile = _sCmdFiles.Split(' ', '\t'); //TODO "" or ''
 	
@@ -1723,15 +1521,6 @@ bExtacted = true;
 
 			fOutputTo(sOutputFile,!(bHaveDirectorySource || bHaveMultipleFileSrc)); //bHaveDirectorySource Single accpet no "wTo"?
 
-	        //Debug.fTrace("asss + "  + sGenBackEndCmd);
-            /*
-			if(bToAnyType){//AAAAAASSS
-				sOutputFile = sOutputFile.Replace(".*" , sToAnyType);
-				//sBackEndCmd = sBackEndCmd.Replace(".*" , sToAnyType);
-				Debug.fTrace("asss + "  + sOutputFile);
-			}*/
-
-
 			//////// Is Output was a directory /////////////
 			if(sOutputFile.Length > 0 && sOutputFile[sOutputFile.Length-1] == '/') {
 
@@ -1743,9 +1532,7 @@ bExtacted = true;
 					return false;
 
 				}else{
-					//Bug remove utilil things
-				//	sBackEndCmd = sBackEndCmd.Substring(0, nLastBackEndIndex); ///Remove -c source command
-				}
+            	}
 				FileUtils.fCreateDirectoryRecursively(sOutputFile);
 			
 
@@ -1759,8 +1546,6 @@ bExtacted = true;
 					return false;
 				}
 			
-
-		
 			}
 			////////////////////////////////////////////////
 
@@ -1787,8 +1572,6 @@ bExtacted = true;
             FileUtils.fCreateDirectoryRecursively(_sDirectory);
 			sOutDirectory = _sDirectory.Replace("\\","/" ) + "/";
 
-			//Console.WriteLine("ToType " +_sToType  + " | " + _sOutput);
-
             switch(_sToType) {
 				 case ".a":
 	//				bToStaticLib = true; -> PreOutput
@@ -1801,12 +1584,7 @@ bExtacted = true;
                 case ".exe":
 				case ".*":
                 case "": //Linux?
-					//Console.WriteLine("!!!!!!!!!!!!!!!!-**-*-*!_pOutput_Bin" + _sDirectory);
 					oParent.fSetVar("_pOutput_Bin", sOutDirectory);
-					//fSetVarCmd("_pOutput_Bin", "wOutBin"+_sDirectory);
-					
-				//	Console.WriteLine("!! " + 	Data.fGetGlobalVar("_pOutput_Bin"));
-
 
 					if(_bwTo){
 						if(_sToType == ".*") {
@@ -1817,11 +1595,10 @@ bExtacted = true;
 						}
 					}
 
-                  //    bLink = true; -> PreOutput
                      oParent.aLinkCmdList.Add(this);
 					
                  break;
-				default: //Any!
+				default: //Any
 				
 				break;
             }
@@ -2121,51 +1898,10 @@ bExtacted = true;
                   }
             }
 
-       
-            /*
-             string[] _aCond = _sFullRArg.Split(new string[] { "::", "!:" }, StringSplitOptions.None);
-            if (_aCond.Length> 0) {
-
-                    _sCmdArg = _aCond[0];
-        //    Console.WriteLine("_sCmdArg2: " + _sCmdArg);
-            }
-           if (_aCond.Length> 1) {//TOFO test if its realy "::"
-                    _sCmdTrue = _aCond[1];
-            }
-             if (_aCond.Length> 2) { //TOFO test if its realy "!:"
-                    _sCmdFalse = _aCond[2];
-            }
-      
-            */
 
 
              _sCmdArg = fExtractSpaceMultiVals(_sCmdArg, ' ' );
 
-
-            
-
-/*
-			///////////////////////////////Same
-			string _sFullValue = "";
-			int _nIndex = _sArg.IndexOf('=');
-			int _nIndexSpace = _sArg.IndexOf(' ');
-			if(_nIndex < _nIndexSpace) {
-				_nIndex = _nIndexSpace;
-			}
-			if(_nIndex != -1) {
-				_nIndex++;
-				_sFullValue = _sArg.Substring(_nIndex, _sArg.Length -  _nIndex).Trim();
-			}
-			////////////////////////////////////
-
-			string _sMainValue = "";
-			string[] _aCmd = _sArg.Split('=', ' ');
-
-            if(_aCmd.Length > 1) {
-                _sMainValue = _aCmd[1];
-			
-            }
-            */
 
 			  //switch (_sCmd){
 			  switch (sRet_ExtractSpaceMultiValsCmd){
@@ -2181,16 +1917,11 @@ bExtacted = true;
 				 
              case "#Run":
                  //Do not preextract?
-                         //     Output.TraceWarning("_sCmdArg: " + _sCmdArg );
-               //  Output.TraceWarning("sRet_ExtractSpaceMultiValsAltArg: " + sRet_ExtractSpaceMultiValsAltArg );
 
-                    
                  sRunToArgDontPrextract_File = _sCmdArg;
                  sRunToArgDontPrextract_File_Arg = sRet_ExtractSpaceMultiValsAltArg;
                  bRunToArgDontPrextract = true;
-                  //if(oParent.bPreOutput_Link) {
-                    //    oParent.bOverideRunCmd = true;
-                  //}
+
                break;
 				 
               case "#Lauch":
@@ -2214,13 +1945,10 @@ bExtacted = true;
                  	fTestCmd(_sCmdArg);
              break;
 
-
-
              case "#Obj":
                  	fPrObjCmd(_sCmdArg);
              break;
-                //    fSetCompiler(_sArg);
-                // break;
+
 					
             }
 		}
@@ -2237,15 +1965,14 @@ bExtacted = true;
                 Output.TraceError("Output object list to var require assing '=>{VarName}' : " + sPreCwcCommand);
             }   
            sObjListVar = fGetStringVar(sCmdArg);
-        //    Output.TraceAction("sObjListVar + "  + sObjListVar);
-               
+
         }
 
         private void fCmdwLauch(string _sToLauch) {
 
             //Create settings file
 
-	/*
+	        /*
             bSendCmdToLauch = true;
             sToLauch = _sToLauch;
 
@@ -2260,9 +1987,7 @@ bExtacted = true;
 			while(Data.sCmd != "") {
 				Thread.CurrentThread.Join(1);
 			}
-			*/
-
-			    
+			*/			    
                  sRunToArgDontPrextract_File = _sToLauch;
                  sRunToArgDontPrextract_File_Arg = sRet_ExtractSpaceMultiValsAltArg;
                  bRunToArgDontPrextract = true;
@@ -2319,22 +2044,15 @@ bExtacted = true;
                  break;
 
                case "#If_HasIncluded":
-                  //  fCmdHasInclude(_sCond, _sCmdTrue, _sCmdFalse);
+                    // fCmdHasInclude(_sCond, _sCmdTrue, _sCmdFalse);
                     /*
                     sHasIncluded = _sCond;
-                    
-                    Console.WriteLine("****HasIncluded !? " + sHasIncluded );
+                   Debug("*HasIncluded: " + sHasIncluded );
                     if (oParent.fHasInclude(sHasIncluded)) {
-                           Console.WriteLine("YYYYEEESS-INCLUDED !? " + sHasIncluded );
+                         Debug("IS-INCLUDED !? " + sHasIncluded );
                     } else {
                     }*/
                break;
-
-				/*
-				  case "#Run":
-                    fCmdRun(fExtractSpaceMultiVals(_sArg, ' ' ));
-                 break;
-			*/
             }
         }
 
@@ -2869,13 +2587,6 @@ bExtacted = true;
                                 _sSubFolder = "";
                              }
 
-		//	//		Debug.fTrace("_sOutputFolder: " +  _sOutputFolder);
-			//	Console.WriteLine("_sSubFolder: " +  _sSubFolder);
-				//Debug.fTrace("_sFile: " + _sFile);
-				//Debug.fTrace("_sSubFolder: " + _sSubFolder);
-									
-								
-
 							switch(_sExt) {
 								case ".o":
 								case ".obj":
@@ -2891,15 +2602,11 @@ bExtacted = true;
 								case ".cw":
 								case ".gcpp":
                                     if(_sExt == ".cw") {
-									//Console.WriteLine("Found CW");
 									}
 							        if(_sExt == ".c") {
 										bHaveSourceC = true;
 									}
-									/*
-									if(_sExt == ".gcpp") {
-										bForceCpp = true;
-									}*/
+		
 									string _sForceLang = "";
 									if(bForceCpp){
 										_sForceLang = "-x c++ ";
@@ -2918,19 +2625,10 @@ bExtacted = true;
 										/////
 									}
 										
-								//	string _sCmd = " " + sCallerCmd + " " + sSubResidualArg + " " +  sSubArg + " " + _sForceLang + " -c " +_sFile + " -o " + _sOutputFolder + _sSubFolder  + _sName +".o";
 									string _sCmd = " " + sCallerCmd.Replace("#To", "") + " " + _sForceLang + " -c " +_sFile + " -o " + _sOutputFolder + _sSubFolder  + _sName +".o";
-									
-                
-                /*
-									Debug.fTrace("sSubArg: " + sSubArg);
-									Debug.fTrace("_sCmd: " + _sCmd);
-									Debug.fTrace("sBackENd: " + sBackEndCmd);*/
 
 									CppCmd _oSubCmd =  new CppCmd(oParent, _sCmd, this);
                                      _oSubCmd.sCompileExtention = _sExt.Substring(1); //Remove dot
-                                   // _oSubCmd.oCompiler.oCurrentConfigType = _oSubCmd.oCompiler.fGetConfigFileType(_oSubCmd.sCompileExtention );
-                                   // oCompiler.oCurrentConfigType = oCompiler.fGetConfigFileType(_oSubCmd.sCompileExtention );
                                     _oSubCmd.fExtract();
 									aSubCmd.Add(_oSubCmd);
 									sObjectLinkList +=_oSubCmd.sOutputFile + " ";
@@ -3302,9 +3000,6 @@ bExtacted = true;
          if (Int32.TryParse(_sID, out _nId)) {
                Sys.nConnectedHandle = _nId;
          }
-
-//		Console.WriteLine("----------------------------fCmdwMenuHandle! : " +_sID);
-//		Console.WriteLine("----------------------------fCmdwMenuHandle! : " + _nId.ToString());
     }
 
 

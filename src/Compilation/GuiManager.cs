@@ -9,15 +9,6 @@ namespace cwc {
     class GuiManager {
         	public static void fCreateGUI()  {
 
-               // Console.WriteLine("fCreateGUI");
-            /*
-            if (SysAPI.bIsLoadedFromAnotherCwcInstance || Data.bModeIDE) { //Not GUI
-                return;
-            }*/
-
-
-			//if(Data.oMsgForm == null) {
-
 				   Empty.bHaveMsgForm = true;
 
 
@@ -29,10 +20,7 @@ namespace cwc {
                                GuiConsole _oConsole =   new GuiConsole();
                                 Application.Run(_oConsole);
 
-						
-
 					 }catch(Exception Ex) {
-                        // Console.WriteLine("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
                          Output.TraceError("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
 					 }
 				  }));  
@@ -47,46 +35,10 @@ namespace cwc {
                        Thread.CurrentThread.Join(1);
                 }
 
-                /*
-                while(Data.oMsgForm == null) {
-                   Thread.Sleep(1);
-                }
-
-                while( Data.oGuiForm== null) {
-                   Thread.Sleep(1);
-                }*/
-               
-               // fDebug("finish");
-          //      fActivate();
-                /*
-                while(Data.oMsgForm == null) { //Null protection
-					Thread.Sleep(1);
-				}*/
-
-                /*
-				while(!oMainForm.bPositionSet) { //Wait initialise
-					Thread.Sleep(1);
-				}*/
-			
-	
-	
 				///////////////////////////
 			
-           
-
-
-
-
-          //  }
-
         }
 
-
-
-/*
-        internal static void fActivate() {
-           NativeMethods.SetForegroundWindow(NativeMethods.GetConsoleWindow()); //Activate console, Todo, after npp loaded
-        }*/
 
 
     }

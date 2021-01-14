@@ -404,9 +404,9 @@ namespace cwc
 
                 if(_oCmd != null && _oCmd.oToInputProcess != null){
                      _oCmd.oToInputProcess.StandardInput.WriteLine(_sResult );
-                  //   _oCmd.oToInputProcess.StandardInput.Write(_sResult + "\n");
+                     // _oCmd.oToInputProcess.StandardInput.Write(_sResult + "\n");
                     _oCmd.oToInputProcess.Refresh();
-                    Console.WriteLine("R:" + _sResult);
+                    Debug.fTrace("R:" + _sResult);
                     return;
                 }
 
@@ -591,8 +591,8 @@ namespace cwc
                                 }
                             };
                                
-                            Console.WriteLine("Start " +	 process.StartInfo.FileName );
-                            Console.WriteLine("arg " +	     process.StartInfo.Arguments  );
+                            Debug.fTrace("Start " +	 process.StartInfo.FileName );
+                             Debug.fTrace("arg " +	     process.StartInfo.Arguments  );
  
                             process.Start();
                             process.BeginOutputReadLine();
@@ -608,11 +608,9 @@ namespace cwc
                                 lock(oLockTicket) {
                                   
                                     if(nCurrentTicket == _nMyTicket) {
-                                    // Console.WriteLine("*** Process  " + nCurrentTicket + " " + _oCmd == null );
                                         fShowSendedCmd(_oCmd);
                                         fShowProcOutput(_oCmd);
                                         if (nErrorTicket == nCurrentTicket &&  (nError > 0 ) ) {
-                                            //Console.WriteLine(":: " +  GuiForm.fIsChecked("afterFileErrorToolStripMenuItem")); //TODO TODOTODO
                                             fShowProcOutput(_oCmd);
                                             Build.StopBuild(); //Dont display other file errors
                                             break;

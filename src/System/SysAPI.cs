@@ -362,8 +362,6 @@ namespace cwc {
                 /*
 					fSetConsolePosition();
                   
-				
-
                     ////////// Set console /////////
                     //uint STD_OUTPUT_HANDLE = 0xfffffff5;
                      hConsoleInput = GetStdHandle((uint)STD_INPUT_HANDLE);
@@ -378,36 +376,6 @@ namespace cwc {
                     SetConsoleMode(hConsoleInput, mode);*/
                     /////////////////////////////////////////
                    hConsole = GetStdHandle((uint)STD_OUTPUT_HANDLE);
-
-
-			
-
-
-                    // Application.SetCompatibleTextRenderingDefault(false);
-
-                    /*
-
-                    // create a thread  
-                    Thread newWindowThread = new Thread(new ThreadStart(() =>  {  
-                        	handler = new ConsoleEventDelegate(ConsoleEventCallback);
-				 SetConsoleCtrlHandler(handler, true);
-				Console.CancelKeyPress += new ConsoleCancelEventHandler(myHandler);
-
-                        while(!bEnd) { 
-                            
-                           // if (Console.KeyAvailable) {
-                          //      ConsoleKeyInfo result = Console.ReadKey(true);
-                            //    if (result.Key == ConsoleKey.Escape) {
-                             //       StopBuild();
-                                 
-                              //    }       
-                            } 
-                            Thread.Sleep(1);
-                        }
-
-                    }));  
-                    
-                    newWindowThread.Start();*/
 
                 } catch (Exception ex){    }
         }
@@ -443,12 +411,10 @@ namespace cwc {
 					if(_oKey != null){
 						int _nWindowPlacement = (int)_oKey;
 						if(_nWindowPlacement == 3){//Maximise
-							//Console.WriteLine("Maximize!!");
 							fMaximise();
 						}
 					}
 				}catch(Exception e){};
-					//Console.WriteLine(_nWindowPlacement);
 			}
 		}
 

@@ -61,15 +61,10 @@ namespace cwc
         public  void fSetToParentApp(Form _oForm) {
             if (bFromParent) {
                 if (Sys.nConnectedHandle != 0) {
-               //       nMainHwnd = NativeMethods.SetParent( _oForm.Handle, (IntPtr)Data.nConnectedHandle);
-                  //Console.WriteLine("fSendMsg " + _oForm.Handle.ToString() + " to " +   (IntPtr)Data.nConnectedHandle);
-
-                   
- 
-                 //     NativeMethods.SetWindowText((IntPtr)Data.nConnectedHandle, Handle.ToString()); //Sendback our Handle  work!
+                     //nMainHwnd = NativeMethods.SetParent( _oForm.Handle, (IntPtr)Data.nConnectedHandle);
+                    //Debug.fTrace("fSendMsg " + _oForm.Handle.ToString() + " to " +   (IntPtr)Data.nConnectedHandle);
+                    //  NativeMethods.SetWindowText((IntPtr)Data.nConnectedHandle, Handle.ToString()); //Sendback our Handle  work!
                     fSendMsg("C:wMsgHandle:" + Handle.ToString() + ";wMenuHandle:" +  _oForm.Handle);
-
-
 
                 //   MessageBox.Show("Set to " + Data.nMenuHandle);
 

@@ -682,7 +682,7 @@ namespace cwc
                      string _sOut  = _sOutput.Trim();
                         if(_sOut == "") {continue; }
 
-				    Debug.fRPrint("Extract: " + _sOut + "                                                                                             ");
+				  //  Debug.fRPrint("Extract: " + _sOut + "                                                                                             ");
 
                     if (_bGood) {
                          Output.TraceGood( _sOut );

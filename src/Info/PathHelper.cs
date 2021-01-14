@@ -167,7 +167,7 @@ namespace cwc.Utilities
 
 
                 } catch (UnauthorizedAccessException) {
-                    Console.WriteLine("Path is not accessible: {0}", _sPath);
+                    Output.TraceWarning("Path is not accessible:" + _sPath);
                 }      
             return ""; 
         }

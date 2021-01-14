@@ -175,12 +175,9 @@ namespace cwc {
          public override void fStepOver(){oProcess.fSend("next");}
 
          public override void fStepOut(){
-           Console.WriteLine("StepOUT!"); 
             oProcess.fSend("finish");}
 
         public override void fIni() {
-           // base.fIni();
-       //    Console.WriteLine("fIni");
         }
 
        public override void fReceiveCmd(string _sCommand){
@@ -500,9 +497,6 @@ namespace cwc {
                 _oFrame.sFile = "??";
             }
 
-
-
-           //Console.WriteLine("    _oFrame.sFuncName" +     _oFrame.sFuncName  + "(" + _oFrame.sAdress + ")(" + _oFrame.sFuncParam  );
             if (_oFrame.sFuncName == "??") {
                 _oFrame.sFuncName =  "(" + _oFrame.sAdress + ")";
                 _oFrame.bUnknowName = true;
@@ -510,8 +504,6 @@ namespace cwc {
 
             aCurrBacktrace.Add(_oFrame);
             return  _oFrame;
-          //  _oFrame._sFile
-        //   Output.Trace("O> " +_sOut);
       }
 
         public  Boolean fAddLocalVar(Frame _oFrame, string _sCmd){
@@ -539,10 +531,8 @@ namespace cwc {
         private void fPrintBackTrace() {
            
             foreach(Frame _oFrame in aCurrBacktrace) {
-               // Console.WriteLine("------ " +     _oFrame.sFuncName  + "(" + _oFrame.sFuncParam  + ")" );
                 Output.Trace("\f0C>>----  \f1C" +     _oFrame.sFuncName  + "\f13(" + _oFrame.sFuncParam  + ")\fs");
                 string _sLine =  ":" + _oFrame.nLine;//TODO changing color break linking file
-               // string _sLine =  "\f05:" + _oFrame.nLine;
                 if (_oFrame.sFile == "??") { _sLine = ""; } 
                 Output.Trace("    \f05at   \f04" + _oFrame.sFile  +_sLine );
                  foreach(Var _oVar in _oFrame.aVar) {

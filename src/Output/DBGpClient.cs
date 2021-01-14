@@ -228,7 +228,6 @@ private const bool SHOW_MESSAGES = false;
           
 			while(sMessageBuffer.Contains("\0")) {
 				var _sMessage = sMessageBuffer.Substring(0, sMessageBuffer.IndexOf('\0'));
-        //      MessageBox.Show("message " + message);
         
 #pragma warning disable 162
 				if (SHOW_MESSAGES) { Console.WriteLine("Message: "+(_sMessage.Length > 1000 ? _sMessage.Substring(0, 1000) : _sMessage)); }
@@ -375,7 +374,6 @@ private const bool SHOW_MESSAGES = false;
         }
 
         public void fSendMessage(string _sOutputMessage) {
-         //   Console.WriteLine(_sOutputMessage);
             if (_sOutputMessage != null) {
 				var _sRealMessage = this.GenerateOutputMessage(_sOutputMessage);
 				oSocket.Send(Encoding.UTF8.GetBytes(_sRealMessage));

@@ -110,12 +110,10 @@ namespace cwc.Compiler {
             if (oCurrNode == null) { //TODO POSSIBLE?
                 oCurrNode = oMainNode;
             }
-                 
-            //Console.WriteLine("fRemoveNode " + _sName);
+
         }
 
         internal void fSetValue(string _sValue,string _sType) {
-               //    Console.WriteLine("-- fSetValue  "  + oCurrNode.sName + " | "+ _sValue);
            oCurrNode.fSetValue( _sValue, _sType);
         }
 
@@ -177,7 +175,7 @@ namespace cwc.Compiler {
             Node _oNode = oMainNode;
 
              if(_sType != "") {
-              //  Console.WriteLine("_sType " + _sType);
+              // Debug.Trace("_sType " + _sType);
               }
               
             if (_aValue[0] == "Exe" || _aValue[0] == "Config") { //Only one exe / config at time

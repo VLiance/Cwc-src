@@ -198,13 +198,9 @@ namespace cwc {
                                  Data.oLauchProject.fCancel();
                             break;
                             case "StartBuild":Data.sCmd = "";
-                                   // Debug.fTrace("****StartBuild!!");
-                                 //  Console.WriteLine("start build");
                                 Build.StartBuild();
                             break;
                             case "Delocalise":Data.sCmd = "";
-                    //    Console.WriteLine("fDelocaliseCmd");
-								
                                Delocalise.fDelocaliseCmd();
 							
                             break;

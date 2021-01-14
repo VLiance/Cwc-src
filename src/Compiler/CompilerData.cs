@@ -148,12 +148,6 @@ namespace cwc
 		}
 
 		void fPerformSpecialCase(ArgumentManager _oParamArg ){
-			///Load all prelaod exe
-			///
-//Debug.fTrace("aaaaaasss : " + oModuleData.sAutorName);
-					//		Output.TraceGood(aExe_Preload.Count.ToString());
-
-            
 
  	        foreach(string _sRequire  in aRequireTC ){
 				//Output.TraceGood(_sPath);
@@ -172,7 +166,6 @@ namespace cwc
 				
 			}
 
-
            if(oModuleData.bIsCompiler && sCmd != "") {
                 //Output.TraceWarning("Run " + sCmd);
                ArgumentManager  _oArg = new ArgumentManager(Data.oArg);
@@ -181,30 +174,7 @@ namespace cwc
                    _oArg.fCompleteExtractMainArgument(null,false);
 				_oArg.fExtract(null);
 				_oArg.fRun(null, true, false, true); //Warning if "_bDontExecute = true" , bug with GZE or other lib?
-
-               //  _oArg = new ArgumentManager(oParent);
-               /*
-                ArgumentManager  _oArg =  new ArgumentManager(Data.oArg);
-			
-                _oArg.fCompleteExtractMainArgument(null,false);
-				_oArg.fExtract(null);
-				_oArg.fRun(null, false, false);*/
-                  //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
-            //  fNewArgCmdRun( sCmd , false,oLauchLib_Arg,false); //Not run
-              // fRunLib();
-        //          Console.WriteLine("havec commmand!! " + oLib.oLibData.sCmd);
             }
-
-            
-/*
-			switch(oModuleData.sAutorName){
-				case "Honera/WebRT":
-					Emscripten.oCmp= this;
-//	Debug.fTrace("aaaaaasss : " + oModuleData.sAutorName);
-					Emscripten.fCreateEmscConfig(true);
-				break;
-				
-			}*/
 		}
 
         private void fRequireModule(ArgumentManager _oParamArg , string _sPath) {
@@ -217,11 +187,6 @@ namespace cwc
                  CppCmd.fAddToolchain(_sModule, _oParamArg);
            }
         }
-
-
-
-
-
 
 
         internal bool fFinalize() {
@@ -248,9 +213,6 @@ namespace cwc
 				}
 
                 return true;
-
-				//string _sInputFolder =   Path.GetDirectoryName(oCompiler.sLink_Action_src).Replace("\\", "/") + "/";
-				//string _sOutFolder =  PathHelper.ExeWorkDir + sOutDirectory;
 			}
             return false;
 			
@@ -273,9 +235,7 @@ namespace cwc
 
 	}
 
-
-
-
+       
 	public static void 	fOut(LauchTool _oTool, string _sOut){
 	
 		CppCmd _oCmd = new CppCmd(Data.oCompilerArg, _sOut );
@@ -484,24 +444,15 @@ namespace cwc
 		    	_oNode.MoveToAttribute( nIdx );
 		        switch(_oNode.Name.ToLower()){
 			        case "type":
-                      //      Console.WriteLine("-******************_oNode.Name.ToLower() : " +_oNode.Name.ToLower());
-				     //   string _sTypeName = _oNode.Value;
+
                           sNodeCurrentType =  _oNode.Value;
-                       // if (!aConfigType.ContainsKey(sNodeCurrentType)) {
-                        //    oCurrentConfigType = aConfigType[sNodeCurrentType];
-                                       //   oCurrentConfigType.fCopyNodes(oGblConfigType.oCurrNode);
-                      //  }else {
+
                             
-                            if (!aConfigType.ContainsKey(sNodeCurrentType)) {
-                                aConfigType.Add(sNodeCurrentType, new ConfigType(this,sNodeCurrentType, oGblConfigType));
-                            }
-                        //    oCurrentConfigType = aConfigType[sNodeCurrentType];
-
-                              //  Output.TraceError("Type not found: " + _sName);
-                                Console.WriteLine("Type not found: " + _sName);
-
-                       // }
-                         oCurrentConfigType = aConfigType[sNodeCurrentType];
+                        if (!aConfigType.ContainsKey(sNodeCurrentType)) {
+                            aConfigType.Add(sNodeCurrentType, new ConfigType(this,sNodeCurrentType, oGblConfigType));
+                        }
+                        Debug.fTrace("Type not found: " + _sName);
+                        oCurrentConfigType = aConfigType[sNodeCurrentType];
 
 			        break;
 			    }
@@ -691,34 +642,13 @@ namespace cwc
 		public string sCurrentArch = "x32";
 
          public void fLoadNode(XmlTextReader _oNode, Dictionary<string,  Dictionary<string,string>  > _aNode, string _sCurrent, string _sValue) {
-			/*
-            for (int nIdx = 0; nIdx < _oNode.AttributeCount; nIdx++){
-		    	_oNode.MoveToAttribute( nIdx );
-                Console.WriteLine("-******************_oNode.Name.ToLower() : " +_oNode.Name.ToLower());
-		        switch(_oNode.Name.ToLower()){
-			        case "type":
-				        string _sTypeName = _oNode.Value;
 
-                        
-			        break;
-			    }
-	    	}*/
-            
-    
-            
             _sValue = fSpecialExtartVar( _sValue);
 
 
 
             oGblConfigType.fSetValue(_sValue, sNodeCurrentType);
-         //    Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
              Debug.fTrace("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + oCurrentConfigType.sName + ">" + oCurrentConfigType.oParent.sFullName  + "[" + oCurrentConfigType.sName + "] :" + oCurrentConfigType.fGetCurrentNodeFull()  + "[" + oCurrentConfigType.fGetCurrentNodeValue() + "]" );
-           
-
-         //   oCurrentConfigType.fSetValue(_sValue, sNodeCurrentType);
-
-
-
 
 			if (sNode_Arch == "" || sNode_Arch == sCurrentArch ){
 
@@ -1275,14 +1205,10 @@ namespace cwc
 
           
             if (_oCmd.sCompileExtention == "cw" || _oCmd.sCompileExtention == "c~") {
-             
-                //   Console.WriteLine("sCWift: " + sCWift);
-                //  _sArg += _oConfig.sCWayv;
+
                 _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler, new string[]{"Arguments", "CWayv"}, _oConfig.sName)+ " ";
                     Output.TraceAction("CWayv Arg: ["+ sConditionalName + "]" + _sArg );
-            //     _sArg += oGblConfigType.fGetNode(new string[]{"Platform","arguments", "CWayv"}, oCurrentConfigType.sName).sValue;
 
-                //return _sArg; //Rest is for C++
             }else { //Rest is for C++
 
 
@@ -1293,51 +1219,21 @@ namespace cwc
                     }
 
                     switch(_sOptLevel) {
-                          /*
-                         case "DEBUG":
-                             _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler, new string[]{"Arguments", "Debug"}, _oConfig.sName)+ " ";
-                            // _sArg += "-g ";
-
-                         break;
-                         case "OS":
-                         case "O3":
-                         case "O2":
-                         case "OZ":
-                           //  _sArg += "-O2 " + oGblConfigType.sName + "| ";
-                             _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", _sOptLevel}, _oConfig.sName)+ " ";
-                         break;
-                        */
                         default:
                             _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", _sOptLevel}, _oConfig.sName)+ " ";
                         break;
                   }
               }
                  
-
-          
-    //string _sTest =    oGblConfigType.fGetNode(new string[]{"Lib","Arguments", "Compiler"}, oCurrentConfigType.sName).sValue;  
-            /*
-            Console.WriteLine("!!!!!!!!!!! " + _sTest);
-            if (_sTest != "") {
-                throw new Exception(_sTest);
-            }*/
-
-
-		//		_sArg += oCurrentConfigType.sCompilerLinker;
                  if(!_bSLib && !_bDLib) {
                     _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", "CompilerLinker"}, _oConfig.sName) + " ";
                 }
 				if(_bLinkTime){
 
-               
-				//	_sArg += oCurrentConfigType.sLinker;
-                
 					if(_bSLib) {
-					//	_sArg += oCurrentConfigType.sLink_Static;
                         _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", "Linker_Static"}, _oConfig.sName) + " ";
 					}
 					else if(_bDLib) {
-					//	_sArg += oCurrentConfigType.sLink_Dynamic;
                       _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", "Linker_Dynamic"}, _oConfig.sName) + " ";
 					}
                     
@@ -1349,17 +1245,7 @@ namespace cwc
                     }
 					
 				}else{
-
-                   _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", "Compiler"}, _oConfig.sName) + " ";
-                    /*
-					if(_bHaveSourceC) {
-						_sArg += oCurrentConfigType.sC;
-					}else {
-						_sArg += oCurrentConfigType.sCpp;
-					}
-					_sArg += oCurrentConfigType.sCompiler;
-                    */
-
+                    _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Arguments", "Compiler"}, _oConfig.sName) + " ";
 					_sArg += _sAllDefine;
 				}
             }
@@ -1367,19 +1253,12 @@ namespace cwc
 		    CompilerData _oCond_Plat =	fGetConditionalPlatformCompilo(_oCmd.fGetVar("_sPlatform"));
 			if(_oCond_Plat != null){
 
-               //  Output.TraceError("Found: " + _oCond_Plat.sConditionalName);
-                // ConfigType _oTest = _oCond_Plat.oCurrentConfigType;
-                 //  Output.TraceWarning("Node:[" + sConditionalName + "]"  + sPlatformName + "<" + _oTest.sName + ">" + _oTest.oParent.sFullName  + "[" + _oTest.sName + "] :" + _oTest.fGetCurrentNodeFull()  + "[" + _oTest.fGetCurrentNodeValue() + "]" );
-           
                 string _sCondArg = _oCond_Plat.fGetArgs(_oCmd,_sAllDefine,_bLinkTime,_bSLib,_bDLib,_bHaveSourceC).Trim();
                 if(_sCondArg != "") {
                     _sArg += _sCondArg + " ";
-                   // Output.TraceError("Found: " +_sCondArg);
                 }
 			}
-            
-
-
+           
 			return _sArg;
 		}
 
@@ -1426,21 +1305,10 @@ namespace cwc
         public string fGetExecutableAndArgForCmd(CppCmd _oCmd,  bool _bLinkTime = false, bool _bCompileAndLink = false,  bool _bSLib = false, bool _bDLib = false) {
 
                oCurrentConfigType = fGetConfigFileType(_oCmd.sCompileExtention, _oCmd.oCompiler );
-
-
-         //   Console.WriteLine("**********fGetExecutableAndArgForCmd  " +  oCurrentConfigType.sName + " " + oCurrentConfigType.sExe_Compiler);
-            /*
-            if (_oCmd.sCompileExtention == "cw"  || _oCmd.sCompileExtention == "c~") {
-            
-            }*/
-              
-            
                 string _sExe = "";
 
 				_oCmd.sArgument =  fGetArgs(_oCmd, _oCmd.sAllDefine, _bLinkTime, _bSLib, _bDLib, _oCmd.bHaveSourceC);
 
-             
-         //   Console.WriteLine(_oCmd.sCmd);
 				////// Libs ////
 				string _sLibArg = "";
 				foreach(ModuleData _oLib in _oCmd.oParent.aLib){
@@ -1456,38 +1324,8 @@ namespace cwc
 		
 				//////////////////////
 				///// GET EXE /////////////
-                 //  Console.WriteLine("Compile type: " + _oCmd.sE);
                 if (_oCmd.sCompileExtention == "cw"  || _oCmd.sCompileExtention == "c~") {
-                        // Console.WriteLine("HAVE CW!");
-                        //  return PathHelper.ToolDir +  "CWift/CWift.exe";
-                        //   return PathHelper.ToolDir +  "CWave/CWave.exe";
-
-                        //return PathHelper.ToolDir +  "CWayv/CWayv.exe";
-                        //     _sArg += oGblConfigType.fGetNode(oConfigTypeCompiler, new string[] { "Arguments", "CWayv" }, _oConfig.sName) + " ";
-
-                        //   string _sWayv = oGblConfigType.fGetNode(oConfigTypeCompiler, new string[] { "Exe", "CWayv" }, oCurrentConfigType.sName);
-                        //     Output.TraceWarning("_sWayv : " + _sWayv);
-                        /*
-
-                      ConfigType _oConfig = oCurrentConfigType;
-                      _oConfig = fGetConfigFileType(_oCmd.sCompileExtention, _oCmd.oCompiler);
-                      _sWayv =  oGblConfigType.fGetNode(oConfigTypeCompiler, new string[] { "Exe", "CWayv" }, _oConfig.sName) + " ";
-                      Output.TraceWarning("_sWayv : " + _sWayv);
-                      */
-
-                        /*
-                        string _sLibExe = "";
-                        foreach (ModuleData _oLib in _oCmd.oParent.aLib)
-                        {
-                            CompilerData _oData = _oLib.oLibData;
-                            if (_oData != null)
-                            {
-                                Output.TraceWarning(_oData.sFullName);
-                                _sLibExe += _oData.fGetParam(_oCmd, "Exe", "CWayv") + " ";//_oCmd.oParentCmd.bHaveSourceC ?
-                            }
-                        }
-                        */
-
+               
                         string _sWayv = fGetLibParam(_oCmd,  "Exe", "CWayv");
 
                         if (_sWayv == "") {
@@ -1498,62 +1336,30 @@ namespace cwc
 
 				if(_bSLib) {
 					if( oCurrentConfigType.sExe_Link_Static != ""){
-					//	_sExe = oCurrentConfigType.sExe_Link_Static;
                        _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Linker_Static"}, oCurrentConfigType.sName);
 
 					}else{
-						//_sExe = oCurrentConfigType.sExe_Linker;
                        _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Linker"}, oCurrentConfigType.sName);
 
 					}
 				}
 				else if(_bDLib){
 					if( oCurrentConfigType.sExe_Link_Static != ""){
-					//	_sExe = oCurrentConfigType.sExe_Link_Dynamic;
                       _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Linker_Dynamic"}, oCurrentConfigType.sName);
 
 					}else{
-					//	_sExe = oCurrentConfigType.sExe_Linker;
                        _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Linker"}, oCurrentConfigType.sName);
 
 					}
 				}
                 else if(_bLinkTime) {
-
-				//	_sExe = oCurrentConfigType.sExe_Linker;
-
                      _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Linker"}, oCurrentConfigType.sName);
 
                 }else {
-
-                    
-
-					//if(_oCmd.bHaveSourceC) {
-				//	if(_oCmd.sCompileExtention == "c") {
-                //
-					//	_sExe = oCurrentConfigType.sExe_C;   Console.WriteLine("HAVE C");
-
-             
-				//	}else {
-					//	_sExe = oCurrentConfigType.sExe_Cpp;       Console.WriteLine("HAVE C++");
-						//_sExe =  oCurrentConfigType.sExe_Compiler;     
-
-
-			//			_sExe =  oCurrentConfigType.fGet_Exe_Compiler();   
-                        
-
-                         _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Compiler"}, oCurrentConfigType.sName);
-                     //   Console.WriteLine("!!!!***** _sExe !!!! " + _sExe);
-				//	}
+                
+                     _sExe = oGblConfigType.fGetNode(oConfigTypeCompiler,new string[]{"Exe", "Compiler"}, oCurrentConfigType.sName);
                 }
-        /*    
 
-	Console.WriteLine("_sExeA " + oCurrentConfigType.sName);
-	Console.WriteLine("_sExeA " +  _oCmd.sCompileExtention);
-	Console.WriteLine("sSubName " +  sSubName);
-	Console.WriteLine("sFullName " +  sFullName);
-	Console.WriteLine("sFullName " +  sFilePath);
-	Console.WriteLine("_sExeb " + _sExe);*/
 
 			_sExe =  _oCmd.fExtractVar(_sExe); //Extract wVal
 			string _sSubExe = _sExe.Trim();
@@ -1579,64 +1385,20 @@ namespace cwc
 				}
 			}
 
-          
-			//Console.WriteLine("sResidualArg " + _oCmd.sResidualArg);
-			//Console.WriteLine("_sExe " + _sExe);
 			return _sExe.Replace("\'","" ).Replace("\"","" ).Trim();;
 		}
 
 
 
-
-
-			/*
-		public void fSetCompilerEmsc() {  
-		
-			fGetEmscPaths();
-			
-			sCpp = sPathExePython;
-			sHArgCpp = sEmscArgClangExe + sEmscInclude  + sCreateDFile + sHiddenArg_sColoConsole + "--emrun "  + sArch + sCppVer; //sArch sCppVer TODO
-			
-			////////////////////
-			sHArgC = sHArgLinkerS =  sHArgLinker = sHArgLinkerD = sHArgRC = sHArgCpp; //Set all to clang by default
-			sC = sLinker = sLinkerD = sLinkerS = sCpp; //Set all to clang by default
-			
-			
-			//sHtml_Shell_src = Emscripten.sPathEmsc + "src/shell_minimal.html";
-			sLink_Action_src = sGZE_Dir + "Emsc/Shell/Base/Console.s_html";
-			if(!File.Exists(sLink_Action_src)) {
-				sLink_Action_src =  Emscripten.sPathEmsc + "src/shell_minimal.html";
-			}
-
-			sLink_Action_cmd = Path.GetExtension(sLink_Action_src) ;
-			if(sLink_Action_cmd.Length > 0) {
-				sLink_Action_cmd = sLink_Action_cmd.Substring(1);
-			}else {
-				sLink_Action_cmd = "";
-			}
-			
-			
-			//Debug.fTrace("E!xte " + Path.GetDirectoryName(sHtml_Shell_src)  );
-			//Debug.fTrace("sHtml_Shell_src_ext " +  sHtml_Shell_src_ext );
-			
-			sHArgLinker += sHtml_Shell + "\"" + sLink_Action_src   + "\" " + sBind + sMemFile;
-
-		}*/
-
-
 		internal void fUsed()	{
-				
-				//rogram.fDebug("-------Compiler USED!?: " + sSubName );
-				//rogram.fDebug("-------: " + sExe_Cpp );
-				
-				
+
 				/*
 				if(oCmdH == null) {
 					oCmdH =  new CppCmd(Data.oCompilerArg, sHArgCpp );
 
 					oCmdH.fPreExtract();
 					Debug.fTrace("----------arg: "  + sHArgCpp);
-						Debug.fTrace("-------Extract: CmdH " );
+					Debug.fTrace("-------Extract: CmdH " );
 					oCmdH.fExtract();
 				}*/
 

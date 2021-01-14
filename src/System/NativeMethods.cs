@@ -38,13 +38,10 @@ namespace cwc
 				GetWindowPlacement(_nHandle, ref placement);
 				switch (placement.showCmd) {
 					case 1:
-						//Console.WriteLine("Normal");
 						return 1;//Normal
 					case 2:
-					//	Console.WriteLine("Minimized");
 						return 2;//Minimized
 					case 3:
-
 						return 3;//Maximized
 				}
 			}   

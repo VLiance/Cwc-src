@@ -70,15 +70,11 @@ namespace cwc {
                    if( _oMenuItem.DropDownItems.Count == 0) {
                        _oMenuItem.Click += fCheckMenu;
                         _oMenuItem.Name = (_sParent +_oMenuItem.Text).Replace("&&", "&");
-                      //  _oItem.Checked = true;
-                     // Console.WriteLine("_oItem.Name " +_oItem.Name);
-                        // aOption[ _oItem.Name] = Data.fGetStrBool( (bool)_oItem.Checked );
-                      _oMenuItem.Checked =  Data.fIsDataTrue(  _oMenuItem.Name);
+                        _oMenuItem.Checked =  Data.fIsDataTrue(  _oMenuItem.Name);
                         if(_oMenuItem.Checked) {
                             _bFound = true;
                         }
                     } else {
-                      // Console.WriteLine("asss " +_oMenu.Text);
                         fLoadMenuStrip(_sParent + _oItem.Text + "/", _oMenuItem);
                     }
                 }
@@ -88,7 +84,6 @@ namespace cwc {
 
 
         Assembly assembly = Assembly.GetExecutingAssembly();
-       // Assembly assembly = null;
 
         public static TextStyle eInfoStyle  = new TextStyle(Brushes.Black, null, FontStyle.Regular);
         public static TextStyle eWarningStyle = new TextStyle(Brushes.BurlyWood, null, FontStyle.Regular);
@@ -100,22 +95,13 @@ namespace cwc {
 
         public static bool bReady = false;
         public GuiConsole() {
-                    //   Console.WriteLine("GuiConsole");
 
-                ExtendMargins(0, 35, 0, 0, false, true);
-             
-
+             ExtendMargins(0, 35, 0, 0, false, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
-                         //  Console.WriteLine("InitializeComponent");
             InitializeComponent();
             DoubleBuffered = true;
             nTreePrjScrollBar_IniX =  treeViewPrj.Location.X;
             nTreePrjScrollBar_IniY =  treeViewPrj.Location.Y;
-                     //      Console.WriteLine("Populate");
-          
-        //    Populate(true); //Slow to load
-              //    Console.WriteLine("Finish");
-      
           
         }
         
@@ -144,24 +130,15 @@ namespace cwc {
                 // collection.Add(shell32Provider);
                 //  treeViewPrj.DataSource = shell32Provider;
 
-
-
                 FolderBrowser = new Raccoom.Windows.Forms.TreeStrategyFolderBrowserProvider();
                 FolderBrowser.fIni();
                 FolderBrowser.ShowFiles = true;
 
                 treeViewPrj.DataSource = FolderBrowser;
                 treeViewPrj.CheckBoxBehaviorMode = CheckBoxBehaviorMode.None;
-                //return;
                 // FolderBrowser.sCustomRootDir = @"E:\_Project";
                 FolderBrowser.RootFolder = Environment.SpecialFolder.Desktop;
-   
-
                 treeViewPrj.Populate(true);
-
-
-
-
            }
 
         }
@@ -295,7 +272,7 @@ namespace cwc {
                         _oNew.Click += fCheckMenu;
                     }
 
-                }catch( Exception e) { Console.WriteLine(e.Message);};
+                }catch( Exception e) {  Output.TraceWarning(e.Message);};
             });
         }
 
@@ -376,16 +353,12 @@ namespace cwc {
                           fSetIconName(_oPath,"ToolChain" );
 
                          if(_oPath.Parent == oNodeToolchain) {
-                         //    Console.WriteLine("aaaaaaaaaaaaaaa  oNodeToolchainoNodeToolchain " +  _oPath.Path);
+                         //   Debug.fTrace(" oNodeToolchainoNodeToolchain " +  _oPath.Path);
                          }
                      } else {
                          oNodeLib.Nodes.Add(_oPath);
                         fSetIconName(_oPath,"Lib" );
                      }
-                   // _oPath. = oNodeLib;
-
-                  //    fAddTreeFolder(_oParentNode, _sInclude);
-                     //Console.WriteLine("_oCompiler.sCurrFolder" +    _oCompiler.sCurrFolder);
                  }
                 
                  aBaseNode.Add(oNodeProject);
@@ -396,7 +369,6 @@ namespace cwc {
                foreach(string _sInclude in  Data.aAllInclude) {
                     _oParentNode  = oNodeOther;
                      foreach (TreeNodePath _oNode in aBaseNode) {
-                         //    Console.WriteLine("_oNode.Path" +   _oNode.Text);
                          
                          if (_sInclude.IndexOf(_oNode.Path ) != -1) {
                              _oParentNode = _oNode;
@@ -404,7 +376,6 @@ namespace cwc {
                      }
 
                     fAddTreeFolder(_oParentNode, _sInclude);
-                  //   Console.WriteLine(" ---_sInclude " + _sInclude);
                 }
                 
 
@@ -804,7 +775,7 @@ namespace cwc {
 
                 ///// Clear ///
                 foreach(ToolStripItem _oItem in lauchToolStripMenuItem.DropDownItems){
-                    //Console.WriteLine("aa" + _oItem.Tag);
+
                     if( !(_oItem is ToolStripSeparator) ) {
                         if(_oItem.Tag != null){
                            aToRem.Add(_oItem);
@@ -838,7 +809,7 @@ namespace cwc {
 
                     _oNew.Click += fRecentClick;
                 }
-               }catch( Exception e) { Console.WriteLine(e.Message);};
+               }catch( Exception e) { Output.TraceWarning(e.Message);};
 
 
            });
@@ -2152,8 +2123,7 @@ namespace cwc {
                   
                             msMenu.Top = nInitialPosTop;
                             msMenu.Left = Width - nInitialPosLeft;
-         //    Console.WriteLine("Restored " +    ConfigMng.oConfig.vStartPos);
-         
+
                     Location = new Point(-999999,-999999);//Why??
                     Location = ConfigMng.oConfig.vStartPos; //Restore previous loc
 
@@ -2233,7 +2203,6 @@ namespace cwc {
             var p = fctbConsole.PointToPlace(e.Location);
             if (CharIsHyperlink(p))
             {
-               // string _sLink = fctb.GetRange(p, p).GetFragment(oLinkStyle,false).Text;
                 Range _oLink = fctbConsole.GetRange(p, p).GetFragment(oLinkStyle,false);
 
                 string _sLink = _oLink.Text;
@@ -2251,57 +2220,14 @@ namespace cwc {
 		                 winThread.Start();
 
                 }else { 
-                    /*
-                    //It's relative path?
-                    if( !(_sLink.Length > 1 && _sLink[1] == ':') ) {
-
-                        _sFile =  PathHelper.ExeWorkDir + _sFile;
-                    }
-                    */
 
                     FileUtils.RunInEditor(_sFile,  " -n" + nLine + " -c" +  nColomn);
                                   
                 }
-             //   _oLink.SetStyle(oHightLightStyle);
-
-                    
-
-
-
-            //   Console.WriteLine();
-                /*
-            string _sFile = PipeInput.sFile;
-            if (PipeInput.bRealive) {
-                _sFile = PathHelper.ExeWorkDir  + _sFile;
-            }
-			
-			 // MainForm.RunInEditor(PipeInput.sFile);
-		//	  MainForm.RunInEditor(PipeInput.sFile ,  " -lcpp" + " -n" + PipeInput.nLine + " -c" +  PipeInput.nColomn);
-			  FileUtils.RunInEditor(_sFile,  " -n" + PipeInput.nLine + " -c" +  PipeInput.nColomn);
-	*/
-
-             //   var url = fctb.GetRange(p, p).GetFragment(@"[\S]").Text;
-              //  Process.Start(url);
+   
             }
         }
 
-
-
-        /*
-         FastColoredTextBox CurrentTB
-        {
-            get {
-                if (tsFiles.SelectedItem == null)
-                    return null;
-                return (tsFiles.SelectedItem.Controls[0] as FastColoredTextBox);
-            }
-
-            set
-            {
-                tsFiles.SelectedItem = (value.Parent as FATabStripItem);
-                value.Focus();
-            }
-        }*/
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e) {
            //  CurrentTB.Copy();
@@ -2322,19 +2248,12 @@ namespace cwc {
 
         static bool bMouseDown = false;
         private void GuiConsole_MouseDown(object sender, MouseEventArgs e) {
-        //    bMouseDown =true;
-          //  Console.WriteLine("Down");
         }
 
         private void GuiConsole_MouseUp(object sender, MouseEventArgs e) {
-            // bMouseDown =false;
-             //   Console.WriteLine("Up");
         }
 
         private void GuiConsole_DragEnter(object sender, DragEventArgs e) {
-            
-          //  Console.WriteLine("asss");
-
         }
 
         
@@ -2459,11 +2378,6 @@ namespace cwc {
         private void treeViewPrj_AfterCollapse(object sender, TreeViewEventArgs e) {
                 fAutoSizeTree((TreeView) sender,pnTtreeViewPrj);
                 fSetTreeViewScrollBarMaximum((TreeView) sender);
-          //       Setting.oSettingsLauch.fSetNodes((TreeView) sender);
-            //pnTreeCenter.Refresh();
-           // pnTreeCenter.AutoScrollPosition = new Point( pnTreeCenter.Location.X + 10, pnTreeCenter.Location.Y);
-           // pnTreeCenter.AutoScrollPosition = new Point( pnTreeCenter.Location.X + 10, pnTreeCenter.Location.Y);
-         
         }
 
         public void fSetTreeViewScrollBarMaximum(TreeView _oTree) {
@@ -2475,8 +2389,6 @@ namespace cwc {
             if (hTreePrjScrollBar.Maximum < 1) {
                hTreePrjScrollBar.Maximum = 1;
             }
-           //Console.WriteLine("hTreePrjScrollBar " +  hTreePrjScrollBar.Maximum );
-           // Console.WriteLine("vTreePrjScrollBar " +  vTreePrjScrollBar.Maximum );
         }
 
         private void pnTreeCenter_Paint(object sender, PaintEventArgs e) {
@@ -2603,7 +2515,6 @@ namespace cwc {
                 if (text.IndexOf("pause") == 0 || text.IndexOf("break") == 0 || text.IndexOf("interrupt") == 0) {
                      SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
                 }
-
 
                 /*
                  if (text.IndexOf("pause")== 0 ){
@@ -2753,208 +2664,6 @@ namespace cwc {
             Output.TraceAction("Options/Debug Type/Sanitizer = TRUE");
         }
     }
-
-
-
-
-
-    #region MyScrollBar
-    /*
-    public class MyScrollBar: Control
-    {
-
-        public  int nDelta = 0;
-         
-
-        private int @value;
-
-        public int Value
-        {
-            get { return value; }
-            set {
-                if (this.value == value)
-                    return;
-                this.value = value;
-                Invalidate();
-                OnScroll();
-            }
-        }
-
-        private int maximum = 0;
-        public int Maximum
-        {
-            get { return maximum; }
-            set { maximum = value; Invalidate(); }
-        }
-
-        public int thumbSize = 1000;
-        public int ThumbSize
-        {
-            get { return thumbSize; }
-            set { thumbSize = value; Invalidate(); }
-        }
-
-        private Color thumbColor = Color.Gray;
-        public Color ThumbColor
-        {
-            get { return thumbColor; }
-            set { thumbColor = value; Invalidate(); }
-        }
-
-        private Color borderColor = Color.Silver;
-        public Color BorderColor
-        {
-            get { return borderColor; }
-            set { borderColor = value; Invalidate(); }
-        }
-
-        private ScrollOrientation orientation;
-        public ScrollOrientation Orientation
-        {
-            get { return orientation; }
-            set { orientation = value; Invalidate(); }
-        }
-
-        public event ScrollEventHandler Scroll;
-
-        public MyScrollBar()
-        {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
-
-
-        }
-
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                MouseScroll(e);
-            base.OnMouseDown(e);
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                MouseScroll(e);
-            base.OnMouseMove(e);
-        }
-
-
-        private void MouseScroll(MouseEventArgs e)
-        {
-            if(GuiConsole.bDown){
-            int v = 0;
-            switch(Orientation)
-            {
-                case ScrollOrientation.VerticalScroll: v = Maximum * (e.Y - nDelta - thumbSize / 2) / (Height - thumbSize) ; break;
-                case ScrollOrientation.HorizontalScroll: v = Maximum * (e.X - nDelta - thumbSize / 2) / (Width - thumbSize); break;
-            }
-            Value = Math.Max(0, Math.Min(Maximum, v));
-            }
-
-        }
-
-        public double fGetCenter(int _nDim) {
-
-            return ( (Value) * (_nDim - thumbSize) / Maximum) + thumbSize/2;
-        }
-
-
-        public virtual void OnScroll(int _nVal)
-        {
-            if (Scroll != null){
-                Value+= _nVal *-1;
-                if (Value< 0) {
-                    Value = 0;
-                }
-                 if (Value > Maximum) {
-                    Value = Maximum;
-                }
-                Scroll(this, new ScrollEventArgs(ScrollEventType.ThumbPosition,Value, Orientation));
-            }
-        }
-
-        public virtual void OnScroll(ScrollEventType type = ScrollEventType.ThumbPosition)
-        {
-            if (Scroll != null)
-                Scroll(this, new ScrollEventArgs(type, Value, Orientation));
-        }
-
-
-        public bool bFirst = true;
-
-        public  double nMinimalSize = 30;
-        public  double nToTumbSize = 0;
-        public  double nToPos = 0;
-        public  double nPos = 0;
-        public  double nTumbSize = 0;
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            //    Console.WriteLine("Maximum " +  Maximum);
-            if (bFirst) {
-                bFirst = false;
-                if(Height > Width) {
-                  nTumbSize = Height/2.0;
-                } else {
-                    nTumbSize = Width/2.0;
-                }
-                nToTumbSize = nTumbSize;
-              //  return;
-            }
-
-           
-            Rectangle thumbRect = Rectangle.Empty;
-            switch(Orientation)
-            {
-                case ScrollOrientation.HorizontalScroll:
-                    nToTumbSize  = Width/2.0-Maximum/20;
-                    thumbSize = (int) nTumbSize;
-                    if (nToTumbSize < nMinimalSize) { //Minimal
-                      nToTumbSize = nMinimalSize;
-                    }
-                
-                      thumbRect = new Rectangle( (int)(nPos) * (Width - thumbSize) / Maximum, 2, thumbSize, Height - 4);
-                
-                    //  thumbRect = new Rectangle(value * (Width - thumbSize) / Maximum, 2, thumbSize, Height - 4);
-                    break;
-                case ScrollOrientation.VerticalScroll:
-
-                    nToTumbSize  = Height/2.0-Maximum/20;
-                    thumbSize = (int) nTumbSize;
-                    if (nToTumbSize < nMinimalSize) { //Minimal
-                      nToTumbSize = nMinimalSize;
-                    }
-
-                  //  nToPos = value;
-                 
-                   // thumbRect = new Rectangle(2, (value) * (Height - thumbSize) / Maximum, Width - 4, thumbSize);
-                    thumbRect = new Rectangle(2, (int)(nPos) * (Height - thumbSize) / Maximum, Width - 4, thumbSize);
-                    break;
-            }
-
-            using(var brush = new SolidBrush(thumbColor))
-                e.Graphics.FillRectangle(brush, thumbRect);
-
-            using (var pen = new Pen(borderColor))
-                e.Graphics.DrawRectangle(pen, new Rectangle(0, 0, Width - 1, Height - 1));
-        }
-
-        internal void fUpdate() {   
-            this.BeginInvoke((MethodInvoker)delegate  {
-                      if(Base.bAlive){
-                    nPos += (value  - nPos) / 5;
-
-
-                    nTumbSize  +=  (nToTumbSize - nTumbSize )/ 10.0;
-                    if(Math.Abs(nTumbSize  - nToTumbSize) >= 1.0 ||  Math.Abs(nPos  - value) >= 1.0){
-                       this.Refresh();
-                    }
-              }
-            });
-        }
-    }
-    */
-    #endregion
-
 
 
 }

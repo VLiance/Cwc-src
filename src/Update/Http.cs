@@ -295,13 +295,10 @@ namespace cwc
 
 
 		 public static void fGetHttp(ParamHttp _oParam)	{
-//if(_oParam.sURL[8] == 'a'){
 
 
 		Console.WriteLine("------------------------fGetHttp : " +  _oParam.sURL);
-		
 
-	//if(!_oParam.bDownloadFile) {
 	if(true) {
 
 				LauchTool _oLauchUrl = new LauchTool();
@@ -312,20 +309,11 @@ namespace cwc
 				_oLauchUrl.dExit = new LauchTool.dIExit(fUrlRequestComplete);
 				_oLauchUrl.oCustom = (Object)_oParam;
 
-		//_oLauchUrl.bRunInThread = false;
-		//_oLauchUrl.bWaitEndForOutput = true;
-					_oParam.sResult  = "";
+				_oParam.sResult  = "";
 	
-				//	_oLauchUrl.fLauchExe( PathHelper.ToolDir + "curl/curl.exe", "-i  -k -L  -A \"Cwc - app\" \"" + _oParam.sURL + "\"");
-					//_oLauchUrl.fLauchExe( PathHelper.ToolDir + "curl/curl.exe", "--anyauth -f -i  -k -L  -A \"Cwc - app\" \"" + _oParam.sURL + "\"");
-					//_oLauchUrl.fLauchExe( PathHelper.ToolDir + "wget/wget.exe", "--no-check-certificate -S -O - \"" + _oParam.sURL + "\"");
 				if(!_oParam.bDownloadFile) {
 					_oLauchUrl.fLauchExe( PathHelper.ToolDir + "wget/wget.exe", "--no-check-certificate -S -O - \"" + _oParam.sURL + "\"");
 				}else{
-                  //    _oLauchUrl.dOut += new LauchTool.dIOut(fHttpConsole);
-			      //  _oLauchUrl.dError += new LauchTool.dIError(fHttpConsole);
-
-                    Console.WriteLine("------------------Download File !! ");
 					_oLauchUrl.fLauchExe( PathHelper.ToolDir + "wget/wget.exe", "--no-check-certificate -O \"" +  _oParam.sToFile +  "\" \"" + _oParam.sURL + "\"");
 				}
 			//	
@@ -346,12 +334,8 @@ namespace cwc
 		public static void 	fHttpOutInfo(LauchTool _oTool, string _sOut){
 	
 			ParamHttp _oParam = (ParamHttp)_oTool.oCustom;
-			//_oParam.sResult = _sOut;
 			_oParam.sInfo += _sOut + "\n";
-				//_oParam
-			//Debug.fTrace("E: " + _sOut);
 
- //"Length:"
 			if(_oParam.bDownloadFile) {
                 int _nLimit = -1;
 				if(_sOut.Length > 7 && _sOut[0] == 'L' && _sOut[6] == ':'){
@@ -364,10 +348,9 @@ namespace cwc
 					}
 			
 					int.TryParse( _sSubLength, out _nLimit);
-				//	Debug.fTrace("--Total!! " + _nLimit);
 				}
                 _oParam.nTotalBytes = _nLimit;
-	//	Debug.fTrace("--_sOut[_sOut.Length - 1 ]!! " + _sOut[_sOut.Length - 1 ]);
+
 				if(_sOut[_sOut.Length - 1 ] == 's'){
 					int _nEnd = _sOut.IndexOf('K');
 					if(_nEnd != -1){
@@ -375,7 +358,7 @@ namespace cwc
 						int _nByte = -1;
 						int.TryParse( _sBytes, out _nByte);
 						_oParam.nBytes = _nByte*1000;
-						//	Debug.fTrace("--nBytes!! " + _oParam.nBytes);
+
 						fUrlProgress(_oParam);
 					}
 				}
@@ -390,11 +373,7 @@ namespace cwc
                     }
                 }
                     
-                // if(Data.oGuiConsole != null){ aLineToDelete.Add( Data.oGuiConsole.Fctb.LinesCount-1); }
-
-				Debug.fRPrint("Download: " + _sOut + "                                                                                                 ");
 			}
-		////	_oParam.oHeader = _response.Headers;
 		}
 
 
@@ -402,22 +381,11 @@ namespace cwc
 	
 			ParamHttp _oParam = (ParamHttp)_oTool.oCustom;
 			_oParam.sResult += _sOut;
-		//	Debug.fTrace(": " + _sOut);
-
-		//	_oParam.oHeader = _response.Headers;
-
-			
 
 		}
 		public static void 	fUrlRequestComplete(LauchTool _oTool){
 		
-			
 			ParamHttp _oParam =   (ParamHttp)_oTool.oCustom;
-	//Console.WriteLine("------------------ Finish :\n"  +_oParam.sURL );
-
-	//Console.WriteLine( _oParam.sResult );
-	//Console.WriteLine("" );
-	//Console.WriteLine("------------------" );
 			if(_oParam.bDownloadFile) {
 
 
@@ -431,23 +399,8 @@ namespace cwc
                 Output.TraceGood("Downloaded: " + _oParam.sToFile);
 			}
        
-			///if(!_oParam.bDownloadFile) {
-				_oParam.dComplete(_oParam);
-			//}
+		    _oParam.dComplete(_oParam);
 		}
-
-
-
-
-
-
-
-/*
-	public static  void fProgress(Object sender, RunWorkerCompletedEventArgs e) {
-			ParamHttp _oParam =   (ParamHttp)e.Result;
-			_oParam.dComplete(_oParam);
-		}*/
-
 
 
  public static void fUrlProgress(ParamHttp _oParam)  {
@@ -481,7 +434,7 @@ namespace cwc
 							_oParam.nLastBytes = _oParam.nBytes;
 
 
-			//		Debug.fTrace("pc" + _oParam.nPercentage + " bytesIn  " + bytesIn + " totalBytes " + totalBytes);
+			                //Debug.fTrace("pc" + _oParam.nPercentage + " bytesIn  " + bytesIn + " totalBytes " + totalBytes);
 
 							_oParam.dProgress(_oParam);
 
@@ -898,10 +851,6 @@ zipball_url	"https://api.github.com/repos/Maeiky/LibRT/zipball/0.0.2"
 				Tags _aTags = (Tags)_oData.oContainer;
 				Tags _aNewTags;
 
-			//	Debug.fTrace("fGetTagData " + _oData.sResult);
-
-				
-				 //_aNewTags = fExtractTags_API(_oData.sResult) ;
 				 _aNewTags = fExtractTags_API( fBetween( _oData.sResult, "[", "]",0,true,true )  ) ;
 			
 			
@@ -911,22 +860,13 @@ zipball_url	"https://api.github.com/repos/Maeiky/LibRT/zipball/0.0.2"
 				}else{
 					Debug.fTrace("No new TAG " );
 				}
-//Console.WriteLine("assssssssssss");
 
-			
-	//			Debug.fTrace("--Count: " + _aNewTags.Count.ToString());
-	//			Debug.fTrace("--last: " + _aNewTags[_aNewTags.Count-1].name);
-
-			//	string _sNext = oPa oHeader
 				string _sAllLink =  "";
 				if(_oData.oHeader != null) {   //C# http method
 					 _sAllLink = _oData.oHeader["Link"];
 				}else{
 					_sAllLink = fBetween(_oData.sInfo, "Link:" , "\n");
 				}
-
-		//		string _sModified = _oData.oHeader["Last-Modified"];
-			//	int _nRemain = _oData.oHeader["X-RateLimit-Limit"];
 
 				string _sNextLink = "";
 				if(!FileUtils.IsEmpty(_sAllLink)) {
@@ -1172,24 +1112,6 @@ zipball_url	"https://api.github.com/repos/Maeiky/LibRT/zipball/0.0.2"
 			
 		}
 
-
-/*
-		
-		 public static void fTest() {
-							* /// Sample code using the above helper methods
-			/// to serialize and deserialize the Release object
- 
-			Release myPerson = new Release("Chris", "Pietschmann");
- 
-			// Serialize
-			string json = JSON.Serialize<Release>(myPerson);
- 
-			// Deserialize
-			myPerson = JSON.Deserialize<Release>(json);
-		}
-
-
-		*/
 		 public static string To<T>(T obj)
 			{
 				string retVal = null;
@@ -1214,30 +1136,6 @@ zipball_url	"https://api.github.com/repos/Maeiky/LibRT/zipball/0.0.2"
 
 				return obj;
 			}
-
-
-
-/*
- * 
-* /// Sample code using the above helper methods
-/// to serialize and deserialize the Release object
- 
-Release myPerson = new Release("Chris", "Pietschmann");
- 
-// Serialize
-string json = JSONHelper.Serialize<Release>(myPerson);
- 
-// Deserialize
-myPerson = JSONHelper.Deserialize<Release>(json);
-*/
-
-
-
-
-
-
-
-
 
 
 	}

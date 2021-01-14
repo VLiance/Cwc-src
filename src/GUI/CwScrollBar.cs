@@ -162,7 +162,6 @@ namespace cwc {
         public  double nTumbSize = 0;
         protected override void OnPaint(PaintEventArgs e)
         {
-           //    Console.WriteLine("Maximum " +  Maximum);
             if (bFirst) {
                 bFirst = false;
                 if(Height > Width) {
@@ -171,13 +170,7 @@ namespace cwc {
                     nTumbSize = Width/2.0;
                 }
                 nToTumbSize = nTumbSize;
-              //  return;
             }
-
-            /*
-            if (Maximum <= 0){
-                return;
-            }*/
 
             Rectangle thumbRect = Rectangle.Empty;
             switch(Orientation)
@@ -190,8 +183,6 @@ namespace cwc {
                     }
                 
                       thumbRect = new Rectangle( (int)(nPos) * (Width - thumbSize) / Maximum, 2, thumbSize, Height - 4);
-                
-                    //  thumbRect = new Rectangle(value * (Width - thumbSize) / Maximum, 2, thumbSize, Height - 4);
                     break;
                 case ScrollOrientation.VerticalScroll:
 
@@ -201,13 +192,9 @@ namespace cwc {
                       nToTumbSize = nMinimalSize;
                     }
 
-                  //  nToPos = value;
-                 
-                   // thumbRect = new Rectangle(2, (value) * (Height - thumbSize) / Maximum, Width - 4, thumbSize);
                     thumbRect = new Rectangle(2, (int)(nPos) * (Height - thumbSize) / Maximum, Width - 4, thumbSize);
                     break;
             }
-                // Console.WriteLine("Paint " +  nPos);
 
             using(var brush = new SolidBrush(Color.FromArgb(60,66,70)))
                 e.Graphics.FillRectangle(brush, thumbRect);

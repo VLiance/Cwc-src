@@ -612,18 +612,6 @@ public class ProcessOutputHandler
 		}
     }
 
-/*
-    public void ReadStdOut() {
-        string line;
-		  while (!proc.HasExited){
-			Thread.Sleep(1);
-
-				line = proc.StandardOutput.ReadLine();
-			if (line != ""){
-            StdOut += line;
- 			Console.WriteLine("OO:" + line);
-        }}
-    }*/
 
 }
 

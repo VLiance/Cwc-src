@@ -464,7 +464,7 @@ namespace cwc
                 if(File.Exists(file)) { 
                     
                      if(Data.fIsDataTrue("IDE/LiteWayv") ){
-                        Console.WriteLine(" PathHelper.ExeWorkDir " +  PathHelper.ExeWorkDir );
+                        Debug.fTrace(" PathHelper.ExeWorkDir " +  PathHelper.ExeWorkDir );
                         fLauchIDE( PathHelper.CwcRootPath() +  "LiteWayv.exe", file,  Arg );
                         return;
                     }
@@ -473,13 +473,10 @@ namespace cwc
                         return;
                     }
 
-                   Console.WriteLine("No Editor selected for: " +file  + " " + Arg);
-
-                 //   Console.WriteLine("exist: " +file );
+                   Output.TraceError("No Editor selected for: " +file  + " " + Arg);
 
                 }else{
 
-                     //     Console.WriteLine("ass:" +file  + "|");
 					if( Directory.Exists(file)) { 
 				       Process.Start("explorer.exe", file.Replace('/','\\'));
 					}
@@ -545,8 +542,6 @@ namespace cwc
                 exeProcess.StartInfo.FileName = _sFullPath;
                 exeProcess.StartInfo.Arguments = _sFirstLoadArg + Arg  + " " + file; //Restore quotes
                 exeProcess.Start();
-            Console.WriteLine("strart  "  +  exeProcess.StartInfo.FileName);
-            Console.WriteLine("arg  "  +  exeProcess.StartInfo.Arguments);
 
         }
 

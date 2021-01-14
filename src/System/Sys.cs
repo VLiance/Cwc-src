@@ -23,11 +23,8 @@ namespace cwc {
             results.MoveNext();
             var queryObj = results.Current;
             var parentId = (uint)queryObj["ParentProcessId"];
-           oParentProcess = Process.GetProcessById((int)parentId);
+            oParentProcess = Process.GetProcessById((int)parentId);
 		    sParentName =  oParentProcess.ProcessName;
-      //    Console.WriteLine("I was started by {0}", oParentProcess.ProcessName);
-        // Console.WriteLine("I was started by {0}", oParentProcess.MainModule.ModuleName);
-
          }
 
 

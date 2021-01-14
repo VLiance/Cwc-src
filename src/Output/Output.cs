@@ -94,14 +94,11 @@ namespace cwc
                             }else if (c == '\x0C') {
                                 bCustomEscape = true;
                             }else {
-						//	Console.Write(c);
 							_sResult += c;
                         }
                     }
 
 			    	Debug.fPrint(_sResult );
-				//	Debug.fTrace(_sResult);
-
                 }
 
 				return _sResult;
@@ -155,7 +152,6 @@ namespace cwc
             foreach(LauchTool _oLauch in LauchTool.aLauchList){
                 if( _oLauch.sExeName.ToLower() == _sAppNameNorm) {
                     Output.TraceActionLite("C> Send[" +_sAppName + "]:" +_sCmd);
-                  //  _oLauch.fSend(_sCmd.Substring(_sCmd.Length));
                     _oLauch.fSend(_sCmd.Trim());
                     return;
                 }
@@ -182,23 +178,12 @@ namespace cwc
                 }
                  Output.TraceErrorLite("C> Unable to Process:" + _sOut);
             }
-
-
-            /*
-            if(_sOut.Length > 8 && _sOut[3] == '(' && _sOut[4] == 'a' && _sOut[5] == 'd' && _sOut[6] == 'd' && _sOut[7] == ')') {
-                //add to cmd list
-                aList.Add(_sOut.Substring(8));
-                     Output.TraceWarning("Add:" +_sOut.Substring(8) );
-            }*/
         }
-
-
 
 
 
         public static void ProcessStdErr( string _sOut){
             if(_sOut.Length > 4 && _sOut[0] == 'C' && _sOut[1] == 'm' && _sOut[2] == 'd' && (_sOut[3] == ':' || _sOut[3] == '('|| _sOut[3] == '[')){
-                //Output.TraceActionLite("C> " + _sOut);
                 ProcessCmd(_sOut);
 
             }else { 
@@ -222,19 +207,14 @@ namespace cwc
 		}
 
         public static void TraceErrorLite(string _sText)  {
-
 			Output.TraceColored("\f0C" + _sText ); 
 		}
         public static void TraceActionLite(string _sText)  {
-
 			Output.TraceColored("\f0B" + _sText ); 
 		}
 
-
-
-
-         public static  string sWarningColor = "\fE4";
-         public static  string sWarningColorLite = "\f0E";
+        public static  string sWarningColor = "\fE4";
+        public static  string sWarningColorLite = "\f0E";
 		public static void TraceWarning(string _sText){
 
 			Output.TraceColored(sWarningColor + _sText ); 
@@ -242,7 +222,6 @@ namespace cwc
 
         public static  string sUndefinedColor = "\f4D";
     	public static void TraceUndefined(string _sText){
-
 			Output.TraceColored(sUndefinedColor + _sText ); 
 		}
         
@@ -256,18 +235,15 @@ namespace cwc
         public static  string sGoodColorLite = "\f0A";
 		public static void TraceGood(string _sText)
 		{
-				//Output.TraceColored("\fB3" + _sText ); 
 				Output.TraceColored("\f2A" + _sText ); 
 		}
 		public static void TraceAction(string _sText)
 		{
-				//Output.TraceColored("\fB3" + _sText ); 
 				Output.TraceColored("\f3B" + _sText ); 
 		}
 
         public static void TraceReturn(string _sText)
 		{
-				//Output.TraceColored("\fB3" + _sText ); 
 				Output.TraceColored("\f3B" + _sText ); 
 		}
 
@@ -276,7 +252,6 @@ namespace cwc
         public static Boolean bFirstTrace = true;
         public static string TraceColored(string _sText)  { 
             if(bFirstTrace){bFirstTrace = false; fTraceThread(); }
-          //  TraceColoredThread(_sText);
             lock(oLockTrace) {
                  aTrace.Add(_sText);
             }
@@ -328,14 +303,10 @@ namespace cwc
             bCustomEscape = false;
             bCustomEscapeChar2 = false;
             bBold = false;
-			//bool _bColorChange = false; //Bug?
 			bool _bColorChange = false;
 
          string _sBuffer = "";
-    
 
-         //   StringBuilder _sBuffer = new StringBuilder(_sText.Length);
-     //     StringBuilder _sBuffer = new StringBuilder(_sText);
         int _nIndex_Start = 0;
         int _nIndex_End = 0;
              string _sShow = "";
@@ -347,13 +318,6 @@ namespace cwc
           int _nNumber = 7;
 
            foreach (char c in _sText)  {
-     /*
-unsafe{
-fixed (char* pString = _sText) { char* pChar = pString;
-    for (int i = 0; i < _sText.Length; i++) {        
-        char c = *pChar ;
-        pChar++;*/
-
                 if(bCustomEscapeChar2) {
                     bCustomEscapeChar2 = false;
                     //   int _nNumber = 7;
@@ -387,8 +351,6 @@ fixed (char* pString = _sText) { char* pChar = pString;
                     cCustomFirst = c;
                     if(c == 's') { //Return 2 default
 						 _bColorChange = true;
-                         // SetConsoleTextAttribute(SysAPI.hConsole, 7);
-                        //  _nColorCode = 7;
                          _nNumber = 7;
                          _nForeGround = 0;
 
@@ -433,7 +395,6 @@ fixed (char* pString = _sText) { char* pChar = pString;
                         _nNumIndex++;
                     }
 
-                   // Console.Write(c);
 
                 }else {
 
@@ -444,11 +405,8 @@ fixed (char* pString = _sText) { char* pChar = pString;
                       
                     } else if (!bInEscape ) {
 						
-                       // _sBuffer[_nIndex] = c;    
 						if(_bColorChange) {	_bColorChange = false;
 
-							//Data.fWPrint(_sBuffer);
-                          //   _sShow = _sText.Substring(_nIndex_Start,_nIndex_End-_nIndex_Start);
                             if(_sShow != ""){
 
 							    Debug.fWPrint(_sShow,(int)_nColorCode);
@@ -456,21 +414,18 @@ fixed (char* pString = _sText) { char* pChar = pString;
                                 _sShow = "";
                             }
                            
-                             SetConsoleTextAttribute(SysAPI.hConsole, (int)( (_nForeGround << 4) | _nNumber) );
+                            if(Data.oGuiConsole != null){
+                                SetConsoleTextAttribute(SysAPI.hConsole, (int)( (_nForeGround << 4) | _nNumber) );
+                            }
                              _nColorCode =  (uint)( (_nForeGround << 4) | _nNumber);
                                     
-						//	_sBuffer = "";
-                       //  _nIndex_Start = _nIndex_End;
-                          
 						}
 					    _sShow += c;
-                       // _sResult  += c;
                     }
                 }
            
             }
-
-  // }}         
+  
             if(_sShow != ""){
                
 			   Debug.fPrint(_sShow, (int)_nColorCode);
@@ -485,7 +440,7 @@ fixed (char* pString = _sText) { char* pChar = pString;
 
 
         public static void fExecuteCode(string _sTest)  {
-             // fExecuteCode( Int32.Parse(sb.ToString() ) );
+
             uint _nNumber = 0;
             try { 
              _nNumber =  UInt32.Parse( _sTest);
@@ -496,8 +451,7 @@ fixed (char* pString = _sText) { char* pChar = pString;
                 return;
             }
 
-            
-             if(_nNumber == 0)  {
+            if(_nNumber == 0)  {
                // _nNumber = 37;
                return;
             }
@@ -507,39 +461,16 @@ fixed (char* pString = _sText) { char* pChar = pString;
                 return;
             }
 
-
             //background
             if(_nNumber >= 40 && _nNumber <= 47 ) {
                 nForegroundColor = _nNumber - 40;
             }
 
-
             if(_nNumber >= 30 && _nNumber <= 37 ) {
                 _nNumber -= 30;
                 _nNumber = fCorrectColor(_nNumber);
-
-                /*
-                if(bBold) {
-                    _nNumber += 8;
-                }
-                 SetConsoleTextAttribute(Data.hConsole, _nNumber);
-                 */
-
-               nLetterColor = _nNumber;
-              
+                nLetterColor = _nNumber;
             }
-
-       /*
-                 Console.Write("--");
-            Console.Write(_nNumber.ToString());
-               Console.Write("/");
-                    Console.Write( (_nNumber & 0x08).ToString() );
-               Console.Write("--");
-               */
-
-            //SetConsoleTextAttribute(Data.hConsole, _nNumber);
-         //   SetConsoleTextAttribute(Data.hConsole, _nNumber & 0x08);
-
         }
 
          public static uint fCorrectColor(uint _nColor)  {
@@ -571,26 +502,17 @@ fixed (char* pString = _sText) { char* pChar = pString;
 		}
 
         public static uint fExecuteColor()  {
+            uint _nFinalNumber = nLetterColor;
+            if(bBold) {
+                _nFinalNumber += 8;
+            }
+            _nFinalNumber = _nFinalNumber | (nForegroundColor << 4);
 
-			//Print remaining Buffer
-	
-            /*
-             if(bCustomEscape) {
-                    SetConsoleTextAttribute(Data.hConsole, (int)nLetterColor);
-             }else {*/
-                  uint _nFinalNumber = nLetterColor;
-                 if(bBold) {
-                     _nFinalNumber += 8;
-                  }
-                 _nFinalNumber = _nFinalNumber | (nForegroundColor << 4);
-
-                 SetConsoleTextAttribute(SysAPI.hConsole, (int)_nFinalNumber);
-                return _nFinalNumber;
-           // }
-
-
+            if(Data.oGuiConsole != null){
+                SetConsoleTextAttribute(SysAPI.hConsole, (int)_nFinalNumber);
+            }
+            return _nFinalNumber;
         }
         
-
     }
 }

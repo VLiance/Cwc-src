@@ -51,16 +51,13 @@ namespace cwc.Compiler {
 
         internal void fSetValue(string _sValue, string _sType) {
 
-             if(_sValue.IndexOf("nasm") != -1) {
-                    Console.WriteLine("HERRE");
-            }
+           // if(_sValue.IndexOf("nasm") != -1) {
+           //       Debug.fTrace("nasm");
+            //}
 
             if (aVal.ContainsKey(_sType)) {
                 NdValue _oVal =  aVal[_sType];
 
-         
-
-                //_oVal.sValue += _sValue + " ";
                 _oVal.sValue += _sValue + " ";
                 oVal = _oVal;
             }else{

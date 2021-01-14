@@ -154,8 +154,6 @@ namespace cwc {
               foreach (string __sSeqArg in _aSequenceArg) { if (!IsEmpty(__sSeqArg)) {
 
                     string _sSeqArg = __sSeqArg.Replace('¦','>').Trim();//Recover Bug if we have =>
-                                      //          Console.WriteLine("_sSeqArg " +_sSeqArg);
-
 					aPrecObjOutput = new List<CppCmd>();
 					sPrecObjOutput = "";
 					
@@ -165,7 +163,6 @@ namespace cwc {
 
                    string[] _aArg = _sSeqArg.Split('|'); //Simultanous
                    foreach (string _sArg in _aArg) { if (!IsEmpty(_sArg)) {
-                       //     Console.WriteLine("ExtractCommandLine " +_sArg);
                         ExtractCommandLine(_sArg);
                   }}
 
@@ -249,7 +246,6 @@ namespace cwc {
 
 
 			foreach(CompilerData _oLib in  aLibList) { //TODO separate subcompiler and extract after!?
-					//Console.WriteLine("Extract Lib: " + _oLib.sFullName);
 			    Debug.fTrace("Extract Lib: " + _oLib.sFullName);
 				_oLib.fExtract(this);
 
@@ -552,7 +548,6 @@ namespace cwc {
 		}
 
 		public string fGetVar(string _sVar, bool _bWeak = false){
-          //  Console.WriteLine("------fGetVar " + _sVar );
 			return Data.fGetGlobalVar(_sVar,_bWeak);
 		}
 
@@ -595,18 +590,6 @@ namespace cwc {
        
 
         }
-        /*
-        internal void fAddDepandances(string _sText) {
-           
-            string[] aReadLine = _sText.Replace('\\','/').Split(new[]{ " /" }, StringSplitOptions.None);
-            foreach (string _sLine in aReadLine) {
-
-             //   Console.WriteLine("Dep:" + _sLine.Trim());
-                    
-            }
-
-        }
-        */
 
         static  public Dictionary<string, DepandanceData> aDependance = new Dictionary<string, DepandanceData>();
         internal bool bPreOutput_Link =false;
@@ -614,11 +597,8 @@ namespace cwc {
 
         internal bool fAddDepandance(Depandance _oFrom, string _sFile) { //Return true if newer file
 
-          //  Console.WriteLine("Check: " +_sFile );
             if(!File.Exists(_sFile)) {
-              //  _oFrom.bHaveNewerFile = true;//Not exist, force recompilation
                 _oFrom.fHaveNewerFile();//Not exist, force recompilation
-                //Console.WriteLine("!File.Exists(_sFile): " +_sFile );
                 return true; 
             }
            
@@ -627,7 +607,6 @@ namespace cwc {
             if (!aDependance.ContainsKey(_sFile)) {
                 _oDep = new DepandanceData();
                 _oDep.sPath = _sFile;
-            //    Console.WriteLine("Add: " + _sFile);
                 aDependance.Add(_sFile, _oDep);
             } else {
                 _oDep = aDependance[_sFile];
