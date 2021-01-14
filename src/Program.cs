@@ -12,6 +12,7 @@ using System.Management;
 using System.IO;
 using cwc.Utilities;
 using Microsoft.Win32;
+using Microsoft.Win32.SafeHandles;
 
 namespace cwc {
 
@@ -20,13 +21,28 @@ namespace cwc {
     static extern bool AttachConsole(int dwProcessId);
     private const int ATTACH_PARENT_PROCESS = -1;
 
+
+            internal const int STD_OUTPUT_HANDLE = -11;
+    internal const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    internal static extern SafeFileHandle GetStdHandle(int nStdHandle);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    internal static extern bool SetConsoleMode(SafeFileHandle hConsoleHandle, uint mode);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    internal static extern bool GetConsoleMode(SafeFileHandle handle, out uint mode);
+
+
     [STAThread]
     static int Main(string[] args){
-		try {
-                    
+
+		try {        
         // redirect console output to parent process;
         // must be before any calls to Console.WriteLine()
         AttachConsole(ATTACH_PARENT_PROCESS);
+       Console.WriteLine("***Start CWCs");
 
         Sys.fGetParentProcess();
         Debug.fTrace("Systeme mode: " + Sys.sParentName);
