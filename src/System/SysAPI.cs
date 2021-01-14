@@ -117,8 +117,6 @@ namespace cwc {
 				    Data.oConfigMng.SaveConfig(); //save screenn coordinate
                  }
 
-				//	MessageBox.Show("QUIIIIIIIIIIIIIIII!!!!!!!!!! ",  "ass", MessageBoxButtons.OK, MessageBoxIcon.Warning);		
-//MessageBox.Show("********QUIIIIIIIIIIIIIIII!!!!!!!!!! ",  "aaa", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 	Base.bAlive  = false;
    Data.bModeIDE = false;
      Build.StopBuild();

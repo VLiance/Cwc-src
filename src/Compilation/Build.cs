@@ -206,14 +206,7 @@ namespace cwc {
                             break;
                          }
 
-                      
-                     //   Thread.Sleep(1);
-                       //Thread.Sleep(1);
                         Thread.CurrentThread.Join(1);
-                        if (Data.bConsoleMode && !Data.bNowBuilding) {
-                            Base.bAlive = false;
-                        }
-                    
 
                     }
                 }

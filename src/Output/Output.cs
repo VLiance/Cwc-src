@@ -255,7 +255,7 @@ namespace cwc
             lock(oLockTrace) {
                  aTrace.Add(_sText);
             }
-
+         
             return _sText;
         }
 
@@ -274,6 +274,7 @@ namespace cwc
                               _sTrace = aTrace.First();
                                 aTrace.RemoveAt(0);
                             }
+
                         }
                         if(_sTrace != ""){
                              TraceColoredThread(_sTrace);
@@ -283,6 +284,7 @@ namespace cwc
                     }
 				    Thread.CurrentThread.Join(1);
 			    }
+
 		    }));  
 		    winThread.Start();
         }
