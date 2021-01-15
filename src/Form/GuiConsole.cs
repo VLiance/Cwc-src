@@ -2689,6 +2689,20 @@ namespace cwc {
            ConfigMng.oConfig.fSetOption("Options/Debug Type/Sanitizer", Data.sTRUE);
             Output.TraceAction("Options/Debug Type/Sanitizer = TRUE");
         }
+
+          
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+
+        const int WM_CHAR = 0x102;
+       const int WM_KEYDOWN           = 0x0100;
+       const int WM_KEYUP           = 0x0101;
+
+        //https://stackoverflow.com/questions/1264227/send-keystroke-to-other-control
+        private void fctbConsole_KeyPress(object sender, KeyPressEventArgs e) {
+              tbCmd.Select();
+           SendMessage((IntPtr)tbCmd.Handle, WM_CHAR, (IntPtr)(e.KeyChar ), (IntPtr)0);
+        }
     }
 
 

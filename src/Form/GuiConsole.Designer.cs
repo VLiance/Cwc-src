@@ -572,6 +572,7 @@
             this.fctbConsole.SelectionChanged += new System.EventHandler(this.fctb_SelectionChanged);
             this.fctbConsole.ScrollbarsUpdated += new System.EventHandler(this.fctb_ScrollbarsUpdated);
             this.fctbConsole.Load += new System.EventHandler(this.fctb_Load);
+            this.fctbConsole.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.fctbConsole_KeyPress);
             this.fctbConsole.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fctb_MouseClick);
             this.fctbConsole.MouseMove += new System.Windows.Forms.MouseEventHandler(this.fctb_MouseMove);
             // 

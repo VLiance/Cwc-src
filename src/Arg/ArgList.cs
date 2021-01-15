@@ -1,6 +1,8 @@
 ﻿using cwc.Update;
+using cwc.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -30,6 +32,7 @@ namespace cwc {
             new ArgStruct("-h", "--help",       getHelp     , "Get command list"),
             new ArgStruct("-v", "--version",    getVersion  , "Get current version"),
             new ArgStruct("-m", "--module",     getModule   , "Get installed module list"),
+            new ArgStruct("-r", "--release",    getRelease  , "Get module release list"),
 
         };
 
@@ -41,12 +44,18 @@ namespace cwc {
             return _in;
         }
         
-       public static void ProcessArg(string _arg) {
-            Output.TraceAction( _arg );
+       public static void ProcessArg(string _fullarg) {
+            Output.TraceAction( _fullarg );
+
+             CppCmd _oTemp =  new CppCmd(null,"");
+             string _sCmdArg = _oTemp.fExtractSpaceMultiVals(_fullarg, ' ' );
+            string _cmd = _oTemp.sRet_ExtractSpaceMultiValsCmd;
+
+
 
             foreach(ArgStruct _o in ArgList.aList) {
-                if( _o.arg_short == _arg || _o.arg_long == _arg) {
-                    _o.func(_arg);
+                if( _o.arg_short == _cmd || _o.arg_long == _cmd) {
+                    _o.func(_sCmdArg);
                     return;
                 }
             }
@@ -71,9 +80,66 @@ namespace cwc {
             }
         }
 
+
+       public static string[] getDirList(string _path) {
+             string[] _aDir = Directory.GetDirectories(_path);
+			Array.Sort(_aDir, StringComparer.InvariantCultureIgnoreCase);
+			Array.Reverse(_aDir);
+            return _aDir;
+        }
+
+
+        public static void getRelease(string _param) {
+            Output.TraceAction("PAram: " + _param);
+
+               ModuleData _oModule = ModuleData.fGetModule("VLianceTool/LibRT", true);
+			   _oModule.fGetLocalVersions();
+             _oModule.fReadHttpModuleTags();
+                
+
+
+                  
+                //Wait to finish
+                while(ModuleData.nRequestTag > 0) {
+                    Thread.CurrentThread.Join(1);
+                }
+              
+                List<ModuleLink> _aLink = new List<ModuleLink>();
+          
+                if( _oModule.aLinkList.Count > 0) {
+                    foreach(string _sKeyLink  in _oModule.aLinkList) {
+                        // Output.TraceWarning( "Recommended version:");
+                        Output.TraceReturn( " Tag:" + _oModule.sName + " : " + _sKeyLink );
+                        _aLink.Add(_oModule.aLink[_sKeyLink]);
+                       
+                    }
+                }else {
+                        Output.TraceError( "Not found:" + _oModule.sName  );
+                    // _bFound = false;
+                        
+                }
+                
+        }
+
         public static void getModule(string _param) {
 
 			 // fGetModule
+
+            string[] _aDir = getDirList( PathHelper.GetExeDirectory() + "Toolchain/");
+            foreach(string _sServer in _aDir) {
+                Output.TraceReturn(_sServer);
+                string[] _aSubDir = getDirList( _sServer);
+                foreach(string _sDir in _aSubDir) {
+                    Output.TraceReturn("    " + _sDir);
+                    string[] _aVersion = getDirList( _sDir);
+                    foreach(string _sVersion in _aVersion) {
+                        Output.TraceReturn("        " + _sVersion);
+
+
+                    }
+                }
+            }
+
 
                     
                     ModuleData _oModule = ModuleData.fGetModule("VLianceTool/LibRT", true);
