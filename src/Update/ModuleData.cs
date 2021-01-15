@@ -209,7 +209,12 @@ namespace cwc
         public  ModuleData( string _sAutorName, bool _bIsCompiler = false) {
 			sAutorName = _sAutorName;
 			 string[] _aValue = _sAutorName.Split('/'); //Squential
-			
+			if(_aValue.Length < 2) {
+                Output.TraceError("Module require 'Autor/Name'");
+                return;
+            }
+
+
 			sAutor =  _aValue[0];
 			sName = _aValue[1];
 			bIsCompiler = _bIsCompiler;

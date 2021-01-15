@@ -1,7 +1,9 @@
-﻿using System;
+﻿using cwc.Update;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace cwc {
@@ -25,10 +27,9 @@ namespace cwc {
 
     class ArgList {
         public static ArgStruct[] aList = new ArgStruct[] {
-            new ArgStruct("-v", "--version",    getVersion  , "Get current version"),
             new ArgStruct("-h", "--help",       getHelp     , "Get command list"),
-
-
+            new ArgStruct("-v", "--version",    getVersion  , "Get current version"),
+            new ArgStruct("-m", "--module",     getModule   , "Get installed module list"),
 
         };
 
@@ -67,9 +68,54 @@ namespace cwc {
                 _line += "(" + _o.description + ")";
 
                 Output.TraceReturn(_line);
-
-
             }
         }
+
+        public static void getModule(string _param) {
+
+			 // fGetModule
+
+                    
+                    ModuleData _oModule = ModuleData.fGetModule("VLianceTool/LibRT", true);
+			        _oModule.fGetLocalVersions();
+                   // _oModule.fUpdateStatus();
+
+                    foreach(string _sVersion in _oModule.aLocalVersion) { if(_sVersion != null) {
+                          Output.TraceReturn("Module: " + _oModule.sName + " version " + _sVersion);
+                    } }
+                    
+                  
+                    
+			       // _oModule.fReadHttpModuleTags();
+                
+
+
+                  /*
+                //Wait to finish
+                while(ModuleData.nRequestTag > 0) {
+                    Thread.CurrentThread.Join(1);
+                }
+              
+                List<ModuleLink> _aLink = new List<ModuleLink>();
+                foreach(string _sModule in Data.aRequiredModule) {
+                    ModuleData _oModule = ModuleData.fFindModule(_sModule);
+                    if( _oModule.aLinkList.Count > 0) {
+                        foreach(string _sKeyLink  in _oModule.aLinkList) {
+                          // Output.TraceWarning( "Recommended version:");
+                            Output.TraceAction( "Recommended version:" + _oModule.sName + " : " + _sKeyLink );
+                            _aLink.Add(_oModule.aLink[_sKeyLink]);
+                            break;
+                        }
+                    }else {
+                         Output.TraceError( "Not found:" + _sModule  );
+                       // _bFound = false;
+                        
+                    }
+                }*/
+
+
+        }
+
+
     }
 }
