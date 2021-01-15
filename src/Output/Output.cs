@@ -232,6 +232,12 @@ namespace cwc
 
 			Output.TraceColored(sErrorColor + _sText ); 
 		}
+		 public static void InternalError(Exception Ex)  {
+
+			Output.TraceColored("InternalError: " +Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace); 
+		}
+
+
         public static  string sGoodColorLite = "\f0A";
 		public static void TraceGood(string _sText)
 		{

@@ -2956,7 +2956,7 @@ bExtacted = true;
 				break;
 			
 				case ".bat": //old method? not sure
-				   Debug.fTrace("Found WRun, delocalising ... ");
+					Debug.fTrace("Found WRun, delocalising ... ");
 				    Delocalise.fDelocalise(_sAllArg);
                     
 				break;

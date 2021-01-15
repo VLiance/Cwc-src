@@ -272,7 +272,7 @@ namespace cwc {
                         _oNew.Click += fCheckMenu;
                     }
 
-                }catch( Exception e) {  Output.TraceWarning(e.Message);};
+                }catch( Exception e) {  Output.InternalError(e);};
             });
         }
 
@@ -768,49 +768,53 @@ namespace cwc {
             }));   winThread.Start();
         }
 
+
         public void fLoadRecent() {
            this.BeginInvoke((MethodInvoker)delegate  {
-                
-               List<ToolStripItem> aToRem = new List<ToolStripItem>();
 
-                ///// Clear ///
-                foreach(ToolStripItem _oItem in lauchToolStripMenuItem.DropDownItems){
+					   List<ToolStripItem> aToRem = new List<ToolStripItem>();
 
-                    if( !(_oItem is ToolStripSeparator) ) {
-                        if(_oItem.Tag != null){
-                           aToRem.Add(_oItem);
-                        }
-                     }
-                 }
-                foreach(ToolStripItem _oItem in aToRem){
-                   lauchToolStripMenuItem.DropDownItems.Remove(_oItem);
-                }
-                //////
+						///// Clear ///
+						foreach(ToolStripItem _oItem in lauchToolStripMenuItem.DropDownItems){
 
-               try { 
-                foreach(string _sRecent in ConfigMng.oConfig.aRecent){
-                     ToolStripMenuItem _oNew = new ToolStripMenuItem(_sRecent);
-                     _oNew.Tag = _sRecent;
+							if( !(_oItem is ToolStripSeparator) ) {
+								if(_oItem.Tag != null){
+								   aToRem.Add(_oItem);
+								}
+							 }
+						 }
+						foreach(ToolStripItem _oItem in aToRem){
+						   lauchToolStripMenuItem.DropDownItems.Remove(_oItem);
+						}
+						//////
 
-                    string _sName = _sRecent;
-                    string _sPath= _sRecent;
-                   int _nLastIndex = _sName.LastIndexOf("/");
-                    if (_nLastIndex != -1) {
-                         _sPath =  _sName.Substring(0,_nLastIndex);
-                        _sName = _sName.Substring(_nLastIndex);
-                    }
-                    _nLastIndex = _sPath.LastIndexOf("/");
-                     if (_nLastIndex != -1) {
-                        _sName = _sPath.Substring(_nLastIndex+1) + _sName;
-                    }
+					   try {
+				  
+								foreach(string _sRecent in ConfigMng.oConfig.aRecent.ToList()){
+									 ToolStripMenuItem _oNew = new ToolStripMenuItem(_sRecent);
+									 _oNew.Tag = _sRecent;
 
-                      _oNew.Text = _sName;
-                     lauchToolStripMenuItem.DropDownItems.Add(_oNew);
+									string _sName = _sRecent;
+									string _sPath= _sRecent;
+								   int _nLastIndex = _sName.LastIndexOf("/");
+									if (_nLastIndex != -1) {
+										 _sPath =  _sName.Substring(0,_nLastIndex);
+										_sName = _sName.Substring(_nLastIndex);
+									}
+									_nLastIndex = _sPath.LastIndexOf("/");
+									 if (_nLastIndex != -1) {
+										_sName = _sPath.Substring(_nLastIndex+1) + _sName;
+									}
 
-                    _oNew.Click += fRecentClick;
-                }
-               }catch( Exception e) { Output.TraceWarning(e.Message);};
+									  _oNew.Text = _sName;
+									 lauchToolStripMenuItem.DropDownItems.Add(_oNew);
 
+									_oNew.Click += fRecentClick;
+					
+						}
+
+					   }catch( Exception e) { Output.InternalError(e);};
+				 
 
            });
         }

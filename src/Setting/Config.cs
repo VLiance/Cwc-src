@@ -67,6 +67,7 @@ namespace cwc
 
         public static string sLastRecentPath = "";
         internal void fAddRecent(string _sPath) {
+
            _sPath = PathHelper.fNormalizePath(_sPath);
             int _nCount = 0;
             foreach (string _sRecent in aRecent) {
@@ -87,6 +88,7 @@ namespace cwc
             }
 
             sLastRecentPath = _sPath;
+
         }
 
          public bool fTestBool(string _sVal) {

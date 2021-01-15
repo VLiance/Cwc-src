@@ -32,13 +32,8 @@ namespace cwc.Utilities
             public static String GetCurrentDirectory()
         {
           //  return Path.GetDirectoryName(Application.StartupPath) + "/";
-            return System.IO.Directory.GetCurrentDirectory().Replace('\\', '/') + "/";
-
-
-		//	return  System.Reflection.Assembly.GetEntryAssembly().Location.Replace('\\', '/') + "/";;
-
-
-
+		  //  return System.IO.Directory.GetCurrentDirectory().Replace('\\', '/') + "/";
+			return Path.GetDirectoryName( System.Reflection.Assembly.GetEntryAssembly().Location).Replace('\\', '/') + "/";
         }
 
 

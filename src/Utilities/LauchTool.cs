@@ -109,8 +109,13 @@ public string sResult ="";
 				if(!File.Exists(sExePath)){
 					Output.TraceError("Unable to lauch: " + sExePath);
 				}*/
+
+					string _sPath = sExePath;
+					if(_sPath.IndexOf("..") != -1) {
+						_sPath = Path.GetFullPath( sExePath);
+					}
 				
-                     processStartInfo = new ProcessStartInfo( Path.GetFullPath( sExePath), sArg);
+                     processStartInfo = new ProcessStartInfo( _sPath, sArg);
                     processStartInfo.UseShellExecute = UseShellExecute;
 
 //bWaitEndForOutput = true;
@@ -168,11 +173,11 @@ public string sResult ="";
                         }
 
                 Debug.fTrace("--------Lauch: " +   sExePath + "  " + processStartInfo.Arguments  );
-
+				/*
                 if(!File.Exists( sExePath)) {
                     Output.TraceError("No executable file found to lauch: \"" +  sExePath + "\" " + processStartInfo.Arguments);
                      return "";
-                }
+                }*/
 
 
 			//Debug.fTrace("Arguments: " +   processStartInfo.Arguments );

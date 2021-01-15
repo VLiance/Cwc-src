@@ -21,7 +21,7 @@ namespace cwc {
                                 Application.Run(_oConsole);
 
 					 }catch(Exception Ex) {
-                         Output.TraceError("Error: " + Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace);
+                         Output.InternalError(Ex );
 					 }
 				  }));  
 

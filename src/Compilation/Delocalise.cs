@@ -53,7 +53,7 @@ namespace cwc {
             if (!File.Exists(_sPath)) {
                  Output.TraceError("File not found: " + _sPath);
             }
-             ConfigMng.oConfig.fAddRecent(_sPath);
+            
 
             string _sExtention = Path.GetExtension(_sPath).Trim();
           //  Debug.fTrace("GetExtension: " + Path.GetExtension(_sPath).ToLower());
@@ -62,12 +62,16 @@ namespace cwc {
                 case ".cwclean":
                 case ".cwmake":
                 case ".cwc":
+					 ConfigMng.oConfig.fAddRecent(_sPath); //cwclean?
                      // Debug.fTrace("!!!");
                 return fDelocaliseFile(_sPath, _sExtention);
 
                 case ".exe":
+					Output.TraceAction("Run: " + _sPath );
+					 return fDelocaliseExe(_sPath, "");
                 case ".bat":
-                return fDelocaliseExe(_sPath);
+					 Output.TraceAction("Run: " + _sPath );
+                return fDelocaliseExe("cmd.exe", "/C "+ _sPath);
                 default:
                     Output.TraceError("Unrecognised extention: " +_sExtention);
                     break;
@@ -103,39 +107,23 @@ namespace cwc {
             return _sResult;
       }
 
-	public static string fDelocaliseExe(string _sPath){
-        
-//fLauchConsoleCmd("");
+	public static string fDelocaliseExe(string _sExe, string _sArg){
 
-   
-
-		LauchTool _oSubCmd = new LauchTool();
-		_oSubCmd.dExit  = new LauchTool.dIExit(fDelocaliseEnd);
-		
-        _oSubCmd.bRedirectOutput = false;
-		//_oSubCmd.bReturnBoth= true;
-		_oSubCmd.bReturnError = true;
-		//_oSubCmd.bRunInThread = false;
-		_oSubCmd.bWaitEndForOutput = true;
-
-		string sResult = _oSubCmd.fLauchExe(_sPath, " @wDeloc ");
-
-         _oSubCmd.fSend("Cwc:Lauch by " + Data.MainProcess.Handle); //Remove "pause" bug ?
-
-		while(_oSubCmd.bExeLauch){
-			//Thread.Sleep(1);
+		LauchTool _oLauch = new LauchTool();
+            _oLauch.dOut =  Data.oLauchProject.fAppOut;
+            _oLauch.dError =  Data.oLauchProject.fAppError;
+			_oLauch.bHidden = true;
+            _oLauch.UseShellExecute = false;
+            _oLauch.bRedirectOutput = true;
+            _oLauch.bReturnBoth = true;
+			_oLauch.bWaitEndForOutput = true;
+			_oLauch.fLauchExe(_sExe, _sArg);
+            
+		while(_oLauch.bExeLauch){
             Thread.CurrentThread.Join(1);
 		}
-		sResult = _oSubCmd.sError;
 
-
-		int _nBegin = sResult.IndexOf("wOut");
-		if(_nBegin != -1){
-			sResult = sResult.Substring(_nBegin);
-		}
-		
-	//	fDebug("!!RESULT!: " + sResult);
-		//fDebug("-----------------------------: ");
+		string sResult = _oLauch.sResult;
 
 		return sResult;
 	}
