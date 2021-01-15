@@ -248,9 +248,15 @@ namespace cwc
 				Output.TraceColored("\f3B" + _sText ); 
 		}
 
-        public static void TraceReturn(string _sText)
+        public static void TraceAction2(string _sText)
 		{
 				Output.TraceColored("\f3B" + _sText ); 
+		}
+
+         public static void TraceReturn(string _sText)
+		{
+		    	//Output.TraceColored( "\f08" + _sText ); 
+		    	Output.TraceColored( "\f07" + _sText ); 
 		}
 
          public static readonly Object oLockTrace = new Object();

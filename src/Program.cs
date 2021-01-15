@@ -42,7 +42,6 @@ namespace cwc {
         // redirect console output to parent process;
         // must be before any calls to Console.WriteLine()
         AttachConsole(ATTACH_PARENT_PROCESS);
-       Console.WriteLine("***Start CWCs");
 
         Sys.fGetParentProcess();
         Debug.fTrace("Systeme mode: " + Sys.sParentName);

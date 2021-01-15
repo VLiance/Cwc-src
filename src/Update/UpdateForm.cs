@@ -521,26 +521,7 @@ namespace cwc
             var res = MessageBox.Show(this, "The Cwc must quit to perform the update, do it now?", "Update?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
             if (res == DialogResult.Yes)  {
 				UpdateCwc.fLauchUpdate( _oModule.sCurrFolder, oModule.sLastLocalVersion);
-		
-	   
-      /*
-         p.StartInfo.FileName = _oModule.sCurrFolder + "cwc.exe";
-				p.StartInfo.Arguments =  + " ";
-			    p.Start();*/
-		//		Data.fQuit(true);
-
-				//bCloseMe = true;
-             /*
-   p.StartInfo.FileName = PathHelper.GetExeDirectory() + "/Updater_x32/Updater.exe";
-          
-
-               */
             }
-			/* else  {
-                Process p = new Process();
-                p.StartInfo.FileName = PathHelper.WorkDirectory() + "/Updater_x32/Updater.exe";
-                p.Start();
-            }*/
          });
         }
 		

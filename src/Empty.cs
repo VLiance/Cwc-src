@@ -437,8 +437,8 @@ private const int WM_DESTROY = 0x0002  ;
 
             bool _bFound = true;
                 if(Data.oGuiConsole != null) {
-                  Data.bIWantGoToEnd = true;
-                   GuiConsole.sFormCmd = "GoEnd";
+                  //Data.bIWantGoToEnd = true;
+                   GuiConsole.sFormCmd = "GoEnd_Force";
                      //fctbConsole.GoEnd();
                 }
                 

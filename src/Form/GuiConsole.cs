@@ -443,7 +443,10 @@ namespace cwc {
                 }
                 fTrace(_sMsg, _nFore, _nBack);
                 //  fTrace(_sMsg, aStdStyle[_nFore]);
-                sFormCmd = "GoEnd";
+                if(sFormCmd == "") {
+                    sFormCmd = "GoEnd";
+                }
+
 
         }
 
@@ -882,6 +885,8 @@ namespace cwc {
        int nInitialPosLeft = 0;
          int nInitialPosTop = 0;
         private void GuiConsole_Load(object sender, EventArgs e) {
+             tbCmd.Select(); //Set focus to the textbox
+
              fUpdateCmdList();
 
              csPrj.ToggleState();//Clesed by default
@@ -1019,6 +1024,10 @@ namespace cwc {
                                              bIgnoreNextSelectionChange = true;
                                             fctbConsole.GoEnd();
                                          }
+                                    }
+                                     if(sFormCmd == "GoEnd_Force"){
+                                             bIgnoreNextSelectionChange = true;
+                                            fctbConsole.GoEnd();
                                     }
                                     sFormCmd = "";
                                 });
@@ -2477,15 +2486,28 @@ namespace cwc {
  
        // foreach(Process _oProc in GuiConsole.aProcList){ if(sCurrentCmdLauch == _oProc.ProcessName) {
         private void fSendCmd(){
-            foreach(LauchTool _oLauch in LauchTool.aLauchList){
-                if(sCurrentCmdLauch == _oLauch.sExeName) {
-                    if(_oLauch.bExeLauch) {
-                        fSendCmdToLauchTool(_oLauch, tbCmd.Text);
-                         tbCmd.Text = "";//Clear
-                        return;
+            if(sCurrentCmdLauch == "Cmd") {
+               ArgList.ProcessArg(tbCmd.Text );
+               
+                tbCmd.Text = "";//Clear
+
+                sFormCmd = "GoEnd_Force";
+
+
+            }else { 
+                foreach(LauchTool _oLauch in LauchTool.aLauchList){
+                    if(sCurrentCmdLauch == _oLauch.sExeName) {
+                        if(_oLauch.bExeLauch) {
+                            fSendCmdToLauchTool(_oLauch, tbCmd.Text);
+                             tbCmd.Text = "";//Clear
+                            return;
+                        }
                     }
                 }
             }
+
+          
+
             //fSendCmdCleanup();
         }
           private void fSendSignal(){

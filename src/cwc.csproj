@@ -78,6 +78,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arg\ArgList.cs" />
     <Compile Include="Compilation\ArgumentManager.cs" />
     <Compile Include="Compilation\ArgProcess.cs" />
     <Compile Include="GUI\CollapsibleSplitter.cs">
