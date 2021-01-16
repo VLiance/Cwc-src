@@ -46,7 +46,7 @@ namespace cwc {
         Sys.fGetParentProcess();
         Debug.fTrace("Systeme mode: " + Sys.sParentName);
                          
-        if (Sys.sParentName == "cmd") {
+        if (Sys.sParentName == "cmd" || Sys.sParentName ==  "powershell") {
             Data.bConsoleMode = true;
         }
 
@@ -83,7 +83,7 @@ namespace cwc {
         }
         
         CppCompiler.CheckAllThreadsHaveFinishedWorking(true);
-        Build.fDisableBuild();
+       // Build.fDisableBuild();
             
         if( Data.oGuiConsole != null){
             if (!Data.oGuiConsole.fCheckForDemos()){

@@ -427,10 +427,10 @@ namespace cwc
                                 _sResult  += _sShow;
                                 _sShow = "";
                             }
-                           
+                           /*
                             if(Data.oGuiConsole != null){
                                 SetConsoleTextAttribute(SysAPI.hConsole, (int)( (_nForeGround << 4) | _nNumber) );
-                            }
+                            }*/
                              _nColorCode =  (uint)( (_nForeGround << 4) | _nNumber);
                                     
 						}
@@ -446,7 +446,7 @@ namespace cwc
                 _sResult  += _sShow;
              }
              
-             SetConsoleTextAttribute(SysAPI.hConsole, (int)7);
+           //  SetConsoleTextAttribute(SysAPI.hConsole, (int)7);
             _nColorCode =  (int)7;
 
             return _sResult;
@@ -521,10 +521,10 @@ namespace cwc
                 _nFinalNumber += 8;
             }
             _nFinalNumber = _nFinalNumber | (nForegroundColor << 4);
-
+			/*
             if(Data.oGuiConsole != null){
                 SetConsoleTextAttribute(SysAPI.hConsole, (int)_nFinalNumber);
-            }
+            }*/
             return _nFinalNumber;
         }
         

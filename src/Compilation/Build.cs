@@ -160,17 +160,19 @@ namespace cwc {
         }
 
         internal static void fBeginBuild() {
+		
             //sArg = " -wCwcUpd C:/aaa ";
             Data.sArgExpand = ArgProcess.fExpandAll(Data.oArg , Data.sArg); //TODO Expand in another thread
      //     Data.sArgExpand = ArgProcess.fTestIfBeginWithAFile( Data.sArgExpand, true);//add lauch arg
 
           //Build.StartBuild();
 			 Delocalise.fDelocaliseInMainThread(Data.sArgExpand );
+
         }
 
         public static void fEnableBuild(){
             Data.bNowBuilding = true;
-         
+
                 //Debug.fTrace("Enable!!");
             if(Data.oGuiConsole != null) {
          
@@ -184,6 +186,8 @@ namespace cwc {
               
             if(!SysAPI.bIsLoadedFromAnotherCwcInstance){
                 if(Base.bAlive){
+
+				
 
                   // PipeInput.fConsoleExit(null);//Show >>
               //     Data.oLauchProject.fConsoleExit(null);//Show >>
@@ -208,6 +212,11 @@ namespace cwc {
 
                         Thread.CurrentThread.Join(1);
 
+						if( !Data.bForceTestNextCmd && Data.bConsoleMode &&  !Data.bNowBuilding) {
+							Thread.Sleep(100); //Wait for output --> Todo better solution (may miss some output)
+							Base.bAlive = false; //exit
+						}
+
                     }
                 }
             }
@@ -219,8 +228,10 @@ namespace cwc {
             if(Data.oLauchProject != null && Data.oLauchProject.oCurLauch != null && Data.oLauchProject.oCurLauch.bExeLauch) {
                 return;
             }
-
+				string ster = "";
             Data.bNowBuilding = false;
+
+
          CppCompiler.nTotalTicket = 0;
         CppCompiler.nCurrentTicket = 0;
         CppCompiler.nErrorTicket = -1;

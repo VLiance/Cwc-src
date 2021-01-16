@@ -45,7 +45,9 @@ public static extern int printf(string format, __arglist);
                   Data.oGuiConsole.fTraceColorCode(_sMsg + "\n", _nColorCode);
                 } else {
                     SysAPI.SetConsoleTextAttribute(SysAPI.hConsole, _nColorCode );
-                    Console.WriteLine(_sMsg);
+                    Console.Write(_sMsg);
+					SysAPI.SetConsoleTextAttribute(SysAPI.hConsole, 0x0F);
+					Console.Write("\n");
                 }   
           }
 
@@ -56,8 +58,8 @@ public static extern int printf(string format, __arglist);
             } else {
                 SysAPI.SetConsoleTextAttribute(SysAPI.hConsole, _nColorCode );
                 Console.Write(_sMsg);
+				SysAPI.SetConsoleTextAttribute(SysAPI.hConsole, 0x0F );
             }
-        
         }
 
 
