@@ -1026,6 +1026,7 @@ namespace cwc {
                                          }
                                     }
                                      if(sFormCmd == "GoEnd_Force"){
+											Thread.Sleep(100); //Wait for all output
                                              bIgnoreNextSelectionChange = true;
                                             fctbConsole.GoEnd();
                                     }

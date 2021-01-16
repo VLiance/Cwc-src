@@ -49,14 +49,11 @@ namespace cwc {
 			if(_fullarg == "") {
 				return;
 			}
-
             Output.TraceAction( _fullarg );
 
-             CppCmd _oTemp =  new CppCmd(null,"");
-             string _sCmdArg = _oTemp.fExtractSpaceMultiVals(_fullarg, ' ' );
+            CppCmd _oTemp =  new CppCmd(null,"");
+            string _sCmdArg = _oTemp.fExtractSpaceMultiVals(_fullarg, ' ' );
             string _cmd = _oTemp.sRet_ExtractSpaceMultiValsCmd;
-
-
 
             foreach(ArgStruct _o in ArgList.aList) {
                 if( _o.arg_short == _cmd || _o.arg_long == _cmd) {
@@ -64,7 +61,7 @@ namespace cwc {
                     return;
                 }
             }
-             Output.TraceWarningLite( "Unknow command" );
+            Output.TraceWarningLite( "Unknow command" );
         }
 
 
@@ -97,7 +94,8 @@ namespace cwc {
         public static void getRelease(string _param) {
             Output.TraceAction("PAram: " + _param);
 
-               ModuleData _oModule = ModuleData.fGetModule("VLianceTool/LibRT", true);
+               //ModuleData _oModule = ModuleData.fGetModule("VLianceTool/LibRT", true);
+               ModuleData _oModule = ModuleData.fGetModule("VLiance/Cwc", true);
 			   _oModule.fGetLocalVersions();
              _oModule.fReadHttpModuleTags();
                 
@@ -123,6 +121,7 @@ namespace cwc {
                     // _bFound = false;
                         
                 }
+				//GuiConsole.sFormCmd = "GoEnd_Force";
                 
         }
 

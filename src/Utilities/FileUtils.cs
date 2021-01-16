@@ -321,25 +321,24 @@ namespace cwc
         }
         public static void CopyFolderContents(string sourceFolder, string destinationFolder, string mask =  "*.*", string _sExept = "", Boolean createFolders = true, Boolean recurseFolders  = true)  {
 
-            Output.TraceAction("Copy: "  + sourceFolder + " to " + destinationFolder);
+            Output.TraceAction("Copy:   "  + sourceFolder + "  to  " + destinationFolder);
 
             try     {
-
-				if(!(sourceFolder.EndsWith(@"\") || sourceFolder.EndsWith(@"/") )) {
-				sourceFolder += @"\";
-				}
 
 				sourceFolder =	Path.GetFullPath(sourceFolder);
 				string _sSingleFile = "";
 				bool _bSourceIsFile = false;
 				if(!Directory.Exists(sourceFolder)) {
 					if(File.Exists(sourceFolder)) { //It's a file from source
-						 _sSingleFile = sourceFolder.Substring(0,sourceFolder.Length-1);
+						 //_sSingleFile = sourceFolder.Substring(0,sourceFolder.Length-1);
+						 _sSingleFile = sourceFolder;
 						sourceFolder = new FileInfo(_sSingleFile).Directory.FullName + "\\";
 						_bSourceIsFile = true;
 					}else {
 						return; //No source
 					}
+				}else { //It's a directory
+					if(!(sourceFolder.EndsWith(@"\") || sourceFolder.EndsWith(@"/") )) {sourceFolder += @"\";}
 				}
 				
 				string _sDestFileName = "";
@@ -401,7 +400,7 @@ namespace cwc
 
                     if (!destFile.Exists || srcFile.LastWriteTime > destFile.LastWriteTime )  {
                         File.Copy(srcFile.FullName, destFile.FullName, true);
-						 Output.Trace("\f3FCopy: \f37 "  + _sFileRelPath );
+						 Output.Trace("\f3FCopied: \f37"  + _sFileRelPath );
                     }
                 }
             }
