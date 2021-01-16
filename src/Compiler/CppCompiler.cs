@@ -240,7 +240,7 @@ namespace cwc
                             }
                             ////////////////////////////////////
                          }catch(Exception e){
-                            Output.TraceError(e.Message);
+                            Output.InternalError(e);
                             string _sSended = process.StartInfo.FileName + " " + process.StartInfo.Arguments;
                             Output.TraceAction(_sSended);
                             if(_sSended.Length >= 32768){

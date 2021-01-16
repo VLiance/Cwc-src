@@ -33,6 +33,7 @@ namespace cwc {
             new ArgStruct("-v", "--version",    getVersion  , "Get current version"),
             new ArgStruct("-m", "--module",     getModule   , "Get installed module list"),
             new ArgStruct("-r", "--release",    getRelease  , "Get module release list"),
+			//"--args \"" 
 
         };
 
@@ -45,6 +46,10 @@ namespace cwc {
         }
         
        public static void ProcessArg(string _fullarg) {
+			if(_fullarg == "") {
+				return;
+			}
+
             Output.TraceAction( _fullarg );
 
              CppCmd _oTemp =  new CppCmd(null,"");

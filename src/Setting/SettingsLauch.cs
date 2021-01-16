@@ -72,7 +72,7 @@ namespace cwc {
 				if (!IsRunAsAdmin()) {
 					Output.TraceWarning("Cwc Require Admin Rights");
 				}
-				Output.TraceError(e.Message);
+				Output.TraceError("Error: " + e.Message);
 				bSettingFail = true;
 			}
 

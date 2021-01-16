@@ -234,7 +234,7 @@ namespace cwc
 		}
 		 public static void InternalError(Exception Ex)  {
 
-			Output.TraceColored("InternalError: " +Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace); 
+			Output.TraceColored(sErrorColor + "InternalError: " +Ex.Message + " : " +Ex.Source  + " : " +Ex.StackTrace); 
 		}
 
 

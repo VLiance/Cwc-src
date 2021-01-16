@@ -232,23 +232,53 @@ namespace cwc {
 
              if(sArg[0] == '\"'){ //Remove current file arg when loaded from file
                     int _nFindEndQuote =  sArg.IndexOf("\"",1)+1;
-                    //fDebug("_nFindEndQuote:"+_nFindEndQuote);
                     sArg = sArg.Substring( _nFindEndQuote ,sArg.Length-_nFindEndQuote).Trim();
                 }
+				
+				//////////// Process ARGS ///////////////
+				string _stdArg =  Data.sArg;
+				//remvoe all before first "-"
+				int _first_arg = _stdArg.IndexOf("-");
+				if(_first_arg == -1) {
+					 _stdArg = "";
+				}else {
+					Data.sArg = _stdArg.Substring(0,_first_arg);
+					_stdArg = _stdArg.Substring(_first_arg);
+				}
+				ArgList.ProcessArg(_stdArg);
+				/////////////////////////////////////////
+
+				//////////////////Remove itself//////////////////
+				Data.sArg = Data.sArg.Trim();
+				string _sArgL = Data.sArg.ToLower();
+				int _idx_cwc = _sArgL.IndexOf("cwc.exe");
+				if (_idx_cwc != -1) {
+					Data.sArg = "";
+				}
+				 _idx_cwc = _sArgL.LastIndexOf("cwc");
+				if (_idx_cwc == _sArgL.Length - "cwc".Length) {
+					Data.sArg = "";
+				}
+				//////////////////////////////////////////////////////
+
+			 /*
                 //Remove current name exe cwc
                 if (sArg.Length >= 3 && sArg[0] == 'c' && sArg[1] == 'w'  && sArg[2] == 'c') {
                       sArg = sArg.Substring(3).Trim();
 
                  //   Data.fSetWorkingDir(_sFullValue);
                 }
+			*/
+
+			/*
+			//First arg is current file?
+			if(Sys.oParentProcess.ProcessName == "cmd"){ //Remove escape sequence
+			Data.sArg =  Data.sArg.Replace("\"|\"", "|");
+			}*/
 
 
-               //First arg is current file
-            if(Sys.oParentProcess.ProcessName == "cmd"){ //Remove escape sequence
-                Data.sArg =  Data.sArg.Replace("\"|\"", "|");
-           }
-
-
+			//Output.TraceAction("ARG: " +  Data.sArg );
+		
         }
 
 

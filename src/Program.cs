@@ -105,12 +105,12 @@ namespace cwc {
 
 		} catch (Exception e) {
 			if( Data.oGuiConsole != null) {
-				Output.TraceError(e.Message);
+				Output.InternalError(e);
 				while(true) {
 					Thread.Sleep(1);
 				}
 			}else {
-				Output.TraceError(e.Message);
+				Output.InternalError(e);
 			}
 		}
 		return 0;
