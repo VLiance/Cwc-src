@@ -66,12 +66,15 @@ namespace cwc {
             }
         }
 
-        Data.fGetMainArg();
+        // Data.fGetMainArg();
         fCheckForRegistringFiles();
 
         if( !Data.bConsoleMode){
             GuiManager.fCreateGUI();
         }
+         Data.fGetMainArg();
+
+
 
         if ( Data.sArg == "") { //No Argument
           

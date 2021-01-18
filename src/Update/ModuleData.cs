@@ -228,7 +228,7 @@ namespace cwc
 			_sMainFolder += sAutor + "/";
 
 
-			if(sAutor == "Honera") { //Special lib
+			if(sAutor == "VLiance") { //Special lib
 				switch(sName) {
 					case "Cwc" :
 						_sMainFolder = "";

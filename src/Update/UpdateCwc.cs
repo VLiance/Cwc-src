@@ -12,12 +12,12 @@ namespace cwc
 	public class UpdateCwc{
 
 
-		internal static void fLauchUpdate(string sCurrFolder, string _sVersion)
+		internal static void fLauchUpdate(string _sModuleFolder, string _sToFolder)
 		{
 			  LauchTool _oUpd =  new LauchTool();
 			_oUpd.bOutput = false;
 			_oUpd.UseShellExecute = true;
-			_oUpd.fLauchExe( sCurrFolder + "cwc.exe", " -wCwcUpd " + PathHelper.GetExeDirectory() + " -wCwcVer " + _sVersion, "","",true);
+			_oUpd.fLauchExe( _sModuleFolder + "cwc.exe", " --self_update \"" + _sToFolder + "\"", "","",true);
 		//		Console.WriteLine("Update to ver "  +_sVersion );
 			while(!_oUpd.bExeLauched && Base.bAlive) {
 				Thread.Sleep(1);

@@ -17,7 +17,7 @@ namespace cwc {
         public string arg_long = "";
         public string description = "";
          
-        public ArgStruct(string _short, string _long, dfunc _func, string _description) {
+        public ArgStruct(string _short, string _long, string _param , dfunc _func, string _description) {
             arg_short = _short;
             arg_long = _long;
             arg_long = _long;
@@ -29,12 +29,13 @@ namespace cwc {
 
     class ArgList {
         public static ArgStruct[] aList = new ArgStruct[] {
-            new ArgStruct("-h", "--help",       getHelp     , "Get command list"),
-            new ArgStruct("-v", "--version",    getVersion  , "Get current version"),
-            new ArgStruct("-m", "--module",     getModule   , "Get installed module list"),
-            new ArgStruct("-r", "--release",    getRelease  , "Get module release list"),
-            new ArgStruct("-u", "--update",		updateModule, "Update modules"),
-            new ArgStruct("-a", "--args",		getRelease	, "Pass argument to the lauching app"),
+            new ArgStruct("-h", "--help",          "",                          getHelp     , "Get command list"),
+            new ArgStruct("-v", "--version",       "",                          getVersion  , "Get current version"),
+            new ArgStruct("-m", "--module",        "",                          getModule   , "Get installed module list"),
+            new ArgStruct("-r", "--release",       "",                          getRelease  , "Get module release list"),
+            new ArgStruct("-u", "--update",		   "[Autor/Name/Version]",      updateModule, "Update modules"),
+            new ArgStruct("-a", "--args",		   "[arg list]",                getRelease	, "Pass argument to the lauching app"),
+            new ArgStruct("",   "--self_update",   "[dir]",                     self_update  , "Copy itself to dir and reload"),
 
         };
 
@@ -47,6 +48,7 @@ namespace cwc {
         }
         
        public static void ProcessArg(string _fullarg) {
+     
 			if(_fullarg == "") {
 				return;
 			}
@@ -91,6 +93,16 @@ namespace cwc {
             return _aDir;
         }
 
+
+       public static void  self_update(string _toDir) {
+            Output.TraceAction("Self_UPDATE to: " +_toDir );
+            UpdateCwc.fUpdateFiles(_toDir);
+            /*
+            while(true) {
+                Thread.Sleep(2);
+            }*/
+        }
+
 		public static void updateModule(string _param) {
 			if(_param == "") {
 				Output.TraceReturn("-= Update Your Modules =-");
@@ -121,24 +133,37 @@ namespace cwc {
                         // Output.TraceWarning( "Recommended version:");
                         Output.TraceReturn( " Tag:" + _oModule.sName + " : " + _sKeyLink );
                         _aLink.Add(_oModule.aLink[_sKeyLink]);
-                       
+                       break;
                     }
                 }else {
                         Output.TraceError( "Not found:" + _oModule.sName  );
                 }
-				/*
+				
+
+                /*
+                 Thread winThread = new Thread(new ThreadStart(() =>  {  
+                            Empty.fLoadModules();
+                          }));  
+		                 winThread.Start();
+                         */
 				Output.TraceWarning( "Starting Download ... (press 'n' to cancel)");
-				foreach(ModuleLink _oLink in _aLink) {
+				foreach(ModuleLink _oLink in _aLink) { //Only one
 						_oLink.fDownload();
 						while(_oLink.bDl_InProgress) {Thread.CurrentThread.Join(1); }
+                        /* temp
 						_oLink.fExtract();
 						while(_oLink.oModule.bExtact_InProgress) {Thread.CurrentThread.Join(1); }
+                        */
 				}
 					Output.Trace("");
 				Output.TraceGood( "---------------- All Required Module Completed ------------------");
-				foreach(ModuleLink _oLink in _aLink) {
+				foreach(ModuleLink _oLink in _aLink) { //only one TODO
 						Output.TraceAction(_oLink.oModule.sCurrFolder);
-				}*/
+                     UpdateCwc.fLauchUpdate( _oLink.oModule.sCurrFolder, PathHelper.GetCurrentDirectory());
+                    break;
+				}
+
+                
 
 
 		}

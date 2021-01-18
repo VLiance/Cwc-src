@@ -231,9 +231,9 @@ namespace cwc {
                Data.sArg = Environment.CommandLine.Trim() ;
 
              if(sArg[0] == '\"'){ //Remove current file arg when loaded from file
-                    int _nFindEndQuote =  sArg.IndexOf("\"",1)+1;
-                    sArg = sArg.Substring( _nFindEndQuote ,sArg.Length-_nFindEndQuote).Trim();
-                }
+                int _nFindEndQuote =  sArg.IndexOf("\"",1)+1;
+                sArg = sArg.Substring( _nFindEndQuote ,sArg.Length-_nFindEndQuote).Trim();
+            }
 				
 				//////////// Process ARGS ///////////////
 				string _stdArg =  Data.sArg;

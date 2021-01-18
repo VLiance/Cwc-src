@@ -42,10 +42,6 @@ namespace cwc {
 				}
 
 
-  //  bNothingToBuild = true;//aasss
-            
-
-
 				if(Data.bNothingToBuild || Data.bNonBuildCommand) {
 				//if(bNothingToBuild) {
 					Data.bNothingToBuild = false;
@@ -226,15 +222,12 @@ namespace cwc {
             if(Data.oLauchProject != null && Data.oLauchProject.oCurLauch != null && Data.oLauchProject.oCurLauch.bExeLauch) {
                 return;
             }
-				string ster = "";
             Data.bNowBuilding = false;
 
 			CppCompiler.nTotalTicket = 0;
 			CppCompiler.nCurrentTicket = 0;
 			CppCompiler.nErrorTicket = -1;
             
-            
-       //   Debug.fTrace("fDisableBuild");
             if(Data.oGuiConsole != null) {
                Data.oGuiConsole.fDisableBuild();
             }
