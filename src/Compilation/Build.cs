@@ -131,8 +131,6 @@ namespace cwc {
 
 					}else {
 
-                      
-                        
 					   Build.fDisableBuild();
 
 					}
@@ -231,10 +229,9 @@ namespace cwc {
 				string ster = "";
             Data.bNowBuilding = false;
 
-
-         CppCompiler.nTotalTicket = 0;
-        CppCompiler.nCurrentTicket = 0;
-        CppCompiler.nErrorTicket = -1;
+			CppCompiler.nTotalTicket = 0;
+			CppCompiler.nCurrentTicket = 0;
+			CppCompiler.nErrorTicket = -1;
             
             
        //   Debug.fTrace("fDisableBuild");
@@ -257,18 +254,11 @@ namespace cwc {
                  
             }
         }
-
-
-
-        
          
         public static void EndExecution(){
        
             fDisableBuild();
             Output.Trace("\f4C--End Execution--");
-           // KillProcessAndChildren( MainProcess.Id );
-                 
-            
         }
 
 

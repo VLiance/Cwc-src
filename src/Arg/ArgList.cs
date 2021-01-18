@@ -33,7 +33,8 @@ namespace cwc {
             new ArgStruct("-v", "--version",    getVersion  , "Get current version"),
             new ArgStruct("-m", "--module",     getModule   , "Get installed module list"),
             new ArgStruct("-r", "--release",    getRelease  , "Get module release list"),
-			//"--args \"" 
+            new ArgStruct("-u", "--update",		updateModule, "Update modules"),
+            new ArgStruct("-a", "--args",		getRelease	, "Pass argument to the lauching app"),
 
         };
 
@@ -90,6 +91,57 @@ namespace cwc {
             return _aDir;
         }
 
+		public static void updateModule(string _param) {
+			if(_param == "") {
+				Output.TraceReturn("-= Update Your Modules =-");
+				Output.TraceReturn("examples:");
+				Output.TraceReturn("-u cwc");
+				Output.TraceReturn("-u cwc v0.0.95.9");
+				Output.TraceReturn("-u VlianceTool/LibRT");
+			}
+			_param = _param.ToLower();
+			if(_param == "cwc") {
+				Output.TraceAction("update CWC!");
+			}
+
+
+			ModuleData _oModule = ModuleData.fGetModule("VLiance/Cwc", true);
+			   _oModule.fGetLocalVersions();
+             _oModule.fReadHttpModuleTags();
+                
+                //Wait to finish
+                while(ModuleData.nRequestTag > 0) {
+                    Thread.CurrentThread.Join(1);
+                }
+              
+                List<ModuleLink> _aLink = new List<ModuleLink>();
+          
+                if( _oModule.aLinkList.Count > 0) {
+                    foreach(string _sKeyLink  in _oModule.aLinkList) {
+                        // Output.TraceWarning( "Recommended version:");
+                        Output.TraceReturn( " Tag:" + _oModule.sName + " : " + _sKeyLink );
+                        _aLink.Add(_oModule.aLink[_sKeyLink]);
+                       
+                    }
+                }else {
+                        Output.TraceError( "Not found:" + _oModule.sName  );
+                }
+				/*
+				Output.TraceWarning( "Starting Download ... (press 'n' to cancel)");
+				foreach(ModuleLink _oLink in _aLink) {
+						_oLink.fDownload();
+						while(_oLink.bDl_InProgress) {Thread.CurrentThread.Join(1); }
+						_oLink.fExtract();
+						while(_oLink.oModule.bExtact_InProgress) {Thread.CurrentThread.Join(1); }
+				}
+					Output.Trace("");
+				Output.TraceGood( "---------------- All Required Module Completed ------------------");
+				foreach(ModuleLink _oLink in _aLink) {
+						Output.TraceAction(_oLink.oModule.sCurrFolder);
+				}*/
+
+
+		}
 
         public static void getRelease(string _param) {
             Output.TraceAction("PAram: " + _param);

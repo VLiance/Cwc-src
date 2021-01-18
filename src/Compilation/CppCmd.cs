@@ -2291,7 +2291,8 @@ bExtacted = true;
             if(_nIndex != -1) {
                 _sResult = _sValue.Substring(_nIndex+1).Trim();
              }else {
-                _sResult = _sValue.Trim();
+               // _sResult = _sValue.Trim();
+                _sResult ="";
             }
             //Output.TraceWarning("Result: " + _sResult);
             sRet_ExtractFullArg = _sResult;
