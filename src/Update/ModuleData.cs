@@ -490,6 +490,50 @@ namespace cwc
         }
 
 
+
+	private static int CompareVersion(string x, string y){
+			//// Keep only numbers //
+			for(int i = 0; i < x.Length; i++) {
+				if(x[i] >= '0' && x[i] <= '9') {
+					x = x.Substring(i);break;
+				}
+			}
+			for(int i = 0; i < y.Length; i++) {
+				if(y[i] >= '0' && y[i] <= '9') {
+					y = y.Substring(i);break;
+				}
+			}
+			////////////////////////
+			string[] _x = x.Split('.');
+			string[] _y = y.Split('.');
+			int min =  _x.Length;
+			if(_y.Length < _x.Length) {
+				min = _y.Length;
+			}
+			for(int i = 0; i < min; i++) {
+				string _sx = _x[i];
+				string _sy = _y[i];
+
+				if(_sx.Length > _sy.Length) {
+					return -1;
+				}
+				if(_sx.Length < _sy.Length) {
+					return 1;
+				}
+				//Egal in length
+				for(int j = 0; j < _sx.Length; j++) {
+					if(_sx[j] > _sy[j]) {
+						return -1;
+					}
+					if(_sx[j] < _sy[j]) {
+						return 1;
+					}
+				}
+
+			}
+			return 0; //Both are egal
+	}
+
     private static readonly Object oLock = new Object();
         public void fReadHttpModuleTagsFinish(ParamHttp _oParam)  {
             	//	Debug.fTrace("---------Get-------" + aTags.Count);
@@ -500,15 +544,15 @@ namespace cwc
 				    new ModuleLink(this, _oTag);
 			    }
                 aLinkList = new List<string>(this.aLink.Keys);
-                aLinkList.Sort();
-                aLinkList.Reverse();
+                aLinkList.Sort(CompareVersion);
+                //aLinkList.Sort();
+               // aLinkList.Reverse();
 
                 
                //	Debug.fTrace("---------FInish-------" + aLink.Count);
         	    if(oForm != null) {  oForm.fDataLoaded(); }
                 nRequestTag--;
             }
-
 
 		}
 

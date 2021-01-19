@@ -479,7 +479,7 @@ private const int WM_DESTROY = 0x0002  ;
 
                 if(_aLink.Count > 0) {
                   //   Output.TraceWarning( "Download? (yes / no)");
-                    Output.TraceWarning( "Starting Download ... (press 'n' to cancel)");
+                    Output.TraceWarning( "Starting Download ... ");
                     foreach(ModuleLink _oLink in _aLink) {
                           _oLink.fDownload();
                           while(_oLink.bDl_InProgress) {Thread.CurrentThread.Join(1); }

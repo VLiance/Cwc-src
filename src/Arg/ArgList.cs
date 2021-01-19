@@ -138,7 +138,6 @@ namespace cwc {
                 }else {
                         Output.TraceError( "Not found:" + _oModule.sName  );
                 }
-				
 
                 /*
                  Thread winThread = new Thread(new ThreadStart(() =>  {  
@@ -146,7 +145,7 @@ namespace cwc {
                           }));  
 		                 winThread.Start();
                          */
-				Output.TraceWarning( "Starting Download ... (press 'n' to cancel)");
+				Output.TraceWarning( "Starting Download ... ");
 				foreach(ModuleLink _oLink in _aLink) { //Only one
 						_oLink.fDownload();
 						while(_oLink.bDl_InProgress) {Thread.CurrentThread.Join(1); }
@@ -163,9 +162,6 @@ namespace cwc {
                     break;
 				}
 
-                
-
-
 		}
 
         public static void getRelease(string _param) {
@@ -176,8 +172,6 @@ namespace cwc {
 			   _oModule.fGetLocalVersions();
              _oModule.fReadHttpModuleTags();
                 
-
-
                   
                 //Wait to finish
                 while(ModuleData.nRequestTag > 0) {
