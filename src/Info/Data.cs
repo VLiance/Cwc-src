@@ -10,13 +10,16 @@ using System.Windows.Forms;
 namespace cwc {
     class Data {
 
+
+          public static string sVersion = "0.0.95";
+
         		internal static bool bUpdateMode = false;
 		internal static string sUpdateModeSrc = "";
 		internal static string sUpdateVer;
 		public static bool bNothingToBuild = false;
 
 
-        public static string sVersion = "0.0.95";
+      
 
         public static string sTRUE = "1";
         public static string sFALSE = "0";

@@ -36,9 +36,16 @@ namespace cwc {
             new ArgStruct("-u", "--update",		   "[Autor/Name/Version]",      updateModule, "Update modules"),
             new ArgStruct("-a", "--args",		   "[arg list]",                getRelease	, "Pass argument to the lauching app"),
             new ArgStruct("",   "--self_update",   "[dir]",                     self_update  , "Copy itself to dir and reload"),
+            new ArgStruct("",   "--message",       "[string]",                  message  , "Message to print at start"),
 
         };
 
+
+        public static bool bReceiveMSG = false;
+       public static void message(string _param) {
+            bReceiveMSG = true;
+             Output.Trace(_param);
+        }
 
         public static string alignTo(string _in, int _to) {
             for(int i = _in.Length; i < _to; i++) {
@@ -52,7 +59,7 @@ namespace cwc {
 			if(_fullarg == "") {
 				return;
 			}
-            Output.TraceAction( _fullarg );
+            //Output.TraceAction( _fullarg );
 
             CppCmd _oTemp =  new CppCmd(null,"");
             string _sCmdArg = _oTemp.fExtractSpaceMultiVals(_fullarg, ' ' );

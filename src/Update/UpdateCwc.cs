@@ -30,8 +30,10 @@ namespace cwc
 			  LauchTool _oUpd =  new LauchTool();
 			_oUpd.bOutput = false;
 			_oUpd.UseShellExecute = true;
+
+           //  Output.Trace("\f0AVersion " + Data.sVersion + "\fs \n" );
 		//	_oUpd.fLauchExe( sCurrFolder + "cwc.exe", "Updated ", "","",true);
-			_oUpd.fLauchExe( sCurrFolder + "cwc.exe", "-wCwcUpdated " + Data.sUpdateVer, "","",true);
+			_oUpd.fLauchExe( sCurrFolder + "cwc.exe", "--message \"\f2ACwc succefully updated to\f2B v" + Data.sVersion + "\fs\"", "","",true);
 				//				_process.StartInfo.Arguments = "Updated " + _sVersion + " " + Data.sWorkDir + " " + Data.sResendArg;	
 			while(!_oUpd.bExeLauched  && Base.bAlive) {
 				Thread.Sleep(1);

@@ -78,8 +78,11 @@ namespace cwc {
 
         if ( Data.sArg == "") { //No Argument
           
-            Output.Trace("\f0AVersion " + Data.sVersion + "\fs \n" );
-            Msg.fShowIntroMessage();
+            if(!ArgList.bReceiveMSG) {
+                Output.Trace("\f0AVersion " + Data.sVersion + "\fs \n" );
+                Msg.fShowIntroMessage();
+            }
+
             SysAPI.fSetWorkingDir(PathHelper.ExeWorkDir);
         }else {
             Build.fBeginBuild();
