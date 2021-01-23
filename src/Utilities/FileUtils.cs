@@ -313,13 +313,13 @@ namespace cwc
 
 
         ///////////////////////////// Copy Directory //////////////////////
-        public static void CopyFolderContents(string sourceFolder, string destinationFolder){
-            CopyFolderContents(sourceFolder, destinationFolder, "*.*", "", true, true);
+        public static string CopyFolderContents(string sourceFolder, string destinationFolder){
+            return CopyFolderContents(sourceFolder, destinationFolder, "*.*", "", true, true);
         }
-        public static void CopyFolderContents(string sourceFolder, string destinationFolder, string mask){
-            CopyFolderContents(sourceFolder, destinationFolder, mask,"", true, true);
+        public static string  CopyFolderContents(string sourceFolder, string destinationFolder, string mask){
+           return  CopyFolderContents(sourceFolder, destinationFolder, mask,"", true, true);
         }
-        public static void CopyFolderContents(string sourceFolder, string destinationFolder, string mask =  "*.*", string _sExept = "", Boolean createFolders = true, Boolean recurseFolders  = true)  {
+        public static string CopyFolderContents(string sourceFolder, string destinationFolder, string mask =  "*.*", string _sExept = "", Boolean createFolders = true, Boolean recurseFolders  = true)  {
 
             Output.TraceAction("Copy:   "  + sourceFolder + "  to  " + destinationFolder);
 
@@ -335,7 +335,7 @@ namespace cwc
 						sourceFolder = new FileInfo(_sSingleFile).Directory.FullName + "\\";
 						_bSourceIsFile = true;
 					}else {
-						return; //No source
+						return ""; //No source
 					}
 				}else { //It's a directory
 					if(!(sourceFolder.EndsWith(@"\") || sourceFolder.EndsWith(@"/") )) {sourceFolder += @"\";}
@@ -408,8 +408,11 @@ namespace cwc
             {
              //   System.Diagnostics.Debug.WriteLine(ex.Message + Environment.NewLine + Environment.NewLine + ex.StackTrace);
 				//Debug.fTrace("Error copy: " + ex.Message + " "  + ex.StackTrace);
-				Output.TraceError("Error copy: " + ex.Message + " "  + ex.StackTrace);
+			    string _sErr = "Error copy: " + ex.Message + " "  + ex.StackTrace;
+                Output.TraceError(_sErr);
+                return _sErr;
             }
+            return "";
         }
 
 

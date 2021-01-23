@@ -35,13 +35,22 @@ namespace cwc {
             new ArgStruct("-r", "--release",       "",                          getRelease  , "Get module release list"),
             new ArgStruct("-u", "--update",		   "[Autor/Name/Version]",      updateModule, "Update modules"),
             new ArgStruct("-a", "--args",		   "[arg list]",                getRelease	, "Pass argument to the lauching app"),
-            new ArgStruct("",   "--self_update",   "[dir]",                     self_update  , "Copy itself to dir and reload"),
             new ArgStruct("",   "--message",       "[string]",                  message  , "Message to print at start"),
+            new ArgStruct("",   "--self_update",   "[dir]",                     self_update  , "Copy itself to dir and reload"),
+            new ArgStruct("",   "--updated",       "[version]",                  updated  , "Validate update"),
 
         };
 
-
         public static bool bReceiveMSG = false;
+
+        public static void updated(string _param) {
+            bReceiveMSG = true;
+
+            UpdateCwc.fUpdated(_param);
+        
+        }
+
+
        public static void message(string _param) {
             bReceiveMSG = true;
              Output.Trace(_param);
@@ -100,8 +109,10 @@ namespace cwc {
             return _aDir;
         }
 
-
+            public static bool bSelfUpdate = false;
        public static void  self_update(string _toDir) {
+            bReceiveMSG = true;
+            bSelfUpdate = true;
             Output.TraceAction("Self_UPDATE to: " +_toDir );
             UpdateCwc.fUpdateFiles(_toDir);
             /*
@@ -120,55 +131,61 @@ namespace cwc {
 			}
 			_param = _param.ToLower();
 			if(_param == "cwc") {
-				Output.TraceAction("update CWC!");
-			}
+				Output.TraceAction("Update CWC");
+			}else {
+                return;
+            }
 
-
+            //Update CWC TODO to func
 			ModuleData _oModule = ModuleData.fGetModule("VLiance/Cwc", true);
-			   _oModule.fGetLocalVersions();
-             _oModule.fReadHttpModuleTags();
+			
+                Thread winThread = new Thread(new ThreadStart(() =>  {  
+                       _oModule.fGetLocalVersions();
+                     _oModule.fReadHttpModuleTags();
                 
-                //Wait to finish
-                while(ModuleData.nRequestTag > 0) {
-                    Thread.CurrentThread.Join(1);
-                }
-              
-                List<ModuleLink> _aLink = new List<ModuleLink>();
+                        //Wait to finish
+                        while(ModuleData.nRequestTag > 0) {
+                            Thread.CurrentThread.Join(1);
+                        }
+
+                    List<ModuleLink> _aLink = new List<ModuleLink>();
           
-                if( _oModule.aLinkList.Count > 0) {
-                    foreach(string _sKeyLink  in _oModule.aLinkList) {
-                        // Output.TraceWarning( "Recommended version:");
-                        Output.TraceReturn( " Tag:" + _oModule.sName + " : " + _sKeyLink );
-                        _aLink.Add(_oModule.aLink[_sKeyLink]);
-                       break;
+                    if( _oModule.aLinkList.Count > 0) {
+                        foreach(string _sKeyLink  in _oModule.aLinkList) {
+                            // Output.TraceWarning( "Recommended version:");
+                            Output.TraceReturn( " Tag:" + _oModule.sName + " : " + _sKeyLink );
+                            _aLink.Add(_oModule.aLink[_sKeyLink]);
+                           break;
+                        }
+                    }else {
+                            Output.TraceError( "Not found:" + _oModule.sName  );
                     }
-                }else {
-                        Output.TraceError( "Not found:" + _oModule.sName  );
-                }
 
-                /*
-                 Thread winThread = new Thread(new ThreadStart(() =>  {  
-                            Empty.fLoadModules();
-                          }));  
-		                 winThread.Start();
-                         */
-				Output.TraceWarning( "Starting Download ... ");
-				foreach(ModuleLink _oLink in _aLink) { //Only one
-						_oLink.fDownload();
-						while(_oLink.bDl_InProgress) {Thread.CurrentThread.Join(1); }
-                        /* temp
-						_oLink.fExtract();
-						while(_oLink.oModule.bExtact_InProgress) {Thread.CurrentThread.Join(1); }
-                        */
-				}
-					Output.Trace("");
-				Output.TraceGood( "---------------- All Required Module Completed ------------------");
-				foreach(ModuleLink _oLink in _aLink) { //only one TODO
-						Output.TraceAction(_oLink.oModule.sCurrFolder);
-                     UpdateCwc.fLauchUpdate( _oLink.oModule.sCurrFolder, PathHelper.GetCurrentDirectory());
-                    break;
-				}
+                
+             
+                    
+                 
+                         
+				    Output.TraceWarning( "Starting Download ... ");
+				    foreach(ModuleLink _oLink in _aLink) { //Only one
+						    _oLink.fDownload();
+						    while(_oLink.bDl_InProgress) {Thread.CurrentThread.Join(1); }
+                     
+						    _oLink.fExtract();
+						    while(_oLink.oModule.bExtact_InProgress) {Thread.CurrentThread.Join(1); }
+                        
+				    }
+					    Output.Trace("");
+				    Output.TraceGood( "---------------- All Required Module Completed ------------------");
+				    foreach(ModuleLink _oLink in _aLink) { //only one TODO
+						    Output.TraceAction(_oLink.oModule.sCurrFolder);
+                         UpdateCwc.fLauchUpdate( _oLink.oModule.sCurrFolder, PathHelper.GetCurrentDirectory());
+                        break;
+				    }
 
+
+                }));  
+		        winThread.Start();
 		}
 
         public static void getRelease(string _param) {

@@ -2704,6 +2704,10 @@ namespace cwc {
               tbCmd.Select();
            SendMessage((IntPtr)tbCmd.Handle, WM_CHAR, (IntPtr)(e.KeyChar ), (IntPtr)0);
         }
+
+        private void cWCToolStripMenuItem_Click(object sender, EventArgs e) {
+             ArgList.ProcessArg("--update CWC" );
+        }
     }
 
 

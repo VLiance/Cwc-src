@@ -33,7 +33,11 @@ namespace cwc
 
            //  Output.Trace("\f0AVersion " + Data.sVersion + "\fs \n" );
 		//	_oUpd.fLauchExe( sCurrFolder + "cwc.exe", "Updated ", "","",true);
-			_oUpd.fLauchExe( sCurrFolder + "cwc.exe", "--message \"\f2ACwc succefully updated to\f2B v" + Data.sVersion + "\fs\"", "","",true);
+		//	_oUpd.fLauchExe( sCurrFolder + "cwc.exe", "--message \"\f2ACwc succefully updated to\f2B v" + Data.sVersion + "\fs\"", "","",true);
+			_oUpd.fLauchExe( sCurrFolder + "cwc.exe", "--updated \"" + Data.sVersion +"\"", "","",true);
+
+
+
 				//				_process.StartInfo.Arguments = "Updated " + _sVersion + " " + Data.sWorkDir + " " + Data.sResendArg;	
 			while(!_oUpd.bExeLauched  && Base.bAlive) {
 				Thread.Sleep(1);
@@ -53,11 +57,13 @@ namespace cwc
 
 
 			// Output.TraceGood("Copy Tools: " +_sBaseSrc  + "Tools/"+   "    "+_sBaseDest + "Tools/");
+            string _sUtilsErr = "";
 
 			try {
-				FileUtils.CopyFolderContents(_sBaseSrc + "Utils/", _sBaseDest + "Utils/"); //TODO on run pass only?
-			}catch(Exception e) {
+				_sUtilsErr = FileUtils.CopyFolderContents(_sBaseSrc + "Utils/", _sBaseDest + "Utils/"); //TODO on run pass only?
+			}catch(Exception e) {//Not used?
 				Output.TraceError(e.Message);
+                _sUtilsErr = e.Message;
 			}
 
 			Output.Trace("--- Copy Cwc ----");
@@ -70,7 +76,7 @@ namespace cwc
 			while(_nRetryCount > 0) {
 				try {
 					_sErrror = "";
-						File.Copy(_sBaseSrc + "cwc.exe",_sBaseDest + "cwc.exe", true);
+					File.Copy(_sBaseSrc + "cwc.exe",_sBaseDest + "cwc.exe", true);
 					//_nRetryCount  =0;
 					break;
 				}catch(Exception e) {
@@ -86,36 +92,42 @@ namespace cwc
 					Thread.Sleep(1000);
 					//Output.TraceError(e.GetType().Name);//IOException
 					
-				
+				    
 					_sErrror = e.Message;
 				}
 			}
-			if(_sErrror != "") {
-				Output.TraceError("Can't update cwc, please retry later...");
+			if(_sErrror != "" || _sUtilsErr != "") {
+                if(_sUtilsErr != "") {
+                    Output.TraceError("Can't update Utils folder, please retry later...");
+                }
+                if(_sErrror != "") {
+				    Output.TraceError("Can't update CWC, please retry later...");
+                }
 				Thread.Sleep(3000);
 			}else {
+
 				Output.TraceGood("--- Done ----");
-//				Thread.Sleep(3000);
+                //Thread.Sleep(500);
+                fRestart(_sBaseDest);
 			}
 			
 			
 	
-			fRestart(_sBaseDest);
-			//Cwc copy
-			SysAPI.fQuit();
+		
 			
 				
 				//Console.WriteLine("--- Done ----"); 
 		}
 
-		internal static void fUpdated(string _sArg){	
-			if(_sArg ==  Data.sVersion) {
-				Output.TraceGood("UPDATED TO: " + _sArg);
+		internal static void fUpdated(string _param){	
+   
+			if(_param ==  Data.sVersion) {
+				 Output.Trace("\f2ACwc succefully updated to\f2B v" + Data.sVersion + "\fs\"");
 				//CleanFolder
 				Thread.Sleep(500); //Wait for update close //TODO add retry ??
 				FileUtils.DeleteDirectory(PathHelper.GetExeDirectory() + "Upd_Cwc",true);
 			}else {
-				Output.TraceError("UPDATE FAIL TO: " + _sArg);
+				Output.TraceError("Fail updating to: " + _param + ", current version: " + Data.sVersion);
 				Output.TraceWarning("Current " + Data.sVersion);
 			}
 

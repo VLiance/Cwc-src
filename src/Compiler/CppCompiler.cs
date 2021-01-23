@@ -442,8 +442,15 @@ namespace cwc
                         _oOut.eType = OutType.Undefined;
                     }
                      
+                     //Freebasic TODO more flexible way
+                     if( fFindValidKeyWord(_sResult, "cannot find") != -1  ) {
+                        _oOut.eType = OutType.Error;
+                        nError++; //TODO can result in false positive
+                     }
+
                      if( fFindValidKeyWord(_sResult, "error") != -1  ) {
                         _oOut.eType = OutType.Error;
+                        nError++; //TODO can result in false positive
                     }
                      if(  fFindValidKeyWord(_sResult, "warning") != -1) {
                         _oOut.eType = OutType.Warning;

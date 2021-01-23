@@ -11,7 +11,7 @@ namespace cwc {
     class Data {
 
 
-          public static string sVersion = "0.0.95";
+          public static string sVersion = "0.0.95.25";
 
         		internal static bool bUpdateMode = false;
 		internal static string sUpdateModeSrc = "";
