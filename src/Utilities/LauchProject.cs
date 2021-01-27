@@ -268,9 +268,10 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
 				sOutput =_wTo;
                 try {
 					 string _sExt = Path.GetExtension(_wTo).ToLower();
-					switch(_sExt) {
+					switch(_sExt) {//TODO add "binExt" value
 						case ".bat":
 						case ".exe":
+						case ".html":
 								sOutputExecutable = _wTo;
 						break;
 					}

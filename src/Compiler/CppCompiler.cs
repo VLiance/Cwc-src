@@ -441,7 +441,7 @@ namespace cwc
                      if(_sResult.IndexOf("undefined reference to") != -1) {
                         _oOut.eType = OutType.Undefined;
                     }
-                     
+                     //PS2: 1.0/local/ps2dev/ee/ee/sys-include/sys/types.h:131: redefinition of `off_t'
                      //Freebasic TODO more flexible way
                      if( fFindValidKeyWord(_sResult, "cannot find") != -1  ) {
                         _oOut.eType = OutType.Error;

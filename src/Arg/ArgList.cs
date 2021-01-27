@@ -68,7 +68,7 @@ namespace cwc {
 			if(_fullarg == "") {
 				return;
 			}
-            //Output.TraceAction( _fullarg );
+            Output.TraceAction( _fullarg );
 
             CppCmd _oTemp =  new CppCmd(null,"");
             string _sCmdArg = _oTemp.fExtractSpaceMultiVals(_fullarg, ' ' );
