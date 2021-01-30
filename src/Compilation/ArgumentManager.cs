@@ -149,6 +149,7 @@ namespace cwc {
      //       Debug.fTrace("_sAllArg: " + _sAllArg);
 
              _sAllArg =  _sAllArg.Replace("=>","=¦");//Bug if we have =>
+             _sAllArg =  _sAllArg.Replace(">>","¦");//Convert >> to >?
 
               string[] _aSequenceArg = _sAllArg.Split('>'); //Squential
               foreach (string __sSeqArg in _aSequenceArg) { if (!IsEmpty(__sSeqArg)) {

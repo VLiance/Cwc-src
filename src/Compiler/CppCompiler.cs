@@ -386,6 +386,12 @@ namespace cwc
             }
         }
 
+		public static string fAddToFile(string _sResult,string _sArg, uint _nMyTicket, bool _bStdError = false,  CppCmd _oCmd = null) {
+			return _sResult;
+		}
+		
+
+
         public static string sProcOutputRetrun  = "";
         public static void fCompilerError(string _sResult,string _sArg, uint _nMyTicket, bool _bStdError = false,  CppCmd _oCmd = null) {
 
@@ -524,6 +530,8 @@ namespace cwc
             }
         }
 
+
+		
         internal static string fSend2App(CppCmd _oCmd, string _sExplicite_Name, string _sExplicite_App, string _sExplicite_Call, bool _bWaitToFinish = false, List<CppCmd> aSubInputCmd = null) {
             
            bool _bFinished = false;
@@ -533,9 +541,15 @@ namespace cwc
 
             string _sExe   = fExtracQuote(_sExplicite_App);
             string _sArg = fExtracQuote_sArg + " " + _sExplicite_Call;
-           
+
             //TODO merge with fSend2Compiler
             Output.TraceAction(_sExplicite_Name + " => "  + _sExplicite_Call);
+			bool bRedirectOutputToFile = false;
+
+			if(_sArg.IndexOf('>') != -1) { //We redirect output to a file so we need to call cmd, ex: cat ASM/boot2.bin Kernel.bin >> boot.flp
+				bRedirectOutputToFile = true;
+			}
+
 
             uint _nMyTicket = 0;
             lock(oLockTicket) {
@@ -571,39 +585,57 @@ namespace cwc
                         _oCmd.oCurrProcess = process;
                         _oCmd.sLauchCmdResult = "";
 
-                        process.StartInfo.FileName =  _sExe;
-                        process.StartInfo.Arguments = _sArg;
+
+						 if(bRedirectOutputToFile) {
+							process.StartInfo.FileName =  "cmd.exe" ;
+							process.StartInfo.Arguments =  "/C "+ _sExe + " " + _sArg;
+						 }else {
+							process.StartInfo.FileName =  _sExe;
+							process.StartInfo.Arguments = _sArg;
+						 }
+
+						 //"cmd.exe", "/C "+ _sPath);
 
                         process.StartInfo.CreateNoWindow = true;
                         //process.StartInfo.CreateNoWindow = false;
-                        process.StartInfo.UseShellExecute = false;
-                        process.StartInfo.RedirectStandardOutput = true;
-                        process.StartInfo.RedirectStandardError = true;
 
-                        if(aSubInputCmd != null) {
-                            process.StartInfo.RedirectStandardInput = true;
-                        }
+						
+						process.StartInfo.UseShellExecute = false;
+						process.StartInfo.RedirectStandardOutput = true;
+						process.StartInfo.RedirectStandardError = true;
+						
+
+						if(aSubInputCmd != null) {
+							process.StartInfo.RedirectStandardInput = true;
+						}
+						
 
 	                    process.StartInfo.WorkingDirectory =_oCmd.s_pProject; 
 
                         try  {
-                            process.OutputDataReceived += (sender, e) => {
-                                if (e.Data != null)  {
-                                    fCompilerError(e.Data, _sExplicite_Name + " : " + _sExplicite_Call, _nMyTicket,false, _oCmd);
-                                }
-                            };
-                            process.ErrorDataReceived += (sender, e) => {
-                                if (e.Data != null)  {
-                                    fCompilerError(e.Data, _sExplicite_Name + " : " + _sExplicite_Call, _nMyTicket, true, _oCmd);
-                                }
-                            };
+				
+							process.OutputDataReceived += (sender, e) => {
+								if (e.Data != null)  {
+									fCompilerError(e.Data, _sExplicite_Name + " : " + _sExplicite_Call, _nMyTicket,false, _oCmd);
+								}
+							};
+								
+						
+							 process.ErrorDataReceived += (sender, e) => {
+								if (e.Data != null)  {
+									fCompilerError(e.Data, _sExplicite_Name + " : " + _sExplicite_Call, _nMyTicket, true, _oCmd);
+								}
+							};
+
                                
                             Debug.fTrace("Start " +	 process.StartInfo.FileName );
-                             Debug.fTrace("arg " +	     process.StartInfo.Arguments  );
+                            Debug.fTrace("arg " +	     process.StartInfo.Arguments  );
  
                             process.Start();
-                            process.BeginOutputReadLine();
-                            process.BeginErrorReadLine();
+							
+							process.BeginOutputReadLine();
+							process.BeginErrorReadLine();
+							
                             fLauchInputApp(process, aSubInputCmd);
 
                             process.WaitForExit();
@@ -640,6 +672,7 @@ namespace cwc
                              }
                          } }catch(Exception e) {}
 
+					
                          _bFinished = true;
                           Interlocked.Decrement(ref safeInstanceCount); //safeInstanceCount never decremented if after  fAddCommandLineVerificationToDepedancesFile?? on link time : exception?
 
