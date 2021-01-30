@@ -775,7 +775,7 @@ string sBackEndLinker = "";
 			string[] _aArg = _sArg.Split(new string[] { " -" }, StringSplitOptions.None);
 			string _sBefore = "";
 			string _sAfter = "";
-			foreach (string _sParam in _aArg) {if(_sParam.Length> 2) {
+			foreach (string _sParam in _aArg) {if(_sParam.Length >= 1) {
 				switch(_sParam[0]) {
 					case '%':
 						_sAfter += " -" + _sParam.Substring(1);
