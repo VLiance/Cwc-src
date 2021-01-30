@@ -659,6 +659,9 @@ public string sDelimiter = "";
                 string[] _aCmd = _sRArg.Split(' ', '=', '+'); 
                 string _sCmdName = _aCmd[0].Trim();
                 bool _bSkipCmd = false;
+
+					
+
                     /*
                 if(!Data.bNowBuilding) {
                     return;
@@ -666,6 +669,13 @@ public string sDelimiter = "";
                 
                  ////////////// C~ command  ///////////
                if (!FileUtils.IsEmpty(_sCmdName)) { 
+
+						if(_sCmdName[0] == '%') {//Special, ex: Compiler include -%I
+							if(_sCmdName.Length > 1) {
+								_sCmdName = _sCmdName.Substring(1);
+							}
+						}
+						////////////
 
 						switch(_sCmdName[0]) {
                                 case 'L': //For CWayv
@@ -752,6 +762,33 @@ string sBackEndLinker = "";
 //public bool bExtacted = false;
 
 
+		public string fSpecifyCompilerInclude(string _sArg) {
+			return _sArg.Replace("-I", "-%I");
+		}
+
+		//Toochain include -I must go to the end (search order). (User must have control over toolchain included files)
+		public string fReorderCmd(string _sArg) {
+			//validation
+			if(_sArg.Length < 2) { return _sArg; }
+			if(_sArg[0] != ' ') {_sArg = _sArg += " ";}
+
+			string[] _aArg = _sArg.Split(new string[] { " -" }, StringSplitOptions.None);
+			string _sBefore = "";
+			string _sAfter = "";
+			foreach (string _sParam in _aArg) {if(_sParam.Length> 2) {
+				switch(_sParam[0]) {
+					case '%':
+						_sAfter += " -" + _sParam.Substring(1);
+					break;
+					default:
+						_sBefore += " -" + _sParam;
+					break;
+				}
+			}}
+			return (_sBefore + _sAfter).TrimStart();
+		}
+		
+
 
 		public void fExtract() {
 
@@ -822,7 +859,7 @@ bExtacted = true;
                   sExtractedCmd = fExtractManualSetExecutable( fExtractVar( sCmd) );
 	              sCallerCmd =  fExtractValidCompilerCommand(sExtractedCmd);
 
-		        	_sCmd = " " + sResidualArg +  " " +   sArgument  ;
+		        	_sCmd = " " + sResidualArg +  " " +   fSpecifyCompilerInclude(sArgument)  ;
                   sBackEndCmd =  fExtractValidCompilerCommand(_sCmd) + sCallerCmd + sArgLinkerLib;
                     
                  CppCompiler.fShowArg(" " + sExtractedCmd, bIsSubCmd | bIsFbCmd);
@@ -831,9 +868,11 @@ bExtacted = true;
 			}else{  ///Sub command (Generated)
 
                  sExecutable = oCompiler.fGetExecutableAndArgForCmd(this, bLink, false,  bToStaticLib, bToDynamicLib);
-                _sCmd = " " + sResidualArg   + " " + sArgument  +  " " +   sCmd  ;
+                _sCmd = " " + sResidualArg   + " " + fSpecifyCompilerInclude(sArgument)  +  " " +   sCmd  ;
                 sBackEndCmd =  fExtractValidCompilerCommand(_sCmd);
 			}
+
+			sBackEndCmd = fReorderCmd(sBackEndCmd);
 
 
             if(oCompiler == null) {
