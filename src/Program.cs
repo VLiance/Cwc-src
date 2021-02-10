@@ -39,15 +39,23 @@ namespace cwc {
     static int Main(string[] args){
 
 		try {        
-        // redirect console output to parent process;
-        // must be before any calls to Console.WriteLine()
-        AttachConsole(ATTACH_PARENT_PROCESS);
+            // redirect console output to parent process;
+            // must be before any calls to Console.WriteLine()
+            AttachConsole(ATTACH_PARENT_PROCESS);
+            Debug.fTrace("--- CWC ---");
+            
 
         Sys.fGetParentProcess();
         Debug.fTrace("Systeme mode: " + Sys.sParentName);
-                         
+                
+        /*         
         if (Sys.sParentName == "cmd" || Sys.sParentName ==  "powershell") {
             Data.bConsoleMode = true;
+        }
+        */
+        Data.bConsoleMode = true;
+        if (Sys.sParentName == "explorer" || Sys.sParentName == "devenv") {
+            Data.bConsoleMode = false;
         }
 
         Data.fSetDefaultVar(args);
