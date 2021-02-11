@@ -38,7 +38,7 @@ namespace cwc {
     [STAThread]
     static int Main(string[] args){
 
-		try {        
+		//try {        
             // redirect console output to parent process;
             // must be before any calls to Console.WriteLine()
             AttachConsole(ATTACH_PARENT_PROCESS);
@@ -115,7 +115,7 @@ namespace cwc {
 
          //if(Data.bConsoleMode) {SendKeys.SendWait("{ENTER}"); }
         //return 0;
-
+			try {  
 		} catch (Exception e) {
 			if( Data.oGuiConsole != null) {
 				Output.InternalError(e);

@@ -2292,6 +2292,7 @@ bExtacted = true;
 
 
              public string fExtracVals(string _sValue, char _cRequiredDelim='=' ) {//_cRequiredDelim??
+				if(_sValue == "") {return "";};
 
                 string _sResult = _sValue; 
                     //Remove quote!!
