@@ -41,7 +41,11 @@ namespace cwc {
 		//try {        
             // redirect console output to parent process;
             // must be before any calls to Console.WriteLine()
-            AttachConsole(ATTACH_PARENT_PROCESS);
+
+            #if !tConsole
+              AttachConsole(ATTACH_PARENT_PROCESS);
+            #endif
+
             Debug.fTrace("--- CWC ---");
             
 
@@ -54,9 +58,11 @@ namespace cwc {
         }
         */
         Data.bConsoleMode = true;
+        #if !tConsole
         if (Sys.sParentName == "explorer" || Sys.sParentName == "devenv") {
             Data.bConsoleMode = false;
         }
+        #endif
 
         Data.fSetDefaultVar(args);
         Data.fCheckUpdate();
