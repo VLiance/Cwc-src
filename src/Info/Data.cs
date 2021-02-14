@@ -241,8 +241,12 @@ namespace cwc {
 				//////////// Process ARGS ///////////////
 				string _stdArg =  Data.sArg;
 				//remvoe all before first "-"
-				int _first_arg = _stdArg.IndexOf("-");
-				if(_first_arg == -1) {
+				int _first_arg = _stdArg.IndexOf(" -"); //Warning will break if we have this in the path
+				char _cNext = 'A';
+				if (_first_arg == -1 && _first_arg +1 > _stdArg.Length) {
+					_cNext = _stdArg[_first_arg +1];
+				}
+				if (_first_arg == -1 && _cNext > 32) { //validate that was a commands
 					 _stdArg = "";
 				}else {
 					Data.sArg = _stdArg.Substring(0,_first_arg);
