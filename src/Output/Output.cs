@@ -110,27 +110,28 @@ namespace cwc
 
 
 
-        public  static void 	fPrjOut(string _sLetter,  string _sOut){
+   public  static void 	fPrjOut(string _sLetter,  string _sOut){
 
     if (_sOut == null){
         return;
     }
 
+
     string _sPrefix = _sLetter + "> " ;
     if(_sOut.Length > 4) { //ex T[1]:xxxx
-        if(_sOut[1] == '[') {
+        if(_sOut[1] == '[' || (_sOut[1] == ':' && (_sOut[2] != '\\' || _sOut[2] != '/'))) {
             switch(_sOut[0]) {
                    case 'P':
                        Output.TraceGood(_sPrefix +_sOut);
                    break;
                    case 'E':
-                       Output.TraceError(_sPrefix +_sOut);
+                       Output.TraceErrorLite(_sPrefix +_sOut);
                    break;
                     case 'W':
-                       Output.TraceWarning(_sPrefix +_sOut);
+                       Output.TraceWarningLite(_sPrefix +_sOut);
                    break;
                    case 'A':
-                       Output.TraceAction(_sPrefix +_sOut);
+                       Output.TraceActionLite(_sPrefix +_sOut);
                    break;
                    case 'T':
                        Output.TraceStd(_sPrefix +_sOut);
