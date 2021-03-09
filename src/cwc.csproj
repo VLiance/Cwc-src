@@ -115,6 +115,7 @@
     <Compile Include="Output\Debug.cs" />
     <Compile Include="Compilation\Delocalise.cs" />
     <Compile Include="Compilation\GuiManager.cs" />
+    <Compile Include="Output\NamedPipes.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
