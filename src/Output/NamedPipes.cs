@@ -28,8 +28,11 @@ namespace cwc {
 					
 						//pipe.pipe.Dispose();
 						pipe.pipe.Close();
+						pipe.pipe.Dispose();
+				
+
 						pipe.dataToSend = _data;
-						Thread.Sleep(1);
+						Thread.Sleep(10);
 						pipe.newpipe();
 
 					}catch(Exception e) {
@@ -53,9 +56,18 @@ namespace cwc {
 		
 
 
-
+		 bool bInside = false;
 		public void newpipe() {
+	
+			
+
 			Thread winThread = new Thread(new ThreadStart(() =>  {  
+
+				while(bInside) {
+					Thread.Sleep(1);
+				}
+					bInside = true;
+
 			try { 
 				pipe = new NamedPipeClientStream(server, name, PipeDirection.InOut, PipeOptions.Asynchronous);
 				while(true) {
@@ -81,11 +93,13 @@ namespace cwc {
 
 			}catch(Exception e) {
 				Output.TraceError(e.Message);
-				removepipe();
+				//removepipe();
 			}
 			}));  
 			winThread.Start();
 
+		
+			  bInside = false;
 		}
 
 		public NamedPipes(string _server="localhost", string _name="cwc_pipe")
