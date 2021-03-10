@@ -108,6 +108,9 @@ namespace FastColoredTextBoxNS
         public virtual Line this[int i]
         {
             get{
+                if (i > lines.Count) {
+                    i = lines.Count-1;
+                }
                  return lines[i];
             }
             set {

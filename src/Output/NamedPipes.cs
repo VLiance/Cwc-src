@@ -20,17 +20,56 @@ namespace cwc {
 				_realname = _name.Substring(1);
 			}
 
+			bool _bremove = false;
+			NamedPipes _curr = null;
 			foreach(NamedPipes pipe in aPipeList ) {
 				if(pipe.name == _realname) {
+					_curr = pipe;
+					if(pipe.pipe != null && pipe.pipe.IsConnected){
 
-					pipe.dataToSend = _data;
-					pipe.bReset = true;
-					pipe.pipe.Close();
-					//pipe.pipe.Dispose();
-					//pipe.Send( _data);
+						pipe.dataToSend = _data;
+						pipe.bReset = true;
+					
+						pipe.pipe.Close();
+
+					} else {
+						Output.TraceErrorLite("(Not connected)[:" +pipe.name +"] "  + _data);
+					
+						_bremove = true;
+					}
 				}
 			}
+			if(_bremove){_curr.removepipe();}
+		}
+		public static void SendSignal(string _name, string text) {
+			if(_name.Length <= 0) { return; }
 
+			string _realname = _name;
+			if(_name[0] == ':') {//namedpipe
+				_realname = _name.Substring(1);
+			}
+			if (text == "Close") {
+
+				foreach(NamedPipes p in aPipeList ) {
+					if(p.name == _realname) {
+						if(p.pipe.IsConnected) {
+							p.bClose = true;
+							p.pipe.Close();
+						} else {
+							Output.TraceError("Not connected");
+						}
+					}
+				}
+			}
+		}
+
+		public static void CloseAll() {
+			foreach(NamedPipes p in aPipeList ) {
+				if(p.pipe.IsConnected) {
+					p.bClose = true;
+					p.pipe.Close();
+				}
+			}
 		}
 
 		NamedPipeClientStream pipe = null;
@@ -40,6 +79,7 @@ namespace cwc {
 		public string server = "";
 		public string dataToSend = "";
 		public bool bReset = false;
+		public bool bClose = false;
 		
 
 		public NamedPipes(string _server="localhost", string _name="cwc_pipe")
@@ -61,13 +101,11 @@ namespace cwc {
 
 							//pipe.Connect(3000);
 							pipe.Connect();
-							//while(!pipe.IsConnected){Thread.Sleep(1);}
 
 							if(!bReset){Output.TraceActionLite("Pipe " + _name + " connected");}
 							bReset = false;
 							Data.bIWantGoToEnd = true;
 
-							//pipe.ReadMode = PipeTransmissionMode.Message;
 							do{
 								if(dataToSend != "") {
 									Send(dataToSend);
@@ -78,7 +116,7 @@ namespace cwc {
 							
 							} while (pipe.IsConnected && !bReset);
 							pipe.Dispose();
-							if(!bReset){Output.TraceErrorLite("Pipe " + _name + " disconnected"); }
+							if(!bReset){Output.TraceErrorLite("Pipe " + _name + " disconnected"); removepipe(); }
 				
 						}while(bReset);
 
@@ -101,7 +139,6 @@ namespace cwc {
 				_data += "\n\r";
 				//Thread winThread = new Thread(new ThreadStart(() =>  {  
 					try {
-					//	cts.Cancel();
 						byte[] bytes = Encoding.Default.GetBytes(_data);
 						pipe.Write(bytes, 0, bytes.Length);
 
@@ -121,7 +158,7 @@ namespace cwc {
 
 		}
 
-        private async void ReadMessage(PipeStream pipe)
+        private void ReadMessage(PipeStream pipe)
         {
 
 			try { 
@@ -140,13 +177,15 @@ namespace cwc {
 				}
 
 			}catch(Exception e) {
-				Output.TraceError(e.Message);
+				if(!bClose){
+					Output.TraceError(e.Message);
+				}
+
 			}
-			Thread.Sleep(1);
+			//Thread.Sleep(16);
 
 
         }
-
 
 	}
 }

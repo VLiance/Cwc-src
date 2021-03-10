@@ -2694,11 +2694,11 @@ namespace FastColoredTextBoxNS
         /// </summary>
         public void GoEnd()
         {
-            if (lines.Count > 0)
+            if (lines.Count > 0){
                 Selection.Start = new Place(lines[lines.Count - 1].Count, lines.Count - 1);
-            else
-                Selection.Start = new Place(0, 0);
-
+            } else{
+            //    Selection.Start = new Place(0, 0); //bug?
+            }
             DoCaretVisible();
         }
 
@@ -5075,10 +5075,12 @@ namespace FastColoredTextBoxNS
                 bookmarksByLineIndex[item.LineIndex] = item;
             //
             int startLine = YtoLineIndex(VerticalScroll.Value);
-            int iLine;
+            int iLine = lines.Count;
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
+
+            try{
             //draw text
             for (iLine = startLine; iLine < lines.Count; iLine++)
             {
@@ -5152,6 +5154,8 @@ namespace FastColoredTextBoxNS
                     DrawLineChars(e.Graphics, firstChar, lastChar, iLine, iWordWrapLine, x + indent, y);
                 }
             }
+            }catch (Exception _e){};
+
 
             int endLine = iLine - 1;
 

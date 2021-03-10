@@ -105,6 +105,7 @@ namespace cwc {
 
         static public void fQuit(bool _bForceQuitConsole = false) {
 
+             NamedPipes.CloseAll();
       //      MessageBox.Show("QUIIIIIIIIIIIIIIII!!!!!!!!!!");
             /*
             if (oLauchProject.oCurLauch != null && oLauchProject.oCurLauch.sExeName == "gdb") {
