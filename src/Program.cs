@@ -94,9 +94,6 @@ namespace cwc {
             if(!ArgList.bReceiveMSG) {
                 Output.Trace("\f0AVersion " + Data.sVersion + "\fs \n" );
                 Msg.fShowIntroMessage();
-
-				new NamedPipes();
-
             }
 
             SysAPI.fSetWorkingDir(PathHelper.ExeWorkDir);

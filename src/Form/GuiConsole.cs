@@ -1067,7 +1067,8 @@ namespace cwc {
 
             string _sTag =  (string) ((ToolStripMenuItem) sender).Tag;
             sCurrentCmdLauch = _sTag;
-            cmdToolStripMenuItem.Text = sCurrentCmdLauch;
+          //  cmdToolStripMenuItem.Text = sCurrentCmdLauch;
+			fUpdateCmdList();
         }
          private void fCmdSingalSelect(object sender, EventArgs e) {
 
@@ -1078,7 +1079,7 @@ namespace cwc {
 
         public string sCurrentCmdLauch = "";
         public int nLastCmdCount = 0;
-        private void fUpdateCmdList(){
+        public void fUpdateCmdList(){
             this.BeginInvoke((MethodInvoker)delegate  {
                 if(sCurrentCmdLauch == ""){
                     sCurrentCmdLauch = "Cmd";
@@ -1092,6 +1093,11 @@ namespace cwc {
                    //fAddItemCmd(_oLauch.ExeProcess.ProcessName, _oLauch.ExeProcess );
                 }
              
+				foreach(NamedPipes _pipe in NamedPipes.aPipeList)
+				{
+					 fAddItemCmd(":" + _pipe.name,  null);
+				}
+
                 //auto select first lauched app
                 if(sCurrentCmdLauch == "Cmd" && nLastCmdCount == 1 && cmdToolStripMenuItem.DropDownItems.Count > 1 ){
                     bool bFirst = true;
@@ -1103,10 +1109,24 @@ namespace cwc {
                         }
                         bFirst = false;
                     }
-                       
                 }
-             
+				//auto deselect if not exist anymore
+				if(sCurrentCmdLauch != "Cmd") {
+					bool _bFound = false;
+					 foreach(ToolStripDropDownItem _item in cmdToolStripMenuItem.DropDownItems){ 
+						if( sCurrentCmdLauch == _item.Text) {
+							_bFound = true;
+						}
+					}
+					if(!_bFound) {
+						sCurrentCmdLauch = "Cmd";
+					}
+				}
+       
                 cmdToolStripMenuItem.Text = sCurrentCmdLauch;
+
+				tbCmd.Location = new Point(6 + cmdToolStripMenuItem.Width, tbCmd.Location.Y);
+
                 nLastCmdCount = cmdToolStripMenuItem.DropDownItems.Count;
             });
         }
@@ -2487,6 +2507,8 @@ namespace cwc {
  
        // foreach(Process _oProc in GuiConsole.aProcList){ if(sCurrentCmdLauch == _oProc.ProcessName) {
         private void fSendCmd(){
+			if(sCurrentCmdLauch.Length <= 0) { return; }
+
             if(sCurrentCmdLauch == "Cmd") {
                ArgList.ProcessArg(tbCmd.Text );
                
@@ -2496,19 +2518,27 @@ namespace cwc {
 
 
             }else { 
-                foreach(LauchTool _oLauch in LauchTool.aLauchList){
-                    if(sCurrentCmdLauch == _oLauch.sExeName) {
-                        if(_oLauch.bExeLauch) {
-                            fSendCmdToLauchTool(_oLauch, tbCmd.Text);
-                             tbCmd.Text = "";//Clear
-                            return;
-                        }
-                    }
-                }
+				if(sCurrentCmdLauch[0] == ':') {//namedpipe
+					NamedPipes.Send(sCurrentCmdLauch, tbCmd.Text);
+				}else {//app
+					foreach(LauchTool _oLauch in LauchTool.aLauchList){
+						if(sCurrentCmdLauch == _oLauch.sExeName) {
+							if(_oLauch.bExeLauch) {
+								fSendCmdToLauchTool(_oLauch, tbCmd.Text);
+								//tbCmd.Text = "";//Clear
+								//return;
+								break;
+							}
+						}
+					}
+
+				}
+
+
             }
 
-          
-
+			tbCmd.Text = "";//Clear
+			return;
             //fSendCmdCleanup();
         }
           private void fSendSignal(){
@@ -2640,9 +2670,8 @@ namespace cwc {
             foreach(Process _oProcess in _aProcess)
             {
                  fAddItemCmd( _oProcess.ProcessName,  _oProcess);
-               
             }
-
+			
            
          }
 

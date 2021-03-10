@@ -16,12 +16,13 @@ namespace cwc {
         public string arg_short = "";
         public string arg_long = "";
         public string description = "";
+        public string param = "";
          
         public ArgStruct(string _short, string _long, string _param , dfunc _func, string _description) {
             arg_short = _short;
             arg_long = _long;
-            arg_long = _long;
             func = _func;
+            param = _param;
             description = _description;
         }
 
@@ -33,11 +34,12 @@ namespace cwc {
             new ArgStruct("-v", "--version",       "",                          getVersion  , "Get current version"),
             new ArgStruct("-m", "--module",        "",                          getModule   , "Get installed module list"),
             new ArgStruct("-r", "--release",       "",                          getRelease  , "Get module release list"),
-            new ArgStruct("-u", "--update",		   "[Autor/Name/Version]",      updateModule, "Update modules"),
-            new ArgStruct("-a", "--args",		   "[arg list]",                getRelease	, "Pass argument to the lauching app"),
-            new ArgStruct("",   "--message",       "[string]",                  message  , "Message to print at start"),
-            new ArgStruct("",   "--self_update",   "[dir]",                     self_update  , "Copy itself to dir and reload"),
-            new ArgStruct("",   "--updated",       "[version]",                  updated  , "Validate update"),
+            new ArgStruct("-u", "--update",		   "[Autor/Name/(Version)]",    updateModule, "Update modules"),
+            new ArgStruct("-a", "--args",		   "[Arg List]",                getRelease	, "Pass argument to the lauching app"),
+            new ArgStruct("",   "--message",       "[String]",                  message  , "Message to print at start"),
+            new ArgStruct("",   "--self_update",   "[Dir]",                     self_update  , "Copy itself to dir and reload"),
+            new ArgStruct("",   "--updated",       "[Version]",                  updated  , "Validate update"),
+            new ArgStruct("-p", "--pipe",		   "[Name/(Server)/(TimeoutMs)]",namedpipe  , "Create a named pipe"),
 
         };
 
@@ -49,7 +51,17 @@ namespace cwc {
             UpdateCwc.fUpdated(_param);
         
         }
+	    public static void namedpipe(string _param) {
+			string _server = "localhost";
+			string _name = _param;
+			if(_name == "") {
+				_name = "cwc_pipe";
+			}
+            Output.TraceAction("Named Pipe [" + _server + "] "  + _name + " " );
+			new NamedPipes(_server, _name);
+        }
 
+		
 
        public static void message(string _param) {
             bReceiveMSG = true;
@@ -80,7 +92,7 @@ namespace cwc {
                     return;
                 }
             }
-            Output.TraceWarningLite( "Unknow command" );
+            Output.TraceWarningLite( "Unknow command, try --help" );
         }
 
 
@@ -95,6 +107,7 @@ namespace cwc {
                 string _line = "    ";
                 _line =   alignTo(_line  + _o.arg_short,        8);
                 _line =   alignTo(_line  + _o.arg_long ,       25); 
+			    _line =   alignTo(_line  + _o.param,       50); 
                 _line += "(" + _o.description + ")";
 
                 Output.TraceReturn(_line);
@@ -162,10 +175,6 @@ namespace cwc {
                     }
 
                 
-             
-                    
-                 
-                         
 				    Output.TraceWarning( "Starting Download ... ");
 				    foreach(ModuleLink _oLink in _aLink) { //Only one
 						    _oLink.fDownload();

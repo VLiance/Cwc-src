@@ -41,7 +41,7 @@ namespace cwc
 
        public static string Trace(string _sText, bool _bDirectTrace = false)  {
 
-         /*
+			 /*
 			if(_sText == null || _sText == ""){
 				if(_sText == ""){
 					Debug.fPrint("");
