@@ -22,49 +22,54 @@ namespace cwc {
 
 			foreach(NamedPipes pipe in aPipeList ) {
 				if(pipe.name == _realname) {
-					pipe.Send(_data);
+					pipe.dataToSend = _data;
+					//pipe.Send( _data);
 				}
 			}
 
 		}
 
-
 		NamedPipeClientStream pipe = null;
+
+		public string result = "";
 		public string name = "";
 		public string server = "";
+		public string dataToSend = "";
+		
 
 		public NamedPipes(string _server="localhost", string _name="cwc_pipe")
         {
+		
 			name = _name;
 			server = _server;
 
 			aPipeList.Add(this);
 			LauchTool.bListModified = true;
 
-			Thread winThread = new Thread(new ThreadStart(() =>  {  
 
+			Thread winThread = new Thread(new ThreadStart(() =>  {  
 			try { 
-				using (pipe = new NamedPipeClientStream(_server, _name, PipeDirection.InOut))
-				{
+				pipe = new NamedPipeClientStream(_server, _name, PipeDirection.InOut, PipeOptions.Asynchronous);
+				while(true) {
 					string _sResult = "";
 					//pipe.Connect(3000);
 					pipe.Connect();
+					Output.TraceActionLite("Pipe " + _name + " connected");
+					Data.bIWantGoToEnd = true;
+
 					pipe.ReadMode = PipeTransmissionMode.Message;
 					do
 					{
-						var result = ReadMessage(pipe);
-
-						_sResult += Encoding.UTF8.GetString(result);
-						if(_sResult.IndexOf("\n") != -1) {
-							Output.Trace(_sResult);
-							_sResult = "";
-
-							//  byte[] bytes = Encoding.Default.GetBytes("ass");
-							// pipe.Write(bytes, 0, bytes.Length);
+						if(dataToSend != "") {
+							Send(dataToSend);
+							dataToSend = "";
 						}
-					} while (true);
+						
+						ReadMessage(pipe);
+							
+					} while (pipe.IsConnected);
+					Output.TraceErrorLite("Pipe " + _name + " disconnected");
 				}
-
 
 			}catch(Exception e) {
 				Output.TraceError(e.Message);
@@ -76,8 +81,18 @@ namespace cwc {
 
 		public void Send(string _data) {
 			if(pipe.IsConnected) {
-				byte[] bytes = Encoding.Default.GetBytes(_data);
-				pipe.Write(bytes, 0, bytes.Length);
+				Output.TraceAction("[:" +name +"] "  + _data);
+				_data += "\n\r";
+				//Thread winThread = new Thread(new ThreadStart(() =>  {  
+					try {
+					//	cts.Cancel();
+						byte[] bytes = Encoding.Default.GetBytes(_data);
+						pipe.Write(bytes, 0, bytes.Length);
+
+					}catch(Exception e) {Output.TraceError(e.Message);}
+
+				//}));  
+				//winThread.Start();
 			}else {
 				Output.TraceError("Not connected");
 			}
@@ -87,33 +102,33 @@ namespace cwc {
 			//Remove this pipe
 			aPipeList.Remove(this);
 			LauchTool.bListModified = true;
-			/*
-			List<NamedPipes> _aTempPipeList = new List<NamedPipes>();
-			foreach(NamedPipes pipe in aPipeList)  {
-				if(pipe != this) {
-					_aTempPipeList.Add(pipe);
-				}
-			}
-			aPipeList = _aTempPipeList;
-			*/
+
 		}
 
-
-        private static byte[] ReadMessage(PipeStream pipe)
+        private async void ReadMessage(PipeStream pipe)
         {
-			int  readBytes;
-            byte[] buffer = new byte[1024 * 4];
-            using (var ms = new MemoryStream())
-            {
-                do
-                {
-                    readBytes = pipe.Read(buffer, 0, buffer.Length);
-                    ms.Write(buffer, 0, readBytes);
-                }
-                while (readBytes > 0 && !pipe.IsMessageComplete);
 
-                return ms.ToArray();
-            }
+			try { 
+				 byte[] buffer = new byte[1024 *8];
+				var ms = new MemoryStream();
+
+				int readBytes =  pipe.Read(buffer, 0, buffer.Length);
+
+				 ms.Write(buffer, 0, readBytes);
+
+				result += Encoding.UTF8.GetString( ms.ToArray());
+
+				if(result != "" && result.IndexOf("\n") != -1) {
+					Output.Trace(result);
+					result = "";
+				}
+
+			}catch(Exception e) {
+				Output.TraceError(e.Message);
+			}
+			Thread.Sleep(1);
+
+
         }
 
 
