@@ -22,7 +22,22 @@ namespace cwc {
 
 			foreach(NamedPipes pipe in aPipeList ) {
 				if(pipe.name == _realname) {
-					pipe.dataToSend = _data;
+					try {
+					//pipe.removepipe();
+					//	pipe.pipe  = new NamedPipeClientStream("localhost", "test", PipeDirection.InOut);
+					
+						//pipe.pipe.Dispose();
+						pipe.pipe.Close();
+						pipe.dataToSend = _data;
+						Thread.Sleep(1);
+						pipe.newpipe();
+
+					}catch(Exception e) {
+						Output.TraceError("assole");
+					}
+				
+
+					//pipe.dataToSend = _data;
 					//pipe.Send( _data);
 				}
 			}
@@ -37,24 +52,17 @@ namespace cwc {
 		public string dataToSend = "";
 		
 
-		public NamedPipes(string _server="localhost", string _name="cwc_pipe")
-        {
-		
-			name = _name;
-			server = _server;
-
-			aPipeList.Add(this);
-			LauchTool.bListModified = true;
 
 
+		public void newpipe() {
 			Thread winThread = new Thread(new ThreadStart(() =>  {  
 			try { 
-				pipe = new NamedPipeClientStream(_server, _name, PipeDirection.InOut, PipeOptions.Asynchronous);
+				pipe = new NamedPipeClientStream(server, name, PipeDirection.InOut, PipeOptions.Asynchronous);
 				while(true) {
 					string _sResult = "";
 					//pipe.Connect(3000);
 					pipe.Connect();
-					Output.TraceActionLite("Pipe " + _name + " connected");
+					Output.TraceActionLite("Pipe " + name + " connected");
 					Data.bIWantGoToEnd = true;
 
 					pipe.ReadMode = PipeTransmissionMode.Message;
@@ -68,7 +76,7 @@ namespace cwc {
 						ReadMessage(pipe);
 							
 					} while (pipe.IsConnected);
-					Output.TraceErrorLite("Pipe " + _name + " disconnected");
+					Output.TraceErrorLite("Pipe " + name + " disconnected");
 				}
 
 			}catch(Exception e) {
@@ -77,6 +85,20 @@ namespace cwc {
 			}
 			}));  
 			winThread.Start();
+
+		}
+
+		public NamedPipes(string _server="localhost", string _name="cwc_pipe")
+        {
+		
+			name = _name;
+			server = _server;
+
+			aPipeList.Add(this);
+			LauchTool.bListModified = true;
+
+			newpipe();
+			
         }
 
 		public void Send(string _data) {
@@ -110,13 +132,14 @@ namespace cwc {
 
 			try { 
 				 byte[] buffer = new byte[1024 *8];
+
+
 				var ms = new MemoryStream();
-
-				int readBytes =  pipe.Read(buffer, 0, buffer.Length);
-
+				//int readBytes = await pipe.ReadAsync(buffer, 0, buffer.Length);
+				int readBytes = pipe.Read(buffer, 0, buffer.Length);
 				 ms.Write(buffer, 0, readBytes);
-
 				result += Encoding.UTF8.GetString( ms.ToArray());
+
 
 				if(result != "" && result.IndexOf("\n") != -1) {
 					Output.Trace(result);
