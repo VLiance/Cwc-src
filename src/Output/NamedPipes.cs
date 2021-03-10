@@ -22,7 +22,11 @@ namespace cwc {
 
 			foreach(NamedPipes pipe in aPipeList ) {
 				if(pipe.name == _realname) {
+
 					pipe.dataToSend = _data;
+					pipe.bReset = true;
+					pipe.pipe.Close();
+					//pipe.pipe.Dispose();
 					//pipe.Send( _data);
 				}
 			}
@@ -35,6 +39,7 @@ namespace cwc {
 		public string name = "";
 		public string server = "";
 		public string dataToSend = "";
+		public bool bReset = false;
 		
 
 		public NamedPipes(string _server="localhost", string _name="cwc_pipe")
@@ -46,36 +51,47 @@ namespace cwc {
 			aPipeList.Add(this);
 			LauchTool.bListModified = true;
 
-
 			Thread winThread = new Thread(new ThreadStart(() =>  {  
-			try { 
-				pipe = new NamedPipeClientStream(_server, _name, PipeDirection.InOut, PipeOptions.Asynchronous);
-				while(true) {
-					string _sResult = "";
-					//pipe.Connect(3000);
-					pipe.Connect();
-					Output.TraceActionLite("Pipe " + _name + " connected");
-					Data.bIWantGoToEnd = true;
 
-					pipe.ReadMode = PipeTransmissionMode.Message;
-					do
-					{
-						if(dataToSend != "") {
-							Send(dataToSend);
-							dataToSend = "";
-						}
+				do {
+
+					try { 
+						do {
+							pipe = new NamedPipeClientStream(_server, _name, PipeDirection.InOut, PipeOptions.Asynchronous);
+
+							//pipe.Connect(3000);
+							pipe.Connect();
+							//while(!pipe.IsConnected){Thread.Sleep(1);}
+
+							if(!bReset){Output.TraceActionLite("Pipe " + _name + " connected");}
+							bReset = false;
+							Data.bIWantGoToEnd = true;
+
+							//pipe.ReadMode = PipeTransmissionMode.Message;
+							do{
+								if(dataToSend != "") {
+									Send(dataToSend);
+									dataToSend = "";
+								}
 						
-						ReadMessage(pipe);
+								ReadMessage(pipe);
 							
-					} while (pipe.IsConnected);
-					Output.TraceErrorLite("Pipe " + _name + " disconnected");
-				}
+							} while (pipe.IsConnected && !bReset);
+							pipe.Dispose();
+							if(!bReset){Output.TraceErrorLite("Pipe " + _name + " disconnected"); }
+				
+						}while(bReset);
 
-			}catch(Exception e) {
-				Output.TraceError(e.Message);
-				removepipe();
-			}
+					}catch(Exception e) {
+						if(!bReset){
+							Output.TraceError(e.Message);
+							removepipe();
+						}
+					}
+				}while(bReset);
+
 			}));  
+
 			winThread.Start();
         }
 
