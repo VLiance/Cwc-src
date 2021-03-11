@@ -208,7 +208,7 @@ namespace cwc {
 
               public static string sToLauch = "";
         internal static bool bForceTestNextCmd;
-        internal static bool bIWantGoToEnd = false;
+        internal static bool bIWantGoToEnd = true;
 
         internal static void fCheckUpdate() {
            

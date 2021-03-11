@@ -22,6 +22,7 @@ namespace cwc
 			while(!_oUpd.bExeLauched && Base.bAlive) {
 				Thread.Sleep(1);
 			}
+			Thread.Sleep(1000);//Give time to show if we have info diplayed
 			SysAPI.fQuit(true);
 		}
 
@@ -37,11 +38,11 @@ namespace cwc
 			_oUpd.fLauchExe( sCurrFolder + "cwc.exe", "--updated \"" + Data.sVersion +"\"", "","",true);
 
 
-
-				//				_process.StartInfo.Arguments = "Updated " + _sVersion + " " + Data.sWorkDir + " " + Data.sResendArg;	
+			//_process.StartInfo.Arguments = "Updated " + _sVersion + " " + Data.sWorkDir + " " + Data.sResendArg;	
 			while(!_oUpd.bExeLauched  && Base.bAlive) {
 				Thread.Sleep(1);
 			}	
+			Thread.Sleep(1000);//Give time to show Msgs
 			SysAPI.fQuit(true);
 		}
 

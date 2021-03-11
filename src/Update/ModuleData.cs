@@ -207,6 +207,8 @@ namespace cwc
 
 
         public  ModuleData( string _sAutorName, bool _bIsCompiler = false) {
+			Data.bIWantGoToEnd = true;
+
 			sAutorName = _sAutorName;
 			 string[] _aValue = _sAutorName.Split('/'); //Squential
 			if(_aValue.Length < 2) {
