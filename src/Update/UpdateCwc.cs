@@ -42,7 +42,7 @@ namespace cwc
 			while(!_oUpd.bExeLauched  && Base.bAlive) {
 				Thread.Sleep(1);
 			}	
-			Thread.Sleep(1000);//Give time to show Msgs
+			Thread.Sleep(1500);//Give time to show Msgs
 			SysAPI.fQuit(true);
 		}
 
@@ -78,6 +78,7 @@ namespace cwc
 				try {
 					_sErrror = "";
 					File.Copy(_sBaseSrc + "cwc.exe",_sBaseDest + "cwc.exe", true);
+					Output.TraceGood("[cwc.exe] copied");
 					//_nRetryCount  =0;
 					break;
 				}catch(Exception e) {
@@ -104,7 +105,7 @@ namespace cwc
                 if(_sErrror != "") {
 				    Output.TraceError("Can't update CWC, please retry later...");
                 }
-				Thread.Sleep(3000);
+				Thread.Sleep(4000);
 			}else {
 
 				Output.TraceGood("--- Done ----");
@@ -127,6 +128,7 @@ namespace cwc
 				//CleanFolder
 				Thread.Sleep(500); //Wait for update close //TODO add retry ??
 				FileUtils.DeleteDirectory(PathHelper.GetExeDirectory() + "Upd_Cwc",true);
+				FileUtils.DeleteDirectory(PathHelper.GetExeDirectory() + "Upd_CwcUtils",true);
 			}else {
 				Output.TraceError("Fail updating to: " + _param + ", current version: " + Data.sVersion);
 				Output.TraceWarning("Current " + Data.sVersion);

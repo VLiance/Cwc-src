@@ -56,7 +56,14 @@ namespace cwc {
         if (Sys.sParentName == "cmd" || Sys.sParentName ==  "powershell") {
             Data.bConsoleMode = true;
         }
-        
+
+		Data.sArg  = Environment.CommandLine.Trim() ;
+		int idx = Data.sArg.IndexOf("--GUI");
+		if(idx != -1) { //TODO check for space after?
+			Data.sArg = Data.sArg.Replace("--GUI", "");
+			Data.bConsoleMode = false;
+		}
+
         /* //Default to console
         Data.bConsoleMode = true;
         #if !tConsole
@@ -84,24 +91,25 @@ namespace cwc {
         if( !Data.bConsoleMode){
             GuiManager.fCreateGUI();
         }
-         Data.fGetMainArg();
+
+		SysAPI.fSetWorkingDir(PathHelper.ExeWorkDir);
+        Data.fGetMainArg();
 
         if(!ArgList.bSelfUpdate) { 
             fCheckForRegistringFiles();
          }
 
-        if ( Data.sArg == "") { //No Argument
-          
-            if(!ArgList.bReceiveMSG) {
-                Output.Trace("\f0AVersion " + Data.sVersion + "\fs \n" );
-                Msg.fShowIntroMessage();
-            }
+		if(!ArgList.bReceiveMSG) {
+			if ( Data.sArg == "") { //No Argument
+         
+				Output.Trace("\f0AVersion " + Data.sVersion + "\fs \n" );
+				Msg.fShowIntroMessage();
 
-            SysAPI.fSetWorkingDir(PathHelper.ExeWorkDir);
-        }else {
-            Build.fBeginBuild();
+				
+			}else {
+				Build.fBeginBuild();
+			}
         }
-        
         CppCompiler.CheckAllThreadsHaveFinishedWorking(true);
        // Build.fDisableBuild();
             

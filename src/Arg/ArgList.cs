@@ -38,9 +38,10 @@ namespace cwc {
             new ArgStruct("-a", "--args",		   "[Arg List]",                getRelease	, "Pass argument to the lauching app"),
             new ArgStruct("",   "--message",       "[String]",                  message  , "Message to print at start"),
             new ArgStruct("",   "--self_update",   "[Dir]",                     self_update  , "Copy itself to dir and reload"),
-            new ArgStruct("",   "--updated",       "[Version]",                  updated  , "Validate update"),
-            new ArgStruct("-p", "--pipe",		   "[Name/(Server)/(TimeoutMs)]",namedpipe  , "Create a named pipe"),
-
+            new ArgStruct("",   "--updated",       "[Version]",                 updated  , "Validate update"),
+			new ArgStruct("",	"--GUI",			"",						GUI  ,		"Start in GUI mode"),
+			new ArgStruct("-p", "--pipe",		   "[Name/(Server)/(TimeoutMs)]",namedpipe  , "Create a named pipe"),
+       
         };
 
         public static bool bReceiveMSG = false;
@@ -51,6 +52,15 @@ namespace cwc {
             UpdateCwc.fUpdated(_param);
         
         }
+		public static void GUI(string _param) {
+			if(Data.bConsoleMode == false) {
+				 Output.TraceWarning("Already in GUI mode" );
+			}else {
+				 Output.TraceAction("Lauch GUI mode");//Impossible?
+			}
+			 
+		}
+
 	    public static void namedpipe(string _param) {
 			string _server = "localhost";
 			string _name = _param;
@@ -76,23 +86,29 @@ namespace cwc {
         }
         
        public static void ProcessArg(string _fullarg) {
-     
+			_fullarg = _fullarg.Trim();     
 			if(_fullarg == "") {
+				Debug.fTrace("No Args");
 				return;
 			}
             Output.TraceAction( _fullarg );
 
             CppCmd _oTemp =  new CppCmd(null,"");
+			//Debug.fTrace("Args: " + _fullarg);
+
             string _sCmdArg = _oTemp.fExtractSpaceMultiVals(_fullarg, ' ' );
             string _cmd = _oTemp.sRet_ExtractSpaceMultiValsCmd;
-
+			if(_cmd =="") {
+				Debug.fTrace("No cmd Args");
+				return;
+			}
             foreach(ArgStruct _o in ArgList.aList) {
                 if( _o.arg_short == _cmd || _o.arg_long == _cmd) {
                     _o.func(_sCmdArg);
                     return;
                 }
             }
-            Output.TraceWarningLite( "Unknow command, try --help" );
+            Output.TraceWarningLite( "Unknow command[\f0C" + _cmd + "\f0E], try --help" );
         }
 
 
@@ -149,9 +165,12 @@ namespace cwc {
                 return;
             }
 
-            //Update CWC TODO to func
+            //Cleanup
+			FileUtils.DeleteDirectory(PathHelper.GetExeDirectory() + "Upd_Cwc",true);
+			FileUtils.DeleteDirectory(PathHelper.GetExeDirectory() + "Upd_CwcUtils",true);
+
 			ModuleData _oModule = ModuleData.fGetModule("VLiance/Cwc", true);
-			
+
                 Thread winThread = new Thread(new ThreadStart(() =>  {  
                        _oModule.fGetLocalVersions();
                      _oModule.fReadHttpModuleTags();
@@ -162,7 +181,6 @@ namespace cwc {
                         }
 
                     List<ModuleLink> _aLink = new List<ModuleLink>();
-          
                     if( _oModule.aLinkList.Count > 0) {
                         foreach(string _sKeyLink  in _oModule.aLinkList) {
                             // Output.TraceWarning( "Recommended version:");

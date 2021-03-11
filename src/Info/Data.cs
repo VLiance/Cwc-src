@@ -5,17 +5,19 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace cwc {
     class Data {
 
 
-          public static string sVersion = "0.0.95.26";
+          public static string sVersion = "0.0.95.28";
 
         		internal static bool bUpdateMode = false;
 		internal static string sUpdateModeSrc = "";
 		internal static string sUpdateVer;
+	
 		public static bool bNothingToBuild = false;
 
 
@@ -231,7 +233,8 @@ namespace cwc {
         }
 
         internal static void fGetMainArg() {
-               Data.sArg = Environment.CommandLine.Trim() ;
+               //Data.sArg = Environment.CommandLine.Trim() ;
+
 
              if(sArg[0] == '\"'){ //Remove current file arg when loaded from file
                 int _nFindEndQuote =  sArg.IndexOf("\"",1)+1;
@@ -243,14 +246,16 @@ namespace cwc {
 				//remvoe all before first "-"
 				int _first_arg = _stdArg.IndexOf(" -"); //Warning will break if we have this in the path
 				char _cNext = 'A';
-				if (_first_arg == -1 && _first_arg +1 > _stdArg.Length) {
-					_cNext = _stdArg[_first_arg +1];
-				}
-				if (_first_arg == -1 && _cNext > 32) { //validate that was a commands
-					 _stdArg = "";
-				}else {
-					Data.sArg = _stdArg.Substring(0,_first_arg);
-					_stdArg = _stdArg.Substring(_first_arg);
+				if(_first_arg != -1) {
+					if ( _first_arg +1 < _stdArg.Length) {
+						_cNext = _stdArg[_first_arg +1];
+					}
+					if ( _cNext > 32) { //validate that was a commands
+						 _stdArg = "";
+					}else {
+						Data.sArg = _stdArg.Substring(0,_first_arg);
+						_stdArg = _stdArg.Substring(_first_arg);
+					}
 				}
 				ArgList.ProcessArg(_stdArg);
 				/////////////////////////////////////////
