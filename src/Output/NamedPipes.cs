@@ -173,7 +173,13 @@ namespace cwc {
 
 				int idx = result.IndexOf("\n");
 				if(result != "" && result.IndexOf("\n") != -1) {
-					Output.Trace(result.Substring(0, idx));
+					//exe/ /win32 tests/openfile.exe
+					string _sLine = result.Substring(0, idx);
+
+					//if(_sLine.Trim() != ""){
+						Output.Trace(_sLine);
+					//}
+
 					result = result.Substring( idx + 1).TrimStart();
 				}
 
