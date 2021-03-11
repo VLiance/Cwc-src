@@ -171,9 +171,10 @@ namespace cwc {
 
 				result += Encoding.UTF8.GetString( ms.ToArray());
 
+				int idx = result.IndexOf("\n");
 				if(result != "" && result.IndexOf("\n") != -1) {
-					Output.Trace(result);
-					result = "";
+					Output.Trace(result.Substring(0, idx));
+					result = result.Substring( idx + 1).TrimStart();
 				}
 
 			}catch(Exception e) {
