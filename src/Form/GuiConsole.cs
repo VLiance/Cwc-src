@@ -1127,6 +1127,10 @@ namespace cwc {
 
 				tbCmd.Location = new Point(6 + cmdToolStripMenuItem.Width, tbCmd.Location.Y);
 
+                if(sCurrentCmdLauch[0] == ':'){
+                    tsSignal.Text = "Close"; //Only optin for named pipe
+                }
+
                 nLastCmdCount = cmdToolStripMenuItem.DropDownItems.Count;
             });
         }
@@ -2542,7 +2546,14 @@ namespace cwc {
             //fSendCmdCleanup();
         }
           private void fSendSignal(){
-            foreach(LauchTool _oLauch in LauchTool.aLauchList){
+           
+            if (sCurrentCmdLauch.Length > 0 && sCurrentCmdLauch[0] == ':') { //NamedPipe
+                
+                NamedPipes.SendSignal(sCurrentCmdLauch, tsSignal.Text);
+
+
+            } else {
+                foreach(LauchTool _oLauch in LauchTool.aLauchList){
                 if(sCurrentCmdLauch == _oLauch.sExeName) {
                     if(_oLauch.bExeLauch) {
                         fSendSignal(_oLauch, tsSignal.Text);
@@ -2550,6 +2561,9 @@ namespace cwc {
                     }
                 }
             }
+
+            }
+
         }
 
 

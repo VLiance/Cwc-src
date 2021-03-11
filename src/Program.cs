@@ -52,18 +52,19 @@ namespace cwc {
         Sys.fGetParentProcess();
         Debug.fTrace("Systeme mode: " + Sys.sParentName);
                 
-        /*         
+        //Default to gui
         if (Sys.sParentName == "cmd" || Sys.sParentName ==  "powershell") {
             Data.bConsoleMode = true;
         }
-        */
+        
+        /* //Default to console
         Data.bConsoleMode = true;
         #if !tConsole
         if (Sys.sParentName == "explorer" || Sys.sParentName == "devenv") {
             Data.bConsoleMode = false;
         }
         #endif
-
+        */
         Data.fSetDefaultVar(args);
         Data.fCheckUpdate();
 
