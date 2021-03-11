@@ -101,7 +101,7 @@ namespace cwc {
 
 		if(!ArgList.bReceiveMSG) {
 			if ( Data.sArg == "") { //No Argument
-         
+                Data.bIWantGoToEnd = false;
 				Output.Trace("\f0AVersion " + Data.sVersion + "\fs \n" );
 				Msg.fShowIntroMessage();
 

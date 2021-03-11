@@ -85,10 +85,12 @@ namespace cwc {
             TextSource.Manager.BeginAutoUndoCommands();
             try
             {
-                if (TextSource.Count > 0)
+                if (TextSource.Count > 0){
                     Selection.Start = new Place(TextSource[TextSource.Count - 1].Count, TextSource.Count - 1);
-                else
-                    Selection.Start = new Place(0, 0);
+                }
+
+               // else
+               //     Selection.Start = new Place(0, 0);
 
                 //remember last caret position
                 Place last = Selection.Start;

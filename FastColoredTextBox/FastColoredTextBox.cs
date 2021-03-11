@@ -2694,11 +2694,11 @@ namespace FastColoredTextBoxNS
         /// </summary>
         public void GoEnd()
         {
-            if (lines.Count > 0)
+            if (lines.Count > 0){
                 Selection.Start = new Place(lines[lines.Count - 1].Count, lines.Count - 1);
-            else
-                Selection.Start = new Place(0, 0);
-
+            } else{
+              //Selection.Start = new Place(0, 0); //Bug & cause glitch!?
+            }
             DoCaretVisible();
         }
 
