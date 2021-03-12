@@ -5649,6 +5649,8 @@ namespace FastColoredTextBoxNS
             }
         }
 
+		
+	
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             Invalidate();
@@ -5755,6 +5757,17 @@ namespace FastColoredTextBoxNS
                 OnZoomChanged();
             }
         }
+		float zomm = 0;
+		protected override void OnResize(EventArgs e) 
+			{
+			try { 
+				NeedRecalc(true);
+			}catch(Exception _e) {
+			}
+
+			base.OnResize(e);
+
+		}
 
         protected virtual void OnZoomChanged()
         {
