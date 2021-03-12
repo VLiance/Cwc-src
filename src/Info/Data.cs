@@ -235,14 +235,22 @@ namespace cwc {
         internal static void fGetMainArg() {
                //Data.sArg = Environment.CommandLine.Trim() ;
 
+			//Remove current cwc path
+				if(sArg.Length> 1 && sArg[0] == '\"'){ 
+				int _nFindEndQuote =  sArg.IndexOf("\"",1)+1;
+				sArg = sArg.Substring( _nFindEndQuote).Trim();
+			}
 
-             if(sArg[0] == '\"'){ //Remove current file arg when loaded from file
-                int _nFindEndQuote =  sArg.IndexOf("\"",1)+1;
-                sArg = sArg.Substring( _nFindEndQuote ,sArg.Length-_nFindEndQuote).Trim();
-            }
+		
 				
 				//////////// Process ARGS ///////////////
 				string _stdArg =  Data.sArg;
+				 //Remove current file arg when loaded from file
+				 if(_stdArg.Length> 1 && sArg[0] == '\"'){ 
+					int _nFindEndQuote =  _stdArg.IndexOf("\"",1)+1;
+					_stdArg = sArg.Substring( _nFindEndQuote).Trim();
+				}
+
 				//remvoe all before first "-"
 				int _first_arg = _stdArg.IndexOf(" -"); //Warning will break if we have this in the path
 				char _cNext = 'A';

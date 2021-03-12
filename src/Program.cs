@@ -57,7 +57,7 @@ namespace cwc {
             Data.bConsoleMode = true;
         }
 
-		Data.sArg  = Environment.CommandLine.Trim() ;
+		Data.sArg  = Environment.CommandLine.Trim();
 		int idx = Data.sArg.IndexOf("--GUI");
 		if(idx != -1) { //TODO check for space after?
 			Data.sArg = Data.sArg.Replace("--GUI", "");
