@@ -96,7 +96,7 @@ namespace cwc {
             CppCmd _oTemp =  new CppCmd(null,"");
 			//Debug.fTrace("Args: " + _fullarg);
 
-            string _sCmdArg = _oTemp.fExtractSpaceMultiVals(_fullarg, ' ' );
+            string _sCmdArg = _oTemp.fExtractSpaceMultiVals(_fullarg );
             string _cmd = _oTemp.sRet_ExtractSpaceMultiValsCmd;
 			if(_cmd =="") {
 				Debug.fTrace("No cmd Args");

@@ -1939,7 +1939,7 @@ bExtacted = true;
 
 
 
-             _sCmdArg = fExtractSpaceMultiVals(_sCmdArg, ' ' );
+             _sCmdArg = fExtractSpaceMultiVals(_sCmdArg);
 
 
 			  //switch (_sCmd){
@@ -2050,7 +2050,7 @@ bExtacted = true;
             }
 
             
-             _sCond = fExtractSpaceMultiVals(_sCond, ' ' );
+             _sCond = fExtractSpaceMultiVals(_sCond );
 
 
             switch (_sCmd){
@@ -2071,7 +2071,7 @@ bExtacted = true;
                   break;
 
 				 case "#Copy":
-                    fCmdCopy(_sCond + " " + sRet_ExtractSpaceMultiValsAltArg);
+                    fCmdCopy( sRet_ExtractSpaceMultiValsCmdWithQuote);
                  break;
 
 				case "#Remove":
@@ -2291,7 +2291,7 @@ bExtacted = true;
 
 
 
-             public string fExtracVals(string _sValue, char _cRequiredDelim='=' ) {//_cRequiredDelim??
+             public string fExtracVals(string _sValue) {//_cRequiredDelim??
 				if(_sValue == "") {return "";};
 
                 string _sResult = _sValue; 
@@ -2311,10 +2311,11 @@ bExtacted = true;
         }
 
 
+        public string sRet_ExtractSpaceMultiValsCmdWithQuote;
         public string sRet_ExtractSpaceMultiValsCmd;
         public string sRet_ExtractSpaceMultiValsAltArg;
         public string sRet_ExtractFullArg;
-        public string fExtractSpaceMultiVals(string _sValue, char _cRequiredDelim='=' ) {//_cRequiredDelim??
+        public string fExtractSpaceMultiVals(string _sValue ) {//_cRequiredDelim??
 
             sRet_ExtractSpaceMultiValsAltArg = "";
             int _nIndexSpace =  _sValue.IndexOf(' ');
@@ -2336,6 +2337,7 @@ bExtacted = true;
             }
             //Output.TraceWarning("Result: " + _sResult);
             sRet_ExtractFullArg = _sResult;
+			sRet_ExtractSpaceMultiValsCmdWithQuote = _sResult;
 
             if(_sResult.Length >= 2){
                     //Remove quote!!
@@ -2360,7 +2362,7 @@ bExtacted = true;
             }else {
                     sRet_ExtractSpaceMultiValsCmd= _sValue.Trim();
             }
-
+		
 
             return _sResult;
         }
@@ -2829,19 +2831,63 @@ bExtacted = true;
 		}
 */
 
+		
+		
+
+
 		public void fCmdCopy(string _sAllArg) {
-            //	Debug.fTrace("COPY:! " + _sAllArg);
-           // Output.TraceAction("COPY:! " + _sAllArg);
+			//	Debug.fTrace("COPY:! " + _sAllArg);
+			// Output.TraceAction("COPY:! " + _sAllArg);
+
+			List<string> aLArg = new List<string>();
+
+			//Split Multi args sQuotes!
+			bool bInsideQuoteType1 = false;
+			bool bInsideQuoteType2 = false;
+			int idx_start = 0;
+
+			_sAllArg += ' ';//Ending space delimiter
+
+			for(int i = 0; i < _sAllArg.Length; i++) {
+				char c = _sAllArg[i];
+				if(c == '\"') {
+					bInsideQuoteType2 = !bInsideQuoteType2;
+				}
+				if(c == '\'') {
+					bInsideQuoteType1 = !bInsideQuoteType1;
+				}
+
+				if( !bInsideQuoteType1 && !bInsideQuoteType2) {
+					if(c <= 32) { //delimiter
+						string _sArg = _sAllArg.Substring(idx_start, i  -idx_start);
+						aLArg.Add( _sArg.Trim() );
+						idx_start = i;
+					}
+				}
+			}
+
+			string[] aArg = aLArg.ToArray();
+			if(!(aArg.Length >= 2)) {
+				Output.TraceError("-#Copy require 2 args");
+				return;
+			}
+
+			string _sFirst	= CppCompiler.fExtracQuote(aArg[0]);
+			string _sSecond =  CppCompiler.fExtracQuote(aArg[1]);
+
+			/*
 
             string[] _aArg =  _sAllArg.Trim().Split(' ');
+
             string _sFirst = _aArg[0];
             string _sSecond = "";
+
             for (int i = 1; i < _aArg.Length; i++)  {
                 _sSecond = _aArg[i].Trim();
                 if (_sSecond != "")  {
                     break;
                 }
-            }
+            }*/
 
             if (_sSecond != "") {
 				FileUtils.CopyFolderContents(_sFirst, _sSecond); //TODO on run pass only?

@@ -498,7 +498,6 @@ namespace cwc
             return -1;
         }
 
-        
         public static string fExtracQuote_sArg = "";
          public static string fExtracQuote(string _sValue, bool _bSplitWithSpace = true) {//_cRequiredDelim??
                 if(_sValue.Length < 1){return "";}
