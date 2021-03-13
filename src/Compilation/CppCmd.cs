@@ -680,7 +680,7 @@ public string sDelimiter = "";
 						switch(_sCmdName[0]) {
                                 case 'L': //For CWayv
 								case 'I':
-									fIncludePath(fExtractOneCharCmd(_sRArg));
+									fIncludePath(fExtractOneCharCmd(_sRArg.Replace('%',' ').Trim()));
 								break;
 
 								case 'o':
@@ -718,7 +718,7 @@ public string sDelimiter = "";
 						 switch(_sCmdName[0]) {
 								case 'I':
 									_sBackEndCmd += fAddArgBackEnd( _sRArg);
-						            fIncludePath(fExtractOneCharCmd(_sRArg));
+						            fIncludePath(fExtractOneCharCmd(_sRArg.Replace('%', ' ').Trim())); //Todo 
 								break;
 
 								case 'L':

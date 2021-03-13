@@ -83,7 +83,13 @@ public string sResult ="";
 					if(sWorkPath == "") {
 						sWorkPath = _sExePath;
 					}
-                    sExeName =Path.GetFileName( Path.GetDirectoryName(sExePath));
+                    string _sPath = Path.GetDirectoryName(sExePath);
+                    if (_sPath != "") {
+                        sExeName =Path.GetFileName(_sPath);
+                    }else {
+                        sExeName = sExePath;
+                    }
+
 
 			if(bRunInThread) {
 						BackgroundWorker bw = new BackgroundWorker();

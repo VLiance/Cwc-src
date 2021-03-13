@@ -1081,7 +1081,7 @@ namespace cwc {
         public int nLastCmdCount = 0;
         public void fUpdateCmdList(){
             this.BeginInvoke((MethodInvoker)delegate  {
-                if(sCurrentCmdLauch == ""){
+                if(sCurrentCmdLauch.Trim() == ""){
                     sCurrentCmdLauch = "Cmd";
                 }
 
