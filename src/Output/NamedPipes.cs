@@ -177,8 +177,10 @@ namespace cwc {
 					string _sLine = result.Substring(0, idx);
 
 					//if(_sLine.Trim() != ""){
-						Output.Trace(_sLine);
+						//Output.Trace(_sLine);
 					//}
+
+					Output.fPrjOut("P", _sLine);
 
 					result = result.Substring( idx + 1).TrimStart();
 				}
