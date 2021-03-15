@@ -1392,7 +1392,9 @@ bExtacted = true;
 					return;
 				}else {
 						// Output.Trace("\f4C Output directory must have a directory source: " +  sCmd);
-					 Output.Trace("\f6EWarning, directory not exist: " + _sFile);
+					 //Output.Trace("\f6EWarning, directory not exist: " + _sFile);
+					  CppCompiler.nError ++; //Something goes wrong, Stop compilation
+					 Output.TraceError("Error, directory doesn't exist: " + _sFile); //In ex: Require for submodule if not present
 					return;
 				} //Todo ... error?
 			}
