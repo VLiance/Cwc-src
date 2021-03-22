@@ -210,7 +210,7 @@ namespace cwc {
                 }
             }
 
-             Output.ProcessStdErr(_sOut);
+             Output.ProcessStdErr("[GDB] " + _sOut);
 
 
 		   // Output.Trace("E> " + _sOut);
