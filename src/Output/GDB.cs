@@ -210,7 +210,8 @@ namespace cwc {
                 }
             }
 
-             Output.ProcessStdErr("[GDB] " + _sOut);
+           //  Output.ProcessStdErr("[GDB] " + _sOut); //TODO (Not work for  Send[GDB]:add-symbol-file)
+             Output.ProcessStdErr( _sOut);
 
 
 		   // Output.Trace("E> " + _sOut);
