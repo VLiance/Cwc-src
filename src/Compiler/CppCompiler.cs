@@ -545,6 +545,10 @@ namespace cwc
             Output.TraceAction(_sExplicite_Name + " => "  + _sExplicite_Call);
 			bool bRedirectOutputToFile = false;
 
+
+
+
+
 			if(_sArg.IndexOf('>') != -1) { //We redirect output to a file so we need to call cmd, ex: cat ASM/boot2.bin Kernel.bin >> boot.flp
 				bRedirectOutputToFile = true;
 			}
@@ -583,6 +587,17 @@ namespace cwc
                       
                         _oCmd.oCurrProcess = process;
                         _oCmd.sLauchCmdResult = "";
+
+
+						 //TODO Replace all with lauch tool
+						LauchTool _oTool = new LauchTool();
+						_oTool.sExeName = _sExplicite_Name;
+						_oTool.ExeProcess = process;
+						 _oTool.bExeLauch = true;
+						 _oTool.fAddThisToList();
+						////////////////////////
+
+
 
 
 						 if(bRedirectOutputToFile) {
@@ -631,6 +646,8 @@ namespace cwc
                             Debug.fTrace("arg " +	     process.StartInfo.Arguments  );
  
                             process.Start();
+
+					  _oTool.bExeLauched= true;	//
 							
 							process.BeginOutputReadLine();
 							process.BeginErrorReadLine();
@@ -673,6 +690,7 @@ namespace cwc
 
 					
                          _bFinished = true;
+						 _oTool.fRemoveThisFromList();
                           Interlocked.Decrement(ref safeInstanceCount); //safeInstanceCount never decremented if after  fAddCommandLineVerificationToDepedancesFile?? on link time : exception?
 
                      }
