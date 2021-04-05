@@ -54,6 +54,7 @@
 			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.notePadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.vScodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cbTitle = new System.Windows.Forms.TextBox();
 			this.btn_SendCmd = new System.Windows.Forms.Label();
 			this.cmMain = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -139,12 +140,12 @@
             this.updateToolStripMenuItem,
             this.iDEToolStripMenuItem});
 			this.msMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-			this.msMenu.Location = new System.Drawing.Point(604, 5);
+			this.msMenu.Location = new System.Drawing.Point(512, 5);
 			this.msMenu.Name = "msMenu";
 			this.msMenu.Padding = new System.Windows.Forms.Padding(1);
 			this.msMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
 			this.msMenu.ShowItemToolTips = true;
-			this.msMenu.Size = new System.Drawing.Size(436, 20);
+			this.msMenu.Size = new System.Drawing.Size(528, 21);
 			this.msMenu.TabIndex = 50;
 			// 
 			// lauchToolStripMenuItem
@@ -356,7 +357,8 @@
 			this.iDEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.toolStripSeparator4,
-            this.notePadToolStripMenuItem});
+            this.notePadToolStripMenuItem,
+            this.vScodeToolStripMenuItem});
 			this.iDEToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("iDEToolStripMenuItem.Image")));
 			this.iDEToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
 			this.iDEToolStripMenuItem.Name = "iDEToolStripMenuItem";
@@ -367,23 +369,30 @@
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.openToolStripMenuItem.Text = "Open";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(134, 6);
+			this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
 			// 
 			// notePadToolStripMenuItem
 			// 
 			this.notePadToolStripMenuItem.Checked = true;
 			this.notePadToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.notePadToolStripMenuItem.Name = "notePadToolStripMenuItem";
-			this.notePadToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+			this.notePadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.notePadToolStripMenuItem.Text = "Notepad++";
 			this.notePadToolStripMenuItem.Click += new System.EventHandler(this.notePadToolStripMenuItem_Click);
+			// 
+			// vScodeToolStripMenuItem
+			// 
+			this.vScodeToolStripMenuItem.Name = "vScodeToolStripMenuItem";
+			this.vScodeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.vScodeToolStripMenuItem.Text = "VS Code";
+			this.vScodeToolStripMenuItem.Click += new System.EventHandler(this.vScodeToolStripMenuItem_Click);
 			// 
 			// cbTitle
 			// 
@@ -999,5 +1008,6 @@
         private System.Windows.Forms.ToolStripMenuItem killToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeMWToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cWCToolStripMenuItem;
-    }
+		private System.Windows.Forms.ToolStripMenuItem vScodeToolStripMenuItem;
+	}
 }

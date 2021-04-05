@@ -2096,9 +2096,7 @@ namespace cwc {
                  Data.oLauchProject.fCancel();
         }
 
-        private void notePadToolStripMenuItem_Click(object sender, EventArgs e) {
-           //  FileUtils.fLauchIDE("",  "" );
-        }
+    
 
         private void pathToolStripMenuItem_Click(object sender, EventArgs e) {
 
@@ -2259,7 +2257,8 @@ namespace cwc {
 
                 }else { 
 
-                    FileUtils.RunInEditor(_sFile,  " -n" + nLine + " -c" +  nColomn);
+                   // FileUtils.RunInEditor(_sFile,  " -n" + nLine + " -c" +  nColomn);
+                    FileUtils.RunInEditor(_sFile,   nLine , nColomn);
                                   
                 }
    
@@ -2445,7 +2444,7 @@ namespace cwc {
           
             if (e.Node is TreeNodePath) {
                 if (!Directory.Exists(((TreeNodePath)e.Node).Path)) { //It's a file
-                    FileUtils.RunInEditor( ((TreeNodePath)e.Node).Path,  "");
+                    FileUtils.RunInEditor( ((TreeNodePath)e.Node).Path);
                 }
             }
         }
@@ -2479,11 +2478,26 @@ namespace cwc {
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e) {
-           //  FileUtils.fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", "",  "" );
-             FileUtils.fLauchIDE( PathHelper.ToolDir +  "Code", "",  "" );
+             //FileUtils.fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", "",  "" );
+			  FileUtils.RunInEditor("");
+       
         }
+		private void vScodeToolStripMenuItem_Click(object sender, EventArgs e) {
+			
+				 fUncheckAll(iDEToolStripMenuItem);
+				//Data.fSetGlobalVar("IDE/VS Code", Data.sTRUE);
+				 ConfigMng.oConfig.fSetOption("IDE/VS Code", Data.sTRUE);
 
+				vScodeToolStripMenuItem.Checked = true;
+		}
       
+		 private void notePadToolStripMenuItem_Click(object sender, EventArgs e) {
+			 fUncheckAll(iDEToolStripMenuItem);
+		    // Data.fSetGlobalVar("IDE/Notepad++", Data.sTRUE);
+			 ConfigMng.oConfig.fSetOption("IDE/Notepad++", Data.sTRUE);
+
+			notePadToolStripMenuItem.Checked = true;
+        }
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
               Data.oLauchProject.fLauchDefaultRun("");
@@ -2752,7 +2766,9 @@ namespace cwc {
         private void cWCToolStripMenuItem_Click(object sender, EventArgs e) {
              ArgList.ProcessArg("--update CWC" );
         }
-    }
+
+
+	}
 
 
 }

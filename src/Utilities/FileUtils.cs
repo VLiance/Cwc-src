@@ -456,26 +456,41 @@ namespace cwc
 
           public static   Process exeProcess = null;
           public static Process firstProcess = null;
-          public static void RunInEditor(String file, string Arg = ""){
+          public static void RunInEditor(String file,  int line = 0, int col = 0){
 
+			string locarg;
 
-            Console.WriteLine("RunInEditor: " +file  + " " + Arg);
+			try { 
+			file = Path.GetFullPath(file);
+			}catch(Exception e) { }
+
+            Console.WriteLine("RunInEditor: "  +file  + " " + line + ":" + col);
 		//	this.BeginInvoke((MethodInvoker)delegate  {
 
             try  {
-                if(File.Exists(file)) { 
+                if(file == "" || File.Exists(file)) { 
                     
                      if(Data.fIsDataTrue("IDE/LiteWayv") ){
                         Debug.fTrace(" PathHelper.ExeWorkDir " +  PathHelper.ExeWorkDir );
-                        fLauchIDE( PathHelper.CwcRootPath() +  "LiteWayv.exe", file,  Arg );
+                        fLauchIDE( PathHelper.CwcRootPath() +  "LiteWayv.exe", file );
                         return;
                     }
                     if(Data.fIsDataTrue("IDE/Notepad++") ){
-                        fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", file,  Arg );
+						// + " " + file
+                        fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe",  " -n" + line + " -c" +  col + " " + file );
+                        return;
+                    }
+					if(Data.fIsDataTrue("IDE/VS Code") ){
+						if(line == 0) {
+							locarg = "";
+						}else {
+							locarg = ":" +   line + ":" + col;
+						}
+                        fLauchIDE( "Code", "--goto \"" +  file + locarg , true);
                         return;
                     }
 
-                   Output.TraceError("No Editor selected for: " +file  + " " + Arg);
+                   Output.TraceError("No Editor selected for: " +file  + " " + line + ":" + col);
 
                 }else{
 
@@ -512,11 +527,11 @@ namespace cwc
 
 
 
-        public static void fLauchIDE(String _sFullPath, String file = "", String Arg = ""){
-                
-               
-                fFindExistantExe(_sFullPath);
-                
+        public static void fLauchIDE(String _sFullPath,  String Arg = "", bool bUseEnvPath =false){
+                try { 
+               if(!bUseEnvPath) {
+				 fFindExistantExe(_sFullPath);
+				}
 
                 if(firstProcess != null && !firstProcess.HasExited) { //If already exist
 
@@ -533,17 +548,29 @@ namespace cwc
                 if(firstProcess == null || firstProcess.HasExited) {
 					firstProcess = exeProcess;
 
-                    if(Path.GetFileNameWithoutExtension(_sFullPath) == "notepad++"){
+                    if(!bUseEnvPath  && Path.GetFileNameWithoutExtension(_sFullPath) == "notepad++"){
 					    _sFirstLoadArg =  "-multiInst ";
 					    try { 
 						    XmlManager.loadNppConfig();
 					    } catch (Exception ex) { }
                     }
                 }
+				
+				if(bUseEnvPath) { //Don't show console
+					 exeProcess.StartInfo.UseShellExecute =true ;
+					 exeProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+				}
+
+				//Npp arg
+				//" -n71 -c2 E:/_Project/Vellum/flecs/_cwc/../examples/c/08_hierarchy/src/main.c"
 
                 exeProcess.StartInfo.FileName = _sFullPath;
-                exeProcess.StartInfo.Arguments = _sFirstLoadArg + Arg  + " " + file; //Restore quotes
+                exeProcess.StartInfo.Arguments = _sFirstLoadArg + Arg ; //Restore quotes
                 exeProcess.Start();
+
+			}catch(Exception e) {
+				Output.TraceError("IDE error: [" +_sFullPath + "]"   + e.Message);
+			}
 
         }
 
