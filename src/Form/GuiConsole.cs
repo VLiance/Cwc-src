@@ -2479,7 +2479,8 @@ namespace cwc {
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e) {
-             FileUtils.fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", "",  "" );
+           //  FileUtils.fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", "",  "" );
+             FileUtils.fLauchIDE( PathHelper.ToolDir +  "Code", "",  "" );
         }
 
       
