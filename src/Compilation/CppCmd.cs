@@ -776,21 +776,23 @@ string sBackEndLinker = "";
 			string[] _aArg = _sArg.Split(new string[] { " -" }, StringSplitOptions.None);
 			string _sBefore = "";
 			string _sAfter = "";
-			foreach (string _sParam in _aArg) {if(_sParam.Length >= 1) {
+			foreach (string _sParam in _aArg) {
 				if(!bFirst) { //First is always empty or not arg with ' -'
-					switch(_sParam[0]) {
-						case '%':
-							_sAfter += " -" + _sParam.Substring(1);
-						break;
-						default:
-							_sBefore += " -" + _sParam;
-						break;
+					if(_sParam.Length >= 1) {
+						switch(_sParam[0]) {
+							case '%':
+								_sAfter += " -" + _sParam.Substring(1);
+							break;
+							default:
+								_sBefore += " -" + _sParam;
+							break;
+						}
 					}
 				}else { //First is always empty or not arg with ' -'
-					_sBefore  +=  _sParam;
+					_sBefore  +=  _sParam.TrimStart();
 				}
 				bFirst = false;
-			}}
+			}
 			return (_sBefore + _sAfter).TrimStart();
 		}
 		
