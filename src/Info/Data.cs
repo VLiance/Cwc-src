@@ -12,7 +12,7 @@ namespace cwc {
     class Data {
 
 
-          public static string sVersion = "0.0.95.33";
+          public static string sVersion = "0.0.95.34";
 
         		internal static bool bUpdateMode = false;
 		internal static string sUpdateModeSrc = "";
@@ -37,7 +37,7 @@ namespace cwc {
                return aVarGlobal[_sName] == Data.sTRUE;
             }
             if (aOption.ContainsKey(_sName)) {
-               return aOption[_sName] == Data.sTRUE;
+              return aOption[_sName] == Data.sTRUE;
             }
             return false;
         }
