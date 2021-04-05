@@ -771,19 +771,25 @@ string sBackEndLinker = "";
 			//validation
 			if(_sArg.Length < 2) { return _sArg; }
 			if(_sArg[0] != ' ') {_sArg = _sArg += " ";}
+			bool bFirst = true;
 
 			string[] _aArg = _sArg.Split(new string[] { " -" }, StringSplitOptions.None);
 			string _sBefore = "";
 			string _sAfter = "";
 			foreach (string _sParam in _aArg) {if(_sParam.Length >= 1) {
-				switch(_sParam[0]) {
-					case '%':
-						_sAfter += " -" + _sParam.Substring(1);
-					break;
-					default:
-						_sBefore += " -" + _sParam;
-					break;
+				if(!bFirst) { //First is always empty or not arg with ' -'
+					switch(_sParam[0]) {
+						case '%':
+							_sAfter += " -" + _sParam.Substring(1);
+						break;
+						default:
+							_sBefore += " -" + _sParam;
+						break;
+					}
+				}else { //First is always empty or not arg with ' -'
+					_sBefore  +=  _sParam;
 				}
+				bFirst = false;
 			}}
 			return (_sBefore + _sAfter).TrimStart();
 		}
