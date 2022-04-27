@@ -12,14 +12,14 @@ namespace cwc
 	public class UpdateCwc{
 
 
-		internal static void fLauchUpdate(string sCurrFolder, string _sVersion)
+		internal static void fLaunchUpdate(string sCurrFolder, string _sVersion)
 		{
-			  LauchTool _oUpd =  new LauchTool();
+			  LaunchTool _oUpd =  new LaunchTool();
 			_oUpd.bOutput = false;
 			_oUpd.UseShellExecute = true;
-			_oUpd.fLauchExe( sCurrFolder + "cwc.exe", " -wCwcUpd " + PathHelper.GetExeDirectory() + " -wCwcVer " + _sVersion, "","",true);
+			_oUpd.fLaunchExe( sCurrFolder + "cwc.exe", " -wCwcUpd " + PathHelper.GetExeDirectory() + " -wCwcVer " + _sVersion, "","",true);
 		//		Console.WriteLine("Update to ver "  +_sVersion );
-			while(!_oUpd.bExeLauched && Base.bAlive) {
+			while(!_oUpd.bExeLaunched && Base.bAlive) {
 				Thread.Sleep(1);
 			}
 			SysAPI.fQuit(true);
@@ -27,13 +27,13 @@ namespace cwc
 
 		internal static void fRestart(string sCurrFolder)
 		{
-			  LauchTool _oUpd =  new LauchTool();
+			  LaunchTool _oUpd =  new LaunchTool();
 			_oUpd.bOutput = false;
 			_oUpd.UseShellExecute = true;
-		//	_oUpd.fLauchExe( sCurrFolder + "cwc.exe", "Updated ", "","",true);
-			_oUpd.fLauchExe( sCurrFolder + "cwc.exe", "-wCwcUpdated " + Data.sUpdateVer, "","",true);
+		//	_oUpd.fLaunchExe( sCurrFolder + "cwc.exe", "Updated ", "","",true);
+			_oUpd.fLaunchExe( sCurrFolder + "cwc.exe", "-wCwcUpdated " + Data.sUpdateVer, "","",true);
 				//				_process.StartInfo.Arguments = "Updated " + _sVersion + " " + Data.sWorkDir + " " + Data.sResendArg;	
-			while(!_oUpd.bExeLauched  && Base.bAlive) {
+			while(!_oUpd.bExeLaunched  && Base.bAlive) {
 				Thread.Sleep(1);
 			}	
 			SysAPI.fQuit(true);

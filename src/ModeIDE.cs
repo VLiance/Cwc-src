@@ -13,22 +13,22 @@ namespace cwc
 	
 		public bool oCppAstStarted = false;
 
-		public LauchTool oCppAst =  new LauchTool(); 
+		public LaunchTool oCppAst =  new LaunchTool(); 
 		public bool bExtracted = false;
 		public bool bFinishExtractSended= false;
 
 		public ModeIDE() {
 
    
-		//	LauchTool oCppAst =  new LauchTool();
+		//	LaunchTool oCppAst =  new LaunchTool();
 
 			//oCppAst.sWorkPath = PathHelper.Module; //Disabled?
-			oCppAst.dOut = new LauchTool.dIOut(fCppAstOut);
-	//		_oCppAst.dExit = new LauchTool.dIExit(fGitCloneEnd);
+			oCppAst.dOut = new LaunchTool.dIOut(fCppAstOut);
+	//		_oCppAst.dExit = new LaunchTool.dIExit(fGitCloneEnd);
   // oCppAst. = false;
 
 
-			oCppAst.fLauchExe( PathHelper.ToolDir + "cppast/cppast.exe", "");
+			oCppAst.fLaunchExe( PathHelper.ToolDir + "cppast/cppast.exe", "");
 		}
 		
 		internal void fFinishExtractArg()
@@ -185,7 +185,7 @@ namespace cwc
 
 		
 	
-      public void fCppAstOut(LauchTool _oThis, string _sOut)  {
+      public void fCppAstOut(LaunchTool _oThis, string _sOut)  {
             if(_sOut == null){return;}
 			if(_sOut.Length > 7 && _sOut[0] == 'c' && _sOut[1] == 'w' &&   _sOut[2] == 'c') { //cwcAst:
 				if(_sOut == "cwcAst:Rdy") {
@@ -219,7 +219,7 @@ namespace cwc
 
 		}
 
-        public void fCppAstEnd(LauchTool _oLauch)  {
+        public void fCppAstEnd(LaunchTool _oLaunch)  {
 		/*
 		   this.BeginInvoke((MethodInvoker)delegate {
 					fGitCloneEnd();

@@ -416,7 +416,7 @@ private const int WM_DESTROY = 0x0002  ;
                            Data.sCmd ="StartBuild";
                         break;
                         case "StopBuild":
-                            Data.oLauchProject.fCancel(); //Thread?
+                            Data.oLaunchProject.fCancel(); //Thread?
                         break;
                         
 

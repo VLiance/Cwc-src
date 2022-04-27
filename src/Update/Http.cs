@@ -304,29 +304,29 @@ namespace cwc
 	//if(!_oParam.bDownloadFile) {
 	if(true) {
 
-				LauchTool _oLauchUrl = new LauchTool();
-				_oLauchUrl.dOut = new LauchTool.dIOut(fHttpOut);
-				_oLauchUrl.dError = new LauchTool.dIError(fHttpOutInfo);
+				LaunchTool _oLaunchUrl = new LaunchTool();
+				_oLaunchUrl.dOut = new LaunchTool.dIOut(fHttpOut);
+				_oLaunchUrl.dError = new LaunchTool.dIError(fHttpOutInfo);
 
-                _oLauchUrl.bHidden = true;
-				_oLauchUrl.dExit = new LauchTool.dIExit(fUrlRequestComplete);
-				_oLauchUrl.oCustom = (Object)_oParam;
+                _oLaunchUrl.bHidden = true;
+				_oLaunchUrl.dExit = new LaunchTool.dIExit(fUrlRequestComplete);
+				_oLaunchUrl.oCustom = (Object)_oParam;
 
-		//_oLauchUrl.bRunInThread = false;
-		//_oLauchUrl.bWaitEndForOutput = true;
+		//_oLaunchUrl.bRunInThread = false;
+		//_oLaunchUrl.bWaitEndForOutput = true;
 					_oParam.sResult  = "";
 	
-				//	_oLauchUrl.fLauchExe( PathHelper.ToolDir + "curl/curl.exe", "-i  -k -L  -A \"Cwc - app\" \"" + _oParam.sURL + "\"");
-					//_oLauchUrl.fLauchExe( PathHelper.ToolDir + "curl/curl.exe", "--anyauth -f -i  -k -L  -A \"Cwc - app\" \"" + _oParam.sURL + "\"");
-					//_oLauchUrl.fLauchExe( PathHelper.ToolDir + "wget/wget.exe", "--no-check-certificate -S -O - \"" + _oParam.sURL + "\"");
+				//	_oLaunchUrl.fLaunchExe( PathHelper.ToolDir + "curl/curl.exe", "-i  -k -L  -A \"Cwc - app\" \"" + _oParam.sURL + "\"");
+					//_oLaunchUrl.fLaunchExe( PathHelper.ToolDir + "curl/curl.exe", "--anyauth -f -i  -k -L  -A \"Cwc - app\" \"" + _oParam.sURL + "\"");
+					//_oLaunchUrl.fLaunchExe( PathHelper.ToolDir + "wget/wget.exe", "--no-check-certificate -S -O - \"" + _oParam.sURL + "\"");
 				if(!_oParam.bDownloadFile) {
-					_oLauchUrl.fLauchExe( PathHelper.ToolDir + "wget/wget.exe", "--no-check-certificate -S -O - \"" + _oParam.sURL + "\"");
+					_oLaunchUrl.fLaunchExe( PathHelper.ToolDir + "wget/wget.exe", "--no-check-certificate -S -O - \"" + _oParam.sURL + "\"");
 				}else{
-                  //    _oLauchUrl.dOut += new LauchTool.dIOut(fHttpConsole);
-			      //  _oLauchUrl.dError += new LauchTool.dIError(fHttpConsole);
+                  //    _oLaunchUrl.dOut += new LaunchTool.dIOut(fHttpConsole);
+			      //  _oLaunchUrl.dError += new LaunchTool.dIError(fHttpConsole);
 
                     Console.WriteLine("------------------Download File !! ");
-					_oLauchUrl.fLauchExe( PathHelper.ToolDir + "wget/wget.exe", "--no-check-certificate -O \"" +  _oParam.sToFile +  "\" \"" + _oParam.sURL + "\"");
+					_oLaunchUrl.fLaunchExe( PathHelper.ToolDir + "wget/wget.exe", "--no-check-certificate -O \"" +  _oParam.sToFile +  "\" \"" + _oParam.sURL + "\"");
 				}
 			//	
 
@@ -343,7 +343,7 @@ namespace cwc
 		}
 
 
-		public static void 	fHttpOutInfo(LauchTool _oTool, string _sOut){
+		public static void 	fHttpOutInfo(LaunchTool _oTool, string _sOut){
 	
 			ParamHttp _oParam = (ParamHttp)_oTool.oCustom;
 			//_oParam.sResult = _sOut;
@@ -398,7 +398,7 @@ namespace cwc
 		}
 
 
-		public static void 	fHttpOut(LauchTool _oTool, string _sOut){
+		public static void 	fHttpOut(LaunchTool _oTool, string _sOut){
 	
 			ParamHttp _oParam = (ParamHttp)_oTool.oCustom;
 			_oParam.sResult += _sOut;
@@ -409,7 +409,7 @@ namespace cwc
 			
 
 		}
-		public static void 	fUrlRequestComplete(LauchTool _oTool){
+		public static void 	fUrlRequestComplete(LaunchTool _oTool){
 		
 			
 			ParamHttp _oParam =   (ParamHttp)_oTool.oCustom;

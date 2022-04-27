@@ -10,14 +10,14 @@ using System.Text;
 using System.Threading;
 
 namespace cwc {
-    public class Lauch {
+    public class Launch {
 
-        public LauchProject oForm = null;
+        public LaunchProject oForm = null;
         public string sBrowser = "";
         public string sPlatform = "";
         public string sViewTarget = "";
         public bool bExportCpp = false;
-        public bool bExeLauch = false;
+        public bool bExeLaunch = false;
         public bool bStopAll = false;
         public bool bHasError = false;
         public bool bSanitize = false;
@@ -28,12 +28,12 @@ namespace cwc {
 
        public  Process ExeProcess = null;
 
-        public Lauch() {
+        public Launch() {
 
         }
         /*
-        public void fLauchExe(string _sExePath, bool _bSkipLinkTime  = true) {
-		//	Debug.fTrace("fLauchExe! " + _sExePath);
+        public void fLaunchExe(string _sExePath, bool _bSkipLinkTime  = true) {
+		//	Debug.fTrace("fLaunchExe! " + _sExePath);
             if (sViewTarget != "Build Only" && !bExportCpp){
 				string _sWorkPath = _sExePath;
                 string _sArg = "";
@@ -62,7 +62,7 @@ namespace cwc {
 				}
 
 
-                bExeLauch = true;
+                bExeLaunch = true;
 
                  CppCompiler.CheckAllThreadsHaveFinishedWorking(true);
 
@@ -135,7 +135,7 @@ namespace cwc {
                     bool processStarted = false;
 
                     if (bStopAll) {
-                        bExeLauch = false;
+                        bExeLaunch = false;
                         return;
                     }
 
@@ -167,7 +167,7 @@ namespace cwc {
                             ////////////////////////////////////////////////////////////////////////////////////////
                       //  }
                         if(oForm != null) {
-                            oForm.fLauchEnd();
+                            oForm.fLaunchEnd();
                         }
                         
 
@@ -178,7 +178,7 @@ namespace cwc {
                     }
 
 
-                    bExeLauch = false;
+                    bExeLaunch = false;
 
                 });
                 bw.RunWorkerAsync();

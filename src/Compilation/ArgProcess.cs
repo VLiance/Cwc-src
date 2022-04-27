@@ -26,7 +26,7 @@ namespace cwc {
                              case "exe":
                              case "bat":
                             case "cwMake":
-                                   return "-#Lauch " + sArgExpand;
+                                   return "-#Launch " + sArgExpand;
                              break;
                         }
                     }
@@ -36,7 +36,7 @@ namespace cwc {
                  if (sArgExpand[_nIndex] == '\"'  ) {
                     //First char is quote, we found a file
 
-                    return "-#Lauch " + sArgExpand;
+                    return "-#Launch " + sArgExpand;
                 }
                 if (sArgExpand[_nIndex] == '-' || sArgExpand[_nIndex] == '|' || sArgExpand[_nIndex] == '>' ) {
                      return sArgExpand;

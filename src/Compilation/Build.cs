@@ -57,8 +57,8 @@ namespace cwc {
                         GuiManager.fCreateGUI();
                     }*/
                                      
-                    if(Data.sToLauch != ""){
-					    Delocalise.fDelocaliseInMainThread(Data.sToLauch);
+                    if(Data.sToLaunch != ""){
+					    Delocalise.fDelocaliseInMainThread(Data.sToLaunch);
                     } else {
                        Msg.fShowIntroMessage();
 		
@@ -125,7 +125,7 @@ namespace cwc {
 
 						Build.fDisableBuild();
 						if( CppCompiler.nError == 0) {
-							Data.oLauchProject.fBuildFinish();
+							Data.oLaunchProject.fBuildFinish();
 
 						}
 
@@ -185,7 +185,7 @@ namespace cwc {
                 if(Base.bAlive){
 
                   // PipeInput.fConsoleExit(null);//Show >>
-              //     Data.oLauchProject.fConsoleExit(null);//Show >>
+              //     Data.oLaunchProject.fConsoleExit(null);//Show >>
          
                     while (Base.bAlive ||  Data.bForceTestNextCmd ) {
                          Data.bForceTestNextCmd = false;
@@ -194,7 +194,7 @@ namespace cwc {
 
                             case "StopBuild":Data.sCmd = "";
                                               //  Debug.fTrace("****StopBuild!!");
-                                 Data.oLauchProject.fCancel();
+                                 Data.oLaunchProject.fCancel();
                             break;
                             case "StartBuild":Data.sCmd = "";
                                    // Debug.fTrace("****StartBuild!!");
@@ -225,7 +225,7 @@ namespace cwc {
 
         public static void fDisableBuild(){
 
-            if(Data.oLauchProject != null && Data.oLauchProject.oCurLauch != null && Data.oLauchProject.oCurLauch.bExeLauch) {
+            if(Data.oLaunchProject != null && Data.oLaunchProject.oCurLaunch != null && Data.oLaunchProject.oCurLaunch.bExeLaunch) {
                 return;
             }
 

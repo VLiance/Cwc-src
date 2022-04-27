@@ -10,7 +10,7 @@ namespace cwc {
 
         
 
-	public static void 	fDelocaliseEnd(LauchTool _oTool){
+	public static void 	fDelocaliseEnd(LaunchTool _oTool){
 		Debug.fTrace("fDelocaliseEnd--------");
 	}
 
@@ -22,7 +22,7 @@ namespace cwc {
            Data.sCmd = "Delocalise";
             Delocalise.sDelocaliseCmd = _sPath;
 
-            Setting.fNewSettingsLauch(_sPath);
+            Setting.fNewSettingsLaunch(_sPath);
        
 
             /*
@@ -47,7 +47,7 @@ namespace cwc {
                 Data.oGuiConsole.fLoadData();
             }*/
 
-           Output.TraceWarning("Lauch " + sDelocaliseCmd);
+           Output.TraceWarning("Launch " + sDelocaliseCmd);
             string _sText =  Delocalise.fDelocalise(sDelocaliseCmd);
 			Data.sArgExpand  = ArgProcess.fExpandAll(_sText);
 	       Data.sCmd = "StartBuild";
@@ -114,12 +114,12 @@ namespace cwc {
 
 	public static string fDelocaliseExe(string _sPath){
         
-//fLauchConsoleCmd("");
+//fLaunchConsoleCmd("");
 
    
 
-		LauchTool _oSubCmd = new LauchTool();
-		_oSubCmd.dExit  = new LauchTool.dIExit(fDelocaliseEnd);
+		LaunchTool _oSubCmd = new LaunchTool();
+		_oSubCmd.dExit  = new LaunchTool.dIExit(fDelocaliseEnd);
 		
         _oSubCmd.bRedirectOutput = false;
 		//_oSubCmd.bReturnBoth= true;
@@ -127,11 +127,11 @@ namespace cwc {
 		//_oSubCmd.bRunInThread = false;
 		_oSubCmd.bWaitEndForOutput = true;
 
-		string sResult = _oSubCmd.fLauchExe(_sPath, " @wDeloc ");
+		string sResult = _oSubCmd.fLaunchExe(_sPath, " @wDeloc ");
 
-         _oSubCmd.fSend("Cwc:Lauch by " + Data.MainProcess.Handle); //Remove "pause" bug ?
+         _oSubCmd.fSend("Cwc:Launch by " + Data.MainProcess.Handle); //Remove "pause" bug ?
 
-		while(_oSubCmd.bExeLauch){
+		while(_oSubCmd.bExeLaunch){
 			//Thread.Sleep(1);
             Thread.CurrentThread.Join(1);
 		}

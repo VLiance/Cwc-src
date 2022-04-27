@@ -393,7 +393,7 @@ namespace cwc {
                 }
                 
 
-                Setting.oSettingsLauch.fExtractTreeViewPrjData();
+                Setting.oSettingsLaunch.fExtractTreeViewPrjData();
 
                 treeViewPrj_AfterExpand(treeViewPrj,null);//Update size
 
@@ -760,7 +760,7 @@ namespace cwc {
             //Save setting
             ConfigMng.oConfig.bMaximize = (WindowState ==  FormWindowState.Maximized);
             ConfigMng.oConfig.bTreePrjOpen = csPrj.IsCollapsed;
-            Setting.oSettingsLauch.fSaveSetting(true);
+            Setting.oSettingsLaunch.fSaveSetting(true);
 
             Base.bAlive = false;
             FastColoredTextBox.bAlive = false;
@@ -788,7 +788,7 @@ namespace cwc {
                List<ToolStripItem> aToRem = new List<ToolStripItem>();
 
                 ///// Clear ///
-                foreach(ToolStripItem _oItem in lauchToolStripMenuItem.DropDownItems){
+                foreach(ToolStripItem _oItem in LaunchToolStripMenuItem.DropDownItems){
                     //Console.WriteLine("aa" + _oItem.Tag);
                     if( !(_oItem is ToolStripSeparator) ) {
                         if(_oItem.Tag != null){
@@ -797,7 +797,7 @@ namespace cwc {
                      }
                  }
                 foreach(ToolStripItem _oItem in aToRem){
-                   lauchToolStripMenuItem.DropDownItems.Remove(_oItem);
+                   LaunchToolStripMenuItem.DropDownItems.Remove(_oItem);
                 }
                 //////
 
@@ -819,7 +819,7 @@ namespace cwc {
                     }
 
                       _oNew.Text = _sName;
-                     lauchToolStripMenuItem.DropDownItems.Add(_oNew);
+                     LaunchToolStripMenuItem.DropDownItems.Add(_oNew);
 
                     _oNew.Click += fRecentClick;
                 }
@@ -900,7 +900,7 @@ namespace cwc {
                 fLoadRecent();
             
             
-                Setting.oSettingsLauch.fIni( treeViewPrj);  
+                Setting.oSettingsLaunch.fIni( treeViewPrj);  
 
             if(!ConfigMng.bLoadFailed){
                 if(ConfigMng.oConfig.vStartPos != null ){
@@ -1033,8 +1033,8 @@ namespace cwc {
                                 });
                             }
 
-                            if(LauchTool.bListModified) {
-                                LauchTool.bListModified = false;
+                            if(LaunchTool.bListModified) {
+                                LaunchTool.bListModified = false;
                                 fUpdateCmdList();
                             }
                         }
@@ -1060,13 +1060,13 @@ namespace cwc {
             _oNew.Text = _sName;
             _oNew.Name = _sName;
             cmdToolStripMenuItem.DropDownItems.Add(_oNew);
-              _oNew.Click += fCmdLauchSelect;
+              _oNew.Click += fCmdLaunchSelect;
         }
-        private void fCmdLauchSelect(object sender, EventArgs e) {
+        private void fCmdLaunchSelect(object sender, EventArgs e) {
 
             string _sTag =  (string) ((ToolStripMenuItem) sender).Tag;
-            sCurrentCmdLauch = _sTag;
-            cmdToolStripMenuItem.Text = sCurrentCmdLauch;
+            sCurrentCmdLaunch = _sTag;
+            cmdToolStripMenuItem.Text = sCurrentCmdLaunch;
         }
          private void fCmdSingalSelect(object sender, EventArgs e) {
 
@@ -1075,28 +1075,28 @@ namespace cwc {
             tsSignal.Text = sCurrentSignal;
         }
 
-        public string sCurrentCmdLauch = "";
+        public string sCurrentCmdLaunch = "";
         public int nLastCmdCount = 0;
         private void fUpdateCmdList(){
             this.BeginInvoke((MethodInvoker)delegate  {
-                if(sCurrentCmdLauch == ""){
-                    sCurrentCmdLauch = "Cmd";
+                if(sCurrentCmdLaunch == ""){
+                    sCurrentCmdLaunch = "Cmd";
                 }
 
                 cmdToolStripMenuItem.DropDownItems.Clear();
                 fAddItemCmd("Cmd", null);
-                foreach(LauchTool _oLauch in LauchTool.aLauchList)
+                foreach(LaunchTool _oLaunch in LaunchTool.aLaunchList)
                 {
-                   fAddItemCmd(_oLauch.sExeName, _oLauch.ExeProcess );
-                   //fAddItemCmd(_oLauch.ExeProcess.ProcessName, _oLauch.ExeProcess );
+                   fAddItemCmd(_oLaunch.sExeName, _oLaunch.ExeProcess );
+                   //fAddItemCmd(_oLaunch.ExeProcess.ProcessName, _oLaunch.ExeProcess );
                 }
              
-                //auto select first lauched app
-                if(sCurrentCmdLauch == "Cmd" && nLastCmdCount == 1 && cmdToolStripMenuItem.DropDownItems.Count > 1 ){
+                //auto select first Launched app
+                if(sCurrentCmdLaunch == "Cmd" && nLastCmdCount == 1 && cmdToolStripMenuItem.DropDownItems.Count > 1 ){
                     bool bFirst = true;
                     foreach(ToolStripDropDownItem _item in cmdToolStripMenuItem.DropDownItems){ //Get second item
                         if(bFirst == false){
-                            sCurrentCmdLauch = _item.Text;
+                            sCurrentCmdLaunch = _item.Text;
                             //cmdToolStripMenuItem.Text = _item.Text;
                             break;
                         }
@@ -1105,7 +1105,7 @@ namespace cwc {
                        
                 }
              
-                cmdToolStripMenuItem.Text = sCurrentCmdLauch;
+                cmdToolStripMenuItem.Text = sCurrentCmdLaunch;
                 nLastCmdCount = cmdToolStripMenuItem.DropDownItems.Count;
             });
         }
@@ -2028,7 +2028,7 @@ namespace cwc {
 			setCwcToolStripMenuItem.Enabled = true;
         }
 
-        private void lauchToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void LaunchToolStripMenuItem_Click(object sender, EventArgs e) {
            
         }
 
@@ -2068,11 +2068,11 @@ namespace cwc {
         }
 
         private void ToolStrip_Build_Click(object sender, EventArgs e) {
-                 Data.oLauchProject.fCancel();
+                 Data.oLaunchProject.fCancel();
         }
 
         private void notePadToolStripMenuItem_Click(object sender, EventArgs e) {
-           //  FileUtils.fLauchIDE("",  "" );
+           //  FileUtils.fLaunchIDE("",  "" );
         }
 
         private void pathToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -2098,7 +2098,7 @@ namespace cwc {
             }
         }
 
-        internal void fLauchPrj() {
+        internal void fLaunchPrj() {
              try {  this.BeginInvoke((MethodInvoker)delegate  {
             // ToolStrip_Build.Text = "END  ";
             ToolStrip_Build.Image = Resources.Menu0006;
@@ -2434,13 +2434,13 @@ namespace cwc {
         private void treeViewPrj_AfterExpand(object sender, TreeViewEventArgs e) {
               fAutoSizeTree((TreeView) sender, pnTtreeViewPrj, true);
               fSetTreeViewScrollBarMaximum((TreeView) sender);
-         //   Setting.oSettingsLauch.fSetNodes((TreeView) sender);
+         //   Setting.oSettingsLaunch.fSetNodes((TreeView) sender);
         }
 
         private void treeViewPrj_AfterCollapse(object sender, TreeViewEventArgs e) {
                 fAutoSizeTree((TreeView) sender,pnTtreeViewPrj);
                 fSetTreeViewScrollBarMaximum((TreeView) sender);
-          //       Setting.oSettingsLauch.fSetNodes((TreeView) sender);
+          //       Setting.oSettingsLaunch.fSetNodes((TreeView) sender);
             //pnTreeCenter.Refresh();
            // pnTreeCenter.AutoScrollPosition = new Point( pnTreeCenter.Location.X + 10, pnTreeCenter.Location.Y);
            // pnTreeCenter.AutoScrollPosition = new Point( pnTreeCenter.Location.X + 10, pnTreeCenter.Location.Y);
@@ -2510,13 +2510,13 @@ namespace cwc {
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e) {
-             FileUtils.fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", "",  "" );
+             FileUtils.fLaunchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", "",  "" );
         }
 
       
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-              Data.oLauchProject.fLauchDefaultRun("");
+              Data.oLaunchProject.fLaunchDefaultRun("");
         }
 
         private void btn_SendCmd_Click(object sender, EventArgs e)
@@ -2531,8 +2531,8 @@ namespace cwc {
 
         /*
         private void  fSendCmdCleanup(){
-            foreach(LauchTool _oLauch in LauchTool.aLauchList){
-                if(!_oLauch.bExeLauch) {
+            foreach(LaunchTool _oLaunch in LaunchTool.aLaunchList){
+                if(!_oLaunch.bExeLaunch) {
 
                 }
             }
@@ -2540,12 +2540,12 @@ namespace cwc {
 
 
  
-       // foreach(Process _oProc in GuiConsole.aProcList){ if(sCurrentCmdLauch == _oProc.ProcessName) {
+       // foreach(Process _oProc in GuiConsole.aProcList){ if(sCurrentCmdLaunch == _oProc.ProcessName) {
         private void fSendCmd(){
-            foreach(LauchTool _oLauch in LauchTool.aLauchList){
-                if(sCurrentCmdLauch == _oLauch.sExeName) {
-                    if(_oLauch.bExeLauch) {
-                        fSendCmdToLauchTool(_oLauch, tbCmd.Text);
+            foreach(LaunchTool _oLaunch in LaunchTool.aLaunchList){
+                if(sCurrentCmdLaunch == _oLaunch.sExeName) {
+                    if(_oLaunch.bExeLaunch) {
+                        fSendCmdToLaunchTool(_oLaunch, tbCmd.Text);
                          tbCmd.Text = "";//Clear
                         return;
                     }
@@ -2554,10 +2554,10 @@ namespace cwc {
             //fSendCmdCleanup();
         }
           private void fSendSignal(){
-            foreach(LauchTool _oLauch in LauchTool.aLauchList){
-                if(sCurrentCmdLauch == _oLauch.sExeName) {
-                    if(_oLauch.bExeLauch) {
-                        fSendSignal(_oLauch, tsSignal.Text);
+            foreach(LaunchTool _oLaunch in LaunchTool.aLaunchList){
+                if(sCurrentCmdLaunch == _oLaunch.sExeName) {
+                    if(_oLaunch.bExeLaunch) {
+                        fSendSignal(_oLaunch, tsSignal.Text);
                         return;
                     }
                 }
@@ -2565,44 +2565,44 @@ namespace cwc {
         }
 
 
-        private void fSendCmdToLauchTool(LauchTool _oLauch, string text){
+        private void fSendCmdToLaunchTool(LaunchTool _oLaunch, string text){
             text = text.ToLower(); //always?
-            Output.TraceAction("[" +_oLauch.sExeName + "]>> " + text);
+            Output.TraceAction("[" +_oLaunch.sExeName + "]>> " + text);
 
 
-              _oLauch.fSend(text);
+              _oLaunch.fSend(text);
 
-            if(_oLauch.sExeName == "gdb"){
+            if(_oLaunch.sExeName == "gdb"){
                 /*
                  if (  !(text.IndexOf("run") == 0) ) {
                     if (text.IndexOf("continue") == 0 ) {
        
                     }else { 
-                         SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+                         SysAPI.fSend_CTRL_C(_oLaunch.ExeProcess);
                     }
                 }*/
                 if (text.IndexOf("pause") == 0 || text.IndexOf("break") == 0 || text.IndexOf("interrupt") == 0) {
-                     SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+                     SysAPI.fSend_CTRL_C(_oLaunch.ExeProcess);
                 }
 
 
                 /*
                  if (text.IndexOf("pause")== 0 ){
-                      SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+                      SysAPI.fSend_CTRL_C(_oLaunch.ExeProcess);
                  }else {
-                    _oLauch.fSend(text);
+                    _oLaunch.fSend(text);
                 }*/
 
                 /*
-                //   if(_oLauch.ExeProcess.HasExited)
+                //   if(_oLaunch.ExeProcess.HasExited)
                 if( GDB.singleton.bRunning) {
                     GDB.singleton.bRunning = false;
                    // if (text.IndexOf("pause") == 0 || text.IndexOf("break") == 0 || text.IndexOf("interrupt") == 0) {
-                        SysAPI.fSend_CTRL_C(_oLauch.ExeProcess);
+                        SysAPI.fSend_CTRL_C(_oLaunch.ExeProcess);
 
-                          _oLauch.fSend("interrupt -a");
+                          _oLaunch.fSend("interrupt -a");
 
-                        Output.TraceAction("Is Running .. stopping send ... CTRL+C " + _oLauch.ExeProcess.MainWindowTitle);
+                        Output.TraceAction("Is Running .. stopping send ... CTRL+C " + _oLaunch.ExeProcess.MainWindowTitle);
                     //}
                }else{
                    if (text.IndexOf("continue") == 0 || text.IndexOf("run") == 0 ) {
@@ -2618,22 +2618,22 @@ namespace cwc {
        
         }
 
-         private void fSendSignal(LauchTool _oLauch, string text){
+         private void fSendSignal(LaunchTool _oLaunch, string text){
             switch(text){
                 case "SIGINT":
-                      SysAPI.fSend_CTRL_C(_oLauch.ExeProcess, SysAPI.CTRL_C_EVENT);
+                      SysAPI.fSend_CTRL_C(_oLaunch.ExeProcess, SysAPI.CTRL_C_EVENT);
                 break;
                 case "SIGBREAK":
-                      SysAPI.fSend_CTRL_C(_oLauch.ExeProcess, SysAPI.CTRL_BREAK_EVENT);
+                      SysAPI.fSend_CTRL_C(_oLaunch.ExeProcess, SysAPI.CTRL_BREAK_EVENT);
                 break;
                 case "CloseMW":
-                    _oLauch.ExeProcess.CloseMainWindow();
+                    _oLaunch.ExeProcess.CloseMainWindow();
                 break;
                 case "Close":
-                    _oLauch.ExeProcess.Close();
+                    _oLaunch.ExeProcess.Close();
                 break;
                 case "Kill":
-                     _oLauch.ExeProcess.Kill();
+                     _oLaunch.ExeProcess.Kill();
                 break;
             }
           

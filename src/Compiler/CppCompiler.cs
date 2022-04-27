@@ -392,7 +392,7 @@ namespace cwc
             //Direct show if current
             lock (oLockTicket) {
                 
-                _oCmd.sLauchCmdResult += _sResult + "\n";
+                _oCmd.sLaunchCmdResult += _sResult + "\n";
 
                 if(_oCmd.sCloseWhen != ""){
                     if(_sResult.IndexOf(_oCmd.sCloseWhen) != -1) {
@@ -509,10 +509,10 @@ namespace cwc
                 return _sResult;
         }
 
-        internal static void  fLauchInputApp(Process _oToInputProcess, List<CppCmd> aSubInputCmd) {
+        internal static void  fLaunchInputApp(Process _oToInputProcess, List<CppCmd> aSubInputCmd) {
             foreach(CppCmd _oCmd in aSubInputCmd) {
                 _oCmd.oToInputProcess = _oToInputProcess;
-                 Output.TraceWarning("Lauch Input App: " + _oCmd.sExplicite_App + ":" +  _oCmd.sExplicite_Call);
+                 Output.TraceWarning("Launch Input App: " + _oCmd.sExplicite_App + ":" +  _oCmd.sExplicite_Call);
                 _oCmd.fExecute();
             }
         }
@@ -562,7 +562,7 @@ namespace cwc
                  using (Process process = new Process()) {
                       
                         _oCmd.oCurrProcess = process;
-                        _oCmd.sLauchCmdResult = "";
+                        _oCmd.sLaunchCmdResult = "";
 
                         process.StartInfo.FileName =  _sExe;
                         process.StartInfo.Arguments = _sArg;
@@ -597,7 +597,7 @@ namespace cwc
                             process.Start();
                             process.BeginOutputReadLine();
                             process.BeginErrorReadLine();
-                            fLauchInputApp(process, aSubInputCmd);
+                            fLaunchInputApp(process, aSubInputCmd);
 
                             process.WaitForExit();
                             ///////////////////////////////////////
@@ -648,12 +648,12 @@ namespace cwc
                     while(!_bFinished){
                       Thread.CurrentThread.Join(1);
                     }
-                    if(_oCmd.sLauchCmdResult == "") {
+                    if(_oCmd.sLaunchCmdResult == "") {
                            //Recursive call
                          //Thread.Sleep(1); //Minimal wait
                          return fSend2App(_oCmd,_sExplicite_Name,_sExplicite_App,_sExplicite_Call,_bWaitToFinish,aSubInputCmd);
                     }
-                    return _oCmd.sLauchCmdResult ;
+                    return _oCmd.sLaunchCmdResult ;
                  }
 
                 if(_bWaitToFinish){

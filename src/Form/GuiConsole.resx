@@ -121,16 +121,6 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lauchToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAADIAAAAOCAYAAABth09nAAAABGdBTUEAALGPC/xhBQAAARRJREFUSEvt
-        kzFKA0EUhucCQU+QMlgpNrEwKFgEq1jnAoJFELG2S+EFLMXOO5hChSA2FsbEiCRNKhWjBHKBfG/eDCxZ
-        VoLskGY++Hj/zm4x/+6OiURS1HFHYxi+3AzNBe5pDMPEzdAsrcgBvmMLR3iMnm83hQpeabRs4B0+YA+3
-        UZAiu/iML3iKuZJVpOimsIIfGi2/bgrzRTroNy+suilFrjXatVeN+fHXr1XFIzzBsSw4soqs463GFPO/
-        1qebuZFV5BybuIWbuEiRMt5oTLG0Ik9Y0mg3MNVoGWJBo7lEX0TWfnDNXin+ueBF5O0OEh6i0MA+3qN8
-        mS56zlDuPeI+Js9IDd+wjXKok4c9aJFI5N8YMwNDrz0QG01pogAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="configToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADIAAAAOCAYAAABth09nAAAABGdBTUEAALGPC/xhBQAAAaJJREFUSEvt

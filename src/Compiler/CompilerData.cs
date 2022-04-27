@@ -190,7 +190,7 @@ namespace cwc
 				_oArg.fExtract(null);
 				_oArg.fRun(null, false, false);*/
                   //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
-            //  fNewArgCmdRun( sCmd , false,oLauchLib_Arg,false); //Not run
+            //  fNewArgCmdRun( sCmd , false,oLaunchLib_Arg,false); //Not run
               // fRunLib();
         //          Console.WriteLine("havec commmand!! " + oLib.oLibData.sCmd);
             }
@@ -260,15 +260,15 @@ namespace cwc
 
         void fPreloadExe(string _sPath){
 		Output.TraceWarning("PreloadExe: " + _sPath);
-		LauchTool _oPreload = new LauchTool();
+		LaunchTool _oPreload = new LaunchTool();
 		_oPreload.bWaitEndForOutput = true;
 
 			_oPreload.bRunInThread = false;
             _oPreload.bHidden = true;
-		_oPreload.dOut = new LauchTool.dIOut(fOut);
-		_oPreload.dError = new LauchTool.dIError(fOut);
-		_oPreload.fLauchExe(oModuleData.sCurrFolder +  _sPath,"");
-		//_oPreload.dExit = new LauchTool.dIExit(fUrlRequestComplete);
+		_oPreload.dOut = new LaunchTool.dIOut(fOut);
+		_oPreload.dError = new LaunchTool.dIError(fOut);
+		_oPreload.fLaunchExe(oModuleData.sCurrFolder +  _sPath,"");
+		//_oPreload.dExit = new LaunchTool.dIExit(fUrlRequestComplete);
 		Output.TraceWarning("------------------------");
 
 	}
@@ -276,7 +276,7 @@ namespace cwc
 
 
 
-	public static void 	fOut(LauchTool _oTool, string _sOut){
+	public static void 	fOut(LaunchTool _oTool, string _sOut){
 	
 		CppCmd _oCmd = new CppCmd(Data.oCompilerArg, _sOut );
 		_oCmd.fPreExtract();//TODO double call?
@@ -286,19 +286,19 @@ namespace cwc
 
 	void fViewIn(string _sPath){
 		Output.TraceWarning("ViewIn: " + _sPath);
-		LauchTool _oViewIn = new LauchTool();
+		LaunchTool _oViewIn = new LaunchTool();
 		_oViewIn.bWaitEndForOutput = true;
 
 		_oViewIn.bRunInThread = false;
          _oViewIn.bHidden = true;
-		_oViewIn.dOut = new LauchTool.dIOut(fOutViewIn);
-		_oViewIn.dError = new LauchTool.dIError(fOutViewIn);
-		_oViewIn.fLauchExe(oModuleData.sCurrFolder +  _sPath,"");
-		//_oPreload.dExit = new LauchTool.dIExit(fUrlRequestComplete);
+		_oViewIn.dOut = new LaunchTool.dIOut(fOutViewIn);
+		_oViewIn.dError = new LaunchTool.dIError(fOutViewIn);
+		_oViewIn.fLaunchExe(oModuleData.sCurrFolder +  _sPath,"");
+		//_oPreload.dExit = new LaunchTool.dIExit(fUrlRequestComplete);
 		Output.TraceWarning("------------------------");
 	}
 
-	public static void 	fOutViewIn(LauchTool _oTool, string _sOut){
+	public static void 	fOutViewIn(LaunchTool _oTool, string _sOut){
 	
 		CppCmd _oCmd = new CppCmd(Data.oCompilerArg, _sOut );
 		Output.Trace( "\f47" + _sOut);

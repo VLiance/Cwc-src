@@ -11,15 +11,15 @@ using System.Management;
 using System.Windows.Forms;
 
 namespace cwc {
-    public class LauchTool {
+    public class LaunchTool {
 
      ///    public MainForm oForm = null; //Delegate?
 
         public bool bReturnError = false;
         public bool bReturnBoth = false;
 
-        public bool bExeLauch = false;
-        public bool bExeLauched = false;
+        public bool bExeLaunch = false;
+        public bool bExeLaunched = false;
      //   public bool bExited = false;
         public bool bStopAll = false;
         public bool bHasError = false;
@@ -32,15 +32,15 @@ namespace cwc {
         public string sSourceFile  = "";
         public string sTarget  = "";
 
-        public bool bExterneLauch = false;
+        public bool bExterneLaunch = false;
         public bool bRedirectOutput = true;
 
 public string sResult ="";
 		public	string sError ="";
 
-      public   delegate void dIExit(LauchTool _oTool);
-      public   delegate void dIOut(LauchTool _oTool, string _sOut);
-      public   delegate void dIError(LauchTool _oTool, string _sOut);
+      public   delegate void dIExit(LaunchTool _oTool);
+      public   delegate void dIOut(LaunchTool _oTool, string _sOut);
+      public   delegate void dIError(LaunchTool _oTool, string _sOut);
 
        public   dIExit dExit = null; 
        public   dIOut dOut = null; 
@@ -61,23 +61,23 @@ public string sResult ="";
 
 
 
-       // public  LauchTool(string _sName) {
-        public  LauchTool() {
+       // public  LaunchTool(string _sName) {
+        public  LaunchTool() {
         }
 
 
-        public static List<LauchTool> aLauchList = new List<LauchTool>();
+        public static List<LaunchTool> aLaunchList = new List<LaunchTool>();
         public static bool bListModified = true;
 
 
-        public string fLauchExe(string _sExePath, string _sArg, string _sSourceFile = "", string _sTarget= "", bool _bDontKill = false) {
+        public string fLaunchExe(string _sExePath, string _sArg, string _sSourceFile = "", string _sTarget= "", bool _bDontKill = false) {
 			  sTarget =  _sTarget;
                 sSourceFile = _sSourceFile;
 				sArg = _sArg;
 				bDontKill = _bDontKill;
 
              //   string _sArg = "";
-                bExeLauch = true;
+                bExeLaunch = true;
 	
                     sExePath = _sExePath;
 					if(sWorkPath == "") {
@@ -90,24 +90,24 @@ public string sResult ="";
 
 						bw.DoWork += new DoWorkEventHandler(
 						delegate(object o, DoWorkEventArgs args) {
-							fLauch();
+							fLaunch();
 						});
 						bw.RunWorkerAsync();
 			}else {
-				return fLauch();
+				return fLaunch();
 			}
 			return "";
 				
         }
 
 		
-       private  string fLauch() {
+       private  string fLaunch() {
 				
 				string _sResult ="";
 				string _sError ="";
             /*
 				if(!File.Exists(sExePath)){
-					Output.TraceError("Unable to lauch: " + sExePath);
+					Output.TraceError("Unable to Launch: " + sExePath);
 				}*/
 				
                      processStartInfo = new ProcessStartInfo( Path.GetFullPath( sExePath), sArg);
@@ -125,7 +125,7 @@ public string sResult ="";
 
                      if(bOutput) {
          
-						if(!bExterneLauch){
+						if(!bExterneLaunch){
 								//processStartInfo.UseShellExecute = false;
 								processStartInfo.UseShellExecute = false;
                     processStartInfo.CreateNoWindow = bHidden;
@@ -157,8 +157,8 @@ public string sResult ="";
                     bool processStarted = false;
 
                     if (bStopAll) {
-                		bExeLauched = true;
-                        bExeLauch = false;
+                		bExeLaunched = true;
+                        bExeLaunch = false;
                         return "";
                     }
 
@@ -167,10 +167,10 @@ public string sResult ="";
                            return "";
                         }
 
-                Debug.fTrace("--------Lauch: " +   sExePath + "  " + processStartInfo.Arguments  );
+                Debug.fTrace("--------Launch: " +   sExePath + "  " + processStartInfo.Arguments  );
 
                 if(!File.Exists( sExePath)) {
-                    Output.TraceError("No executable file found to lauch: \"" +  sExePath + "\" " + processStartInfo.Arguments);
+                    Output.TraceError("No executable file found to Launch: \"" +  sExePath + "\" " + processStartInfo.Arguments);
                      return "";
                 }
 
@@ -183,17 +183,17 @@ public string sResult ="";
                     fAddThisToList();
                     processStarted = ExeProcess.Start();
                 } catch (Exception e) {
-                    Output.TraceError("Unable to lauch: " + sExePath + " ["  + sWorkPath + "] : " + e.Message);
+                    Output.TraceError("Unable to Launch: " + sExePath + " ["  + sWorkPath + "] : " + e.Message);
                 }
         
 
                          if(bDontKill) {
                             Data.nDontKillId = ExeProcess.Id;
                         }
-						bExeLauched = true;
+						bExeLaunched = true;
 
 		
-			if(!bExterneLauch && !bWaitEndForOutput) {
+			if(!bExterneLaunch && !bWaitEndForOutput) {
 				ProcessOutputHandler outputHandler = new ProcessOutputHandler(this);
                    
 				if(bRedirectOutput){
@@ -292,14 +292,14 @@ public string sResult ="";
 
                         /*
                         if(oForm != null) {
-                            oForm.fLauchEnd();
+                            oForm.fLaunchEnd();
                         }*/
 
                     }  catch (Exception ex){
 							Debug.fTrace(ex.Message);
 					 }
 
-                    bExeLauch = false;
+                    bExeLaunch = false;
 
 
                       //           Debug.fTrace("--------------------------- 7z finish -------------------------");
@@ -317,11 +317,11 @@ public string sResult ="";
 
 
          internal void fAddThisToList() {
-            aLauchList.Add(this);
+            aLaunchList.Add(this);
             bListModified = true;
         }
         internal void fRemoveThisFromList() {
-            aLauchList.Remove(this);
+            aLaunchList.Remove(this);
             bListModified = true;
         }
         
@@ -471,7 +471,7 @@ public bool bSanitize = false;
 
 
 
-        public static void fAppOutput(LauchTool _oThis,string _sOut) {
+        public static void fAppOutput(LaunchTool _oThis,string _sOut) {
 
       //       lock(Data.oLockOutPut) {
 				
@@ -491,7 +491,7 @@ public bool bSanitize = false;
            // }
         }
 
-		 public static void fAppError(LauchTool _oThis,string _sOut) {
+		 public static void fAppError(LaunchTool _oThis,string _sOut) {
 				// lock(Data.oLockError) {
 						 if(_oThis.dError != null) {
 								 _oThis.dError(_oThis, _sOut);
@@ -520,10 +520,10 @@ public bool bSanitize = false;
 
 
 		   public  void fSend(string _sMsg) {
-                while (bExeLauch && !bExeLauched) { //Wait for starting
+                while (bExeLaunch && !bExeLaunched) { //Wait for starting
                     Thread.CurrentThread.Join(1);
                 }
-                if(bExeLauch){
+                if(bExeLaunch){
 			     ExeProcess.StandardInput.WriteLine(_sMsg ); ///bug
                 }
 			   // ExeProcess.StandardInput.WriteLine(_sMsg + "\n"); ///!!GDB dont like "\n" 
@@ -558,14 +558,14 @@ public class ProcessOutputHandler
     public string StdOut { get; set; }
     public string StdErr { get; set; }
 
-		public LauchTool oTool;
+		public LaunchTool oTool;
 
     /// <summary>  
     /// The constructor requires a reference to the process that will be read.  
     /// The process should have .RedirectStandardOutput and .RedirectStandardError set to true.  
     /// </summary>  
     /// <param name="process">The process that will have its output read by this class.</param>  
-    public ProcessOutputHandler(LauchTool _oTool )
+    public ProcessOutputHandler(LaunchTool _oTool )
     {
 		oTool = _oTool;
         proc = _oTool.ExeProcess;

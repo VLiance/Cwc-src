@@ -18,8 +18,8 @@ namespace cwc {
 
         int nLastID = 0;
         public static int LIMIT_OUTPUT = 2000;
-        LauchProject oLauchProject;
-        LauchTool oProcess;
+        LaunchProject oLaunchProject;
+        LaunchTool oProcess;
         Boolean bCmdSend = false;
         string sCurrentCmd = "";
         string sCurrentExp = "";
@@ -28,7 +28,7 @@ namespace cwc {
         public bool bRunning = false;
         bool bShowedBacktrace = false;
 
-        public GDB(LauchProject _oLauchProject, LauchTool _oProcess, string _sGdbPath,string _sExePath,  CompilerData _oCompiler, string _sSubArg = "" ){
+        public GDB(LaunchProject _oLaunchProject, LaunchTool _oProcess, string _sGdbPath,string _sExePath,  CompilerData _oCompiler, string _sSubArg = "" ){
             nLimitNbOutput = LIMIT_OUTPUT;
             singleton = this;
 
@@ -37,11 +37,11 @@ namespace cwc {
             }
 
 
-            oLauchProject = _oLauchProject;
+            oLaunchProject = _oLaunchProject;
             oProcess = _oProcess;
              
-            oProcess.dOut = new LauchTool.dIOut(fAppOut);
-            oProcess.dError = new LauchTool.dIError(fAppError);
+            oProcess.dOut = new LaunchTool.dIOut(fAppOut);
+            oProcess.dError = new LaunchTool.dIError(fAppError);
 
             oProcess.bHidden = true;
             oProcess.bRedirectOutput = true; //DBG assole in !bRedirectOutput
@@ -50,29 +50,29 @@ namespace cwc {
             //Output.TraceAction("Dir: " +  oProcess.sWorkPath );
 
 
-            //oProcess.fLauchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills   -no_soft_kills  -pause_at_exit  -batch -crash_at_unaddressable -crash_at_error " + _sExePath   );
+            //oProcess.fLaunchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills   -no_soft_kills  -pause_at_exit  -batch -crash_at_unaddressable -crash_at_error " + _sExePath   );
       
             bool _bSanitize = true;
             //bool _bSanitize = false;
             
             if(Data.fIsDataTrue("Options/Debug Type/Sanitizer") ){
                 //if(_bSanitize) {
-                //oProcess.bExterneLauch = false;
+                //oProcess.bExterneLaunch = false;
                 //  oProcess.bHidden = false;
                 //     oProcess.bRedirectOutput = false;
-                // oProcess.fLauchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
-                // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
+                // oProcess.fLaunchExe(_sGdbPath, "--args " + _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer + " " + " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
+                // oProcess.fLaunchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -v -exit_code_if_errors 1 -malloc_callstacks -no_soft_kills -batch -pause_at_exit " + _sExePath   );
 
                 
                 string _sSanitizer =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Sanitizer"}, "");
 
-               // oProcess.fLauchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
-                oProcess.fLauchExe( _sSanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath  + _sSubArg   ); //-no_soft_kills
+               // oProcess.fLaunchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
+                oProcess.fLaunchExe( _sSanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath  + _sSubArg   ); //-no_soft_kills
                 
                 return;
 
             } else { //   if(Data.fIsDataTrue("Options/Debug Type/Debugger") ){ 
-                oProcess.fLauchExe(_sGdbPath,  "--args \"" +  _sExePath + "\"" + _sSubArg); //GDB only
+                oProcess.fLaunchExe(_sGdbPath,  "--args \"" +  _sExePath + "\"" + _sSubArg); //GDB only
             }
 
             fLoadBreakpoints();
@@ -189,7 +189,7 @@ namespace cwc {
      
         
 
-        public  void 	fAppError(LauchTool _oTool, string _sOut){
+        public  void 	fAppError(LaunchTool _oTool, string _sOut){
             
              //E> Function "GDB_Func_Break" not defined.
             if(_sOut.IndexOf("Function \"GDB_Func_Break\" not defined") != -1) {
@@ -203,7 +203,7 @@ namespace cwc {
             
 
            // bRunning= false;
-            oLauchProject.bReceiveOutput = true;
+            oLaunchProject.bReceiveOutput = true;
            // bCmdSend = false;//Proble occur, we can resend cmd
              if (bCmdSend) {
                if( fTestEndOfCommand(_sOut)){ //Or just check resutl?
@@ -219,7 +219,7 @@ namespace cwc {
 		   // Output.Trace("E> " + _sOut);
          }
 
-        public  void 	fAppOut(LauchTool _oTool, string _sOut){
+        public  void 	fAppOut(LaunchTool _oTool, string _sOut){
              //bRunning= false;
             if(_sOut == null || _sOut == "") {
                 return;
@@ -228,7 +228,7 @@ namespace cwc {
            //    Output.Trace("Test> "  +_sOut);
 
 
-            oLauchProject.bReceiveOutput = true;
+            oLaunchProject.bReceiveOutput = true;
 	        string _sColor ="";
 
             
@@ -292,13 +292,13 @@ namespace cwc {
         private static int nLimitNbOutput = 0;
          public void fSendCmd(string _sName, string _sCmd, bool _bWaitResult = true, int _nWaitTime = 0){
 
-            if(oProcess.bExeLauch){
+            if(oProcess.bExeLaunch){
 		    Thread sendCmd = new Thread(new ThreadStart(() =>  {  
 
                  while(bCmdSend == true && Base.bAlive) {
                     Thread.CurrentThread.Join(1);
                 }
-                if(oProcess.bExeLauch){
+                if(oProcess.bExeLaunch){
                        Debug.fTrace("S> " + _sName + " : " +_sCmd);
                     //sLastGetExp = "";
                     sCmdSended = _sCmd;
@@ -568,7 +568,7 @@ namespace cwc {
             //    } else {
             //       fReceive_fPropertyGet(_sExp);
             //   }
-            if (oProcess.bExeLauch) {
+            if (oProcess.bExeLaunch) {
                  fSendCmd("fPropertyGetPrint", "print " +  _sExp);
             } else {
                 return "Error";

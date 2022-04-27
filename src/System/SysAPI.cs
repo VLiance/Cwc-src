@@ -107,9 +107,9 @@ namespace cwc {
 
       //      MessageBox.Show("QUIIIIIIIIIIIIIIII!!!!!!!!!!");
             /*
-            if (oLauchProject.oCurLauch != null && oLauchProject.oCurLauch.sExeName == "gdb") {
-                oLauchProject.oCurLauch.fSend("set confirm off");
-                oLauchProject.oCurLauch.fSend("quit");
+            if (oLaunchProject.oCurLaunch != null && oLaunchProject.oCurLaunch.sExeName == "gdb") {
+                oLaunchProject.oCurLaunch.fSend("set confirm off");
+                oLaunchProject.oCurLaunch.fSend("quit");
             }*/
 				//fSaveConsolePosition();
 

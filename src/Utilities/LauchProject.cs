@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace cwc{
 
-	public class LauchProject{
+	public class LaunchProject{
 
 	//	public  MainForm oMainForm = null;
 			
-		// public Lauch oCurLauch = null;
-		 public LauchTool oCurLauch = null;
+		// public Launch oCurLaunch = null;
+		 public LaunchTool oCurLaunch = null;
 		 public Boolean bReceiveOutput = false;
 
 
@@ -22,10 +22,10 @@ namespace cwc{
 		        
 		public  void fBuildFinish() {
            Debug.fTrace("fBuildFinish: " + Data.fGetGlobalVar("wBuildAnd"));
-            //fLauchDefaultRun();
+            //fLaunchDefaultRun();
         }
 
-        public  void fLauchDefaultRun(string _sPath = "", string _sSubArg = "") { //"" = Last link file
+        public  void fLaunchDefaultRun(string _sPath = "", string _sSubArg = "") { //"" = Last link file
 
 
             if(!Data.bModeIDE ) {
@@ -34,11 +34,11 @@ namespace cwc{
 
 					case "Run":
 
-							fLauchExe(_sPath, false, _sSubArg);
+							fLaunchExe(_sPath, false, _sSubArg);
 					break;
 					 case "Sanitize":
                     
-							fLauchExe(_sPath, true, _sSubArg);
+							fLaunchExe(_sPath, true, _sSubArg);
 					break;
 				}
 			}
@@ -46,8 +46,8 @@ namespace cwc{
 
 
 
-		 public void fLauchExe(string _sPath = "",  bool _bSanitize = false, string _sSubArg = "") {
-            if(_sPath == "") {//Lauch default last linked output binary
+		 public void fLaunchExe(string _sPath = "",  bool _bSanitize = false, string _sSubArg = "") {
+            if(_sPath == "") {//Launch default last linked output binary
                  _sPath = PathHelper.ExeWorkDir +   sOutput;
 
             }else {
@@ -62,13 +62,13 @@ namespace cwc{
             }
 
                               //        Output.TraceAction("Run:" + _sPath);
-            if(fLauch(_sPath, _bSanitize, _sSubArg)) {
+            if(fLaunch(_sPath, _bSanitize, _sSubArg)) {
                 
             }
         }
 
 
-		 public bool fLauch(string _sPath, bool _bSanitize = false, string _sSubArg = "") {
+		 public bool fLaunch(string _sPath, bool _bSanitize = false, string _sSubArg = "") {
 
             if(_sPath.Length > 1 && _sPath[_sPath.Length-1] =='/') { //Not a file
                 Output.TraceError("Path is not a File: " + _sPath);
@@ -77,40 +77,40 @@ namespace cwc{
            //   Output.TraceError("Try: " + _sPath);
 
             bool _bDebug = true;//Temp
-            bool _bLauchDebug = false;
+            bool _bLaunchDebug = false;
 	        if(_bDebug){
-                _bLauchDebug = true;
+                _bLaunchDebug = true;
             }
 
 
 
-		//	Debug.fTrace("Lauch: " + _sPath);
+		//	Debug.fTrace("Launch: " + _sPath);
 			
 			
 
-   // if (oCurLauch == null) { //We can relauch !? => Run button
+   // if (oCurLaunch == null) { //We can reLaunch !? => Run button
                 if( File.Exists(  _sPath ) ) {
 							
 					if(Data.oGuiConsole != null) {
-						Data.oGuiConsole.fLauchPrj();
+						Data.oGuiConsole.fLaunchPrj();
 					}
 					
             
-                    oCurLauch = new LauchTool();
+                    oCurLaunch = new LaunchTool();
 
-		//oCurLauch.bWaitEndForOutput = true;
-		//	oCurLauch.bRunInThread = false;
+		//oCurLaunch.bWaitEndForOutput = true;
+		//	oCurLaunch.bRunInThread = false;
 
-        oCurLauch.bRedirectOutput = false;
+        oCurLaunch.bRedirectOutput = false;
 
 
         string _sArg = "";
         string _sExePath = _sPath;
 		if(Data.fGetGlobalVar("_sPlatform") == "Web_Emsc") {
 		        _bDebug = false; // No GDB
-                oCurLauch.bRedirectOutput = true;
-                oCurLauch.bHidden = true;
-                oCurLauch.UseShellExecute = true;
+                oCurLaunch.bRedirectOutput = true;
+                oCurLaunch.bHidden = true;
+                oCurLaunch.UseShellExecute = true;
 
 
 			//	bWeb = true;
@@ -135,18 +135,18 @@ namespace cwc{
 		}else { 
           
             //Normal
-            //	oCurLauch.bDontKill = true;
-            //oCurLauch.UseShellExecute = false;
+            //	oCurLaunch.bDontKill = true;
+            //oCurLaunch.UseShellExecute = false;
         }
         
         _sArg += _sSubArg;
         _sArg = _sArg.Trim();
            //Output.TraceWarning("_sSubArg " + _sSubArg);
 
-        oCurLauch.dError = new LauchTool.dIError(fAppError); //Too much error in Emsc?
-        oCurLauch.dOut = new LauchTool.dIOut(fAppOut);
+        oCurLaunch.dError = new LaunchTool.dIError(fAppError); //Too much error in Emsc?
+        oCurLaunch.dOut = new LaunchTool.dIOut(fAppOut);
  
-	    oCurLauch.dExit = new LauchTool.dIExit(fExit);
+	    oCurLaunch.dExit = new LaunchTool.dIExit(fExit);
 
            string _sPrintArg = "";
           if(_sArg != "") {
@@ -155,7 +155,7 @@ namespace cwc{
 
 
 
-         if(_bLauchDebug){
+         if(_bLaunchDebug){
 		        Output.TraceAction("Debug: " + _sPath + _sPrintArg);
             } else {
                 Output.TraceAction("Run: " + _sPath  +  _sPrintArg);
@@ -168,19 +168,19 @@ namespace cwc{
 			string _sPlatform = Data.fGetGlobalVar("_sConfig_Type");
 		    CompilerData	_oCompiler = Finder.fUseCompiler(_sCompiler, _sPlatform);
             string _sDebugger =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Debugger"}, "");
-            GDB _oGdb  =  new GDB(this, oCurLauch,_sDebugger, _sExePath, _oCompiler, _sArg); //Create debugger proxy
+            GDB _oGdb  =  new GDB(this, oCurLaunch,_sDebugger, _sExePath, _oCompiler, _sArg); //Create debugger proxy
 
         } else {
-          	oCurLauch.fLauchExe( _sExePath, _sArg);
+          	oCurLaunch.fLaunchExe( _sExePath, _sArg);
         }
 	
 
-		//_oPreload.dExit = new LauchTool.dIExit(fUrlRequestComplete);
+		//_oPreload.dExit = new LaunchTool.dIExit(fUrlRequestComplete);
 	//	Output.TraceWarning("------------------------");
 /*
-                    oCurLauch.oForm = this;
-                    oCurLauch.bSanitize = _bSanitize;
-                    oCurLauch.fLauchExe(_sPath);
+                    oCurLaunch.oForm = this;
+                    oCurLaunch.bSanitize = _bSanitize;
+                    oCurLaunch.fLaunchExe(_sPath);
 */
 
                     return true;
@@ -192,11 +192,11 @@ namespace cwc{
         }
 
 
-public  void 	fExit(LauchTool _oTool){
+public  void 	fExit(LaunchTool _oTool){
 
-    if( Data.oLauchProject.oCurLauch != null) {
+    if( Data.oLaunchProject.oCurLaunch != null) {
         Output.TraceError("Exit: " + _oTool.sExeName);
-	    Data.oLauchProject.oCurLauch = null;
+	    Data.oLaunchProject.oCurLaunch = null;
         Build.EndExecution();
     }
 
@@ -206,13 +206,13 @@ public  void 	fExit(LauchTool _oTool){
 
 
 
-public  void 	fAppOut(LauchTool _oTool, string _sOut){
+public  void 	fAppOut(LaunchTool _oTool, string _sOut){
     Output.fPrjOut("O", _sOut );
     bReceiveOutput = true;
 }
 
 
-public  void 	fAppError(LauchTool _oTool, string _sOut){
+public  void 	fAppError(LaunchTool _oTool, string _sOut){
 
          Output.ProcessStdErr(_sOut);
         bReceiveOutput = true;
@@ -222,21 +222,21 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
 
 
 
-		 public void fLauchEnd() {
+		 public void fLaunchEnd() {
             /*
 			if(oMainForm!= null) {
-				oMainForm.fLauchEnd();
+				oMainForm.fLaunchEnd();
 			}*/
 
-			oCurLauch = null; 
+			oCurLaunch = null; 
 		}
 
 		 public void fCancel() {
 
-			 if(oCurLauch != null) {
-                oCurLauch.fEnd();
+			 if(oCurLaunch != null) {
+                oCurLaunch.fEnd();
                   //   Build.fDisableBuild();
-             //   oCurLauch = null;
+             //   oCurLaunch = null;
              //   Data.EndExecution();
 
 
@@ -248,7 +248,7 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
                //  Data.StartBuild();
                //  Data.sCmd = "StartBuild";
 
-                //Start Last lauch
+                //Start Last Launch
                   Delocalise.fDelocaliseInMainThread(Config.sLastRecentPath );
 
             }
@@ -282,41 +282,41 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
         }
 			
 		
-       //private  LauchTool oLauchCmd = null;
+       //private  LaunchTool oLaunchCmd = null;
 
-      public void fLauchConsoleCmd(string sCurrentCmd) {
+      public void fLaunchConsoleCmd(string sCurrentCmd) {
 
-            ///// CURRENT APP LAUCH
-            if (Data.oLauchProject.oCurLauch != null) {
+            ///// CURRENT APP Launch
+            if (Data.oLaunchProject.oCurLaunch != null) {
 
-                 oCurLauch.fSend(sCurrentCmd);
+                 oCurLaunch.fSend(sCurrentCmd);
                 Debug.fPrint("");
                  return;
             }
 
-            ///// CONSOLE LAUCH
+            ///// CONSOLE Launch
             if (sCurrentCmd.Trim() == "") {
                 fConsoleExit(null);
                 return;
             }
 
-           	oCurLauch = new LauchTool();
-      //      _oLauchUrl.bWaitEndForOutput = true;
-            oCurLauch.bRedirectOutput = false; //Important 
-           // _oLauchUrl.bRunInThread = false;
+           	oCurLaunch = new LaunchTool();
+      //      _oLaunchUrl.bWaitEndForOutput = true;
+            oCurLaunch.bRedirectOutput = false; //Important 
+           // _oLaunchUrl.bRunInThread = false;
 
-			oCurLauch.dOut = new LauchTool.dIOut(fConsoleOut);
-			oCurLauch.dError = new LauchTool.dIError(fConsoleOut);
-			oCurLauch.dExit = new LauchTool.dIExit(fConsoleExit);
-       // _oLauchUrl. = true;
+			oCurLaunch.dOut = new LaunchTool.dIOut(fConsoleOut);
+			oCurLaunch.dError = new LaunchTool.dIError(fConsoleOut);
+			oCurLaunch.dExit = new LaunchTool.dIExit(fConsoleExit);
+       // _oLaunchUrl. = true;
 		    
 	       Debug.fPrint("");
 
-			oCurLauch.fLauchExe("cmd.exe" , "/C " + sCurrentCmd); 
+			oCurLaunch.fLaunchExe("cmd.exe" , "/C " + sCurrentCmd); 
             
       }
 
-   public  void  fConsoleOut(LauchTool _oTool, string _sOut){
+   public  void  fConsoleOut(LaunchTool _oTool, string _sOut){
 
       Debug.fPrint(_sOut );
             bReceiveOutput = true;
@@ -330,17 +330,17 @@ public  void 	fAppError(LauchTool _oTool, string _sOut){
     }
 
 	
-      public  void  fConsoleExit(LauchTool _oTool){
+      public  void  fConsoleExit(LaunchTool _oTool){
     
            if(_oTool != null) {
                    bReceiveOutput = false;
-             // Data.oLauchProject.oCurLauch = null;
-                oCurLauch = null;
+             // Data.oLaunchProject.oCurLaunch = null;
+                oCurLaunch = null;
             }
               
            string _sName = "Cmd";
-            if (oCurLauch != null) {
-                _sName = oCurLauch.sExeName;
+            if (oCurLaunch != null) {
+                _sName = oCurLaunch.sExeName;
             }
 
      	 Debug.fPrint("");

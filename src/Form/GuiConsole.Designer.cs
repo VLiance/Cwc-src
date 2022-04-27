@@ -27,11 +27,38 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GuiConsole));
             this.tbCmd = new System.Windows.Forms.TextBox();
             this.msMenu = new System.Windows.Forms.MenuStrip();
-            this.lauchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.cbTitle = new System.Windows.Forms.TextBox();
+            this.btn_SendCmd = new System.Windows.Forms.Label();
+            this.cmMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnAll = new System.Windows.Forms.Panel();
+            this.pnCenter = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.btn_SendSignal = new System.Windows.Forms.Label();
+            this.msSignal = new System.Windows.Forms.MenuStrip();
+            this.tsSignal = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.sIGBREAKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeMWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.killToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.msCmd = new System.Windows.Forms.MenuStrip();
+            this.cmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmdToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnRight = new System.Windows.Forms.Panel();
+            this.pnTreeView = new System.Windows.Forms.Panel();
+            this.pnTreeButtom = new System.Windows.Forms.Panel();
+            this.pnTreeRight = new System.Windows.Forms.Panel();
             this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setCwcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LaunchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nothingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,57 +81,30 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.notePadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cbTitle = new System.Windows.Forms.TextBox();
-            this.btn_SendCmd = new System.Windows.Forms.Label();
-            this.cmMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.replaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pnAll = new System.Windows.Forms.Panel();
-            this.pnCenter = new System.Windows.Forms.Panel();
             this.fctbConsole = new cwc.CwFCTB();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.hMyScrollBar = new cwc.CwScrollBar();
-            this.btn_SendSignal = new System.Windows.Forms.Label();
-            this.msSignal = new System.Windows.Forms.MenuStrip();
-            this.tsSignal = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.sIGBREAKToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeMWToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.killToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.msCmd = new System.Windows.Forms.MenuStrip();
-            this.cmdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmdToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.pnRight = new System.Windows.Forms.Panel();
             this.vMyScrollBar = new cwc.CwScrollBar();
             this.csPrj = new NJFLib.Controls.CollapsibleSplitter();
-            this.pnTreeView = new System.Windows.Forms.Panel();
             this.pnTreeCenter = new cwc.DoubleBufferedPanel();
             this.pnTtreeViewPrj = new cwc.DoubleBufferedPanel();
             this.treeViewPrj = new cwc.CwTreeView();
-            this.pnTreeButtom = new System.Windows.Forms.Panel();
             this.hTreePrjScrollBar = new cwc.CwScrollBar();
-            this.pnTreeRight = new System.Windows.Forms.Panel();
             this.vTreePrjScrollBar = new cwc.CwScrollBar();
             this.msMenu.SuspendLayout();
             this.cmMain.SuspendLayout();
             this.pnAll.SuspendLayout();
             this.pnCenter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).BeginInit();
             this.panel4.SuspendLayout();
             this.msSignal.SuspendLayout();
             this.msCmd.SuspendLayout();
             this.pnRight.SuspendLayout();
             this.pnTreeView.SuspendLayout();
-            this.pnTreeCenter.SuspendLayout();
-            this.pnTtreeViewPrj.SuspendLayout();
             this.pnTreeButtom.SuspendLayout();
             this.pnTreeRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).BeginInit();
+            this.pnTreeCenter.SuspendLayout();
+            this.pnTtreeViewPrj.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbCmd
@@ -131,7 +131,7 @@
             this.msMenu.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.msMenu.GripMargin = new System.Windows.Forms.Padding(1);
             this.msMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lauchToolStripMenuItem,
+            this.LaunchToolStripMenuItem,
             this.configToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.viewInToolStripMenuItem,
@@ -139,38 +139,322 @@
             this.updateToolStripMenuItem,
             this.iDEToolStripMenuItem});
             this.msMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msMenu.Location = new System.Drawing.Point(517, 2);
+            this.msMenu.Location = new System.Drawing.Point(606, 2);
             this.msMenu.Name = "msMenu";
             this.msMenu.Padding = new System.Windows.Forms.Padding(1);
             this.msMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.msMenu.ShowItemToolTips = true;
-            this.msMenu.Size = new System.Drawing.Size(528, 21);
+            this.msMenu.Size = new System.Drawing.Size(439, 20);
             this.msMenu.TabIndex = 50;
             // 
-            // lauchToolStripMenuItem
+            // cbTitle
             // 
-            this.lauchToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.lauchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.toolStripSeparator3});
-            this.lauchToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("lauchToolStripMenuItem.Image")));
-            this.lauchToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.lauchToolStripMenuItem.Name = "lauchToolStripMenuItem";
-            this.lauchToolStripMenuItem.Size = new System.Drawing.Size(62, 18);
-            this.lauchToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.lauchToolStripMenuItem.Click += new System.EventHandler(this.lauchToolStripMenuItem_Click);
+            this.cbTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTitle.BackColor = System.Drawing.SystemColors.MenuText;
+            this.cbTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.cbTitle.Enabled = false;
+            this.cbTitle.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbTitle.ForeColor = System.Drawing.SystemColors.Window;
+            this.cbTitle.Location = new System.Drawing.Point(24, 20);
+            this.cbTitle.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.cbTitle.Name = "cbTitle";
+            this.cbTitle.Size = new System.Drawing.Size(1045, 13);
+            this.cbTitle.TabIndex = 52;
             // 
-            // fileToolStripMenuItem
+            // btn_SendCmd
             // 
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
-            this.fileToolStripMenuItem.Text = "File";
-            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
+            this.btn_SendCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_SendCmd.AutoSize = true;
+            this.btn_SendCmd.BackColor = System.Drawing.Color.Black;
+            this.btn_SendCmd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.btn_SendCmd.Font = new System.Drawing.Font("Courier New", 13.25F);
+            this.btn_SendCmd.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btn_SendCmd.Location = new System.Drawing.Point(780, 2);
+            this.btn_SendCmd.Name = "btn_SendCmd";
+            this.btn_SendCmd.Size = new System.Drawing.Size(45, 22);
+            this.btn_SendCmd.TabIndex = 53;
+            this.btn_SendCmd.Text = " ↴ ";
+            this.btn_SendCmd.Click += new System.EventHandler(this.btn_SendCmd_Click);
+            this.btn_SendCmd.MouseEnter += new System.EventHandler(this.btn_SendCmd_MouseEnter);
+            this.btn_SendCmd.MouseLeave += new System.EventHandler(this.btn_SendCmd_MouseLeave);
             // 
-            // toolStripSeparator3
+            // cmMain
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(99, 6);
+            this.cmMain.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.cmMain.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmMain.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.cmMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cutToolStripMenuItem,
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.selectAllToolStripMenuItem,
+            this.replaceToolStripMenuItem,
+            this.toolStripMenuItem5,
+            this.findToolStripMenuItem});
+            this.cmMain.Name = "cmMain";
+            this.cmMain.ShowImageMargin = false;
+            this.cmMain.Size = new System.Drawing.Size(134, 138);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
+            this.copyToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.copyToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
+            this.pasteToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.pasteToolStripMenuItem.Text = "Paste";
+            this.pasteToolStripMenuItem.Visible = false;
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
+            this.selectAllToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectAllToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.selectAllToolStripMenuItem.Text = "Select all";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            // 
+            // replaceToolStripMenuItem
+            // 
+            this.replaceToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
+            this.replaceToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.replaceToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
+            this.replaceToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.replaceToolStripMenuItem.Text = "Replace";
+            this.replaceToolStripMenuItem.Visible = false;
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.AutoSize = false;
+            this.toolStripMenuItem5.BackColor = System.Drawing.Color.Black;
+            this.toolStripMenuItem5.Enabled = false;
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(160, 2);
+            this.toolStripMenuItem5.Text = "------------";
+            // 
+            // findToolStripMenuItem
+            // 
+            this.findToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
+            this.findToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.findToolStripMenuItem.Name = "findToolStripMenuItem";
+            this.findToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.findToolStripMenuItem.Text = "Find";
+            // 
+            // pnAll
+            // 
+            this.pnAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnAll.Controls.Add(this.pnCenter);
+            this.pnAll.Controls.Add(this.panel4);
+            this.pnAll.Controls.Add(this.pnRight);
+            this.pnAll.Controls.Add(this.csPrj);
+            this.pnAll.Controls.Add(this.pnTreeView);
+            this.pnAll.Location = new System.Drawing.Point(1, 35);
+            this.pnAll.Name = "pnAll";
+            this.pnAll.Size = new System.Drawing.Size(1161, 610);
+            this.pnAll.TabIndex = 61;
+            this.pnAll.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // pnCenter
+            // 
+            this.pnCenter.Controls.Add(this.fctbConsole);
+            this.pnCenter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnCenter.Location = new System.Drawing.Point(0, 0);
+            this.pnCenter.Name = "pnCenter";
+            this.pnCenter.Size = new System.Drawing.Size(950, 564);
+            this.pnCenter.TabIndex = 14;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.hMyScrollBar);
+            this.panel4.Controls.Add(this.btn_SendCmd);
+            this.panel4.Controls.Add(this.btn_SendSignal);
+            this.panel4.Controls.Add(this.msSignal);
+            this.panel4.Controls.Add(this.msCmd);
+            this.panel4.Controls.Add(this.tbCmd);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 564);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(950, 46);
+            this.panel4.TabIndex = 13;
+            // 
+            // btn_SendSignal
+            // 
+            this.btn_SendSignal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_SendSignal.AutoSize = true;
+            this.btn_SendSignal.BackColor = System.Drawing.Color.Black;
+            this.btn_SendSignal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.btn_SendSignal.Font = new System.Drawing.Font("Courier New", 13.25F);
+            this.btn_SendSignal.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btn_SendSignal.Location = new System.Drawing.Point(899, 2);
+            this.btn_SendSignal.Name = "btn_SendSignal";
+            this.btn_SendSignal.Size = new System.Drawing.Size(45, 22);
+            this.btn_SendSignal.TabIndex = 57;
+            this.btn_SendSignal.Text = " ↴ ";
+            this.btn_SendSignal.Click += new System.EventHandler(this.btn_SendSignal_Click);
+            this.btn_SendSignal.MouseEnter += new System.EventHandler(this.btn_SendSignal_MouseEnter);
+            this.btn_SendSignal.MouseLeave += new System.EventHandler(this.btn_SendSignal_MouseLeave);
+            // 
+            // msSignal
+            // 
+            this.msSignal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.msSignal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
+            this.msSignal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.msSignal.Dock = System.Windows.Forms.DockStyle.None;
+            this.msSignal.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.msSignal.GripMargin = new System.Windows.Forms.Padding(1);
+            this.msSignal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsSignal});
+            this.msSignal.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.msSignal.Location = new System.Drawing.Point(831, 1);
+            this.msSignal.Name = "msSignal";
+            this.msSignal.Padding = new System.Windows.Forms.Padding(1);
+            this.msSignal.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.msSignal.ShowItemToolTips = true;
+            this.msSignal.Size = new System.Drawing.Size(69, 22);
+            this.msSignal.TabIndex = 58;
+            // 
+            // tsSignal
+            // 
+            this.tsSignal.BackColor = System.Drawing.Color.Black;
+            this.tsSignal.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.sIGBREAKToolStripMenuItem,
+            this.closeMWToolStripMenuItem,
+            this.closeToolStripMenuItem,
+            this.killToolStripMenuItem});
+            this.tsSignal.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.tsSignal.ForeColor = System.Drawing.Color.White;
+            this.tsSignal.Name = "tsSignal";
+            this.tsSignal.Size = new System.Drawing.Size(67, 20);
+            this.tsSignal.Text = "SIGINT";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(138, 22);
+            this.toolStripMenuItem2.Text = "SIGINT";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.fCmdSingalSelect);
+            // 
+            // sIGBREAKToolStripMenuItem
+            // 
+            this.sIGBREAKToolStripMenuItem.Name = "sIGBREAKToolStripMenuItem";
+            this.sIGBREAKToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.sIGBREAKToolStripMenuItem.Text = "SIGBREAK";
+            this.sIGBREAKToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
+            // 
+            // closeMWToolStripMenuItem
+            // 
+            this.closeMWToolStripMenuItem.Name = "closeMWToolStripMenuItem";
+            this.closeMWToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.closeMWToolStripMenuItem.Text = "CloseMW";
+            this.closeMWToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
+            // 
+            // killToolStripMenuItem
+            // 
+            this.killToolStripMenuItem.Name = "killToolStripMenuItem";
+            this.killToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.killToolStripMenuItem.Text = "Kill";
+            this.killToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
+            // 
+            // msCmd
+            // 
+            this.msCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.msCmd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
+            this.msCmd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.msCmd.Dock = System.Windows.Forms.DockStyle.None;
+            this.msCmd.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.msCmd.GripMargin = new System.Windows.Forms.Padding(1);
+            this.msCmd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmdToolStripMenuItem});
+            this.msCmd.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.msCmd.Location = new System.Drawing.Point(3, 2);
+            this.msCmd.Name = "msCmd";
+            this.msCmd.Padding = new System.Windows.Forms.Padding(1);
+            this.msCmd.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.msCmd.ShowItemToolTips = true;
+            this.msCmd.Size = new System.Drawing.Size(45, 22);
+            this.msCmd.TabIndex = 56;
+            // 
+            // cmdToolStripMenuItem
+            // 
+            this.cmdToolStripMenuItem.BackColor = System.Drawing.Color.Black;
+            this.cmdToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmdToolStripMenuItem1});
+            this.cmdToolStripMenuItem.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
+            this.cmdToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.cmdToolStripMenuItem.Name = "cmdToolStripMenuItem";
+            this.cmdToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.cmdToolStripMenuItem.Text = "Cmd";
+            this.cmdToolStripMenuItem.DropDownOpening += new System.EventHandler(this.cmdToolStripMenuItem_DropDownOpening);
+            this.cmdToolStripMenuItem.Click += new System.EventHandler(this.cmdToolStripMenuItem_Click);
+            this.cmdToolStripMenuItem.MouseEnter += new System.EventHandler(this.cmdToolStripMenuItem_MouseEnter);
+            // 
+            // cmdToolStripMenuItem1
+            // 
+            this.cmdToolStripMenuItem1.Name = "cmdToolStripMenuItem1";
+            this.cmdToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
+            this.cmdToolStripMenuItem1.Text = "Cmd";
+            this.cmdToolStripMenuItem1.Click += new System.EventHandler(this.cmdToolStripMenuItem1_Click);
+            // 
+            // pnRight
+            // 
+            this.pnRight.Controls.Add(this.vMyScrollBar);
+            this.pnRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnRight.Location = new System.Drawing.Point(950, 0);
+            this.pnRight.Name = "pnRight";
+            this.pnRight.Size = new System.Drawing.Size(19, 610);
+            this.pnRight.TabIndex = 12;
+            // 
+            // pnTreeView
+            // 
+            this.pnTreeView.Controls.Add(this.pnTreeCenter);
+            this.pnTreeView.Controls.Add(this.pnTreeButtom);
+            this.pnTreeView.Controls.Add(this.pnTreeRight);
+            this.pnTreeView.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnTreeView.Location = new System.Drawing.Point(977, 0);
+            this.pnTreeView.Name = "pnTreeView";
+            this.pnTreeView.Size = new System.Drawing.Size(184, 610);
+            this.pnTreeView.TabIndex = 0;
+            // 
+            // pnTreeButtom
+            // 
+            this.pnTreeButtom.Controls.Add(this.hTreePrjScrollBar);
+            this.pnTreeButtom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnTreeButtom.Location = new System.Drawing.Point(0, 591);
+            this.pnTreeButtom.Name = "pnTreeButtom";
+            this.pnTreeButtom.Size = new System.Drawing.Size(165, 19);
+            this.pnTreeButtom.TabIndex = 60;
+            // 
+            // pnTreeRight
+            // 
+            this.pnTreeRight.Controls.Add(this.vTreePrjScrollBar);
+            this.pnTreeRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnTreeRight.Location = new System.Drawing.Point(165, 0);
+            this.pnTreeRight.Name = "pnTreeRight";
+            this.pnTreeRight.Size = new System.Drawing.Size(19, 610);
+            this.pnTreeRight.TabIndex = 59;
             // 
             // configToolStripMenuItem
             // 
@@ -190,9 +474,34 @@
             // setCwcToolStripMenuItem
             // 
             this.setCwcToolStripMenuItem.Name = "setCwcToolStripMenuItem";
-            this.setCwcToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.setCwcToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.setCwcToolStripMenuItem.Text = "Set Cwc";
             this.setCwcToolStripMenuItem.Click += new System.EventHandler(this.setCwcToolStripMenuItem_Click);
+            // 
+            // LaunchToolStripMenuItem
+            // 
+            this.LaunchToolStripMenuItem.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.LaunchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.toolStripSeparator3});
+            this.LaunchToolStripMenuItem.Image = global::cwc.Properties.Resources.Menu0003;
+            this.LaunchToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.LaunchToolStripMenuItem.Name = "LaunchToolStripMenuItem";
+            this.LaunchToolStripMenuItem.Size = new System.Drawing.Size(65, 18);
+            this.LaunchToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            this.LaunchToolStripMenuItem.Click += new System.EventHandler(this.LaunchToolStripMenuItem_Click);
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // optionsToolStripMenuItem
             // 
@@ -215,7 +524,7 @@
             this.runToolStripMenuItem1,
             this.sanitizeToolStripMenuItem1});
             this.buildToolStripMenuItem.Name = "buildToolStripMenuItem";
-            this.buildToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.buildToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.buildToolStripMenuItem.Text = "Build &&";
             // 
             // nothingToolStripMenuItem1
@@ -246,7 +555,7 @@
             this.stopBuildToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.afterFileErrorToolStripMenuItem});
             this.stopBuildToolStripMenuItem.Name = "stopBuildToolStripMenuItem";
-            this.stopBuildToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.stopBuildToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.stopBuildToolStripMenuItem.Text = "Stop build";
             // 
             // afterFileErrorToolStripMenuItem
@@ -265,26 +574,26 @@
             this.gDBToolStripMenuItem,
             this.sanitizerToolStripMenuItem});
             this.debugTypeToolStripMenuItem.Name = "debugTypeToolStripMenuItem";
-            this.debugTypeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.debugTypeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.debugTypeToolStripMenuItem.Text = "Debug Type";
             // 
             // noneToolStripMenuItem
             // 
             this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
-            this.noneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.noneToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.noneToolStripMenuItem.Text = "None";
             // 
             // gDBToolStripMenuItem
             // 
             this.gDBToolStripMenuItem.Name = "gDBToolStripMenuItem";
-            this.gDBToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gDBToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.gDBToolStripMenuItem.Text = "Debugger";
             this.gDBToolStripMenuItem.Click += new System.EventHandler(this.gDBToolStripMenuItem_Click);
             // 
             // sanitizerToolStripMenuItem
             // 
             this.sanitizerToolStripMenuItem.Name = "sanitizerToolStripMenuItem";
-            this.sanitizerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sanitizerToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.sanitizerToolStripMenuItem.Text = "Sanitizer";
             this.sanitizerToolStripMenuItem.Click += new System.EventHandler(this.sanitizerToolStripMenuItem_Click);
             // 
@@ -305,7 +614,7 @@
             this.defaultToolStripMenuItem.Checked = true;
             this.defaultToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.defaultToolStripMenuItem.Name = "defaultToolStripMenuItem";
-            this.defaultToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.defaultToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.defaultToolStripMenuItem.Text = "(Default)";
             // 
             // ToolStrip_Build
@@ -384,55 +693,6 @@
             this.notePadToolStripMenuItem.Text = "Notepad++";
             this.notePadToolStripMenuItem.Click += new System.EventHandler(this.notePadToolStripMenuItem_Click);
             // 
-            // cbTitle
-            // 
-            this.cbTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbTitle.BackColor = System.Drawing.SystemColors.MenuText;
-            this.cbTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.cbTitle.Enabled = false;
-            this.cbTitle.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbTitle.ForeColor = System.Drawing.SystemColors.Window;
-            this.cbTitle.Location = new System.Drawing.Point(24, 20);
-            this.cbTitle.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.cbTitle.Name = "cbTitle";
-            this.cbTitle.Size = new System.Drawing.Size(1045, 13);
-            this.cbTitle.TabIndex = 52;
-            // 
-            // btn_SendCmd
-            // 
-            this.btn_SendCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_SendCmd.AutoSize = true;
-            this.btn_SendCmd.BackColor = System.Drawing.Color.Black;
-            this.btn_SendCmd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btn_SendCmd.Font = new System.Drawing.Font("Courier New", 13.25F);
-            this.btn_SendCmd.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btn_SendCmd.Location = new System.Drawing.Point(780, 2);
-            this.btn_SendCmd.Name = "btn_SendCmd";
-            this.btn_SendCmd.Size = new System.Drawing.Size(45, 22);
-            this.btn_SendCmd.TabIndex = 53;
-            this.btn_SendCmd.Text = " ↴ ";
-            this.btn_SendCmd.Click += new System.EventHandler(this.btn_SendCmd_Click);
-            this.btn_SendCmd.MouseEnter += new System.EventHandler(this.btn_SendCmd_MouseEnter);
-            this.btn_SendCmd.MouseLeave += new System.EventHandler(this.btn_SendCmd_MouseLeave);
-            // 
-            // cmMain
-            // 
-            this.cmMain.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.cmMain.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmMain.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.cmMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cutToolStripMenuItem,
-            this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem,
-            this.selectAllToolStripMenuItem,
-            this.replaceToolStripMenuItem,
-            this.toolStripMenuItem5,
-            this.findToolStripMenuItem});
-            this.cmMain.Name = "cmMain";
-            this.cmMain.ShowImageMargin = false;
-            this.cmMain.Size = new System.Drawing.Size(136, 138);
-            // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(100)))));
@@ -440,91 +700,9 @@
             this.cutToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.cutToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.White;
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.cutToolStripMenuItem.Text = "Cut";
             this.cutToolStripMenuItem.Visible = false;
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.copyToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copyToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.copyToolStripMenuItem.Text = "Copy";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.pasteToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.pasteToolStripMenuItem.Text = "Paste";
-            this.pasteToolStripMenuItem.Visible = false;
-            // 
-            // selectAllToolStripMenuItem
-            // 
-            this.selectAllToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.selectAllToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectAllToolStripMenuItem.ForeColor = System.Drawing.Color.Black;
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.selectAllToolStripMenuItem.Text = "Select all";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
-            // 
-            // replaceToolStripMenuItem
-            // 
-            this.replaceToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.replaceToolStripMenuItem.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.replaceToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
-            this.replaceToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.replaceToolStripMenuItem.Text = "Replace";
-            this.replaceToolStripMenuItem.Visible = false;
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.AutoSize = false;
-            this.toolStripMenuItem5.BackColor = System.Drawing.Color.Black;
-            this.toolStripMenuItem5.Enabled = false;
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(160, 2);
-            this.toolStripMenuItem5.Text = "------------";
-            // 
-            // findToolStripMenuItem
-            // 
-            this.findToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
-            this.findToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.findToolStripMenuItem.Name = "findToolStripMenuItem";
-            this.findToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.findToolStripMenuItem.Text = "Find";
-            // 
-            // pnAll
-            // 
-            this.pnAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnAll.Controls.Add(this.pnCenter);
-            this.pnAll.Controls.Add(this.panel4);
-            this.pnAll.Controls.Add(this.pnRight);
-            this.pnAll.Controls.Add(this.csPrj);
-            this.pnAll.Controls.Add(this.pnTreeView);
-            this.pnAll.Location = new System.Drawing.Point(1, 35);
-            this.pnAll.Name = "pnAll";
-            this.pnAll.Size = new System.Drawing.Size(1161, 610);
-            this.pnAll.TabIndex = 61;
-            this.pnAll.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            // 
-            // pnCenter
-            // 
-            this.pnCenter.Controls.Add(this.fctbConsole);
-            this.pnCenter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnCenter.Location = new System.Drawing.Point(0, 0);
-            this.pnCenter.Name = "pnCenter";
-            this.pnCenter.Size = new System.Drawing.Size(950, 564);
-            this.pnCenter.TabIndex = 14;
             // 
             // fctbConsole
             // 
@@ -575,20 +753,6 @@
             this.fctbConsole.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fctb_MouseClick);
             this.fctbConsole.MouseMove += new System.Windows.Forms.MouseEventHandler(this.fctb_MouseMove);
             // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.hMyScrollBar);
-            this.panel4.Controls.Add(this.btn_SendCmd);
-            this.panel4.Controls.Add(this.btn_SendSignal);
-            this.panel4.Controls.Add(this.msSignal);
-            this.panel4.Controls.Add(this.msCmd);
-            this.panel4.Controls.Add(this.tbCmd);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 564);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(950, 46);
-            this.panel4.TabIndex = 13;
-            // 
             // hMyScrollBar
             // 
             this.hMyScrollBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -606,141 +770,6 @@
             this.hMyScrollBar.ThumbSize = 483;
             this.hMyScrollBar.Value = 0;
             this.hMyScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hMyScrollBar_Scroll);
-            // 
-            // btn_SendSignal
-            // 
-            this.btn_SendSignal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_SendSignal.AutoSize = true;
-            this.btn_SendSignal.BackColor = System.Drawing.Color.Black;
-            this.btn_SendSignal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.btn_SendSignal.Font = new System.Drawing.Font("Courier New", 13.25F);
-            this.btn_SendSignal.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btn_SendSignal.Location = new System.Drawing.Point(899, 2);
-            this.btn_SendSignal.Name = "btn_SendSignal";
-            this.btn_SendSignal.Size = new System.Drawing.Size(45, 22);
-            this.btn_SendSignal.TabIndex = 57;
-            this.btn_SendSignal.Text = " ↴ ";
-            this.btn_SendSignal.Click += new System.EventHandler(this.btn_SendSignal_Click);
-            this.btn_SendSignal.MouseEnter += new System.EventHandler(this.btn_SendSignal_MouseEnter);
-            this.btn_SendSignal.MouseLeave += new System.EventHandler(this.btn_SendSignal_MouseLeave);
-            // 
-            // msSignal
-            // 
-            this.msSignal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.msSignal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
-            this.msSignal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.msSignal.Dock = System.Windows.Forms.DockStyle.None;
-            this.msSignal.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
-            this.msSignal.GripMargin = new System.Windows.Forms.Padding(1);
-            this.msSignal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsSignal});
-            this.msSignal.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msSignal.Location = new System.Drawing.Point(830, 1);
-            this.msSignal.Name = "msSignal";
-            this.msSignal.Padding = new System.Windows.Forms.Padding(1);
-            this.msSignal.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.msSignal.ShowItemToolTips = true;
-            this.msSignal.Size = new System.Drawing.Size(70, 22);
-            this.msSignal.TabIndex = 58;
-            // 
-            // tsSignal
-            // 
-            this.tsSignal.BackColor = System.Drawing.Color.Black;
-            this.tsSignal.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.sIGBREAKToolStripMenuItem,
-            this.closeMWToolStripMenuItem,
-            this.closeToolStripMenuItem,
-            this.killToolStripMenuItem});
-            this.tsSignal.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
-            this.tsSignal.ForeColor = System.Drawing.Color.White;
-            this.tsSignal.Name = "tsSignal";
-            this.tsSignal.Size = new System.Drawing.Size(68, 20);
-            this.tsSignal.Text = "SIGINT";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(140, 22);
-            this.toolStripMenuItem2.Text = "SIGINT";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.fCmdSingalSelect);
-            // 
-            // sIGBREAKToolStripMenuItem
-            // 
-            this.sIGBREAKToolStripMenuItem.Name = "sIGBREAKToolStripMenuItem";
-            this.sIGBREAKToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.sIGBREAKToolStripMenuItem.Text = "SIGBREAK";
-            this.sIGBREAKToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
-            // 
-            // closeMWToolStripMenuItem
-            // 
-            this.closeMWToolStripMenuItem.Name = "closeMWToolStripMenuItem";
-            this.closeMWToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.closeMWToolStripMenuItem.Text = "CloseMW";
-            this.closeMWToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
-            // 
-            // closeToolStripMenuItem
-            // 
-            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.closeToolStripMenuItem.Text = "Close";
-            this.closeToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
-            // 
-            // killToolStripMenuItem
-            // 
-            this.killToolStripMenuItem.Name = "killToolStripMenuItem";
-            this.killToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.killToolStripMenuItem.Text = "Kill";
-            this.killToolStripMenuItem.Click += new System.EventHandler(this.fCmdSingalSelect);
-            // 
-            // msCmd
-            // 
-            this.msCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.msCmd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
-            this.msCmd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.msCmd.Dock = System.Windows.Forms.DockStyle.None;
-            this.msCmd.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
-            this.msCmd.GripMargin = new System.Windows.Forms.Padding(1);
-            this.msCmd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmdToolStripMenuItem});
-            this.msCmd.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msCmd.Location = new System.Drawing.Point(3, 2);
-            this.msCmd.Name = "msCmd";
-            this.msCmd.Padding = new System.Windows.Forms.Padding(1);
-            this.msCmd.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.msCmd.ShowItemToolTips = true;
-            this.msCmd.Size = new System.Drawing.Size(46, 22);
-            this.msCmd.TabIndex = 56;
-            // 
-            // cmdToolStripMenuItem
-            // 
-            this.cmdToolStripMenuItem.BackColor = System.Drawing.Color.Black;
-            this.cmdToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmdToolStripMenuItem1});
-            this.cmdToolStripMenuItem.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Bold);
-            this.cmdToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.cmdToolStripMenuItem.Name = "cmdToolStripMenuItem";
-            this.cmdToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.cmdToolStripMenuItem.Text = "Cmd";
-            this.cmdToolStripMenuItem.DropDownOpening += new System.EventHandler(this.cmdToolStripMenuItem_DropDownOpening);
-            this.cmdToolStripMenuItem.Click += new System.EventHandler(this.cmdToolStripMenuItem_Click);
-            this.cmdToolStripMenuItem.MouseEnter += new System.EventHandler(this.cmdToolStripMenuItem_MouseEnter);
-            // 
-            // cmdToolStripMenuItem1
-            // 
-            this.cmdToolStripMenuItem1.Name = "cmdToolStripMenuItem1";
-            this.cmdToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
-            this.cmdToolStripMenuItem1.Text = "Cmd";
-            this.cmdToolStripMenuItem1.Click += new System.EventHandler(this.cmdToolStripMenuItem1_Click);
-            // 
-            // pnRight
-            // 
-            this.pnRight.Controls.Add(this.vMyScrollBar);
-            this.pnRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnRight.Location = new System.Drawing.Point(950, 0);
-            this.pnRight.Name = "pnRight";
-            this.pnRight.Size = new System.Drawing.Size(19, 610);
-            this.pnRight.TabIndex = 12;
             // 
             // vMyScrollBar
             // 
@@ -777,17 +806,6 @@
             this.csPrj.UseAnimations = false;
             this.csPrj.VisualStyle = NJFLib.Controls.VisualStyles.Mozilla;
             this.csPrj.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.collapsibleSplitter2_SplitterMoved);
-            // 
-            // pnTreeView
-            // 
-            this.pnTreeView.Controls.Add(this.pnTreeCenter);
-            this.pnTreeView.Controls.Add(this.pnTreeButtom);
-            this.pnTreeView.Controls.Add(this.pnTreeRight);
-            this.pnTreeView.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnTreeView.Location = new System.Drawing.Point(977, 0);
-            this.pnTreeView.Name = "pnTreeView";
-            this.pnTreeView.Size = new System.Drawing.Size(184, 610);
-            this.pnTreeView.TabIndex = 0;
             // 
             // pnTreeCenter
             // 
@@ -829,15 +847,6 @@
             this.treeViewPrj.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewPrj_AfterExpand);
             this.treeViewPrj.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewPrj_NodeMouseDoubleClick);
             // 
-            // pnTreeButtom
-            // 
-            this.pnTreeButtom.Controls.Add(this.hTreePrjScrollBar);
-            this.pnTreeButtom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnTreeButtom.Location = new System.Drawing.Point(0, 591);
-            this.pnTreeButtom.Name = "pnTreeButtom";
-            this.pnTreeButtom.Size = new System.Drawing.Size(165, 19);
-            this.pnTreeButtom.TabIndex = 60;
-            // 
             // hTreePrjScrollBar
             // 
             this.hTreePrjScrollBar.BackColor = System.Drawing.Color.Black;
@@ -854,15 +863,6 @@
             this.hTreePrjScrollBar.ThumbSize = 82;
             this.hTreePrjScrollBar.Value = 0;
             this.hTreePrjScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hTreePrjScrollBar_Scroll);
-            // 
-            // pnTreeRight
-            // 
-            this.pnTreeRight.Controls.Add(this.vTreePrjScrollBar);
-            this.pnTreeRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnTreeRight.Location = new System.Drawing.Point(165, 0);
-            this.pnTreeRight.Name = "pnTreeRight";
-            this.pnTreeRight.Size = new System.Drawing.Size(19, 610);
-            this.pnTreeRight.TabIndex = 59;
             // 
             // vTreePrjScrollBar
             // 
@@ -909,7 +909,6 @@
             this.pnAll.ResumeLayout(false);
             this.pnCenter.ResumeLayout(false);
             this.pnCenter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.msSignal.ResumeLayout(false);
@@ -918,10 +917,11 @@
             this.msCmd.PerformLayout();
             this.pnRight.ResumeLayout(false);
             this.pnTreeView.ResumeLayout(false);
-            this.pnTreeCenter.ResumeLayout(false);
-            this.pnTtreeViewPrj.ResumeLayout(false);
             this.pnTreeButtom.ResumeLayout(false);
             this.pnTreeRight.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fctbConsole)).EndInit();
+            this.pnTreeCenter.ResumeLayout(false);
+            this.pnTtreeViewPrj.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -939,7 +939,7 @@
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem lauchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem LaunchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewInToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem defaultToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;

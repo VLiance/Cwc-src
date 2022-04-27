@@ -152,11 +152,11 @@ namespace cwc
 
         public static void ProcessCmdSendToApp(string _sCmd, string _sAppName){
             string _sAppNameNorm = _sAppName.ToLower();
-            foreach(LauchTool _oLauch in LauchTool.aLauchList){
-                if( _oLauch.sExeName.ToLower() == _sAppNameNorm) {
+            foreach(LaunchTool _oLaunch in LaunchTool.aLaunchList){
+                if( _oLaunch.sExeName.ToLower() == _sAppNameNorm) {
                     Output.TraceActionLite("C> Send[" +_sAppName + "]:" +_sCmd);
-                  //  _oLauch.fSend(_sCmd.Substring(_sCmd.Length));
-                    _oLauch.fSend(_sCmd.Trim());
+                  //  _oLaunch.fSend(_sCmd.Substring(_sCmd.Length));
+                    _oLaunch.fSend(_sCmd.Trim());
                     return;
                 }
             }

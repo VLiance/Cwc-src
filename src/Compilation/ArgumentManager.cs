@@ -22,7 +22,7 @@ namespace cwc {
 
         public  List<ModuleData> aLib = new List<ModuleData>();
 
-		 public  List<LauchTool> aExeWaitingList = new List<LauchTool>();
+		 public  List<LaunchTool> aExeWaitingList = new List<LaunchTool>();
 		public string sPlatform = "Tes";
 
         public  List<CppSeq> aCppSeq = new List<CppSeq>();
@@ -324,7 +324,7 @@ namespace cwc {
 		internal void fRun(ModuleData _oModule = null, bool _bDontExecute = false, bool _bShowInfo = true, bool _bSilent = false){ 
               bFinalised = false;
              if(!_bDontExecute){
-			     aExeWaitingList = new List<LauchTool>();
+			     aExeWaitingList = new List<LaunchTool>();
 			     fDeletOutput();
          
 
@@ -333,7 +333,7 @@ namespace cwc {
 
 
             //     if(Data.oMainForm != null) {
-                     Data.oLauchProject.fSetOutput(aLinkCmdList,sCurr_wTo);
+                     Data.oLaunchProject.fSetOutput(aLinkCmdList,sCurr_wTo);
             //    }
 
                 if(!Data.bNowBuilding) {
@@ -391,7 +391,7 @@ namespace cwc {
                     }
               
 			        //  if(Data.oMainForm != null) { //TODO better way?
-		        //			 Data.oLauchProject.fSetOutput(aLinkCmdList,sCurr_wTo);
+		        //			 Data.oLaunchProject.fSetOutput(aLinkCmdList,sCurr_wTo);
 			        //	}
 	
                     CppCompiler.CheckAllThreadsHaveFinishedWorking(true);
@@ -410,7 +410,7 @@ namespace cwc {
 						    }	
                     }
 
-                    Data.oLauchProject.fSetOutput(aLinkCmdList,sCurr_wTo);
+                    Data.oLaunchProject.fSetOutput(aLinkCmdList,sCurr_wTo);
 
                     if(!Data.bNowBuilding) {
                         fShowInfo(_oModule,!_bSilent);
@@ -509,13 +509,13 @@ namespace cwc {
 
 		
 		public void fWaitForWaitingList()	{
-			foreach(LauchTool _oExe in aExeWaitingList) {
-				while(_oExe.bExeLauch && Base.bAlive) {
+			foreach(LaunchTool _oExe in aExeWaitingList) {
+				while(_oExe.bExeLaunch && Base.bAlive) {
 					//Thread.Sleep(1);
                     Thread.CurrentThread.Join(1);  
 				}
 			}
-			aExeWaitingList = new List<LauchTool>();
+			aExeWaitingList = new List<LaunchTool>();
 		}
 
         

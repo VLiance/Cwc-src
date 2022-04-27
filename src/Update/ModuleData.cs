@@ -549,7 +549,7 @@ namespace cwc
 
 
 
-        public  void fCompressionExit(LauchTool _oTool)  {
+        public  void fCompressionExit(LaunchTool _oTool)  {
 
 		    		   //Output.TraceWarning("--!!!fCompressionExit!-----: " );
             	bExtracting = false;
@@ -601,7 +601,7 @@ namespace cwc
         public int nExtracted = 0;
         public  string[] aFileAutoExtract;
          public string sCurrentExtractFile = "";
-        public bool fCheckForAutoExtractFiles(LauchTool _oTool) {
+        public bool fCheckForAutoExtractFiles(LaunchTool _oTool) {
  
              if(_oTool.oCustom == null){ //Not for sub extract items (Only master extact get auto sub extract)
                 //Master!
@@ -649,14 +649,14 @@ namespace cwc
             //Debug.fPrint("-Extact : " + zipFileName);
         //    Output.TraceWarning("-Extact : " + zipFileName);
 
-             LauchTool _o7z =  new LauchTool();
+             LaunchTool _o7z =  new LaunchTool();
             _o7z.oModule = _oLink;
              _o7z.oCustom = _oCustom;
-			_o7z.dExit = new LauchTool.dIExit(fCompressionExit);
+			_o7z.dExit = new LaunchTool.dIExit(fCompressionExit);
              _o7z.bHidden = true;
 			_o7z.dOut = fExtractOut;
 			_o7z.dError = fExtractOut; 
-			_o7z.fLauchExe( PathHelper.ToolDir + "7z/7z.exe",  "x \"" + zipFileName + "\"  -bsp2 -y -o\"" + targetDir + "\"", zipFileName , _sFullTargetDir,true);
+			_o7z.fLaunchExe( PathHelper.ToolDir + "7z/7z.exe",  "x \"" + zipFileName + "\"  -bsp2 -y -o\"" + targetDir + "\"", zipFileName , _sFullTargetDir,true);
 
         }
 
@@ -664,7 +664,7 @@ namespace cwc
 		public string sLastLocalVersion = "";
 		public string sDisplayVersion = "";
 
-		public void fExtractOut(LauchTool _oThis,string _sMsg) {
+		public void fExtractOut(LaunchTool _oThis,string _sMsg) {
 
 			//Debug.fTrace(_sOut);
 			if(!FileUtils.IsEmpty(_sMsg)){

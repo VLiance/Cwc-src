@@ -388,7 +388,7 @@ namespace cwc {
                 return;
             }bLibExtracted = true;
 
-             oLauchLib_Arg.aLib = oParent.aLib;
+             oLaunchLib_Arg.aLib = oParent.aLib;
 
             fExtractSubLib(oLib);
             foreach(ModuleData _oSubLib in  oLib.aSubLib) {
@@ -399,18 +399,18 @@ namespace cwc {
 
 
         public void fExtractSubLib(ModuleData _oLib ){
-                 // oLauchLib_Arg.fSetVar("wPath",  oLib.sCurrFolder);  		
-                  oLauchLib_Arg.fSetVar("_pModule",  _oLib.sCurrFolder);  		
-                  oLauchLib_Arg.fSetVar("_pOutput", sLauchLib__pOutput);
+                 // oLaunchLib_Arg.fSetVar("wPath",  oLib.sCurrFolder);  		
+                  oLaunchLib_Arg.fSetVar("_pModule",  _oLib.sCurrFolder);  		
+                  oLaunchLib_Arg.fSetVar("_pOutput", sLaunchLib__pOutput);
 
       
-                  //oLauchLib_Arg.aLib = oParent.aLib;
+                  //oLaunchLib_Arg.aLib = oParent.aLib;
 
 
               if(_oLib.oLibData != null  && _oLib.oLibData.sCmd != "") {
 
                   //      Console.WriteLine("***********************************aaa " + oLib.oLibData.sCmd );
-               	     fNewArgCmdRun( _oLib.oLibData.sCmd , false,oLauchLib_Arg,false); //Not run
+               	     fNewArgCmdRun( _oLib.oLibData.sCmd , false,oLaunchLib_Arg,false); //Not run
                    fRunLib(_oLib);
         //          Console.WriteLine("havec commmand!! " + oLib.oLibData.sCmd);
                 }
@@ -428,18 +428,18 @@ namespace cwc {
         //        bIsRunLib = false;
                  Output.TraceWarning("#Run "  + oLib.sCurrFolder);
 
-                oLauchLib_Arg.fCompleteExtractMainArgument(_oLib);
-                oLauchLib_Arg.fExtract(_oLib);
-                oLauchLib_Arg.fRun(_oLib);
+                oLaunchLib_Arg.fCompleteExtractMainArgument(_oLib);
+                oLaunchLib_Arg.fExtract(_oLib);
+                oLaunchLib_Arg.fRun(_oLib);
                  Output.TraceWarning("#End "  +  oLib.sCurrFolder);
             }
         }
 
 
 
-		public ArgumentManager oLauchLib_Arg = null;
-		public string sLauchLib_File = "";
-		public string sLauchLib__pOutput = "";
+		public ArgumentManager oLaunchLib_Arg = null;
+		public string sLaunchLib_File = "";
+		public string sLaunchLib__pOutput = "";
         public bool bIsRunLib = false;
 
         private void fPreBuildCmd( string _sArg) {
@@ -456,13 +456,13 @@ namespace cwc {
             bIsACmdLib = true;
 		    oLib =	Data.fAddRequiredModule(_aArg[0] + "/" + _aArg[1]);
 			oParent.fAddLib(oLib); //Todo multiple lib with separator ,
-            oLauchLib_Arg =  new ArgumentManager();
+            oLaunchLib_Arg =  new ArgumentManager();
 
 
             //extract varz
             _sArg
             */
-           // sLauchLib_wExPath =  fGetVar("wDir") + _sArg;
+           // sLaunchLib_wExPath =  fGetVar("wDir") + _sArg;
             
         }
 
@@ -470,8 +470,8 @@ namespace cwc {
 
 		public void fPreOutputLib(string _sArg){
 
-			sLauchLib__pOutput =  fGetVar("_pProject") + _sArg;
-		//	sLauchLib_File = oLib.sCurrFolder + "wLib.cwc";
+			sLaunchLib__pOutput =  fGetVar("_pProject") + _sArg;
+		//	sLaunchLib_File = oLib.sCurrFolder + "wLib.cwc";
          //  if(){
              bIsRunLib = true;
          //   }
@@ -1051,7 +1051,7 @@ bExtacted = true;
                 bSkip = bPrecOutputSkip; //TO test !!! Recompile if we are wTo -> 
             }
 
-			if(oLauchLib_Arg != null){
+			if(oLaunchLib_Arg != null){
 				fExtractLib();
 			}
 			
@@ -1315,7 +1315,7 @@ bExtacted = true;
                 string _sExePath =  fFindManualExecutableLocation(sManuallySetExecutable);
 
                   //   CppCompiler.fSend2Compiler(_sSendCmd, bLink, false, this);
-                    fLauchManualExe(_sExePath, sExtractedCmd);
+                    fLaunchManualExe(_sExePath, sExtractedCmd);
 
                     
               //  }
@@ -1360,7 +1360,7 @@ bExtacted = true;
 
 
             /**  Not good
-          	if(oLauchLib_Arg != null){
+          	if(oLaunchLib_Arg != null){
 			//	fRunLib();
 			}*/
 
@@ -1397,16 +1397,16 @@ bExtacted = true;
           return _sResult;
         }
 
-        private void fLauchManualExe(string sExePath, string sExtractedCmd) {
-             LauchTool _oExe =  new LauchTool();
+        private void fLaunchManualExe(string sExePath, string sExtractedCmd) {
+             LaunchTool _oExe =  new LaunchTool();
 
-			//_oExe.dExit = new LauchTool.dIExit(fCompressionExit);
+			//_oExe.dExit = new LaunchTool.dIExit(fCompressionExit);
         
 			_oExe.dOut = fExeOut;
 			_oExe.dError = fExeOut;
-			_oExe.fLauchExe( sExePath, sExtractedCmd);
+			_oExe.fLaunchExe( sExePath, sExtractedCmd);
         }
-        public void fExeOut(LauchTool _oThis,string _sOut) {
+        public void fExeOut(LaunchTool _oThis,string _sOut) {
             Debug.fPrint(_sOut);
         }
 
@@ -2177,9 +2177,9 @@ bExtacted = true;
                   //}
                break;
 				 
-              case "#Lauch":
-              //    Debug.fTrace("--!!Lauch " + _sArg);
-                fCmdwLauch(_sCmdArg);
+              case "#Launch":
+              //    Debug.fTrace("--!!Launch " + _sArg);
+                fCmdwLaunch(_sCmdArg);
                break;
             case "#To":
 					bHave_wTo = true;
@@ -2225,16 +2225,16 @@ bExtacted = true;
                
         }
 
-        private void fCmdwLauch(string _sToLauch) {
+        private void fCmdwLaunch(string _sToLaunch) {
 
             //Create settings file
 
 
-            bSendCmdToLauch = true;
-            sToLauch = _sToLauch;
+            bSendCmdToLaunch = true;
+            sToLaunch = _sToLaunch;
 
-          //  Setting.fNewSettingsLauch(_sToLauch);
-           Data.sToLauch = _sToLauch;//Broken??
+          //  Setting.fNewSettingsLaunch(_sToLaunch);
+           Data.sToLaunch = _sToLaunch;//Broken??
 
            Data.bNonBuildCommand = true;
 
@@ -2678,7 +2678,7 @@ bExtacted = true;
 			bIsACmdLib = true;
 		    oLib =	Data.fAddRequiredModule(_aArg[0] + "/" + _aArg[1]);
 			oParent.fAddLib(oLib); //Todo multiple lib with separator ,
-            oLauchLib_Arg =  new ArgumentManager();
+            oLaunchLib_Arg =  new ArgumentManager();
 		}
         if(_sVar != "") {
                 string _sVarPath = "_p" + _sVar.Substring(2);
@@ -2733,8 +2733,8 @@ bExtacted = true;
 		public void fExecuteGit() {
 
 			
-             LauchTool _oGit =  new LauchTool();
-			 //_o7z.dExit = new LauchTool.dIExit(fCompressionExit);
+             LaunchTool _oGit =  new LaunchTool();
+			 //_o7z.dExit = new LaunchTool.dIExit(fCompressionExit);
 			_oGit.sWorkPath = PathHelper.ExeWorkDir;
 
 			string _sFolderName = Path.GetFileNameWithoutExtension(sGitURL);
@@ -2742,7 +2742,7 @@ bExtacted = true;
 
 			if(!Directory.Exists(  PathHelper.ExeWorkDir + _sFolderName ) ) {
 				
-				_oGit.fLauchExe( PathHelper.ToolDir + "git/cmd/git.exe", sGitCmd + " \""+  sGitURL + "\"", "", "", true);
+				_oGit.fLaunchExe( PathHelper.ToolDir + "git/cmd/git.exe", sGitCmd + " \""+  sGitURL + "\"", "", "", true);
 				oParent.aExeWaitingList.Add(_oGit);
 			}else {
 				 Output.TraceColored("\f2 -- " + _sFolderName + " Exist -- \f28" + sCmd );
@@ -2910,8 +2910,8 @@ bExtacted = true;
 		public string sSubFiltredArg = "";
 		public string sSubExe = "";
 		public string sSubResidualArg = "";
-        private bool bSendCmdToLauch;
-        private string sToLauch;
+        private bool bSendCmdToLaunch;
+        private string sToLaunch;
         private string sRunToArgDontPrextract_File;
         private string sRunToArgDontPrextract_File_Arg;
        // private string sHasIncluded = "";
@@ -2933,7 +2933,7 @@ bExtacted = true;
         public string sCloseWhen = "";
         public string sRetryForInput = "";
         public bool bRetryForInput = false;
-        internal string sLauchCmdResult;
+        internal string sLaunchCmdResult;
 
         public  string fExtractVar( string _sCmd, bool _bWeak = false) {
 			return CppCmd.fExtractVar(_sCmd, this, _bWeak);
@@ -3177,7 +3177,7 @@ bExtacted = true;
 				break;
                 default:
                   
-                   Data.oLauchProject.fLauchDefaultRun(_sRealArg, _sSubArg);
+                   Data.oLaunchProject.fLaunchDefaultRun(_sRealArg, _sSubArg);
             
                 break;
 

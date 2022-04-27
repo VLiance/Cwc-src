@@ -8,11 +8,11 @@ using System.Text;
 namespace cwc {
     class Setting {
 
-          public static SettingsLauch oSettingsLauch = new SettingsLauch(PathHelper.ExeWorkDir + "Default");
-         public static string sLauchedName = "";
-        internal static void fNewSettingsLauch(string _sFile) {
-            sLauchedName = Path.GetFileNameWithoutExtension( _sFile);//Broken??
-            oSettingsLauch.fSetNewFile(_sFile);
+          public static SettingsLaunch oSettingsLaunch = new SettingsLaunch(PathHelper.ExeWorkDir + "Default");
+         public static string sLaunchedName = "";
+        internal static void fNewSettingsLaunch(string _sFile) {
+            sLaunchedName = Path.GetFileNameWithoutExtension( _sFile);//Broken??
+            oSettingsLaunch.fSetNewFile(_sFile);
            
         }
 

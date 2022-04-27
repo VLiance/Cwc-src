@@ -520,7 +520,7 @@ namespace cwc
 
             var res = MessageBox.Show(this, "The Cwc must quit to perform the update, do it now?", "Update?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
             if (res == DialogResult.Yes)  {
-				UpdateCwc.fLauchUpdate( _oModule.sCurrFolder, oModule.sLastLocalVersion);
+				UpdateCwc.fLaunchUpdate( _oModule.sCurrFolder, oModule.sLastLocalVersion);
 		
 	   
       /*

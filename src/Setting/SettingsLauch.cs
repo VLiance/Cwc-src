@@ -9,7 +9,7 @@ using System.Xml;
 using static cwc.DBGpClient;
 
 namespace cwc {
-    public class SettingsLauch : FileUtils {
+    public class SettingsLaunch : FileUtils {
 
         List<Breakpoint> aBreakpoint = DBGpClient.aBreakpoint;
       //  List<TreeNodePath> aPrjNode = new  List<TreeNodePath>();
@@ -17,7 +17,7 @@ namespace cwc {
         XmlNode oXmlPrjNodeLoaded; 
 
 
-        public SettingsLauch(string _sFile) {
+        public SettingsLaunch(string _sFile) {
 
             fSetNewFile(_sFile);
         }

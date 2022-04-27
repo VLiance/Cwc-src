@@ -434,11 +434,11 @@ namespace cwc
                     
                      if(Data.fIsDataTrue("IDE/LiteWayv") ){
                         Console.WriteLine(" PathHelper.ExeWorkDir " +  PathHelper.ExeWorkDir );
-                        fLauchIDE( PathHelper.CwcRootPath() +  "LiteWayv.exe", file,  Arg );
+                        fLaunchIDE( PathHelper.CwcRootPath() +  "LiteWayv.exe", file,  Arg );
                         return;
                     }
                     if(Data.fIsDataTrue("IDE/Notepad++") ){
-                        fLauchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", file,  Arg );
+                        fLaunchIDE( PathHelper.ToolDir +  "npp/notepad++.exe", file,  Arg );
                         return;
                     }
 
@@ -482,7 +482,7 @@ namespace cwc
 
 
 
-        public static void fLauchIDE(String _sFullPath, String file = "", String Arg = ""){
+        public static void fLaunchIDE(String _sFullPath, String file = "", String Arg = ""){
                 
                
                 fFindExistantExe(_sFullPath);

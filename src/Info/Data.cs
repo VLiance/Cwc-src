@@ -92,7 +92,7 @@ namespace cwc {
       //  public  static MainForm oMainForm = null;
 
         public  static Empty oMsgForm = null;
-		public  static LauchProject oLauchProject = new LauchProject();
+		public  static LaunchProject oLaunchProject = new LaunchProject();
 
       public static Dictionary<string, ModuleData> aCompilerData = new Dictionary<string, ModuleData>();
 
@@ -203,7 +203,7 @@ namespace cwc {
              ArgumentManager.aDependance.Clear();
         }
 
-              public static string sToLauch = "";
+              public static string sToLaunch = "";
         internal static bool bForceTestNextCmd;
         internal static bool bIWantGoToEnd = false;
 

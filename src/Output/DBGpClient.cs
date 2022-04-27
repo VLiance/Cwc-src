@@ -593,7 +593,7 @@ private const bool SHOW_MESSAGES = false;
 				+"<init xmlns=\"urn:debugger_protocol_v1\" appid=\"DotNetDbgp\" idekey=\"{0}\" session=\"\" thread=\"\" parent=\"\" language=\"C#\" protocol_version=\"1.0\" fileuri=\"{1}\" />",
 				//+"<init xmlns=\"urn:debugger_protocol_v1\" appid=\"DotNetDbgp\" idekey=\"\" session=\"\" thread=\"\" parent=\"\" language=\"C#\" protocol_version=\"1.0\" fileuri=\"{0}\" />",
 				//path ?? "dbgp:null"
-                "Cwc (" + Setting.sLauchedName + ")",
+                "Cwc (" + Setting.sLaunchedName + ")",
 				"" //No path
 			);
 		}
@@ -693,7 +693,7 @@ private const bool SHOW_MESSAGES = false;
                 _sResolved = "unresolved";
             }
 
-            Setting.oSettingsLauch.fSaveSetting(); //TODO optimize?
+            Setting.oSettingsLaunch.fSaveSetting(); //TODO optimize?
 
             //BREAKPOINT_ID: Is an arbitrary string that uniquely identifies this breakpoint in the debugger engine.
             //STATE: The initial state of the breakpoint as set by the debugger engine  [optional, defaults to "enabled"] "enabled" / "disabled"
@@ -721,7 +721,7 @@ private const bool SHOW_MESSAGES = false;
                 }
             }
            // Console.WriteLine("--- "  + aBreakpoint.Count);
-            Setting.oSettingsLauch.fSaveSetting(); //TODO optimize?
+            Setting.oSettingsLaunch.fSaveSetting(); //TODO optimize?
             
 			return String.Format(
 					"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
