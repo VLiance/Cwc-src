@@ -440,10 +440,18 @@ namespace cwc
            
                      if(_sResult.IndexOf("undefined reference to") != -1) {
                         _oOut.eType = OutType.Undefined;
+                        nError++;
+                        if (_nMyTicket < nErrorTicket || nErrorTicket == -1) {
+                            nErrorTicket = (int)_nMyTicket;
+                        }
                     }
                      
                      if( fFindValidKeyWord(_sResult, "error") != -1  ) {
                         _oOut.eType = OutType.Error;
+                        nError++;
+                        if (_nMyTicket < nErrorTicket || nErrorTicket == -1) {
+                            nErrorTicket = (int)_nMyTicket;
+                        }
                     }
                      if(  fFindValidKeyWord(_sResult, "warning") != -1) {
                         _oOut.eType = OutType.Warning;

@@ -806,6 +806,10 @@ namespace cwc {
                      ToolStripMenuItem _oNew = new ToolStripMenuItem(_sRecent);
                      _oNew.Tag = _sRecent;
 
+                    if (Config.sLastRecentPath =="") {
+                        Config.sLastRecentPath = _sRecent;
+                    }
+
                     string _sName = _sRecent;
                     string _sPath= _sRecent;
                    int _nLastIndex = _sName.LastIndexOf("/");
@@ -825,6 +829,7 @@ namespace cwc {
                 }
                }catch( Exception e) { Console.WriteLine(e.Message);};
 
+              
 
            });
         }
@@ -888,9 +893,36 @@ namespace cwc {
         }
 
 
-       int nInitialPosLeft = 0;
+
+        private GlobalKeyboardHook _globalKeyboardHook;
+        private void keyHook() {
+            // Hooks only into specified Keys (here "A" and "B").
+            _globalKeyboardHook = new GlobalKeyboardHook(new Keys[] { Keys.A, Keys.B });
+
+            // Hooks into all keys.
+            _globalKeyboardHook = new GlobalKeyboardHook();
+            _globalKeyboardHook.KeyboardPressed += OnKeyPressed;
+        }
+        private void OnKeyPressed(object sender, GlobalKeyboardHookEventArgs e) {
+            // EDT: No need to filter for VkSnapshot anymore. This now gets handled
+            // through the constructor of GlobalKeyboardHook(...).
+            if (e.KeyboardState == GlobalKeyboardHook.KeyboardState.KeyDown) {
+                // Now you can access both, the key and virtual code
+                Keys loggedKey = e.KeyboardData.Key;
+                int loggedVkCode = e.KeyboardData.VirtualCode;
+                if (loggedKey == Keys.F1 || loggedKey == Keys.F2) {
+                    Data.oLaunchProject.fCancel();
+                }
+            }
+        }
+
+
+
+
+        int nInitialPosLeft = 0;
          int nInitialPosTop = 0;
         private void GuiConsole_Load(object sender, EventArgs e) {
+          
              fUpdateCmdList();
 
              csPrj.ToggleState();//Clesed by default
@@ -960,7 +992,7 @@ namespace cwc {
 
             fLoadData();
               bReady = true;
-            
+            keyHook();
         }
 
 

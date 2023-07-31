@@ -113,15 +113,15 @@ namespace cwc
 
 
 
-        public  static void 	fPrjOut(string _sLetter,  string _sOut){
+public static void fPrjOut(string _sLetter,  string _sOut){
 
     if (_sOut == null){
         return;
     }
 
     string _sPrefix = _sLetter + "> " ;
-    if(_sOut.Length > 4) { //ex T[1]:xxxx
-        if(_sOut[1] == '[') {
+    if(_sOut.Length > 4) { //ex T|1|:xxxx
+        if(_sOut[1] == '|') {
             switch(_sOut[0]) {
                    case 'P':
                        Output.TraceGood(_sPrefix +_sOut);

@@ -182,8 +182,11 @@ namespace cwc {
 
         Interlocked.Exchange(ref CppCompiler.safeInstanceCount,0); //Just to be sure we will not be waiting for a killed instance
 
-		KillProcessAndChildrens( pid);
-	   try {
+
+        try {
+            KillProcessAndChildrens( pid);
+        } catch (Exception ex) { }
+        try {
 			if(Data.oArg != null) {
 				Data.oArg.fCleanAllCorruptObj();
 			}

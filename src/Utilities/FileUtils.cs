@@ -425,11 +425,14 @@ namespace cwc
           public static Process firstProcess = null;
           public static void RunInEditor(String file, string Arg = ""){
 
-
             Console.WriteLine("RunInEditor: " +file  + " " + Arg);
-		//	this.BeginInvoke((MethodInvoker)delegate  {
+            //	this.BeginInvoke((MethodInvoker)delegate  {
+            if (!File.Exists(file) && file[file.Length-1]!= '/') {
+                string outfolder = Path.GetDirectoryName(LaunchProject.sOutput)+ "/";
+                file = Path.GetFullPath( PathHelper.ExeWorkDir + outfolder + file.Substring(PathHelper.ExeWorkDir.Length));
+            }
 
-            try  {
+             try  {
                 if(File.Exists(file)) { 
                     
                      if(Data.fIsDataTrue("IDE/LiteWayv") ){

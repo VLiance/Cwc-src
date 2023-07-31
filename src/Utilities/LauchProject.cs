@@ -17,7 +17,7 @@ namespace cwc{
 		 public Boolean bReceiveOutput = false;
 
 
-		 public string sOutput = "";
+		 public static string sOutput = "";
 
 		        
 		public  void fBuildFinish() {
