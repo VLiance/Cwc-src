@@ -202,8 +202,8 @@ namespace cwc {
                 }
             }
 
-           // return fEatKeyStroke ? (IntPtr)1 : CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
-            return (IntPtr)1;
+           return fEatKeyStroke ? (IntPtr)1 : CallNextHookEx(IntPtr.Zero, nCode, wParam, lParam);
+           // return (IntPtr)1;
         }
     }
 

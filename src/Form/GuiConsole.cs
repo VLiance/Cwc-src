@@ -897,10 +897,12 @@ namespace cwc {
         private GlobalKeyboardHook _globalKeyboardHook;
         private void keyHook() {
             // Hooks only into specified Keys (here "A" and "B").
-            _globalKeyboardHook = new GlobalKeyboardHook(new Keys[] { Keys.A, Keys.B });
+            _globalKeyboardHook = new GlobalKeyboardHook(new Keys[] { Keys.F1, Keys.F2 });
 
             // Hooks into all keys.
-            _globalKeyboardHook = new GlobalKeyboardHook();
+           // _globalKeyboardHook = new GlobalKeyboardHook();
+
+
             _globalKeyboardHook.KeyboardPressed += OnKeyPressed;
         }
         private void OnKeyPressed(object sender, GlobalKeyboardHookEventArgs e) {
