@@ -893,7 +893,7 @@ namespace cwc {
         }
 
 
-
+        /*
         private GlobalKeyboardHook _globalKeyboardHook;
         private void keyHook() {
             // Hooks only into specified Keys (here "A" and "B").
@@ -917,14 +917,32 @@ namespace cwc {
                 }
             }
         }
+        */
 
 
+        public void fHookOut(LaunchTool _oThis, string _sOut)  {
+            if(_sOut==null) return;
+            Console.WriteLine(_sOut);
+            if (_sOut.IndexOf("KD|F1") != -1) {
+                 Data.oLaunchProject.fCancel();
+            }
+        }
+   
+        public static LaunchTool oHook =  new LaunchTool(); 
+		public bool LauchHook() {
+
+			oHook.dOut = new LaunchTool.dIOut(fHookOut);
+            oHook.bHidden= true;
+			oHook.fLaunchExe( PathHelper.ToolDir + "hook/hkey.exe", "");
+            return true;
+		}
 
 
         int nInitialPosLeft = 0;
          int nInitialPosTop = 0;
         private void GuiConsole_Load(object sender, EventArgs e) {
-          
+            LauchHook();
+
              fUpdateCmdList();
 
              csPrj.ToggleState();//Clesed by default
@@ -994,7 +1012,9 @@ namespace cwc {
 
             fLoadData();
               bReady = true;
-            keyHook();
+           
+
+           
         }
 
 

@@ -105,6 +105,8 @@ namespace cwc {
 
         static public void fQuit(bool _bForceQuitConsole = false) {
 
+           GuiConsole.oHook.fEnd();
+
       //      MessageBox.Show("QUIIIIIIIIIIIIIIII!!!!!!!!!!");
             /*
             if (oLaunchProject.oCurLaunch != null && oLaunchProject.oCurLaunch.sExeName == "gdb") {
@@ -238,10 +240,12 @@ namespace cwc {
                   //  MessageBox.Show(_sFileName);
                         if(!_bSkip){
                           try{
-                             proc.Kill();
-                              while( !proc.HasExited) {
-                                   Thread.Sleep(1);
-                              }              
+                            if( !Base.bAlive ||  proc.ProcessName != "hkey") {
+                                 proc.Kill();
+                                  while( !proc.HasExited) {
+                                       Thread.Sleep(1);
+                                  }   
+                              }
 
                         } catch (Exception ex) { }
                         }}catch (Exception ex) { }
