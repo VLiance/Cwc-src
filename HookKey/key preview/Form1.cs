@@ -22,7 +22,7 @@ namespace key_preview {
 					Hide();
 				}));
 			gkh.HookedKeys.Add(Keys.F1);
-			gkh.HookedKeys.Add(Keys.B);
+		//	gkh.HookedKeys.Add(Keys.B);
 			gkh.KeyDown += new KeyEventHandler(gkh_KeyDown);
 			gkh.KeyUp += new KeyEventHandler(gkh_KeyUp);
 		}
