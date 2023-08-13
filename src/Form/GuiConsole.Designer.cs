@@ -131,20 +131,20 @@
             this.msMenu.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.msMenu.GripMargin = new System.Windows.Forms.Padding(1);
             this.msMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LaunchToolStripMenuItem,
             this.configToolStripMenuItem,
+            this.LaunchToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.viewInToolStripMenuItem,
             this.ToolStrip_Build,
             this.updateToolStripMenuItem,
             this.iDEToolStripMenuItem});
             this.msMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.msMenu.Location = new System.Drawing.Point(606, 2);
+            this.msMenu.Location = new System.Drawing.Point(486, 2);
             this.msMenu.Name = "msMenu";
             this.msMenu.Padding = new System.Windows.Forms.Padding(1);
             this.msMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.msMenu.ShowItemToolTips = true;
-            this.msMenu.Size = new System.Drawing.Size(439, 20);
+            this.msMenu.Size = new System.Drawing.Size(559, 21);
             this.msMenu.TabIndex = 50;
             // 
             // LaunchToolStripMenuItem
@@ -163,14 +163,14 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fileToolStripMenuItem.Text = "File";
             this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(99, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // configToolStripMenuItem
             // 

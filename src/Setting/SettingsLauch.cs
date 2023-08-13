@@ -24,8 +24,10 @@ namespace cwc {
 
 
 
-        string sCurrentFile = "";
+        public  string sCurrentFile = "";
+        public  static string sFileLaunch = "";
         internal void fSetNewFile(string _sFile) {
+            sFileLaunch = _sFile;
         
            String _sDir = Path.GetDirectoryName(_sFile);
            String _sFileName = Path.GetFileNameWithoutExtension(_sFile); //Used?

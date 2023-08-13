@@ -494,6 +494,8 @@ namespace cwc {
 				}
                 //  }
             }
+
+             Data.WriteBash();
         }
 
 

@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace cwc {
     class Data {
@@ -206,6 +208,7 @@ namespace cwc {
               public static string sToLaunch = "";
         internal static bool bForceTestNextCmd;
         internal static bool bIWantGoToEnd = false;
+        private static string sBash;
 
         internal static void fCheckUpdate() {
            
@@ -256,7 +259,18 @@ namespace cwc {
 
         }
 
+        public static void  fAddToBash(CppCmd _oCmd, string _sLine) {
+            string _torel = PathHelper.GetCurrentDirectory().Replace('\\', '/');
+            string module = _oCmd.oCompiler.oModuleData.sCurrFolder;
 
+            string _result = _sLine.Replace(_torel,"./").Replace(module,"");
+             Data.sBash += _result+ "\n";
+        }
+
+       internal static void WriteBash() {
+           //PathHelper.GetCurrentDirectory()+
+          File.WriteAllText(SettingsLaunch.sFileLaunch.Replace("cwMake", ".sh") ,  Data.sBash);
+        }
         
 		public static string  fGetGlobalVar(string _sVar, bool _bWeak = false) {
 //Output.TraceWarning("fGetGlobalVar " + _sVar);
@@ -325,16 +339,12 @@ namespace cwc {
 			Data.fSetGlobalVar("wArchPC", "x86" );
 	
 			Data.fSetGlobalVar("_pProject", PathHelper.ExeWorkDir);
-			Data.fSetGlobalVar("_sOpt", "Debug");
+			Data.fSetGlobalVar("wwdww_sOpt", "Debug");
 
 			Data.fSetGlobalVar("wBuildAnd","Run");
 
 		}
 
-
-
-
-
-
+    
     }
 }

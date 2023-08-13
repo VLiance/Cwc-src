@@ -116,6 +116,7 @@ namespace cwc
 
         public static void fSend2Compiler(string _sArg, bool _bLinkTime = false, bool _bCompileAndLink = false, CppCmd _oCmd = null, string _sAllFile = "") {
            
+
 			//string _sPlatform = _oCmd.oParent.sPlatform;
 			string _sPlatform = _oCmd.oParent.fGetVar("_sPlatform");
 
@@ -148,6 +149,15 @@ namespace cwc
             _sFinalArg = _sFinalArg.Replace('¶', '%');  //A way to keep %
 
             _oCmd.sCommandToShow = "\f1F (" +   _oCmd.sExecutableName  + _oCmd.sExecutableType + _sInfo  + ")" +  _sObjectList + "  " +_sFinalArg;
+
+
+             if(Data.fGetGlobalVar("_sType") == "Bash") {
+
+                 Data.fAddToBash(_oCmd, _oCmd.sExecutableName + " " + _sFinalArg);
+                 fShowSendedCmd(_oCmd);
+                 return;
+             }
+
 
             uint _nMyTicket = 0;
             lock(oLockTicket) {
@@ -268,6 +278,8 @@ namespace cwc
              });
             worker.RunWorkerAsync();
         }
+
+    
 
         private static readonly Object oLock = new Object();
         private static readonly Object oLockFirst = new Object();

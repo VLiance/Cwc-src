@@ -185,7 +185,10 @@ namespace cwc{
 
                     return true;
                 }else {
-				Output.TraceError("Executable not found: " + _sPath);
+                     if(Data.fGetGlobalVar("_sType") != "Bash") {
+				         Output.TraceError("Executable not found: " + _sPath);
+                    }
+
 				}
       //      }
              return false;

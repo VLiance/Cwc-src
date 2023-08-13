@@ -1334,14 +1334,13 @@ bExtacted = true;
             _sObjectList = _sAllFile;
                
              ///////////////////////
-
-  
+              bool bash = Data.fGetGlobalVar("_sType") == "Bash";
+        
 
 			    if(bCallCompiler && !bIsACmdLib ){
 			    //if(bCallCompiler  ){
 
-				    if( !bSkip ) {
-                    
+				    if( !bSkip || bash) {
 					    if(!(bLink && CppCompiler.nError > 0)) {
 						    if(bLink && oCompiler != null &&  oCompiler.sLink_Action_cmd != "") {
 							    fDoLinkCustomAction();
@@ -2012,6 +2011,11 @@ bExtacted = true;
 					oParent.fSetVar(_sVar, _sVarArg);
                  break;
             	 case "_sOpt":
+                    //fBuildAndCommand(_sArg);
+					oParent.fSetVar(_sVar, _sVarArg);
+                 break;
+
+                case "_sType":
                     //fBuildAndCommand(_sArg);
 					oParent.fSetVar(_sVar, _sVarArg);
                  break;
