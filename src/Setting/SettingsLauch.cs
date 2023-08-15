@@ -47,6 +47,7 @@ namespace cwc {
         public static List<string> aFolderToMirror = new List<string>();
         public static List<string> aFileToMirror = new List<string>();
         internal static bool Mirror_BuildFileList() {
+            Output.Trace("\f3B --- Begin Mirroring --- \f13");
             if(sMirror=="")return false;
             List<string> aFile = new List<string>();
             foreach (string folder in aFolderToMirror) {

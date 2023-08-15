@@ -161,7 +161,7 @@ namespace cwc
                 foreach (string d in list) {
                     dir+=d+"/";
                     //Data.fAddToBash(_oCmd,"mkdir " + dir+ "\n");
-                    Data.sBash += "mkdir " + dir+ "\n";
+                    Data.sBash += "mkdir -p " + dir+ "\n";
                 }
                 //////////////
                  Data.fAddToBash(_oCmd, _oCmd.sExecutableName + " " + _sFinalArg);
