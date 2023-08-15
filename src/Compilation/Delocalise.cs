@@ -48,6 +48,7 @@ namespace cwc {
             }*/
 
            Output.TraceWarning("Launch " + sDelocaliseCmd);
+              SettingsLaunch.Mirror_New(sDelocaliseCmd.Replace(".cwMake", ".mirror"));
             string _sText =  Delocalise.fDelocalise(sDelocaliseCmd);
 			Data.sArgExpand  = ArgProcess.fExpandAll(_sText);
 	       Data.sCmd = "StartBuild";

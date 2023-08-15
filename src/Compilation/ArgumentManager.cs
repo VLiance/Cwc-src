@@ -490,12 +490,12 @@ namespace cwc {
 					}else{
 						 Output.Trace("\f1B --- End --- \f13 " +   _nSeconde + "." + _nDotSeconde + " sec" );
 					}
-					
 				}
+                Data.WriteBash();
                 //  }
             }
 
-             Data.WriteBash();
+           
         }
 
 

@@ -12,7 +12,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace cwc {
     class Data {
 
-        		internal static bool bUpdateMode = false;
+        internal static bool bUpdateMode = false;
 		internal static string sUpdateModeSrc = "";
 		internal static string sUpdateVer;
 		public static bool bNothingToBuild = false;
@@ -208,7 +208,7 @@ namespace cwc {
               public static string sToLaunch = "";
         internal static bool bForceTestNextCmd;
         internal static bool bIWantGoToEnd = false;
-        private static string sBash;
+        public static string sBash;
 
         internal static void fCheckUpdate() {
            
@@ -259,17 +259,30 @@ namespace cwc {
 
         }
 
+
+      
+
         public static void  fAddToBash(CppCmd _oCmd, string _sLine) {
             string _torel = PathHelper.GetCurrentDirectory().Replace('\\', '/');
             string module = _oCmd.oCompiler.oModuleData.sCurrFolder;
 
             string _result = _sLine.Replace(_torel,"./").Replace(module,"");
              Data.sBash += _result+ "\n";
+
+            if (SettingsLaunch.sMirror!="") {
+             
+                 
+            }
+
         }
 
        internal static void WriteBash() {
-           //PathHelper.GetCurrentDirectory()+
-          File.WriteAllText(SettingsLaunch.sFileLaunch.Replace("cwMake", ".sh") ,  Data.sBash);
+             if(Data.fGetGlobalVar("_sType") == "Bash") {
+                //PathHelper.GetCurrentDirectory()+
+                File.WriteAllText(SettingsLaunch.sFileLaunch.Replace("cwMake", ".sh") , "#!/bin/bash\n"+Data.sBash);
+                Data.sBash="";
+                SettingsLaunch.Mirror_BuildFileList();
+            }
         }
         
 		public static string  fGetGlobalVar(string _sVar, bool _bWeak = false) {

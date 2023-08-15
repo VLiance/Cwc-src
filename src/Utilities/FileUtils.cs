@@ -267,11 +267,11 @@ namespace cwc
 			}
 
 
-			public static List<String> GetAllFiles(String directory, bool _bWithSubFolder = true){
+			public static List<String> GetAllFiles(String directory, bool _bWithSubFolder = true, string _search="*.*"){
                 if(_bWithSubFolder) {
-				    return Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories).ToList();
+				    return Directory.GetFiles(directory, _search, SearchOption.AllDirectories).ToList();
                 }else {
-                    return Directory.GetFiles(directory, "*.*", SearchOption.TopDirectoryOnly).ToList();
+                    return Directory.GetFiles(directory, _search, SearchOption.TopDirectoryOnly).ToList();
                 }
 			}
        

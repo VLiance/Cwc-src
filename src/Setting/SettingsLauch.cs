@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Xml;
 using static cwc.DBGpClient;
+
 
 namespace cwc {
     public class SettingsLaunch : FileUtils {
@@ -23,11 +23,99 @@ namespace cwc {
         }
 
 
+        public static bool create_directory(string _base, string _file) {
+            
+            string reldir = Path.GetDirectoryName(_file);
+            string[] list = reldir.Split('/');
+            string dir = _base;
+            foreach (string d in list) {
+                dir+=d;
+                if (!Directory.Exists(dir)) {
+                    Directory.CreateDirectory(dir);
+               }
+            }
+            return true;
+        }
+
 
         public  string sCurrentFile = "";
         public  static string sFileLaunch = "";
+
+        ////////// MIRROR ////////////
+        public  static string sFileMirror = "";
+        public  static string sMirror = "";
+        public static List<string> aFolderToMirror = new List<string>();
+        public static List<string> aFileToMirror = new List<string>();
+        internal static bool Mirror_BuildFileList() {
+            if(sMirror=="")return false;
+            List<string> aFile = new List<string>();
+            foreach (string folder in aFolderToMirror) {
+                if (Directory.Exists(folder)) {
+                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.c*"));
+                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.h*"));
+                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.i*"));
+                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.s*"));
+                }
+            }
+            
+
+            //Remove hidden files (.git)
+            foreach (string file in aFile) {
+                string f = file.Replace("\\", "/");
+                if (f.IndexOf(".git") == -1) {
+                    aFileToMirror.Add(f);
+                }
+            }
+
+            //Copy if newer to dest
+           foreach (string f in aFileToMirror) {
+
+                string fm = Path.GetFullPath( sMirror + f);
+                DateTime dc= System.IO.File.GetLastWriteTime(f);
+                DateTime dm= System.IO.File.GetLastWriteTime(fm);
+                if(dc> dm) {
+                    //Copy
+                    create_directory(sMirror, f);
+                    System.IO.File.Copy(f, fm, true);
+			        Output.Trace("\f3FMCopy: \f37 "  + fm );
+                }
+
+           }
+           Output.Trace("\f3B --- End Mirroring --- \f13");
+           return true;
+        }
+       internal static bool Mirror_New(string _file) {
+            try {
+               if (File.Exists(_file)) {
+                    string[] alines  = File.ReadAllText(_file).Split('\n');
+                    sMirror = alines[0];
+                     for (int i =1;i<alines.Length;i++) {
+                        string l = alines[i];
+                        if(l.Length==0) continue;
+                        aFolderToMirror.Add(alines[i]);
+                    }
+                    if (aFolderToMirror.Count>0) {
+                        string folder= Path.GetFullPath( sMirror + aFolderToMirror[0]);//TODO other folder detection
+                        if (!Directory.Exists(folder)) {//TODO other foler detection
+                            Output.TraceError("Mirror not found: " + folder);
+                            sMirror = "";
+                        } else {
+                            Output.TraceWarning("Mirror to: " + folder);
+                        }
+                    }
+                   
+                }
+            }catch { }
+            return true;
+        }
+        //////////////////////////////
+
         internal void fSetNewFile(string _sFile) {
             sFileLaunch = _sFile;
+
+            ////////// MIRROR ////////////
+            //Mirror_New(_sFile.Replace(".cwMake", ".mirror"));
+            /////////////////////////////
         
            String _sDir = Path.GetDirectoryName(_sFile);
            String _sFileName = Path.GetFileNameWithoutExtension(_sFile); //Used?
@@ -282,6 +370,6 @@ namespace cwc {
             }
         }
 
-   
+      
     }
 }

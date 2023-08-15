@@ -153,6 +153,17 @@ namespace cwc
 
              if(Data.fGetGlobalVar("_sType") == "Bash") {
 
+                /// Create OUT directory ///
+                string reldir = Path.GetDirectoryName(_oCmd.sOutDirectory).Replace("\\","/");
+                string[] list = reldir.Split('/');
+                //string dir = _base;
+                string dir = "";
+                foreach (string d in list) {
+                    dir+=d+"/";
+                    //Data.fAddToBash(_oCmd,"mkdir " + dir+ "\n");
+                    Data.sBash += "mkdir " + dir+ "\n";
+                }
+                //////////////
                  Data.fAddToBash(_oCmd, _oCmd.sExecutableName + " " + _sFinalArg);
                  fShowSendedCmd(_oCmd);
                  return;
