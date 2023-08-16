@@ -56,6 +56,8 @@ namespace cwc {
                    aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.h*"));
                    aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.i*"));
                    aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.s*"));
+                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.de*"));
+                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.m*"));
                 }
             }
             

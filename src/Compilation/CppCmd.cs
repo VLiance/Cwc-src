@@ -1208,9 +1208,8 @@ bExtacted = true;
                     oParent.sCurr_wTo = sFile_wTo + sToAnyType; //Better way?
                 }
 
-				
-     
-				if(!bSkip) {
+				bool bash = Data.fGetGlobalVar("_sType") == "Bash";
+				if(!bSkip || bash) {
 					//	Debug.fTrace("-_wTo " + sPrecOutput_wTo);
 					//	Debug.fTrace("-_Out " + sFile_wTo);
 					//	Debug.fTrace("sBackEndCmd " + sBackEndCmd);
@@ -1341,7 +1340,7 @@ bExtacted = true;
 			    //if(bCallCompiler  ){
 
 				    if( !bSkip || bash) {
-					    if(!(bLink && CppCompiler.nError > 0)) {
+					    if( !(bLink && CppCompiler.nError > 0) ) {
 						    if(bLink && oCompiler != null &&  oCompiler.sLink_Action_cmd != "") {
 							    fDoLinkCustomAction();
 						    }
@@ -1561,6 +1560,7 @@ bExtacted = true;
                 case ".cxx":
                 case ".cc":
                 case ".cpp":
+                case ".mm":
                 case ".c++":
                     bHaveKnowSourcesFiles = true;
                 break;
@@ -2857,6 +2857,7 @@ bExtacted = true;
 								case ".cpp":
 								case ".c++":
 								case ".cw":
+                                case ".mm":
 								case ".gcpp":
                                     if(_sExt == ".cw") {
 									//Console.WriteLine("Found CW");

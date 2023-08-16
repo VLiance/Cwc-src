@@ -105,6 +105,7 @@ namespace cwc.Generate {
             fAdd("</Project>");
             fSubTab();
             fAdd("</CodeBlocks_project_file>");
+
            // writer.Close();
 			fClose();
         }

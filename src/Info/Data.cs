@@ -267,6 +267,7 @@ namespace cwc {
             string module = _oCmd.oCompiler.oModuleData.sCurrFolder;
 
             string _result = _sLine.Replace(_torel,"./").Replace(module,"");
+             Data.sBash += "echo \"\n\x1B[45;2m"+ _result+ "\"\x1B[0m\n";
              Data.sBash += _result+ "\n";
 
             if (SettingsLaunch.sMirror!="") {
@@ -279,7 +280,7 @@ namespace cwc {
        internal static void WriteBash() {
              if(Data.fGetGlobalVar("_sType") == "Bash") {
                 //PathHelper.GetCurrentDirectory()+
-                File.WriteAllText(SettingsLaunch.sFileLaunch.Replace("cwMake", ".sh") , "#!/bin/bash\nset -e\n"+Data.sBash);
+                File.WriteAllText(SettingsLaunch.sFileLaunch.Replace(".cwMake", ".sh") , "#!/bin/bash\nset -e\n"+Data.sBash+"\necho \"Build Finished\"\n");
                 Data.sBash="";
                 SettingsLaunch.Mirror_BuildFileList();
             }

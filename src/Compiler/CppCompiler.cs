@@ -151,6 +151,8 @@ namespace cwc
             _oCmd.sCommandToShow = "\f1F (" +   _oCmd.sExecutableName  + _oCmd.sExecutableType + _sInfo  + ")" +  _sObjectList + "  " +_sFinalArg;
 
 
+         
+
              if(Data.fGetGlobalVar("_sType") == "Bash") {
 
                 /// Create OUT directory ///
@@ -163,8 +165,17 @@ namespace cwc
                     //Data.fAddToBash(_oCmd,"mkdir " + dir+ "\n");
                     Data.sBash += "mkdir -p " + dir+ "\n";
                 }
+
+                  if (_bLinkTime) {
+                    //  Data.sBash +="\necho link";
+                  }
                 //////////////
-                 Data.fAddToBash(_oCmd, _oCmd.sExecutableName + " " + _sFinalArg);
+                 if (_oCmd.bLink) { 
+                   Data.fAddToBash(_oCmd, _oCmd.sExecutableName + " " + _oCmd.sPrecOutput_wTo + " " + _sFinalArg); //Cannot retreive object files list in bash mode (not generated)
+                } else {
+                   Data.fAddToBash(_oCmd, _oCmd.sExecutableName + " " + _sFinalArg);
+                }
+            
                  fShowSendedCmd(_oCmd);
                  return;
              }
