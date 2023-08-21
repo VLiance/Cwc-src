@@ -1557,10 +1557,13 @@ bExtacted = true;
                     bHaveKnowSourcesFiles = true;
                 break;
 
+                case ".mm":
+                    if (Data.fGetGlobalVar("_sType") != "Bash") break;
+                        bHaveKnowSourcesFiles = true;
+                    break;
                 case ".cxx":
                 case ".cc":
                 case ".cpp":
-                case ".mm":
                 case ".c++":
                     bHaveKnowSourcesFiles = true;
                 break;
@@ -2859,6 +2862,8 @@ bExtacted = true;
 								case ".cw":
                                 case ".mm":
 								case ".gcpp":
+                                    if(_sExt == ".mm"&&Data.fGetGlobalVar("_sType") != "Bash") break;
+
                                     if(_sExt == ".cw") {
 									//Console.WriteLine("Found CW");
 									}

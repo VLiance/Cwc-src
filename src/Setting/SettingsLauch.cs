@@ -1,4 +1,5 @@
-﻿using Raccoom.Windows.Forms;
+﻿using FastColoredTextBoxNS;
+using Raccoom.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,9 +47,75 @@ namespace cwc {
         public  static string sMirror = "";
         public static List<string> aFolderToMirror = new List<string>();
         public static List<string> aFileToMirror = new List<string>();
+
+
+        public static List<string> aOriTimeFileMirror = new List<string>();
+
+
+
+
+     //  public static Dictionary<string,string> aOriTimeFileMirror = new Dictionary<string,string>();
+      // public static Dictionary<string,Int32> aRefTimeFileMirror = new Dictionary<string,Int32>();
+       public static Dictionary<string,Int32> aReadTimeFileMirror = new Dictionary<string,Int32>();
+
+
+        public static bool add_to_dic(Dictionary<string,Int32>  _dic, string _key, Int32 _data) {
+            if (!_dic.ContainsKey(_key)) {
+                _dic.Add(_key, _data);
+                return true;
+            } else {
+                _dic[_key]= _data;
+                return false;
+            }
+        }
+
+
+
+        internal static bool Mirror_SaveModeTime(string _file) {
+            ////
+            String _sDir = Path.GetDirectoryName(_file);
+            String _sName = Path.GetFileNameWithoutExtension(_file);
+            string f = _sDir + "/.wdat/" + _sName + ".md";
+            ////
+            string text = "";
+            foreach(string line in aOriTimeFileMirror) {
+                text+=line+"\n";
+            }
+            File.WriteAllText(f, text);
+            return true;
+        }
+
+        internal static bool Read_FileTime(string _file) {
+            aReadTimeFileMirror.Clear();
+            ////
+            String _sDir = Path.GetDirectoryName(_file);
+            String _sName = Path.GetFileNameWithoutExtension(_file);
+            string f = _sDir + "/.wdat/" + _sName + ".md";
+            ////
+            string _text = File.ReadAllText(f);
+
+            string[] lines = _text.Split('\n');
+            foreach (string line in lines) {
+                try {
+                    string[] _data = line.Split('|');
+                    Int32 modtime=  Int32.Parse( _data[0]);
+                    add_to_dic(aReadTimeFileMirror,_data[1], modtime);
+
+                }catch(Exception e){ };
+            }
+            return true;
+        }
+
         internal static bool Mirror_BuildFileList() {
             Output.Trace("\f3B --- Begin Mirroring --- \f13");
+            aFileToMirror.Clear();
+
+            Read_FileTime(sFileMirror);
+
+          //  aRefTimeFileMirror.Clear();
+            aOriTimeFileMirror.Clear();
             if(sMirror=="")return false;
+      
             List<string> aFile = new List<string>();
             foreach (string folder in aFolderToMirror) {
                 if (Directory.Exists(folder)) {
@@ -73,22 +140,37 @@ namespace cwc {
             //Copy if newer to dest
            foreach (string f in aFileToMirror) {
 
-                string fm = Path.GetFullPath( sMirror + f);
                 DateTime dc= System.IO.File.GetLastWriteTime(f);
-                DateTime dm= System.IO.File.GetLastWriteTime(fm);
-                if(dc> dm) {
+                Int32 dc_time = (int)dc.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+             
+                Int32 lastCopyTime =0;
+                if (aReadTimeFileMirror.ContainsKey(f)) {
+                    lastCopyTime= aReadTimeFileMirror[f];
+                 }
+                //DateTime dm= System.IO.File.GetLastWriteTime(fm);//SLOW
+
+                if(dc_time > lastCopyTime) {
                     //Copy
+                    string fm = Path.GetFullPath( sMirror + f);
                     create_directory(sMirror, f);
                     System.IO.File.Copy(f, fm, true);
 			        Output.Trace("\f3FMCopy: \f37 "  + fm );
                 }
-
+              
+                //add_to_dic(aRefTimeFileMirror, f, dc_time);
+                aOriTimeFileMirror.Add(dc_time+"|"+f);
            }
            Output.Trace("\f3B --- End Mirroring --- \f13");
+            //save modification time
+
+            Mirror_SaveModeTime(sFileMirror);
+
            return true;
         }
        internal static bool Mirror_New(string _file) {
             try {
+                sFileMirror = _file;
+                aFolderToMirror.Clear();
                if (File.Exists(_file)) {
                     string[] alines  = File.ReadAllText(_file).Split('\n');
                     sMirror = alines[0];
