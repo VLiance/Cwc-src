@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using static cwc.DBGpClient;
 
 namespace cwc {
     public class ArgumentManager {
@@ -526,11 +527,9 @@ namespace cwc {
 
         }
 
-
+      
 		public void fSetVar(string _sCmd, string _sMainValue, bool _bAssingOnEmpty = false)
-		{
-
-            
+        {
 			//special case
 			if(_sCmd == "_sConfig_Type"){
 				if(_sMainValue == ""){
@@ -540,7 +539,15 @@ namespace cwc {
 			Data.fSetGlobalVar(_sCmd, _sMainValue, _bAssingOnEmpty);
 		}
 
+      
 		public string fGetVar(string _sVar, bool _bWeak = false){
+            /*
+            if(_sVar=="_sPlatform") { //Return last (#Run bugfix)
+                if (Data.fGetGlobalVar(_sVar,_bWeak) == "") {
+                    return "ass";
+                }
+            }*/
+
           //  Console.WriteLine("------fGetVar " + _sVar );
 			return Data.fGetGlobalVar(_sVar,_bWeak);
 		}

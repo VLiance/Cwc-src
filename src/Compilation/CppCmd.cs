@@ -785,6 +785,9 @@ string sBackEndLinker = "";
 		public void fExtract() {
        
             if (bRunToArgDontPrextract) {
+                if (Data.fGetGlobalVar("_sType") == "Bash") {
+                     Data.fAddRunToBash(this);
+                 }
                  // case "#Run":
                     fCmdRun(sRunToArgDontPrextract_File, sRunToArgDontPrextract_File_Arg);
                 return;
@@ -1336,7 +1339,7 @@ bExtacted = true;
               bool bash = Data.fGetGlobalVar("_sType") == "Bash";
         
 
-			    if(bCallCompiler && !bIsACmdLib ){
+			    if(bCallCompiler && !bIsACmdLib  ){
 			    //if(bCallCompiler  ){
 
 				    if( !bSkip || bash) {
@@ -2177,7 +2180,7 @@ bExtacted = true;
 
                     
                  sRunToArgDontPrextract_File = _sCmdArg;
-                 sRunToArgDontPrextract_File_Arg = sRet_ExtractSpaceMultiValsAltArg;
+                 sRunToArgDontPrextract_File_Arg = CppCmd.fExtractVar( sRet_ExtractSpaceMultiValsAltArg, null);
                  bRunToArgDontPrextract = true;
                   //if(oParent.bPreOutput_Link) {
                     //    oParent.bOverideRunCmd = true;
@@ -2567,7 +2570,7 @@ bExtacted = true;
                 }
                 
             }
-    
+         
 
             if(_nIndex != -1) {
                     sRet_ExtractSpaceMultiValsCmd = _sValue.Substring(0,_nIndex).Trim();
@@ -2925,11 +2928,11 @@ bExtacted = true;
         private string sRunToArgDontPrextract_File;
         private string sRunToArgDontPrextract_File_Arg;
        // private string sHasIncluded = "";
-        private bool bRunToArgDontPrextract;
-        private string sRunToArgDontPrextract_Arg = "";
-        private string sHasIncluded_Arg = "";
-        private string sHasIncluded_True = "";
-        private string sHasIncluded_False = "";
+        public bool bRunToArgDontPrextract;
+        public string sRunToArgDontPrextract_Arg = "";
+        public string sHasIncluded_Arg = "";
+        public string sHasIncluded_True = "";
+        public string sHasIncluded_False = "";
 
 
 

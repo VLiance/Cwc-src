@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using static cwc.DBGpClient;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace cwc {
@@ -260,7 +261,15 @@ namespace cwc {
         }
 
 
-      
+       public static void  fAddRunToBash(CppCmd _oCmd) {
+            if (_oCmd.sRet_ExtractFullArg != "" &&  _oCmd.sRet_ExtractFullArg.IndexOf(".cwc") == -1) { //not for cwc type
+          
+               string cmd =  CppCmd.fExtractVar( _oCmd.sRet_ExtractFullArg , null ); 
+                Data.sBash += "echo \"\n\x1B[45;2m"+ cmd + "\"\x1B[0m\n";
+              Data.sBash +=  cmd + "\n";
+             //   _oCmd.sOutputFile;
+            }
+        }
 
         public static void  fAddToBash(CppCmd _oCmd, string _sLine) {
             string _torel = PathHelper.GetCurrentDirectory().Replace('\\', '/');
@@ -270,10 +279,14 @@ namespace cwc {
              Data.sBash += "echo \"\n\x1B[45;2m"+ _result+ "\"\x1B[0m\n";
              Data.sBash += _result+ "\n";
 
+            //  fCmdRun(sRunToArgDontPrextract_File, sRunToArgDontPrextract_File_Arg);
+            //if (_oCmd.bRunToArgDontPrextract) {
+          
+            /*
             if (SettingsLaunch.sMirror!="") {
              
                  
-            }
+            }*/
 
         }
 
