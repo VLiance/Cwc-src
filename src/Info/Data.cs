@@ -293,7 +293,7 @@ namespace cwc {
        internal static void WriteBash() {
              if(Data.fGetGlobalVar("_sType") == "Bash") {
                 //PathHelper.GetCurrentDirectory()+
-                File.WriteAllText(SettingsLaunch.sFileLaunch.Replace(".cwMake", ".sh") , "#!/bin/bash\nset -e\n"+Data.sBash+"\necho \"Build Finished\"\n");
+                File.WriteAllText(SettingsLaunch.sFileLaunch.Replace(".cwMake", ".sh") , "#!/bin/bash\nset -e\n"+Data.sBash+"\necho \"-- Finished --\"\n");
                 Data.sBash="";
                 SettingsLaunch.Mirror_BuildFileList();
             }
