@@ -640,9 +640,21 @@ public string sDelimiter = "";
                             break;
                         }
                     }
-                    if(_bFound) { //Found
+                    if(_bFound|| fFirstWord.Length>1 && fFirstWord[0]==':') { //Found
+                        if(fFirstWord.Length>1 && fFirstWord[0]==':'){
+                            fFirstWord= fFirstWord.Substring(1)+".exe";
+
+                            _sCmd=_sCmd.Substring(fFirstWord.Length-2);
+                            sExplicite_Call = _sCmd.Trim();
+
+                            sExplicite_App=fFirstWord;
+
+                        }else{
+                            sExplicite_Call = _sCmd.Substring(_indexSpace + 1).Trim();
+                        }
+
                         sExplicite_Name = fFirstWord;
-                        sExplicite_Call = _sCmd.Substring(_indexSpace + 1).Trim();
+                        
                         sExplicite_Call =  fExtractCwcCmd(sExplicite_Call);
                         sExplicite_Call = fTest_SubCmdOrCompileMultiFiles(sExplicite_Call);
 
@@ -2895,7 +2907,7 @@ bExtacted = true;
 										/////
 									}
 									
-                                    string extra_define =" -DD_FILE_NAME=\"" + _sName + "\" -DD_FOLDER_NAME=\"" + _sSubFolder.Replace("\\","") .Replace("/","") + "\"";
+                                    string extra_define =" -DD_FILE_NAME=" + _sName + " -DD_FILE_ID=" + _sSubFolder.Replace("\\","") .Replace("/","_") +_sName;
 
 								//	string _sCmd = " " + sCallerCmd + " " + sSubResidualArg + " " +  sSubArg + " " + _sForceLang + " -c " +_sFile + " -o " + _sOutputFolder + _sSubFolder  + _sName +".o";
 									string _sCmd = " " + sCallerCmd.Replace("#To", "") + " " + _sForceLang + " -c " +_sFile + " -o " + _sOutputFolder + _sSubFolder  + _sName +".o" + extra_define;
