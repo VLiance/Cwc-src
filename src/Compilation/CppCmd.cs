@@ -2895,7 +2895,7 @@ bExtacted = true;
 										/////
 									}
 									
-                                    string extra_define =" -DD_FILE_NAME=\"" + _sName + "\" -DD_FOLDER_NAME=\"" + _sSubFolder.Replace("\\","") .Replace("/","") + "\"";
+                                    string extra_define =" -DD_FILE_NAME=" + _sName + " -DD_FILE_ID=" + _sSubFolder.Replace("\\","") .Replace("/","_") + _sName;
 
 								//	string _sCmd = " " + sCallerCmd + " " + sSubResidualArg + " " +  sSubArg + " " + _sForceLang + " -c " +_sFile + " -o " + _sOutputFolder + _sSubFolder  + _sName +".o";
 									string _sCmd = " " + sCallerCmd.Replace("#To", "") + " " + _sForceLang + " -c " +_sFile + " -o " + _sOutputFolder + _sSubFolder  + _sName +".o" + extra_define;
