@@ -16,15 +16,22 @@ namespace cwc {
             public static void fGetParentProcess(){
 
 
-		    var myId = Process.GetCurrentProcess().Id;
-            var query = string.Format("SELECT ParentProcessId FROM Win32_Process WHERE ProcessId = {0}", myId);
-            var search = new ManagementObjectSearcher("root\\CIMV2", query);
-            var results = search.Get().GetEnumerator();
-            results.MoveNext();
-            var queryObj = results.Current;
-            var parentId = (uint)queryObj["ParentProcessId"];
-           oParentProcess = Process.GetProcessById((int)parentId);
-		    sParentName =  oParentProcess.ProcessName;
+            try
+            {
+                var myId = Process.GetCurrentProcess().Id;
+                var query = string.Format("SELECT ParentProcessId FROM Win32_Process WHERE ProcessId = {0}", myId);
+                var search = new ManagementObjectSearcher("root\\CIMV2", query);
+                var results = search.Get().GetEnumerator();
+                results.MoveNext();
+                var queryObj = results.Current;
+                var parentId = (uint)queryObj["ParentProcessId"];
+                oParentProcess = Process.GetProcessById((int)parentId);
+                sParentName = oParentProcess.ProcessName;
+            }
+            catch (Exception e) {
+                Console.WriteLine("Warning: unable to get parent process");
+            }
+
       //    Console.WriteLine("I was started by {0}", oParentProcess.ProcessName);
         // Console.WriteLine("I was started by {0}", oParentProcess.MainModule.ModuleName);
 

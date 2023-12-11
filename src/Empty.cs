@@ -57,7 +57,7 @@ namespace cwc
 
 
        public  static bool bFromParent = false;
-
+        /*
         public  void fSetToParentApp(Form _oForm) {
             if (bFromParent) {
                 if (Sys.nConnectedHandle != 0) {
@@ -81,7 +81,7 @@ namespace cwc
                 
             }
         }
-
+        */
 
 
 

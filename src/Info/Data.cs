@@ -253,7 +253,7 @@ namespace cwc {
 
 
                    //First arg is current file
-            if(Sys.oParentProcess.ProcessName == "cmd"){ //Remove escape sequence
+            if(Sys.sParentName == "cmd"){ //Remove escape sequence
                 Data.sArg =  Data.sArg.Replace("\"|\"", "|");
            }
 

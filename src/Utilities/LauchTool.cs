@@ -338,10 +338,14 @@ public bool bSanitize = false;
             if(dExit != null){ dExit(this);};
             SysAPI.KillProcessAndChildren( Data.MainProcess.Id ); //TODO more gentle with -- SEND WM_CLOSE -- ?
 
-
-            while(!ExeProcess.HasExited  && Base.bAlive) {
-                Thread.CurrentThread.Join(1);
+            try
+            {
+                while (!ExeProcess.HasExited && Base.bAlive)
+                {
+                    Thread.CurrentThread.Join(1);
                 }
+            }
+            catch (Exception ex) { }
      
 
             return;

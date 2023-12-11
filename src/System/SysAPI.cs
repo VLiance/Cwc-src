@@ -422,7 +422,7 @@ namespace cwc {
         public static RegistryKey  fGetRegkey(){
 			try{
 				string _sCurrenKey = "";
-				if(Sys.oParentProcess.ProcessName == "cmd"){
+				if(Sys.sParentName == "cmd"){
 					_sCurrenKey = "%SystemRoot%_system32_cmd.exe";
 				}else{
 					_sCurrenKey = Application.ExecutablePath.Replace('\\','_');
