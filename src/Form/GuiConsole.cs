@@ -128,28 +128,33 @@ namespace cwc {
         public static bool _bHaveBeenPopulated = false;
         void Populate(bool providerTypeChanged)
         {
-            if(!_bHaveBeenPopulated) {
-                _bHaveBeenPopulated = true;
-          
+            try
+            {
+                if (!_bHaveBeenPopulated)
+                {
+                    _bHaveBeenPopulated = true;
 
-                Raccoom.Windows.Forms.TreeStrategyShell32Provider shell32Provider = new Raccoom.Windows.Forms.TreeStrategyShell32Provider();
-                shell32Provider.EnableContextMenu = true;
-                shell32Provider.ShowAllShellObjects = true;
-                // collection.Add(shell32Provider);
-                //  treeViewPrj.DataSource = shell32Provider;
 
-                FolderBrowser = new Raccoom.Windows.Forms.TreeStrategyFolderBrowserProvider();
-                FolderBrowser.fIni();
-                FolderBrowser.ShowFiles = true;
-                treeViewPrj.DataSource = FolderBrowser;
-                treeViewPrj.CheckBoxBehaviorMode = CheckBoxBehaviorMode.None;
-                // return;
-                // FolderBrowser.sCustomRootDir = @"E:\_Project";
-                FolderBrowser.RootFolder = Environment.SpecialFolder.Desktop;
-   
-                treeViewPrj.Populate(true);
+                    Raccoom.Windows.Forms.TreeStrategyShell32Provider shell32Provider = new Raccoom.Windows.Forms.TreeStrategyShell32Provider();
+                    shell32Provider.EnableContextMenu = true;
+                    shell32Provider.ShowAllShellObjects = true;
+                    // collection.Add(shell32Provider);
+                    //  treeViewPrj.DataSource = shell32Provider;
 
-           }
+                    FolderBrowser = new Raccoom.Windows.Forms.TreeStrategyFolderBrowserProvider();
+                    FolderBrowser.fIni();
+                    FolderBrowser.ShowFiles = true;
+                    treeViewPrj.DataSource = FolderBrowser;
+                    treeViewPrj.CheckBoxBehaviorMode = CheckBoxBehaviorMode.None;
+                    // return;
+                    // FolderBrowser.sCustomRootDir = @"E:\_Project";
+                    FolderBrowser.RootFolder = Environment.SpecialFolder.Desktop;
+
+                    treeViewPrj.Populate(true);
+
+                }
+            }
+            catch(Exception e) { }
 
         }
 
@@ -1076,15 +1081,23 @@ namespace cwc {
                 
 
                             if(sFormCmd != ""){
-                                 this.BeginInvoke((MethodInvoker)delegate {
-			                         if(sFormCmd == "GoEnd"){
-                                         if(Data.bIWantGoToEnd){
-                                             bIgnoreNextSelectionChange = true;
-                                            fctbConsole.GoEnd();
-                                         }
-                                    }
-                                    sFormCmd = "";
-                                });
+                                try
+                                {
+                                    this.BeginInvoke((MethodInvoker)delegate
+                                    {
+                                        if (sFormCmd == "GoEnd")
+                                        {
+                                            if (Data.bIWantGoToEnd)
+                                            {
+                                                bIgnoreNextSelectionChange = true;
+                                                fctbConsole.GoEnd();
+                                            }
+                                        }
+                                        sFormCmd = "";
+                                    });
+                                }
+                                catch (Exception e) { };
+
                             }
 
                             if(LaunchTool.bListModified) {
@@ -1132,36 +1145,44 @@ namespace cwc {
         public string sCurrentCmdLaunch = "";
         public int nLastCmdCount = 0;
         private void fUpdateCmdList(){
-            this.BeginInvoke((MethodInvoker)delegate  {
-                if(sCurrentCmdLaunch == ""){
-                    sCurrentCmdLaunch = "Cmd";
-                }
-
-                cmdToolStripMenuItem.DropDownItems.Clear();
-                fAddItemCmd("Cmd", null);
-                foreach(LaunchTool _oLaunch in LaunchTool.aLaunchList)
+            try
+            {
+                this.BeginInvoke((MethodInvoker)delegate
                 {
-                   fAddItemCmd(_oLaunch.sExeName, _oLaunch.ExeProcess );
-                   //fAddItemCmd(_oLaunch.ExeProcess.ProcessName, _oLaunch.ExeProcess );
-                }
-             
-                //auto select first Launched app
-                if(sCurrentCmdLaunch == "Cmd" && nLastCmdCount == 1 && cmdToolStripMenuItem.DropDownItems.Count > 1 ){
-                    bool bFirst = true;
-                    foreach(ToolStripDropDownItem _item in cmdToolStripMenuItem.DropDownItems){ //Get second item
-                        if(bFirst == false){
-                            sCurrentCmdLaunch = _item.Text;
-                            //cmdToolStripMenuItem.Text = _item.Text;
-                            break;
-                        }
-                        bFirst = false;
+                    if (sCurrentCmdLaunch == "")
+                    {
+                        sCurrentCmdLaunch = "Cmd";
                     }
-                       
-                }
-             
-                cmdToolStripMenuItem.Text = sCurrentCmdLaunch;
-                nLastCmdCount = cmdToolStripMenuItem.DropDownItems.Count;
-            });
+
+                    cmdToolStripMenuItem.DropDownItems.Clear();
+                    fAddItemCmd("Cmd", null);
+                    foreach (LaunchTool _oLaunch in LaunchTool.aLaunchList)
+                    {
+                        fAddItemCmd(_oLaunch.sExeName, _oLaunch.ExeProcess);
+                        //fAddItemCmd(_oLaunch.ExeProcess.ProcessName, _oLaunch.ExeProcess );
+                    }
+
+                    //auto select first Launched app
+                    if (sCurrentCmdLaunch == "Cmd" && nLastCmdCount == 1 && cmdToolStripMenuItem.DropDownItems.Count > 1)
+                    {
+                        bool bFirst = true;
+                        foreach (ToolStripDropDownItem _item in cmdToolStripMenuItem.DropDownItems)
+                        { //Get second item
+                            if (bFirst == false)
+                            {
+                                sCurrentCmdLaunch = _item.Text;
+                                //cmdToolStripMenuItem.Text = _item.Text;
+                                break;
+                            }
+                            bFirst = false;
+                        }
+
+                    }
+
+                    cmdToolStripMenuItem.Text = sCurrentCmdLaunch;
+                    nLastCmdCount = cmdToolStripMenuItem.DropDownItems.Count;
+                });
+            }catch(Exception e){ };
         }
 
              

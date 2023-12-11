@@ -216,20 +216,27 @@ namespace cwc {
                 e.Graphics.DrawRectangle(pen, new Rectangle(0, 0, Width - 1, Height - 1));
         }
 
-        internal void fUpdate() {   
-
+        internal void fUpdate() {
+            try
+            {
                 this.BeginInvoke((MethodInvoker)delegate  {
-                      if(Base.bAlive){
-                            nPos += (value  - nPos) / 5;
+              
+                        if (Base.bAlive)
+                        {
+                            nPos += (value - nPos) / 5;
 
-                            nTumbSize  +=  (nToTumbSize - nTumbSize )/ 10.0;
-                            if(Math.Abs(nTumbSize  - nToTumbSize) >= 1.0 ||  Math.Abs(nPos  - value) >= 1.0){
-                               this.Refresh();
+                            nTumbSize += (nToTumbSize - nTumbSize) / 10.0;
+                            if (Math.Abs(nTumbSize - nToTumbSize) >= 1.0 || Math.Abs(nPos - value) >= 1.0)
+                            {
+                                this.Refresh();
                             }
                         }
+             
                    
                 });
-            
+            }
+            catch (Exception e) { };
+
         }
     }
 }
