@@ -642,7 +642,10 @@ public string sDelimiter = "";
                     }
                     if(_bFound|| fFirstWord.Length>1 && fFirstWord[0]==':') { //Found
                         if(fFirstWord.Length>1 && fFirstWord[0]==':'){
-                            fFirstWord= fFirstWord.Substring(1)+".exe";
+                            fFirstWord= fFirstWord.Substring(1);
+                            if(fFirstWord.IndexOf(".")==-1){ 
+                                fFirstWord+=".exe";
+                            }
 
                             _sCmd=_sCmd.Substring(fFirstWord.Length-2);
                             sExplicite_Call = _sCmd.Trim();
