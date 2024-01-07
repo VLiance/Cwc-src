@@ -1562,6 +1562,7 @@ bExtacted = true;
            // Console.WriteLine("_sExt C!!!" + _sExt);
             switch(_sExt) {
                 case ".c":
+                case ".jc":
 					bHaveSourceC = true; 
 					 bHaveKnowSourcesFiles = true; 
 				break;
@@ -2870,6 +2871,7 @@ bExtacted = true;
 								break;
 
 								case ".c":
+								case ".jc":
                                 case ".cxx":
                                 case ".cc":
 								case ".cpp":
@@ -2882,17 +2884,23 @@ bExtacted = true;
                                     if(_sExt == ".cw") {
 									//Console.WriteLine("Found CW");
 									}
-							        if(_sExt == ".c") {
+							        if(_sExt == ".c" || _sExt == ".jc" ) {
 										bHaveSourceC = true;
 									}
+	                                string _sForceLang = "";
+                                    if( _sExt == ".jc" ){
+	                                    _sForceLang = "-x c ";
+                                    }
+
 									/*
 									if(_sExt == ".gcpp") {
 										bForceCpp = true;
 									}*/
-									string _sForceLang = "";
+								
 									if(bForceCpp){
 										_sForceLang = "-x c++ ";
 									}
+
 								
                                      
 									if(sSubArg == null){  //Reget correct compiler with file type?
