@@ -280,7 +280,14 @@ namespace cwc
 				return Directory.GetFiles(directory, "*", SearchOption.AllDirectories).ToList();
 			}*/
 
-
+        public static void DelContents(string file, string other){
+             if (File.Exists(file)) {
+                    File.Delete(file);
+             } else {
+           	    Output.TraceWarning("No file to Delete: " +file);
+            }
+        }
+			
         ///////////////////////////// Copy Directory //////////////////////
         public static void CopyFolderContents(string sourceFolder, string destinationFolder){
             CopyFolderContents(sourceFolder, destinationFolder, "*.*", "", true, true);

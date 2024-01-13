@@ -2303,6 +2303,10 @@ bExtacted = true;
                     fCmdCopy(_sCond + " " + sRet_ExtractSpaceMultiValsAltArg);
                  break;
 
+                 case "#Del":
+                    fCmdDel(_sCond + " " + sRet_ExtractSpaceMultiValsAltArg);
+                 break;
+
 				 case "#If_NotExist":
                     fCmdIfNotExist(_sCond);
                  break;
@@ -3087,6 +3091,23 @@ bExtacted = true;
 			return "";
 		}
 */
+
+        public void fCmdDel(string _sAllArg) {
+            //	Debug.fTrace("COPY:! " + _sAllArg);
+           // Output.TraceAction("COPY:! " + _sAllArg);
+            string[] _aArg =  _sAllArg.Trim().Split(' ');
+            string _sFirst = _aArg[0];
+            string _sSecond = "";
+            for (int i = 1; i < _aArg.Length; i++)  {
+                _sSecond = _aArg[i].Trim();
+                if (_sSecond != "")  {
+                    break;
+                }
+            }
+
+		    FileUtils.DelContents(_sFirst, _sSecond); //TODO on run pass only?
+		}
+
 
 		public void fCmdCopy(string _sAllArg) {
             //	Debug.fTrace("COPY:! " + _sAllArg);

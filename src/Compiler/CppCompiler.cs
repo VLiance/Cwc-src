@@ -480,7 +480,7 @@ namespace cwc
                         }
                     }
                      
-                     if( fFindValidKeyWord(_sResult, "error") != -1  ) {
+                     if( fFindValidKeyWord(_sResult, "error") != -1  && _sResult.IndexOf( "keytool") == -1) { //TODO do generic ignoring errors (keytool android build)
                         _oOut.eType = OutType.Error;
                         nError++;
                         if (_nMyTicket < nErrorTicket || nErrorTicket == -1) {
