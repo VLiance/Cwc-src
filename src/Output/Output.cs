@@ -9,6 +9,7 @@ namespace cwc
     using System.Runtime.InteropServices; // DllImport() 
     using System.Threading;
     using global::System.Threading;
+    using static cwc.LaunchTool;
 
     class Output {
 
@@ -197,6 +198,7 @@ public static void fPrjOut(string _sLetter,  string _sOut){
 
 
         public static void ProcessStdErr( string _sOut){
+            if (_sOut == null) return;
             if(_sOut.Length > 4 && _sOut[0] == 'C' && _sOut[1] == 'm' && _sOut[2] == 'd' && (_sOut[3] == ':' || _sOut[3] == '('|| _sOut[3] == '[')){
                 //Output.TraceActionLite("C> " + _sOut);
                 ProcessCmd(_sOut);
@@ -212,8 +214,30 @@ public static void fPrjOut(string _sLetter,  string _sOut){
 		}
 
 
-        public static void TraceStd(string _sText){
-			Output.TraceColored( "\f0F" + _sText ); 
+        public static void ProcessCMD(string _sOut)
+        {
+            if (_sOut == null) return;
+            if (_sOut.Length > 4 && _sOut[0] == 'C' && _sOut[1] == 'm' && _sOut[2] == 'd' && (_sOut[3] == ':' || _sOut[3] == '(' || _sOut[3] == '['))
+            {
+                //Output.TraceActionLite("C> " + _sOut);
+                ProcessCmd(_sOut);
+
+            }
+           
+        }
+        public static void TraceStd(string _sOut)
+        {
+            if (_sOut == null) return;
+            if (_sOut.Length > 4 && _sOut[0] == 'C' && _sOut[1] == 'm' && _sOut[2] == 'd' && (_sOut[3] == ':' || _sOut[3] == '(' || _sOut[3] == '['))
+            {
+                //Output.TraceActionLite("C> " + _sOut);
+                ProcessCmd(_sOut);
+
+            }
+            else
+            {
+                Output.TraceColored("\f0F" + _sOut);
+            }
 		}
 
 		public static void TraceWarningLite(string _sText){

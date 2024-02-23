@@ -191,16 +191,7 @@ namespace cwc {
 
         public  void 	fAppError(LaunchTool _oTool, string _sOut){
             
-             //E> Function "GDB_Func_Break" not defined.
-            if(_sOut.IndexOf("Function \"GDB_Func_Break\" not defined") != -1) {
-                Output.TraceActionLite("Tips: To have in-code GDB break, add this function: extern \"C\" void GDB_Func_Break(){}");
-                return;
-            }
-             if(_sOut.IndexOf("Function \"GDB_Func_ExecuteCmds\" not defined") != -1) {
-                Output.TraceActionLite("Tips: To have in-code GDB command-line, add this function: extern \"C\" void GDB_Func_ExecuteCmds(){}\nSend command like this: fprintf(stderr,\"Cmd[GDB]:yourCmd\")");
-                return;
-            }
-            
+      
 
            // bRunning= false;
             oLaunchProject.bReceiveOutput = true;
@@ -219,9 +210,49 @@ namespace cwc {
 		   // Output.Trace("E> " + _sOut);
          }
 
+
+        public void fAppGBD(LaunchTool _oTool, string _sOut)
+        {
+
+            //E> Function "GDB_Func_Break" not defined.
+            if (_sOut.IndexOf("Function \"GDB_Func_Break\" not defined") != -1)
+            {
+                Output.TraceActionLite("Tips: To have in-code GDB break, add this function: extern \"C\" void GDB_Func_Break(){}");
+                return;
+            }
+            if (_sOut.IndexOf("Function \"GDB_Func_ExecuteCmds\" not defined") != -1)
+            {
+                Output.TraceActionLite("Tips: To have in-code GDB command-line, add this function: extern \"C\" void GDB_Func_ExecuteCmds(){}\nSend command like this: fprintf(stderr,\"Cmd[GDB]:yourCmd\")");
+                return;
+            }
+
+
+            // bRunning= false;
+            oLaunchProject.bReceiveOutput = true;
+            // bCmdSend = false;//Proble occur, we can resend cmd
+            if (bCmdSend)
+            {
+                if (fTestEndOfCommand(_sOut))
+                { //Or just check resutl?
+                    return;
+                }
+                else
+                {
+                    _sOut = sCurrentCmd;
+                }
+            }
+
+            Output.ProcessCMD(_sOut);
+            // Output.Trace("E> " + _sOut);
+        }
+
+
         public  void 	fAppOut(LaunchTool _oTool, string _sOut){
+
+            fAppGBD( _oTool,  _sOut);
+
              //bRunning= false;
-            if(_sOut == null || _sOut == "") {
+            if (_sOut == null || _sOut == "") {
                 return;
             }
            
