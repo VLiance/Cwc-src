@@ -472,7 +472,7 @@ namespace cwc
                     _oOut.oFrom = _oCmd;
                     _oOut.sOut = _sResult;
            
-                     if(_sResult.IndexOf("undefined reference to") != -1) {
+                     if(_sResult.IndexOf("undefined reference to") != -1 || _sResult.IndexOf("UnsatisfiedLinkError") != -1) { //UnsatisfiedLinkError (android)
                         _oOut.eType = OutType.Undefined;
                         nError++;
                         if (_nMyTicket < nErrorTicket || nErrorTicket == -1) {

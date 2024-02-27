@@ -65,9 +65,13 @@ namespace cwc {
 
                 
                 string _sSanitizer =  _oCompiler.oGblConfigType.fGetNode(null,new string[]{"Exe", "Sanitizer"}, "");
+                
+                if(!File.Exists("drmem_supp.txt")){
+                    File.WriteAllLines("drmem_supp.txt", new string[]{""});
+                }    
 
                // oProcess.fLaunchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
-                oProcess.fLaunchExe( _sSanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath  + _sSubArg   ); //-no_soft_kills
+                oProcess.fLaunchExe( _sSanitizer,  "-suppress " + Directory.GetCurrentDirectory() + "/drmem_supp.txt -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath  + _sSubArg + " 2>&1"  ); //-no_soft_kills
                 
                 return;
 
@@ -213,6 +217,7 @@ namespace cwc {
 
         public void fAppGBD(LaunchTool _oTool, string _sOut)
         {
+            if(_sOut==null)return;
 
             //E> Function "GDB_Func_Break" not defined.
             if (_sOut.IndexOf("Function \"GDB_Func_Break\" not defined") != -1)
