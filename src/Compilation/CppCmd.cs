@@ -312,7 +312,7 @@ namespace cwc {
                     	    break;
                             case '#':
                              //   fPreCwcCommand( _sRArg,_sFullRArg);
-                                fPreCwcCommand( _sRArg,_sFullRArg); //Require full
+                                fPreCwcCommand( _sRArg,_sFullRArg, _nNextIdex); //Require full
 							break;
                     /*
                           case '#':
@@ -2109,7 +2109,7 @@ bExtacted = true;
 
 
         string sPreCwcCommand = "";
-		public void fPreCwcCommand( string _sArg, string _sFullRArg) {
+		public void fPreCwcCommand( string _sArg, string _sFullRArg, int _nNextIdex) {
             sPreCwcCommand = _sArg;
 
 
@@ -2190,10 +2190,19 @@ bExtacted = true;
                  //Do not preextract?
                          //     Output.TraceWarning("_sCmdArg: " + _sCmdArg );
                //  Output.TraceWarning("sRet_ExtractSpaceMultiValsAltArg: " + sRet_ExtractSpaceMultiValsAltArg );
-
-                    
                  sRunToArgDontPrextract_File = _sCmdArg;
-                 sRunToArgDontPrextract_File_Arg = CppCmd.fExtractVar( sRet_ExtractSpaceMultiValsAltArg, null);
+
+                //patch get app arguments
+                string ending = "";
+                if(_nNextIdex!=-1){
+                    ending = " " + _sFullRArg.Substring(_nNextIdex);
+                    int endidx = ending.IndexOf(';');
+                    if(endidx!=-1){
+                        ending =  ending.Substring(0, endidx);
+                    }
+                }
+
+                 sRunToArgDontPrextract_File_Arg = CppCmd.fExtractVar( sRet_ExtractSpaceMultiValsAltArg +  ending, null);
                  bRunToArgDontPrextract = true;
                   //if(oParent.bPreOutput_Link) {
                     //    oParent.bOverideRunCmd = true;
