@@ -71,7 +71,7 @@ namespace cwc {
                 }    
 
                // oProcess.fLaunchExe( _oCompiler.oModuleData.sCurrFolder+ _oCompiler.sExe_Sanitizer,  " -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath   ); //-no_soft_kills
-                oProcess.fLaunchExe( _sSanitizer,  "-suppress " + Directory.GetCurrentDirectory() + "/drmem_supp.txt -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath  + _sSubArg + " 2>&1"  ); //-no_soft_kills
+                oProcess.fLaunchExe( _sSanitizer,  "-suppress " + Directory.GetCurrentDirectory() + "/drmem_supp.txt -no_callstack_use_fp   -no_callstack_use_top_fp  -v -exit_code_if_errors 1 -malloc_callstacks  -batch " + _sExePath  + _sSubArg  ); //-no_soft_kills
                 
                 return;
 

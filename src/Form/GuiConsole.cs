@@ -1127,7 +1127,12 @@ namespace cwc {
             _oNew.Text = _sName;
             _oNew.Name = _sName;
             cmdToolStripMenuItem.DropDownItems.Add(_oNew);
-              _oNew.Click += fCmdLaunchSelect;
+
+             sCurrentCmdLaunch = _sName;
+             cmdToolStripMenuItem.Text = _sName;
+
+            _oNew.Click += fCmdLaunchSelect;
+            
         }
         private void fCmdLaunchSelect(object sender, EventArgs e) {
 
