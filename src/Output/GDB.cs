@@ -287,7 +287,7 @@ namespace cwc {
                 if( _sOut.IndexOf("GDB_Func_ExecuteCmds")!= -1 ){ //Special function
                      _sColor = Output.sGoodColorLite;
                       Output.Trace(_sLetter + "> " +_sColor +_sOut);
-                     oProcess.fSend("Continue");
+                     oProcess.fSend("continue");
                     return;
                 }
                 _sColor = Output.sWarningColor;
