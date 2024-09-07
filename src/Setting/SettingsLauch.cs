@@ -92,6 +92,8 @@ namespace cwc {
             String _sName = Path.GetFileNameWithoutExtension(_file);
             string f = _sDir + "/.wdat/" + _sName + ".md";
             ////
+            if (!File.Exists(f)) return false;
+
             string _text = File.ReadAllText(f);
 
             string[] lines = _text.Split('\n');
@@ -177,7 +179,7 @@ namespace cwc {
                      for (int i =1;i<alines.Length;i++) {
                         string l = alines[i];
                         if(l.Length==0) continue;
-                        aFolderToMirror.Add(alines[i]);
+                        aFolderToMirror.Add(alines[i].Trim());
                     }
                     if (aFolderToMirror.Count>0) {
                         string folder= Path.GetFullPath( sMirror + aFolderToMirror[0]);//TODO other folder detection
@@ -191,6 +193,7 @@ namespace cwc {
                    
                 }
             }catch { }
+            sMirror = sMirror.Trim();
             return true;
         }
         //////////////////////////////
