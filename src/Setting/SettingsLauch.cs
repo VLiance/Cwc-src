@@ -3,7 +3,9 @@ using Raccoom.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using static cwc.DBGpClient;
@@ -25,17 +27,24 @@ namespace cwc {
 
 
         public static bool create_directory(string _base, string _file) {
-            
-            string reldir = Path.GetDirectoryName(_file);
-            string[] list = reldir.Split('/');
-            string dir = _base;
-            foreach (string d in list) {
-                dir+=d;
-                if (!Directory.Exists(dir)) {
-                    Directory.CreateDirectory(dir);
-               }
+            try
+            {
+                string reldir = Path.GetDirectoryName(_file);
+                string[] list = reldir.Split('/');
+                string dir = _base;
+                foreach (string d in list)
+                {
+                    dir += d;
+                    if (!Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
+                }
+                return true;
             }
-            return true;
+            catch (Exception e) {
+                Output.TraceError("Cannot create dir for file: " + _file);
+                return false; }
         }
 
 
@@ -117,19 +126,38 @@ namespace cwc {
           //  aRefTimeFileMirror.Clear();
             aOriTimeFileMirror.Clear();
             if(sMirror=="")return false;
-      
+
+            Output.Trace("GetFiles");
             List<string> aFile = new List<string>();
             foreach (string folder in aFolderToMirror) {
                 if (Directory.Exists(folder)) {
-                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.c*"));
-                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.h*"));
-                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.i*"));
-                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.s*"));
-                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.de*"));
-                   aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.m*"));
+                    Output.Trace("GetFiles from: " + folder);
+
+                    // Liste des extensions que vous souhaitez inclure
+                    var allowedExtensions = new[] { ".c", ".h", ".i", ".s", ".de", ".m" };
+
+                    // Récupérer tous les fichiers du dossier
+                    var allFiles = FileUtils.GetAllFiles(folder, true, "*.*");
+
+                    // Filtrer les fichiers par extension autorisée
+                    var filteredFiles = allFiles.Where(file =>  allowedExtensions.Any(ext => Path.GetExtension(file).Equals(ext, StringComparison.OrdinalIgnoreCase)));
+
+                    // Ajouter les fichiers filtrés à la liste
+                    aFile.AddRange(filteredFiles);
+
+                    //var test = FileUtils.GetAllFiles(folder, true, "*.c*");
+
+                    // aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.c*"));
+                    // aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.h*"));
+                    // aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.i*"));
+                    // aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.s*"));
+                    // aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.de*"));
+                    // aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.m*"));
                 }
+
+                Thread.Sleep(50);
             }
-            
+            Output.Trace("EndGetFiles");
 
             //Remove hidden files (.git)
             foreach (string file in aFile) {
