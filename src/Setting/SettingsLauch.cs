@@ -134,7 +134,7 @@ namespace cwc {
                     Output.Trace("GetFiles from: " + folder);
 
                     // Liste des extensions que vous souhaitez inclure
-                    var allowedExtensions = new[] { ".c", ".h", ".i", ".s", ".de", ".m" };
+                    var allowedExtensions = new[] { ".c", ".cc", ".cpp", ".h", ".hh", ".hpp",  ".glsl",  ".inc", ".s", ".def", ".jc", ".m", ".mm", ".sh" };
 
                     // Récupérer tous les fichiers du dossier
                     var allFiles = FileUtils.GetAllFiles(folder, true, "*.*");
