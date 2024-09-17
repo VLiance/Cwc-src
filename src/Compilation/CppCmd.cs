@@ -2308,7 +2308,11 @@ bExtacted = true;
                      bRetryForInput = true;
                   break;
 
-				 case "#Copy":
+                case "#WriteBash":
+                    Data.WriteBash();
+                 break;
+
+                case "#Copy":
                     fCmdCopy(_sCond + " " + sRet_ExtractSpaceMultiValsAltArg);
                  break;
 
