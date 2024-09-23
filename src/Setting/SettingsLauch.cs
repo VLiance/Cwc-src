@@ -155,7 +155,7 @@ namespace cwc {
                     // aFile.AddRange(  FileUtils.GetAllFiles(folder, true, "*.m*"));
                 }
 
-                Thread.Sleep(50);
+                //Thread.Sleep(50);
             }
             Output.Trace("EndGetFiles");
 
