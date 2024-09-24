@@ -1584,6 +1584,8 @@ bExtacted = true;
                     bHaveKnowSourcesFiles = true;
                 break;
 
+
+                case ".bc":
                 case ".o":
                 case ".obj":
 
@@ -2881,7 +2883,8 @@ bExtacted = true;
 								
 
 							switch(_sExt) {
-								case ".o":
+                                case ".bc":
+                                case ".o":
 								case ".obj":
 									sObjectLinkList += _sFile + " ";
 								
