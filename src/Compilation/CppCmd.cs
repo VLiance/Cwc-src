@@ -488,7 +488,7 @@ namespace cwc {
 			if(!_bCompiling){   ////TODO better detection
 				_sArg= _sArg.Trim();
 				string _sExtention = "";
-				int _nIndex = _sArg.IndexOf('.');
+				int _nIndex = _sArg.LastIndexOf('.');
 				if(_nIndex != -1){
 					_sExtention = _sArg.Substring(_nIndex+1);
 				}
