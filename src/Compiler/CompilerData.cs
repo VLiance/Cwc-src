@@ -636,6 +636,7 @@ namespace cwc
 			cppCmd.oParent.fSetVar("_wToolchain", oModuleData.sAutorName);
 			cppCmd.oParent.fSetVar("_wToolchain_Dir", oModuleData.sCurrFolder);
 			cppCmd.oParent.fSetVar("_sPlatform", sPlatformName);
+			cppCmd.oParent.fSetVar("_sWorkingDir", Environment.CurrentDirectory + "/");
 
          //   Output.TraceAction("_wToolchain " +  oModuleData.sAutorName);
          //   Output.TraceAction("_sPlatform " + sPlatformName);

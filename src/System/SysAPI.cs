@@ -240,7 +240,7 @@ namespace cwc {
                   //  MessageBox.Show(_sFileName);
                         if(!_bSkip){
                           try{
-                            if( !Base.bAlive ||  proc.ProcessName != "hkey") {
+                            if( (!Base.bAlive ||  proc.ProcessName != "hkey" ) &&   proc.ProcessName != "notepad++" ) {
                                  proc.Kill();
                                   while( !proc.HasExited) {
                                        Thread.Sleep(1);

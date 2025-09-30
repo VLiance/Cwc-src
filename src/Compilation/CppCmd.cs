@@ -2036,6 +2036,7 @@ bExtacted = true;
 					oParent.fSetVar(_sVar, _sVarArg);
                  break;
 
+
                 case "_sType":
                     //fBuildAndCommand(_sArg);
 					oParent.fSetVar(_sVar, _sVarArg);
