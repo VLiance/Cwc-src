@@ -343,7 +343,7 @@ public static void fPrjOut(string _sLetter,  string _sOut){
 				return TraceWithoutColor(_sText);
 			}
 
-              _sText = _sText.Replace('\\', '/'); //Always replace??
+            //  _sText = _sText.Replace('\\', '/'); //Always replace??
             
             string _sResult = "";
             string s = "\0\0\0\0";

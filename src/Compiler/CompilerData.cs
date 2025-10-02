@@ -634,15 +634,17 @@ namespace cwc
         internal void fSetVar(CppCmd cppCmd)
 		{
 			cppCmd.oParent.fSetVar("_wToolchain", oModuleData.sAutorName);
-			cppCmd.oParent.fSetVar("_wToolchain_Dir", oModuleData.sCurrFolder);
-			cppCmd.oParent.fSetVar("_sPlatform", sPlatformName);
-			cppCmd.oParent.fSetVar("_sWorkingDir", Environment.CurrentDirectory + "/");
+			cppCmd.oParent.fSetVar("_wToolchain_Dir", oModuleData.sCurrFolder.Replace('\\', '/')); 
+			cppCmd.oParent.fSetVar("_wToolchain_DirW", oModuleData.sCurrFolder.Replace('/', '\\')); //replace / to \ for -ffile-prefix-map compatibility
+            cppCmd.oParent.fSetVar("_sPlatform", sPlatformName);
+			cppCmd.oParent.fSetVar("_sWorking_Dir", (Environment.CurrentDirectory ).Replace('\\','/'));
+			cppCmd.oParent.fSetVar("_sWorking_DirW", (Environment.CurrentDirectory )); //replace / to \ for -ffile-prefix-map compatibility
 
-         //   Output.TraceAction("_wToolchain " +  oModuleData.sAutorName);
-         //   Output.TraceAction("_sPlatform " + sPlatformName);
+            //   Output.TraceAction("_wToolchain " +  oModuleData.sAutorName);
+            //   Output.TraceAction("_sPlatform " + sPlatformName);
 
-			//cppCmd.oParent.fSetVar("wPlatform_Type", sType);
-			cppCmd.oParent.fSetVar("_sConfig_Type", sSubName); //.cwfg file name -> LibRT.Default.cwfg = Default
+            //cppCmd.oParent.fSetVar("wPlatform_Type", sType);
+            cppCmd.oParent.fSetVar("_sConfig_Type", sSubName); //.cwfg file name -> LibRT.Default.cwfg = Default
 //Debug.fTrace("SetVar: " + sSubName);
 //Debug.fTrace("SetVar: " + sType);
 		}
