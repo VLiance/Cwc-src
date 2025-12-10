@@ -1037,6 +1037,12 @@ bExtacted = true;
 
 					oDepandance = new Depandance(this, sOutputFile);
 				    bSkip = !oDepandance.bHaveNewerFile;
+
+                   // if (oDepandance.bHaveNewerFile) {
+                   //    	Output.TraceStd("Newer Dep: " + sOutputFile);
+                   // }
+
+                  //  bSkip = true;
                     
 				}
 

@@ -75,7 +75,11 @@ namespace cwc{
 						    //Debug.fTrace("CompareOld:" +  _sOldCmd);  //TODO   Data.sCompiler Test if may change between files
 						    //    Console.WriteLine("CompareNew:" + _sCmd);
 						    //Console.WriteLine("CompareOld:" +  _sOldCmd);  //TODO   Data.sCompiler Test if may change between files
-					        if(_sOldCmd != _sCmd) { //Command are not the same 
+					        if(_sOldCmd.Replace('\\','/') != _sCmd) { //Command are not the same 
+                            
+                                //Output.TraceStd("Older: " + _sOldCmd);
+                                //Output.TraceStd("Newer: " + _sCmd);
+
                         	    fHaveNewerFile();
                                 //bHaveNewerFile = true;	
 
