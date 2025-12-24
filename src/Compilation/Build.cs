@@ -13,6 +13,7 @@ namespace cwc {
 
         public static void StartBuild(bool _bShowInfo = true){
             Data.bIWantGoToEnd = true;
+            Data.bNoStopOnError = false;
            // fDebug("-------------StartBUILDDDD");
             Data.fClearData();
 
@@ -242,7 +243,7 @@ namespace cwc {
         }
 
        public static void StopBuild(){
-           
+
               Data.sCmd = "";
             if(Data.bNowBuilding) {
               

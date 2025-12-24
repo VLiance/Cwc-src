@@ -210,6 +210,7 @@ namespace cwc {
         internal static bool bForceTestNextCmd;
         internal static bool bIWantGoToEnd = false;
         public static string sBash;
+        internal static bool bNoStopOnError;
 
         internal static void fCheckUpdate() {
            

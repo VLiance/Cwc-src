@@ -366,7 +366,7 @@ namespace cwc {
                         if(!Data.bNowBuilding) {
                             return;
                         }
-						if( CppCompiler.nError > 0) {
+						if(!Data.bNoStopOnError &&  CppCompiler.nError > 0) {
 							break;
 						}			
                         			
@@ -385,7 +385,7 @@ namespace cwc {
                                fShowInfo(_oModule,!_bSilent);
                                 return;
                             }
-						    if( CppCompiler.nError > 0) {
+						    if(!Data.bNoStopOnError && CppCompiler.nError > 0) {
 							    break;
 						    }
                        // Thread.Sleep(1);				
@@ -417,7 +417,7 @@ namespace cwc {
                         fShowInfo(_oModule,!_bSilent);
                         return;
                     }
-				    if( CppCompiler.nError > 0) {
+				    if(!Data.bNoStopOnError && CppCompiler.nError > 0) {
 					    break;
 				    }	
                 }
@@ -470,7 +470,7 @@ namespace cwc {
        //     if(Data.bInConsole && !bSubArgMan) {
 		 //   if( !bSubArgMan) {
              if(_bShowInfo){
-				if( CppCompiler.nError > 0) {
+				if(!Data.bNoStopOnError && CppCompiler.nError > 0) {
 					string _sS = "s";
 					if(CppCompiler.nError == 1) {
 						_sS = "";

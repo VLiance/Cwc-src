@@ -2321,6 +2321,10 @@ bExtacted = true;
                     Data.WriteBash();
                  break;
 
+                case "#NoStopOnError":
+                    Data.bNoStopOnError = true;
+                 break;
+
                 case "#Copy":
                     fCmdCopy(_sCond + " " + sRet_ExtractSpaceMultiValsAltArg);
                  break;

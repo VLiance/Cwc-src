@@ -258,7 +258,7 @@ namespace cwc
                                         fShowSendedCmd(_oCmd);
                                         fShowProcOutput(_oCmd);
 
-                                        if (nErrorTicket == nCurrentTicket &&  (nError > 0 ) ) { //&& GuiForm.fIsChecked("afterFileErrorToolStripMenuItem") //TODO
+                                        if (!Data.bNoStopOnError  &&  nErrorTicket == nCurrentTicket &&  (nError > 0 ) ) { //&& GuiForm.fIsChecked("afterFileErrorToolStripMenuItem") //TODO
                                             fShowProcOutput(_oCmd);
                                             Build.StopBuild(); //Dont display other file errors
                                             break;
@@ -653,7 +653,7 @@ namespace cwc
                                     // Console.WriteLine("*** Process  " + nCurrentTicket + " " + _oCmd == null );
                                         fShowSendedCmd(_oCmd);
                                         fShowProcOutput(_oCmd);
-                                        if (nErrorTicket == nCurrentTicket &&  (nError > 0 ) ) {
+                                        if (!Data.bNoStopOnError &&  nErrorTicket == nCurrentTicket &&  (nError > 0 ) ) {
                                             //Console.WriteLine(":: " +  GuiForm.fIsChecked("afterFileErrorToolStripMenuItem")); //TODO TODOTODO
                                             fShowProcOutput(_oCmd);
                                             Build.StopBuild(); //Dont display other file errors
