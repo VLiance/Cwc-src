@@ -301,6 +301,15 @@ namespace cwc
                 Data.aOption[_oVal.sKey] = _oVal.sValue;
             }
 
+            foreach (KeyValuePair<string, string> _oKey in Data.aOption) {
+                if (_oKey.Value == Data.sTRUE && _oKey.Key.StartsWith("ViewIn/")) {
+                    string _sBrowser = _oKey.Key.Substring("ViewIn/".Length);
+                    Data.fSetGlobalVar("_sViewIn", _sBrowser);
+                    Data.sCurrViewIn = _sBrowser;
+                    break;
+                }
+            }
+
 		}
 
 		// Save configuration file

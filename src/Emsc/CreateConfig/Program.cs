@@ -388,7 +388,8 @@ namespace CreateConfig
 			Console.WriteLine("-{vWebRT_Shell_Dir}='" + _sShell_Folder + "'");
 		
 
-			Console.WriteLine("-{vWebRT_Shell}='" + _sShell_Folder + "Base/Console.s_html" + "'");
+		//	Console.WriteLine("-{vWebRT_Shell}:='" + _sShell_Folder + "Base/Console.s_html" + "'");
+			Console.WriteLine("-{vWebRT_Shell}='" + _sShell_Folder + "Fullscreen/Fullscreen.s_html" + "'");
 	
 		//	fAddViewTargetBrowser();
         }

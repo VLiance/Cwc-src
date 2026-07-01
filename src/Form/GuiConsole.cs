@@ -46,7 +46,25 @@ namespace cwc {
 
 
         public void fCheckMenu(object sender, EventArgs e) {
+            ToolStripItem _oParent = ((ToolStripMenuItem)(sender)).OwnerItem;
+            if (_oParent != null) {
+                fUncheckAll((ToolStripMenuItem)_oParent);
+            }
 
+            ((ToolStripMenuItem)(sender)).Checked = true;
+
+            string _sFullName = ((ToolStripMenuItem)(sender)).Name;
+            string _sOptName = Path.GetDirectoryName(_sFullName).Replace('\\', '/');
+
+            aOption[((ToolStripMenuItem)(sender)).Name] = Data.fGetStrBool((bool)(((ToolStripMenuItem)(sender)).Checked));
+
+            Data.fSetGlobalVar("_s" + _sOptName, ((ToolStripMenuItem)(sender)).Text);
+
+            if (_sOptName == "ViewIn") {
+                Data.sCurrViewIn = ((ToolStripMenuItem)(sender)).Text;
+            }
+
+            Output.TraceAction("Set[" + _sOptName + "]:" + ((ToolStripMenuItem)(sender)).Text);
         }
 
         public void fLoadData() {
