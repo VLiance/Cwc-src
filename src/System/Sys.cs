@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Management;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace cwc {
@@ -11,21 +10,46 @@ namespace cwc {
         public static string sParentName = "";
 	    public static Process oParentProcess = null;
             internal static int nConnectedHandle = 0;
-  
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct PROCESS_BASIC_INFORMATION {
+            public IntPtr Reserved1;
+            public IntPtr PebBaseAddress;
+            public IntPtr Reserved2_0;
+            public IntPtr Reserved2_1;
+            public IntPtr UniqueProcessId;
+            public IntPtr InheritedFromUniqueProcessId;
+        }
+
+        [DllImport("ntdll.dll")]
+        private static extern int NtQueryInformationProcess(
+            IntPtr processHandle,
+            int processInformationClass,
+            ref PROCESS_BASIC_INFORMATION processInformation,
+            int processInformationLength,
+            out int returnLength);
 
             public static void fGetParentProcess(){
 
-
             try
             {
-                var myId = Process.GetCurrentProcess().Id;
-                var query = string.Format("SELECT ParentProcessId FROM Win32_Process WHERE ProcessId = {0}", myId);
-                var search = new ManagementObjectSearcher("root\\CIMV2", query);
-                var results = search.Get().GetEnumerator();
-                results.MoveNext();
-                var queryObj = results.Current;
-                var parentId = (uint)queryObj["ParentProcessId"];
-                oParentProcess = Process.GetProcessById((int)parentId);
+                var myProcess = Process.GetCurrentProcess();
+                var pbi = new PROCESS_BASIC_INFORMATION();
+                int returnLength;
+                int status = NtQueryInformationProcess(
+                    myProcess.Handle,
+                    0, // ProcessBasicInformation
+                    ref pbi,
+                    Marshal.SizeOf(typeof(PROCESS_BASIC_INFORMATION)),
+                    out returnLength);
+
+                if (status != 0) {
+                    Console.WriteLine("Warning: unable to get parent process");
+                    return;
+                }
+
+                int parentId = (int)pbi.InheritedFromUniqueProcessId.ToInt64();
+                oParentProcess = Process.GetProcessById(parentId);
                 sParentName = oParentProcess.ProcessName;
             }
             catch (Exception e) {
