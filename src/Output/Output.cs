@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace cwc
 {
@@ -71,7 +72,8 @@ namespace cwc
         }
 
 
-		 public static string TraceWithoutColor(string _sText, bool _bDirectTrace = false)  {
+		 public static string TraceWithoutColor(string _sText, bool _bDirectTrace = false, bool _bError = false)  {
+                if(_sText.IndexOf('\x1b') >= 0) _sText = Regex.Replace(_sText, @"\x1b\[[0-?]*[ -/]*[@-~]", "");
 				string _sResult = "";
 
                 if(_bDirectTrace) {
@@ -100,7 +102,8 @@ namespace cwc
                         }
                     }
 
-			    	Debug.fPrint(_sResult );
+                if(_bError && Data.bConsoleMode) Console.Error.WriteLine(_sResult);
+                else Debug.fPrint(_sResult);
 				//	Debug.fTrace(_sResult);
 
                 }
@@ -246,6 +249,10 @@ public static void fPrjOut(string _sLetter,  string _sOut){
 		}
 
         public static void TraceErrorLite(string _sText)  {
+            if(Data.bConsoleMode) {
+                lock(oLockTrace) { TraceWithoutColor(_sText, false, true); }
+                return;
+            }
 
 			Output.TraceColored("\f0C" + _sText ); 
 		}
@@ -274,6 +281,10 @@ public static void fPrjOut(string _sLetter,  string _sOut){
 
         public static  string sErrorColor = "\f4C";
         public static void TraceError(string _sText)  {
+            if(Data.bConsoleMode) {
+                lock(oLockTrace) { TraceWithoutColor(_sText, false, true); }
+                return;
+            }
 
 			Output.TraceColored(sErrorColor + _sText ); 
 		}
@@ -298,7 +309,10 @@ public static void fPrjOut(string _sLetter,  string _sOut){
          public static readonly Object oLockTrace = new Object();
 
         public static Boolean bFirstTrace = true;
-        public static string TraceColored(string _sText)  { 
+        public static string TraceColored(string _sText)  {
+            if(Data.bConsoleMode) {
+                lock(oLockTrace) { return TraceWithoutColor(_sText); }
+            }
             if(bFirstTrace){bFirstTrace = false; fTraceThread(); }
           //  TraceColoredThread(_sText);
             lock(oLockTrace) {

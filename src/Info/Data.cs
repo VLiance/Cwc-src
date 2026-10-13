@@ -80,6 +80,7 @@ namespace cwc {
 
         public  static Process MainProcess =  Process.GetCurrentProcess();
         public  static bool bConsoleMode = false;
+        public static bool bNoRun = false;
        public static ConfigMng oConfigMng = null;
         
 
@@ -233,26 +234,10 @@ namespace cwc {
         }
 
         internal static void fGetMainArg() {
-               Data.sArg = Environment.CommandLine.Trim() ;
-     //     sArg = String.Join(" ", CmdArgs); //Fail to parse quotes
-
-        //   fDebug("Environment.CommandLine: "+Environment.CommandLine);
-
-            
-             if(sArg[0] == '\"'){ //Remove current file arg when loaded from file
-                    int _nFindEndQuote =  sArg.IndexOf("\"",1)+1;
-                    //fDebug("_nFindEndQuote:"+_nFindEndQuote);
-                    sArg = sArg.Substring( _nFindEndQuote ,sArg.Length-_nFindEndQuote).Trim();
-                }
-            //    Console.WriteLine(sArg);
-                //Remove current name exe cwc
-                if (sArg.Length >= 3 && sArg[0] == 'c' && sArg[1] == 'w'  && sArg[2] == 'c') {
-                      sArg = sArg.Substring(3).Trim();
-
-                 //   Data.fSetWorkingDir(_sFullValue);
-                }
-
-
+            // Preserve project quoting while removing the complete executable token.
+            string command = Environment.CommandLine.Trim();
+            int end = command.StartsWith("\"") ? command.IndexOf('"', 1) + 1 : command.IndexOf(' ');
+            Data.sArg = end < 0 ? "" : command.Substring(end).Trim();
                    //First arg is current file
             if(Sys.sParentName == "cmd"){ //Remove escape sequence
                 Data.sArg =  Data.sArg.Replace("\"|\"", "|");

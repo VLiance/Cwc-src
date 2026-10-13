@@ -19,6 +19,54 @@ namespace cwc {
     [DllImport("kernel32.dll")]
     static extern bool AttachConsole(int dwProcessId);
     private const int ATTACH_PARENT_PROCESS = -1;
+    [DllImport("kernel32.dll")]
+    static extern IntPtr GetStdHandle(int nStdHandle);
+    [DllImport("kernel32.dll")]
+    static extern uint GetFileType(IntPtr hFile);
+
+    static bool fRedirected(int handle) {
+        uint type = GetFileType(GetStdHandle(handle));
+        return type == 1 || type == 3; // Disk or pipe, including automated callers.
+    }
+
+    static bool fConsoleMode(bool redirected, string parent, bool debugging) {
+        parent = parent.ToLowerInvariant();
+        if(debugging || parent == "code" || parent == "devenv") return false;
+        return redirected || parent == "cmd" || parent == "powershell" || parent == "pwsh";
+    }
+
+    static int fOptions(ref string command) {
+        bool run = false, noRun = false, cli = false, gui = false;
+        while(command.StartsWith("--", StringComparison.Ordinal)) {
+            int end = command.IndexOfAny(new char[] {' ', '\t'});
+            string option = end < 0 ? command : command.Substring(0, end);
+            switch(option) {
+            case "--cli": cli = true; break;
+            case "--gui": gui = true; break;
+            case "--run": run = true; break;
+            case "--no-run": noRun = true; break;
+            case "--help":
+                Console.WriteLine("Usage: cwc [--cli | --gui] [--run | --no-run] file.cwMake");
+                Console.WriteLine("CLI builds without running by default; --run enables project execution.");
+                return 0;
+            default:
+                Console.Error.WriteLine("Unknown option: " + option);
+                return 2;
+            }
+            command = end < 0 ? "" : command.Substring(end).TrimStart();
+        }
+        if(cli && gui) {
+            Console.Error.WriteLine("--cli and --gui cannot be combined.");
+            return 2;
+        }
+        if(cli || gui) Data.bConsoleMode = cli;
+        if(run && noRun) {
+            Console.Error.WriteLine("--run and --no-run cannot be combined.");
+            return 2;
+        }
+        Data.bNoRun = noRun || (Data.bConsoleMode && !run);
+        return -1;
+    }
 
     [STAThread]
     static int Main(string[] args){
@@ -26,14 +74,16 @@ namespace cwc {
                     
         // redirect console output to parent process;
         // must be before any calls to Console.WriteLine()
-        AttachConsole(ATTACH_PARENT_PROCESS);
-
+        bool redirected = fRedirected(-11) || fRedirected(-12);
+        if(!redirected) AttachConsole(ATTACH_PARENT_PROCESS);
+        Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
+        Console.SetError(new StreamWriter(Console.OpenStandardError()) { AutoFlush = true });
         Sys.fGetParentProcess();
-        Console.WriteLine("Systeme mode: " + Sys.sParentName);
-                         
-        if (Sys.sParentName == "cmd") {
-            Data.bConsoleMode = true;
-        }
+        Data.bConsoleMode = fConsoleMode(redirected, Sys.sParentName, Debugger.IsAttached);
+        Data.fGetMainArg();
+        int optionResult = fOptions(ref Data.sArg);
+        if(optionResult >= 0) return optionResult;
+        if(Data.bConsoleMode) Data.bGUI = false;
 
         Data.fSetDefaultVar(args);
         Data.fCheckUpdate();
@@ -51,8 +101,7 @@ namespace cwc {
             }
         }
 
-        Data.fGetMainArg();
-        fCheckForRegistringFiles();
+        if(!Data.bConsoleMode) fCheckForRegistringFiles();
 
         if( !Data.bConsoleMode){
             GuiManager.fCreateGUI();
@@ -88,7 +137,7 @@ namespace cwc {
         Build.fMainLoop();
 
          //if(Data.bConsoleMode) {SendKeys.SendWait("{ENTER}"); }
-        return 0;
+        return CppCompiler.nError == 0 ? 0 : 1;
     }
 
     public static bool fCheckForRegistringFiles(bool _bForce = false) {

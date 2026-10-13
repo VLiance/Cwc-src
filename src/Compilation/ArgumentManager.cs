@@ -379,6 +379,7 @@ namespace cwc {
                 if(!_bDontExecute){
 				     CppCompiler.CheckAllThreadsHaveFinishedWorking(true);
 				    foreach(CppCmd _oCmd in _oSeq.aCppCmd) {
+                             if(!Data.bNowBuilding || (!Data.bNoStopOnError && CppCompiler.nError > 0)) break;
 						     _oCmd.fExecute();
 						
                             if(!Data.bNowBuilding) {
@@ -470,7 +471,7 @@ namespace cwc {
        //     if(Data.bInConsole && !bSubArgMan) {
 		 //   if( !bSubArgMan) {
              if(_bShowInfo){
-				if(!Data.bNoStopOnError && CppCompiler.nError > 0) {
+				if(CppCompiler.nError > 0) {
 					string _sS = "s";
 					if(CppCompiler.nError == 1) {
 						_sS = "";

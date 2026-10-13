@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace cwc
@@ -245,6 +246,10 @@ namespace cwc
                             process.BeginOutputReadLine();
                             process.BeginErrorReadLine();
                             process.WaitForExit();
+                            if(process.ExitCode != 0) {
+                                fCompilerError("error: " + process.StartInfo.FileName + " exited with code " + process.ExitCode,
+                                    process.StartInfo.Arguments, _nMyTicket, false, _oCmd);
+                            }
 
                             ///////////////////////////////////////
                             ///Wait for displaying in order
@@ -272,7 +277,10 @@ namespace cwc
                             }
                             ////////////////////////////////////
                          }catch(Exception e){
-                            Output.TraceError(e.Message);
+                            fCompilerError("error: " + e.Message, _sArg, _nMyTicket, false, _oCmd);
+                            fShowSendedCmd(_oCmd);
+                            fShowProcOutput(_oCmd);
+                            Build.StopBuild();
                             string _sSended = process.StartInfo.FileName + " " + process.StartInfo.Arguments;
                             Output.TraceAction(_sSended);
                             if(_sSended.Length >= 32768){
@@ -291,9 +299,16 @@ namespace cwc
                              }
                          }
 
-                         Interlocked.Decrement(ref safeInstanceCount); //safeInstanceCount never decremented if after  fAddCommandLineVerificationToDepedancesFile?? on link time : exception?
-                         if(_oCmd != null && !_bLinkTime) { 
-                              _oCmd.fAddCommandLineVerificationToDepedancesFile(_oCmd); //TODO is infinite loop?
+                         try {
+                             if(_oCmd != null && !_bLinkTime && process.ExitCode == 0 && Data.bNowBuilding) {
+                                 _oCmd.fAddCommandLineVerificationToDepedancesFile(_oCmd);
+                             }
+                         } catch(Exception e) {
+                             fCompilerError("error: " + e.Message, _sArg, _nMyTicket, false, _oCmd);
+                             fShowProcOutput(_oCmd);
+                             Build.StopBuild();
+                         } finally {
+                             Interlocked.Decrement(ref safeInstanceCount);
                          }
                      }
                  }
@@ -454,18 +469,8 @@ namespace cwc
                     fShowProcOutput(_oCmd);
                 }
                  
-			    if(_bStdError) {
-
-				    if( fFindValidKeyWord(_sResult, "error") != -1 ) { //Generiquer error check!?
-					    nError++;
-                        
-                        if(_nMyTicket < nErrorTicket  || nErrorTicket ==-1){
-                            nErrorTicket = (int) _nMyTicket;
-                        }
-
-				    }
-			    }
-               
+                string diagnostic = _sResult.IndexOf('\x1b') < 0 ? _sResult :
+                    Regex.Replace(_sResult, @"\x1b\[[0-?]*[ -/]*[@-~]", "");
                 if(aOutput != null ) {
 
                       OutToken _oOut = new OutToken();
@@ -480,14 +485,14 @@ namespace cwc
                         }
                     }
                      
-                     if( fFindValidKeyWord(_sResult, "error") != -1  && _sResult.IndexOf( "keytool") == -1) { //TODO do generic ignoring errors (keytool android build)
+                     if( fFindValidKeyWord(diagnostic, "error") != -1  && diagnostic.IndexOf( "keytool") == -1) { //TODO do generic ignoring errors (keytool android build)
                         _oOut.eType = OutType.Error;
                         nError++;
                         if (_nMyTicket < nErrorTicket || nErrorTicket == -1) {
                             nErrorTicket = (int)_nMyTicket;
                         }
                     }
-                     if(  fFindValidKeyWord(_sResult, "warning") != -1) {
+                     if(  fFindValidKeyWord(diagnostic, "warning") != -1) {
                         _oOut.eType = OutType.Warning;
                     }
                     aOutput.Add(_oOut);
@@ -552,6 +557,7 @@ namespace cwc
         }
 
         internal static void  fLaunchInputApp(Process _oToInputProcess, List<CppCmd> aSubInputCmd) {
+            if(aSubInputCmd == null) return;
             foreach(CppCmd _oCmd in aSubInputCmd) {
                 _oCmd.oToInputProcess = _oToInputProcess;
                  Output.TraceWarning("Launch Input App: " + _oCmd.sExplicite_App + ":" +  _oCmd.sExplicite_Call);
@@ -642,6 +648,10 @@ namespace cwc
                             fLaunchInputApp(process, aSubInputCmd);
 
                             process.WaitForExit();
+                            if(process.ExitCode != 0) {
+                                fCompilerError("error: " + process.StartInfo.FileName + " exited with code " + process.ExitCode,
+                                    process.StartInfo.Arguments, _nMyTicket, false, _oCmd);
+                            }
                             ///////////////////////////////////////
                             ///Wait for displaying in order
                             ////////////////////////////////////////*
@@ -667,7 +677,10 @@ namespace cwc
                             }
                         ///////////////////////////////////////////////
                         }catch(Exception e) {
-                        Output.TraceError("Error with " + process.StartInfo.FileName + "[" + process.StartInfo.Arguments + "]:" + e.Message);
+                        fCompilerError("error: " + process.StartInfo.FileName + ": " + e.Message, _sArg, _nMyTicket, false, _oCmd);
+                        fShowSendedCmd(_oCmd);
+                        fShowProcOutput(_oCmd);
+                        Build.StopBuild();
                         } finally {}
 
                         try {  while (!process.HasExited){

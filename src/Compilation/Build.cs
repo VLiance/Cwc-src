@@ -213,7 +213,7 @@ namespace cwc {
                      //   Thread.Sleep(1);
                        //Thread.Sleep(1);
                         Thread.CurrentThread.Join(1);
-                        if (Data.bConsoleMode && !Data.bNowBuilding) {
+                        if (Data.bConsoleMode && !Data.bNowBuilding && Data.sCmd == "" && !Data.bForceTestNextCmd) {
                             Base.bAlive = false;
                         }
                     

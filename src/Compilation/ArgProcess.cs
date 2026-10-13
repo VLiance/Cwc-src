@@ -8,49 +8,20 @@ using System.Text;
 namespace cwc {
     class ArgProcess {
         
-         public static string fTestIfBeginWithAFile(string sArgExpand) {
-          //  sArgExpand.Split();
-          //  string[]  aPreArg = sArgExpand.Split(new string[] { " -", "|", ">" }, StringSplitOptions.None);
-          int _nIndex = 0;
-            while (_nIndex <  sArgExpand.Length) {
-         
-                  if (sArgExpand[_nIndex] == '.'  ) {
-                    //Check if is a know file
-                    if(  sArgExpand.Length > _nIndex){
-                        string _sExt = sArgExpand.Substring(_nIndex+1);
-                        _sExt = _sExt.Substring( _sExt.IndexOf(' ')+1);
-                        _sExt = _sExt.Substring( _sExt.IndexOf('\n')+1);
-                        _sExt = _sExt.Substring( _sExt.IndexOf('\t')+1);
-                        switch (_sExt) {
-                             case "cwc":
-                             case "exe":
-                             case "bat":
-                            case "cwMake":
-                                   return "-#Launch " + sArgExpand;
-                             break;
-                        }
-                    }
-
-                }
-                    
-                 if (sArgExpand[_nIndex] == '\"'  ) {
-                    //First char is quote, we found a file
-
-                    return "-#Launch " + sArgExpand;
-                }
-                if (sArgExpand[_nIndex] == '-' || sArgExpand[_nIndex] == '|' || sArgExpand[_nIndex] == '>' ) {
-                     return sArgExpand;
-                   // if(_nIndex>0 && !((sArgExpand[_nIndex-1] == ' ' || sArgExpand[_nIndex-1] == '\t' )) ){ continue; }
-
-                }
-                 _nIndex++;
+        public static string fTestIfBeginWithAFile(string command) {
+            string first = command.TrimStart();
+            if(first.Length == 0 || "-|>:".IndexOf(first[0]) >= 0) return command;
+            int end = first[0] == '"' ? first.IndexOf('"', 1) : first.IndexOfAny(new char[] {' ', '\t', '\r', '\n'});
+            if(first[0] == '"') {
+                if(end < 0) return command;
+                first = first.Substring(1, end - 1);
+            } else if(end >= 0) first = first.Substring(0, end);
+            switch(Path.GetExtension(first).ToLowerInvariant()) {
+            case ".cwc": case ".cwmake": case ".exe": case ".bat":
+                return "-#Launch " + command;
             }
-
-          return sArgExpand;
+            return command;
         }
-
-
-
        public static int fGetEndFile(string _sFullArg, int _nStartIndex ) {
             while(_nStartIndex < _sFullArg.Length) {
 

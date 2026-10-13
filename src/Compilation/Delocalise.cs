@@ -49,7 +49,9 @@ namespace cwc {
 
            Output.TraceWarning("Launch " + sDelocaliseCmd);
               SettingsLaunch.Mirror_New(sDelocaliseCmd.Replace(".cwMake", ".mirror"));
+            Data.sCmd = "";
             string _sText =  Delocalise.fDelocalise(sDelocaliseCmd);
+            if(CppCompiler.nError > 0) return;
 			Data.sArgExpand  = ArgProcess.fExpandAll(_sText);
 	       Data.sCmd = "StartBuild";
             Data.bForceTestNextCmd = true;
@@ -63,6 +65,8 @@ namespace cwc {
            // Debug.fTrace("Deloc: " + _sPath);
             if (!File.Exists(_sPath)) {
                  Output.TraceError("File not found: " + _sPath);
+                 CppCompiler.nError++;
+                 return "";
             }
              ConfigMng.oConfig.fAddRecent(_sPath);
 
@@ -114,6 +118,7 @@ namespace cwc {
       }
 
 	public static string fDelocaliseExe(string _sPath){
+        if(Data.bNoRun || CppCompiler.nError > 0) return "";
         
 //fLaunchConsoleCmd("");
 

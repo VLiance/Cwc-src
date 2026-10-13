@@ -26,6 +26,7 @@ namespace cwc{
         }
 
         public  void fLaunchDefaultRun(string _sPath = "", string _sSubArg = "") { //"" = Last link file
+            if(Data.bNoRun || CppCompiler.nError > 0) return;
 
 
             if(!Data.bModeIDE ) {
@@ -69,6 +70,7 @@ namespace cwc{
 
 
 		 public bool fLaunch(string _sPath, bool _bSanitize = false, string _sSubArg = "") {
+            if(Data.bNoRun || CppCompiler.nError > 0) return false;
 
             if(_sPath.Length > 1 && _sPath[_sPath.Length-1] =='/') { //Not a file
                 Output.TraceError("Path is not a File: " + _sPath);

@@ -182,7 +182,7 @@ namespace cwc {
 
     public static void KillProcessAndChildren(int pid){
 
-        Interlocked.Exchange(ref CppCompiler.safeInstanceCount,0); //Just to be sure we will not be waiting for a killed instance
+
 
 
         try {
